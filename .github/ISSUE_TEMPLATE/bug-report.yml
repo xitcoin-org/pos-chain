@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible issue in Xitcoin software.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include private keys, mnemonics, passwords, node keys or production configuration.
+
+  - type: input
+    id: version
+    attributes:
+      label: Xitcoin version or commit
+      placeholder: "for example: v0.1.0 or a commit hash"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the observed behavior and the expected behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run ...
+        2. Submit ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Remove credentials and sensitive data before pasting logs.
