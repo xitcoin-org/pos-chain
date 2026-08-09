@@ -3,7 +3,7 @@ package namespaces
 import (
 	"context"
 
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/types"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/types"
 )
 
 const (

@@ -1,9 +1,9 @@
 package ante
 
 import (
-	cosmosante "github.com/cosmos/evm/ante/cosmos"
-	evmante "github.com/cosmos/evm/ante/evm"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	cosmosante "github.com/xitcoin-org/pos-chain/ante/cosmos"
+	evmante "github.com/xitcoin-org/pos-chain/ante/evm"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 	ibcante "github.com/cosmos/ibc-go/v11/modules/core/ante"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"

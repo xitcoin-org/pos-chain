@@ -16,11 +16,11 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	"github.com/cosmos/evm/rpc/backend/mocks"
-	rpc "github.com/cosmos/evm/rpc/types"
-	"github.com/cosmos/evm/testutil/constants"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/rpc/backend/mocks"
+	rpc "github.com/xitcoin-org/pos-chain/rpc/types"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 	proto "github.com/cosmos/gogoproto/proto"
 
 	"cosmossdk.io/math"

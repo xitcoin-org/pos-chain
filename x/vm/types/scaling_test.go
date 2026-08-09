@@ -8,8 +8,8 @@ import (
 	"github.com/holiman/uint256"
 	"github.com/stretchr/testify/require"
 
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

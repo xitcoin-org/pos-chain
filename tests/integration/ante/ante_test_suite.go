@@ -5,13 +5,13 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/testutil/integration"
-	"github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	"github.com/cosmos/evm/testutil/keyring"
-	feemarkettypes "github.com/cosmos/evm/x/feemarket/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/testutil/keyring"
+	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdkmath "cosmossdk.io/math"
 

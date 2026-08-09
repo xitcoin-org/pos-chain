@@ -9,10 +9,10 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/evm/contracts"
-	rpctypes "github.com/cosmos/evm/rpc/types"
-	"github.com/cosmos/evm/utils"
-	"github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
+	"github.com/xitcoin-org/pos-chain/utils"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

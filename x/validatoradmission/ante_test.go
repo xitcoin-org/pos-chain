@@ -14,8 +14,8 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	gogoany "github.com/cosmos/gogoproto/types/any"
 
-	"github.com/cosmos/evm/x/validatoradmission/keeper"
-	"github.com/cosmos/evm/x/validatoradmission/types"
+	"github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
+	"github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
 )
 
 type testTx struct {

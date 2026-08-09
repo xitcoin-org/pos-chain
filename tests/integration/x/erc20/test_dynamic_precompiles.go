@@ -5,9 +5,9 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/holiman/uint256"
 
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	"github.com/cosmos/evm/x/erc20/types"
-	"github.com/cosmos/evm/x/vm/statedb"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	"cosmossdk.io/math"
 

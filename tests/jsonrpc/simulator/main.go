@@ -5,8 +5,8 @@ import (
 	"flag"
 	"log"
 
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/report"
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/runner"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/report"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/runner"
 )
 
 func main() {

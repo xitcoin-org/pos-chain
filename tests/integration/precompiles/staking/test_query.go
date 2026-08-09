@@ -8,9 +8,9 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/holiman/uint256"
 
-	cmn "github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/precompiles/staking"
-	testutiltx "github.com/cosmos/evm/testutil/tx"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/precompiles/staking"
+	testutiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
 
 	"cosmossdk.io/math"
 

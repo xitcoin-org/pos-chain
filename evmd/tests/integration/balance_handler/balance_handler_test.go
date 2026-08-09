@@ -6,12 +6,12 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm"
-	"github.com/cosmos/evm/contracts"
-	"github.com/cosmos/evm/evmd/tests/integration"
-	debugprecompile "github.com/cosmos/evm/evmd/tests/testdata/debug"
-	evmibctesting "github.com/cosmos/evm/testutil/ibc"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
+	"github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	debugprecompile "github.com/xitcoin-org/pos-chain/evmd/tests/testdata/debug"
+	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
 
 	sdkmath "cosmossdk.io/math"
 

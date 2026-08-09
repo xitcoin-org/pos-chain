@@ -1,9 +1,9 @@
 package vm
 
 import (
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 func (s *KeeperTestSuite) TestEndBlock() {

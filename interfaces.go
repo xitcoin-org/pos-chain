@@ -3,10 +3,10 @@ package evm
 import (
 	"encoding/json"
 
-	erc20keeper "github.com/cosmos/evm/x/erc20/keeper"
-	feemarketkeeper "github.com/cosmos/evm/x/feemarket/keeper"
-	"github.com/cosmos/evm/x/ibc/callbacks/keeper"
-	evmkeeper "github.com/cosmos/evm/x/vm/keeper"
+	erc20keeper "github.com/xitcoin-org/pos-chain/x/erc20/keeper"
+	feemarketkeeper "github.com/xitcoin-org/pos-chain/x/feemarket/keeper"
+	"github.com/xitcoin-org/pos-chain/x/ibc/callbacks/keeper"
+	evmkeeper "github.com/xitcoin-org/pos-chain/x/vm/keeper"
 	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v11/modules/core/keeper"
 	ibctesting "github.com/cosmos/ibc-go/v11/testing"

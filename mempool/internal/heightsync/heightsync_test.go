@@ -10,7 +10,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/cosmos/evm/mempool/internal/heightsync"
+	"github.com/xitcoin-org/pos-chain/mempool/internal/heightsync"
 
 	"cosmossdk.io/log/v2"
 )

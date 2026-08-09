@@ -7,8 +7,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	"github.com/cosmos/evm/precompiles/erc20"
-	"github.com/cosmos/evm/testutil"
+	"github.com/xitcoin-org/pos-chain/precompiles/erc20"
+	"github.com/xitcoin-org/pos-chain/testutil"
 	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
 	"github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
 

@@ -1,7 +1,7 @@
 package evm
 
 import (
-	evmante "github.com/cosmos/evm/x/vm/ante"
+	evmante "github.com/xitcoin-org/pos-chain/x/vm/ante"
 
 	errorsmod "cosmossdk.io/errors"
 

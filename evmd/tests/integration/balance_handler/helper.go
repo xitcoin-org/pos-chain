@@ -6,10 +6,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/cosmos/evm"
-	evmibctesting "github.com/cosmos/evm/testutil/ibc"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	"github.com/cosmos/evm/x/vm/statedb"
+	"github.com/xitcoin-org/pos-chain"
+	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	errorsmod "cosmossdk.io/errors"
 )

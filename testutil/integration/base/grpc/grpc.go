@@ -1,7 +1,7 @@
 package grpc
 
 import (
-	"github.com/cosmos/evm/testutil/integration/base/network"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/base/network"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"

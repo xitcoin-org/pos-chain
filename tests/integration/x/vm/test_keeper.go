@@ -8,9 +8,9 @@ import (
 	ethparams "github.com/ethereum/go-ethereum/params"
 	"github.com/holiman/uint256"
 
-	"github.com/cosmos/evm/utils"
-	"github.com/cosmos/evm/x/vm/statedb"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/utils"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"

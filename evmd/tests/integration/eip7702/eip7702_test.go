@@ -3,10 +3,10 @@ package eip7702
 import (
 	"testing"
 
-	evm "github.com/cosmos/evm"
-	"github.com/cosmos/evm/evmd/tests/integration"
-	"github.com/cosmos/evm/tests/integration/eip7702"
-	testapp "github.com/cosmos/evm/testutil/app"
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	"github.com/xitcoin-org/pos-chain/tests/integration/eip7702"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
 )
 
 func TestEIP7702IntegrationTestSuite(t *testing.T) {

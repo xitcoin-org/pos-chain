@@ -8,7 +8,7 @@ import (
 	mempool "github.com/cosmos/cosmos-sdk/types/mempool"
 	mock "github.com/stretchr/testify/mock"
 
-	txpool "github.com/cosmos/evm/mempool/txpool"
+	txpool "github.com/xitcoin-org/pos-chain/mempool/txpool"
 
 	types "github.com/cosmos/cosmos-sdk/types"
 )

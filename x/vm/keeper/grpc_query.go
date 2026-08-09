@@ -23,12 +23,12 @@ import (
 
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 
-	rpctypes "github.com/cosmos/evm/rpc/types"
-	evmtrace "github.com/cosmos/evm/trace"
-	"github.com/cosmos/evm/utils"
-	evmante "github.com/cosmos/evm/x/vm/ante"
-	"github.com/cosmos/evm/x/vm/statedb"
-	"github.com/cosmos/evm/x/vm/types"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
+	evmtrace "github.com/xitcoin-org/pos-chain/trace"
+	"github.com/xitcoin-org/pos-chain/utils"
+	evmante "github.com/xitcoin-org/pos-chain/x/vm/ante"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdkmath "cosmossdk.io/math"
 

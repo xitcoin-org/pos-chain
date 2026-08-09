@@ -3,10 +3,10 @@ package eips_test
 import (
 	"testing"
 
-	evm "github.com/cosmos/evm"
-	"github.com/cosmos/evm/evmd/tests/integration"
-	"github.com/cosmos/evm/tests/integration/eips"
-	testapp "github.com/cosmos/evm/testutil/app"
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	"github.com/xitcoin-org/pos-chain/tests/integration/eips"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
 	//nolint:revive // dot imports are fine for Ginkgo
 	//nolint:revive // dot imports are fine for Ginkgo
 )

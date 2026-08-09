@@ -7,13 +7,13 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/stretchr/testify/suite"
 
-	cmn "github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/precompiles/werc20"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	"github.com/cosmos/evm/testutil/keyring"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/precompiles/werc20"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/testutil/keyring"
 )
 
 type PrecompileUnitTestSuite struct {

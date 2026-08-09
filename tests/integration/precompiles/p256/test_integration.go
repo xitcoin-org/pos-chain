@@ -15,14 +15,14 @@ import (
 
 	"github.com/cometbft/cometbft/crypto"
 
-	"github.com/cosmos/evm/precompiles/p256"
-	"github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	"github.com/cosmos/evm/testutil/integration/evm/utils"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/precompiles/p256"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/utils"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 type IntegrationTestSuite struct {

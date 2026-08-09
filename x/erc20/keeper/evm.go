@@ -7,10 +7,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/cosmos/evm/contracts"
-	"github.com/cosmos/evm/utils"
-	"github.com/cosmos/evm/x/erc20/types"
-	"github.com/cosmos/evm/x/vm/statedb"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	"github.com/xitcoin-org/pos-chain/utils"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	errorsmod "cosmossdk.io/errors"
 

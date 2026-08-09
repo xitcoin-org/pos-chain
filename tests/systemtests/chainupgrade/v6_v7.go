@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/gjson"
 
-	"github.com/cosmos/evm/tests/systemtests/suite"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/suite"
 
 	systest "github.com/cosmos/cosmos-sdk/tools/systemtests"
 	sdk "github.com/cosmos/cosmos-sdk/types"

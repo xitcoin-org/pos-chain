@@ -11,12 +11,12 @@ import (
 
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 
-	"github.com/cosmos/evm/testutil/integration/base/factory"
-	"github.com/cosmos/evm/x/erc20/keeper"
-	"github.com/cosmos/evm/x/erc20/types"
-	erc20mocks "github.com/cosmos/evm/x/erc20/types/mocks"
-	"github.com/cosmos/evm/x/vm/statedb"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/base/factory"
+	"github.com/xitcoin-org/pos-chain/x/erc20/keeper"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
+	erc20mocks "github.com/xitcoin-org/pos-chain/x/erc20/types/mocks"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

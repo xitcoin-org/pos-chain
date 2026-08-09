@@ -13,10 +13,10 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/encoding"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	"github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/encoding"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdkmath "cosmossdk.io/math"
 

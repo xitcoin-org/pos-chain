@@ -1,9 +1,9 @@
 package runner
 
 import (
-	ns "github.com/cosmos/evm/tests/jsonrpc/simulator/namespaces"
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/types"
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/utils"
+	ns "github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/namespaces"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/types"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/utils"
 )
 
 // GetTestCase returns the comprehensive test configuration organized by namespace

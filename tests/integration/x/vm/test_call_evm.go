@@ -5,12 +5,12 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/cosmos/evm/contracts"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	"github.com/cosmos/evm/x/erc20/types"
-	"github.com/cosmos/evm/x/vm/statedb"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

@@ -6,10 +6,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	cmn "github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/precompiles/gov"
-	"github.com/cosmos/evm/precompiles/testutil"
-	utiltx "github.com/cosmos/evm/testutil/tx"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/precompiles/gov"
+	"github.com/xitcoin-org/pos-chain/precompiles/testutil"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
 
 	"cosmossdk.io/math"
 

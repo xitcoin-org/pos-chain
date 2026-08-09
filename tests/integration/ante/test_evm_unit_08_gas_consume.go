@@ -3,14 +3,14 @@ package ante
 import (
 	"fmt"
 
-	evmante "github.com/cosmos/evm/ante/evm"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	commonfactory "github.com/cosmos/evm/testutil/integration/base/factory"
-	testfactory "github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	evmante "github.com/xitcoin-org/pos-chain/ante/evm"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	commonfactory "github.com/xitcoin-org/pos-chain/testutil/integration/base/factory"
+	testfactory "github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdkmath "cosmossdk.io/math"
 

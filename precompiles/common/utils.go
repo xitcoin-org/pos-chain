@@ -6,8 +6,8 @@ import (
 
 	"github.com/holiman/uint256"
 
-	"github.com/cosmos/evm/utils"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/utils"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"

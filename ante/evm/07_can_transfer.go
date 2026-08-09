@@ -5,9 +5,9 @@ import (
 
 	"github.com/ethereum/go-ethereum/core"
 
-	anteinterfaces "github.com/cosmos/evm/ante/interfaces"
-	"github.com/cosmos/evm/utils"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	anteinterfaces "github.com/xitcoin-org/pos-chain/ante/interfaces"
+	"github.com/xitcoin-org/pos-chain/utils"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	errorsmod "cosmossdk.io/errors"
 

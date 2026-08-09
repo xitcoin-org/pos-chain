@@ -3,7 +3,7 @@ package config
 import (
 	clienthelpers "cosmossdk.io/client/v2/helpers"
 	serverconfig "github.com/cosmos/cosmos-sdk/server/config"
-	cosmosevmserverconfig "github.com/cosmos/evm/server/config"
+	cosmosevmserverconfig "github.com/xitcoin-org/pos-chain/server/config"
 )
 
 func MustGetDefaultNodeHome() string {

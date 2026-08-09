@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/cosmos/evm/x/feemarket/types"
+	"github.com/xitcoin-org/pos-chain/x/feemarket/types"
 
 	"cosmossdk.io/log/v2"
 

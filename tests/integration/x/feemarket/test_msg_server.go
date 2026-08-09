@@ -3,8 +3,8 @@ package feemarket
 import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	"github.com/cosmos/evm/x/feemarket/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/x/feemarket/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"

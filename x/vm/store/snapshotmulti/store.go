@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/cosmos/evm/x/vm/store/snapshotkv"
-	"github.com/cosmos/evm/x/vm/store/types"
-	vmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/store/snapshotkv"
+	"github.com/xitcoin-org/pos-chain/x/vm/store/types"
+	vmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 )

@@ -28,7 +28,7 @@ jobs:
           cache-dependency-path: go.sum
 
       - name: Run Go tests
-        run: go test ./...
+        run: go test -tags=test ./...
 
       - name: Build xitcoind
         run: make build

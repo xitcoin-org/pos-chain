@@ -9,12 +9,12 @@ import (
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/mock/gomock"
 
-	"github.com/cosmos/evm/testutil/integration/evm/utils"
-	"github.com/cosmos/evm/x/erc20/keeper"
-	"github.com/cosmos/evm/x/erc20/types"
-	erc20mocks "github.com/cosmos/evm/x/erc20/types/mocks"
-	"github.com/cosmos/evm/x/vm/statedb"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/utils"
+	"github.com/xitcoin-org/pos-chain/x/erc20/keeper"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
+	erc20mocks "github.com/xitcoin-org/pos-chain/x/erc20/types/mocks"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

@@ -10,13 +10,13 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/holiman/uint256"
 
-	"github.com/cosmos/evm/precompiles/staking"
-	"github.com/cosmos/evm/precompiles/testutil"
-	chainutil "github.com/cosmos/evm/testutil"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/keyring"
-	"github.com/cosmos/evm/x/vm/statedb"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/precompiles/staking"
+	"github.com/xitcoin-org/pos-chain/precompiles/testutil"
+	chainutil "github.com/xitcoin-org/pos-chain/testutil"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/keyring"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

@@ -10,9 +10,9 @@ import (
 
 	_ "embed"
 
-	ibcutils "github.com/cosmos/evm/ibc"
-	cmn "github.com/cosmos/evm/precompiles/common"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	ibcutils "github.com/xitcoin-org/pos-chain/ibc"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/log/v2"
 

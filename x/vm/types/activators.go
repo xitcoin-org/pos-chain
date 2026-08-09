@@ -3,7 +3,7 @@ package types
 import (
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	"github.com/cosmos/evm/eips"
+	"github.com/xitcoin-org/pos-chain/eips"
 )
 
 // DefaultCosmosEVMActivators defines a map of opcode modifiers associated

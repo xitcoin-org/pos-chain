@@ -16,11 +16,11 @@ import (
 	"github.com/spf13/cobra"
 
 	dbm "github.com/cosmos/cosmos-db"
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/evmd"
-	erc20types "github.com/cosmos/evm/x/erc20/types"
-	feemarkettypes "github.com/cosmos/evm/x/feemarket/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/evmd"
+	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
+	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/log/v2"
 

@@ -11,7 +11,7 @@ import (
 
 	mock "github.com/stretchr/testify/mock"
 
-	rpctypes "github.com/cosmos/evm/rpc/types"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
 
 	types "github.com/ethereum/go-ethereum/core/types"
 )

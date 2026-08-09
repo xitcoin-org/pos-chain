@@ -10,9 +10,9 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/evmd"
-	"github.com/cosmos/evm/evmd/tests/integration"
-	evmibctesting "github.com/cosmos/evm/testutil/ibc"
+	"github.com/xitcoin-org/pos-chain/evmd"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
 	"github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
 	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
 

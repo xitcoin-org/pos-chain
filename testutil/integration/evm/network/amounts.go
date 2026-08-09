@@ -3,9 +3,9 @@ package network
 import (
 	"math/big"
 
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/utils"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/utils"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

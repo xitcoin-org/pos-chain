@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	evm "github.com/cosmos/evm"
-	"github.com/cosmos/evm/tests/integration/eip712"
-	testapp "github.com/cosmos/evm/testutil/app"
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/tests/integration/eip712"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
 )
 
 func TestEIP712TestSuite(t *testing.T) {

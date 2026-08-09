@@ -7,14 +7,14 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/require"
 
-	"github.com/cosmos/evm/contracts"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	testKeyring "github.com/cosmos/evm/testutil/keyring"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	"github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	testKeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 func TestIterateContracts(t *testing.T, create network.CreateEvmApp, options ...network.ConfigOption) {

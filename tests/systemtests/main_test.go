@@ -5,12 +5,12 @@ package systemtests
 import (
 	"testing"
 
-	"github.com/cosmos/evm/tests/systemtests/accountabstraction"
-	"github.com/cosmos/evm/tests/systemtests/chainupgrade"
-	"github.com/cosmos/evm/tests/systemtests/eip712"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/accountabstraction"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/chainupgrade"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/eip712"
 
-	"github.com/cosmos/evm/tests/systemtests/mempool"
-	"github.com/cosmos/evm/tests/systemtests/suite"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/mempool"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/suite"
 
 	"github.com/cosmos/cosmos-sdk/tools/systemtests"
 )

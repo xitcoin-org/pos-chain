@@ -12,12 +12,12 @@ import (
 	cmttypes "github.com/cometbft/cometbft/types"
 
 	dbm "github.com/cosmos/cosmos-db"
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/indexer"
-	"github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	"github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/indexer"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/log/v2"
 

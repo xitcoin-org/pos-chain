@@ -23,10 +23,10 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 
-	rpcfilters "github.com/cosmos/evm/rpc/namespaces/ethereum/eth/filters"
-	"github.com/cosmos/evm/rpc/stream"
-	rpctypes "github.com/cosmos/evm/rpc/types"
-	"github.com/cosmos/evm/server/config"
+	rpcfilters "github.com/xitcoin-org/pos-chain/rpc/namespaces/ethereum/eth/filters"
+	"github.com/xitcoin-org/pos-chain/rpc/stream"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
+	"github.com/xitcoin-org/pos-chain/server/config"
 
 	"cosmossdk.io/log/v2"
 

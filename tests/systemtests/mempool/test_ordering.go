@@ -14,7 +14,7 @@ import (
 	"github.com/holiman/uint256"
 	"github.com/stretchr/testify/require"
 
-	"github.com/cosmos/evm/tests/systemtests/suite"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/suite"
 )
 
 func RunTxsOrdering(t *testing.T, base *suite.BaseTestSuite) {

@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
 
 	"cosmossdk.io/math"
 

@@ -3,7 +3,7 @@ package vm
 import (
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
 )
 
 type EvmAnteTestSuite struct {

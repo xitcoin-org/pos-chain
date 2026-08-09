@@ -9,9 +9,9 @@ import (
 	cmttypes "github.com/cometbft/cometbft/types"
 
 	dbm "github.com/cosmos/cosmos-db"
-	rpctypes "github.com/cosmos/evm/rpc/types"
-	servertypes "github.com/cosmos/evm/server/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
+	servertypes "github.com/xitcoin-org/pos-chain/server/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/log/v2"

@@ -8,10 +8,10 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/holiman/uint256"
 
-	cmn "github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/precompiles/staking"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
-	"github.com/cosmos/evm/x/vm/statedb"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/precompiles/staking"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	"cosmossdk.io/math"
 

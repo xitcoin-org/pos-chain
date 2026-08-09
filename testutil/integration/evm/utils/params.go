@@ -3,11 +3,11 @@ package utils
 import (
 	"fmt"
 
-	"github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	erc20types "github.com/cosmos/evm/x/erc20/types"
-	feemarkettypes "github.com/cosmos/evm/x/feemarket/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
+	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"

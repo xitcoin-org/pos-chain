@@ -6,8 +6,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/crypto/hd"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/crypto/hd"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/input"

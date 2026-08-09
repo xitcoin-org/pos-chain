@@ -1,12 +1,12 @@
 package ante
 
 import (
-	"github.com/cosmos/evm/ante/evm"
-	"github.com/cosmos/evm/mempool"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
+	"github.com/xitcoin-org/pos-chain/ante/evm"
+	"github.com/xitcoin-org/pos-chain/mempool"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
 
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
 )

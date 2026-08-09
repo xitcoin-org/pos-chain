@@ -12,11 +12,11 @@ import (
 	"github.com/cometbft/cometbft/types"
 
 	dbm "github.com/cosmos/cosmos-db"
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/indexer"
-	"github.com/cosmos/evm/rpc/backend/mocks"
-	rpctypes "github.com/cosmos/evm/rpc/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/indexer"
+	"github.com/xitcoin-org/pos-chain/rpc/backend/mocks"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/log/v2"
 

@@ -9,8 +9,8 @@ import (
 	"github.com/ethereum/go-ethereum/common/math"
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	cmn "github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/x/vm/statedb"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 

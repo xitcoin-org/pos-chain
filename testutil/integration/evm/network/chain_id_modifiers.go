@@ -5,9 +5,9 @@
 package network
 
 import (
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	erc20types "github.com/cosmos/evm/x/erc20/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )

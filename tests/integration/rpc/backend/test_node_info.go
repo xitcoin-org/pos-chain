@@ -11,11 +11,11 @@ import (
 
 	cmtrpcclient "github.com/cometbft/cometbft/rpc/client"
 
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/rpc/backend/mocks"
-	"github.com/cosmos/evm/server/config"
-	"github.com/cosmos/evm/testutil/constants"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/rpc/backend/mocks"
+	"github.com/xitcoin-org/pos-chain/server/config"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

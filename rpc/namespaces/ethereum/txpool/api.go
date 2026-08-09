@@ -9,9 +9,9 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/cosmos/evm/rpc/backend"
-	"github.com/cosmos/evm/rpc/types"
-	evmtrace "github.com/cosmos/evm/trace"
+	"github.com/xitcoin-org/pos-chain/rpc/backend"
+	"github.com/xitcoin-org/pos-chain/rpc/types"
+	evmtrace "github.com/xitcoin-org/pos-chain/trace"
 
 	"cosmossdk.io/log/v2"
 )

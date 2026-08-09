@@ -18,9 +18,9 @@ import (
 	"github.com/cometbft/cometbft/types"
 	"github.com/cometbft/cometbft/version"
 
-	"github.com/cosmos/evm/rpc/backend/mocks"
-	rpc "github.com/cosmos/evm/rpc/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/rpc/backend/mocks"
+	rpc "github.com/xitcoin-org/pos-chain/rpc/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

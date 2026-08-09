@@ -9,8 +9,8 @@ import (
 
 	abci "github.com/cometbft/cometbft/abci/types"
 
-	"github.com/cosmos/evm/x/vm/keeper"
-	"github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/keeper"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

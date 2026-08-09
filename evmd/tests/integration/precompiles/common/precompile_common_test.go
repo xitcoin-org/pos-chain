@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/evmd/tests/integration"
-	"github.com/cosmos/evm/tests/integration/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	"github.com/xitcoin-org/pos-chain/tests/integration/precompiles/common"
 )
 
 func TestStaticCallTestSuite(t *testing.T) {

@@ -3,8 +3,8 @@ package tx
 import (
 	protov2 "google.golang.org/protobuf/proto"
 
-	"github.com/cosmos/evm"
-	"github.com/cosmos/evm/testutil/constants"
+	"github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
 
 	sdkmath "cosmossdk.io/math"
 

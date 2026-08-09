@@ -16,9 +16,9 @@ import (
 
 	mock "github.com/stretchr/testify/mock"
 
-	reserver "github.com/cosmos/evm/mempool/reserver"
+	reserver "github.com/xitcoin-org/pos-chain/mempool/reserver"
 
-	txpool "github.com/cosmos/evm/mempool/txpool"
+	txpool "github.com/xitcoin-org/pos-chain/mempool/txpool"
 
 	types "github.com/ethereum/go-ethereum/core/types"
 )

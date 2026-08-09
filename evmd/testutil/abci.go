@@ -8,9 +8,9 @@ import (
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	cmttypes "github.com/cometbft/cometbft/types"
 
-	"github.com/cosmos/evm"
-	"github.com/cosmos/evm/testutil/integration"
-	"github.com/cosmos/evm/testutil/tx"
+	"github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/testutil/integration"
+	"github.com/xitcoin-org/pos-chain/testutil/tx"
 
 	errorsmod "cosmossdk.io/errors"
 	sdkmath "cosmossdk.io/math"

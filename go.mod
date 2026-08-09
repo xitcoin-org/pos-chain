@@ -1,4 +1,4 @@
-module github.com/cosmos/evm
+module github.com/xitcoin-org/pos-chain
 
 go 1.25.9
 

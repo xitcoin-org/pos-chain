@@ -3,8 +3,8 @@ package wrappers
 import (
 	"math/big"
 
-	feemarkettypes "github.com/cosmos/evm/x/feemarket/types"
-	"github.com/cosmos/evm/x/vm/types"
+	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

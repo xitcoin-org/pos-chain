@@ -20,9 +20,9 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/status-im/keycard-go/hexutils"
 
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/contracts"
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/types"
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/utils"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/contracts"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/types"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/utils"
 )
 
 const (

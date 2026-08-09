@@ -3,11 +3,11 @@ package erc20
 import (
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/precompiles/erc20"
-	"github.com/cosmos/evm/testutil/integration/evm/factory"
-	"github.com/cosmos/evm/testutil/integration/evm/grpc"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
+	"github.com/xitcoin-org/pos-chain/precompiles/erc20"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
 )
 
 // PrecompileTestSuite is the implementation of the TestSuite interface for ERC20 precompile

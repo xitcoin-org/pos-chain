@@ -11,11 +11,11 @@ import (
 	ethparams "github.com/ethereum/go-ethereum/params"
 	"github.com/holiman/uint256"
 
-	ethante "github.com/cosmos/evm/ante/evm"
-	"github.com/cosmos/evm/testutil"
-	testconstants "github.com/cosmos/evm/testutil/constants"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	ethante "github.com/xitcoin-org/pos-chain/ante/evm"
+	"github.com/xitcoin-org/pos-chain/testutil"
+	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdkmath "cosmossdk.io/math"
 

@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"cosmossdk.io/log/v2"
-	"github.com/cosmos/evm/mempool/txpool"
+	"github.com/xitcoin-org/pos-chain/mempool/txpool"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"go.opentelemetry.io/otel/metric"

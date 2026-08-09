@@ -8,11 +8,11 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/holiman/uint256"
 
-	cmn "github.com/cosmos/evm/precompiles/common"
-	"github.com/cosmos/evm/precompiles/distribution"
-	"github.com/cosmos/evm/precompiles/testutil"
-	"github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/x/vm/statedb"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	"github.com/xitcoin-org/pos-chain/precompiles/distribution"
+	"github.com/xitcoin-org/pos-chain/precompiles/testutil"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	"cosmossdk.io/math"
 

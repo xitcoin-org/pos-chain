@@ -5,10 +5,10 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	evm "github.com/cosmos/evm"
-	"github.com/cosmos/evm/evmd/tests/integration"
-	"github.com/cosmos/evm/tests/integration/precompiles/p256"
-	testapp "github.com/cosmos/evm/testutil/app"
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	"github.com/xitcoin-org/pos-chain/tests/integration/precompiles/p256"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
 )
 
 func TestP256PrecompileTestSuite(t *testing.T) {

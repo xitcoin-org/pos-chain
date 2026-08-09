@@ -1,8 +1,8 @@
 package testutil
 
 import (
-	anteinterfaces "github.com/cosmos/evm/ante/interfaces"
-	"github.com/cosmos/evm/x/vm/statedb"
+	anteinterfaces "github.com/xitcoin-org/pos-chain/ante/interfaces"
+	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

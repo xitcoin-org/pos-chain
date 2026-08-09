@@ -8,12 +8,12 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/cosmos/evm/encoding"
-	evmaddress "github.com/cosmos/evm/encoding/address"
-	"github.com/cosmos/evm/ethereum/eip712"
-	"github.com/cosmos/evm/testutil/constants"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/encoding"
+	evmaddress "github.com/xitcoin-org/pos-chain/encoding/address"
+	"github.com/xitcoin-org/pos-chain/ethereum/eip712"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/math"
 

@@ -16,8 +16,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/require"
 
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/tests/systemtests/clients"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/tests/systemtests/clients"
 
 	"github.com/cosmos/cosmos-sdk/tools/systemtests"
 	sdk "github.com/cosmos/cosmos-sdk/types"

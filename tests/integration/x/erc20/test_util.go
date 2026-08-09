@@ -5,11 +5,11 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/cosmos/evm/contracts"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	"github.com/cosmos/evm/x/erc20/keeper/testdata"
-	"github.com/cosmos/evm/x/erc20/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	"github.com/xitcoin-org/pos-chain/x/erc20/keeper/testdata"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"

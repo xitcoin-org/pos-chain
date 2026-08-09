@@ -5,18 +5,18 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/cosmos/evm/testutil"
+	"github.com/xitcoin-org/pos-chain/testutil"
 
-	"github.com/cosmos/evm/contracts"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	erc20types "github.com/cosmos/evm/x/erc20/types"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/evmd"
-	"github.com/cosmos/evm/evmd/tests/integration"
-	"github.com/cosmos/evm/precompiles/ics20"
-	evmibctesting "github.com/cosmos/evm/testutil/ibc"
+	"github.com/xitcoin-org/pos-chain/evmd"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	"github.com/xitcoin-org/pos-chain/precompiles/ics20"
+	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
 )
 
 // Test constants for sequential ICS20 sends

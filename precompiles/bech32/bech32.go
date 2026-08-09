@@ -10,7 +10,7 @@ import (
 
 	_ "embed"
 
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 var _ vm.PrecompiledContract = &Precompile{}

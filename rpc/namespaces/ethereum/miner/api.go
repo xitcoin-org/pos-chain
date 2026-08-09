@@ -7,7 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"go.opentelemetry.io/otel"
 
-	"github.com/cosmos/evm/rpc/backend"
+	"github.com/xitcoin-org/pos-chain/rpc/backend"
 
 	"cosmossdk.io/log/v2"
 

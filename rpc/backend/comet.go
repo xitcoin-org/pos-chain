@@ -11,9 +11,9 @@ import (
 
 	cmtrpctypes "github.com/cometbft/cometbft/rpc/core/types"
 
-	rpctypes "github.com/cosmos/evm/rpc/types"
-	evmtrace "github.com/cosmos/evm/trace"
-	"github.com/cosmos/evm/utils"
+	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
+	evmtrace "github.com/xitcoin-org/pos-chain/trace"
+	"github.com/xitcoin-org/pos-chain/utils"
 )
 
 // CometBlockByNumber returns a CometBFT-formatted block for a given

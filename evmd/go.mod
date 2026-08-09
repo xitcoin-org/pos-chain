@@ -1,4 +1,4 @@
-module github.com/cosmos/evm/evmd
+module github.com/xitcoin-org/pos-chain/evmd
 
 go 1.25.9
 
@@ -14,7 +14,7 @@ require (
 	github.com/cosmos/cosmos-db v1.1.3
 	github.com/cosmos/cosmos-sdk v0.54.3
 	github.com/cosmos/cosmos-sdk/store/v2 v2.0.0
-	github.com/cosmos/evm v0.2.0
+	github.com/xitcoin-org/pos-chain v0.2.0
 	github.com/cosmos/gogoproto v1.7.2
 	github.com/cosmos/ibc-go/v11 v11.1.0
 	github.com/ethereum/go-ethereum v1.16.8
@@ -372,7 +372,7 @@ require (
 replace (
 	// use cosmos fork of keyring
 	github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
-	github.com/cosmos/evm => ../
+	github.com/xitcoin-org/pos-chain => ../
 	// use Cosmos geth fork
 	// branch: release/1.17
 	github.com/ethereum/go-ethereum => github.com/cosmos/go-ethereum v1.17.2-cosmos-0

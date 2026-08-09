@@ -1,8 +1,8 @@
 package runner
 
 import (
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/types"
-	"github.com/cosmos/evm/tests/jsonrpc/simulator/utils"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/types"
+	"github.com/xitcoin-org/pos-chain/tests/jsonrpc/simulator/utils"
 )
 
 // ExecuteAllTests runs all RPC tests and returns the results

@@ -8,10 +8,10 @@ import (
 
 	abcitypes "github.com/cometbft/cometbft/abci/types"
 
-	"github.com/cosmos/evm/precompiles/testutil"
-	"github.com/cosmos/evm/server/config"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/precompiles/testutil"
+	"github.com/xitcoin-org/pos-chain/server/config"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	errorsmod "cosmossdk.io/errors"
 

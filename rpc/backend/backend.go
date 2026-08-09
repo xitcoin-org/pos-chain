@@ -19,11 +19,11 @@ import (
 	tmrpcclient "github.com/cometbft/cometbft/rpc/client"
 	tmrpctypes "github.com/cometbft/cometbft/rpc/core/types"
 
-	"github.com/cosmos/evm/mempool/txpool"
-	"github.com/cosmos/evm/rpc/types"
-	"github.com/cosmos/evm/server/config"
-	servertypes "github.com/cosmos/evm/server/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/mempool/txpool"
+	"github.com/xitcoin-org/pos-chain/rpc/types"
+	"github.com/xitcoin-org/pos-chain/server/config"
+	servertypes "github.com/xitcoin-org/pos-chain/server/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/log/v2"
 

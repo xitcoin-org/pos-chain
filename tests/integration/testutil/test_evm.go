@@ -7,14 +7,14 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/cosmos/evm/contracts"
-	testfactory "github.com/cosmos/evm/testutil/integration/evm/factory"
-	testhandler "github.com/cosmos/evm/testutil/integration/evm/grpc"
-	testnetwork "github.com/cosmos/evm/testutil/integration/evm/network"
-	"github.com/cosmos/evm/testutil/integration/evm/utils"
-	testkeyring "github.com/cosmos/evm/testutil/keyring"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/contracts"
+	testfactory "github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
+	testhandler "github.com/xitcoin-org/pos-chain/testutil/integration/evm/grpc"
+	testnetwork "github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/utils"
+	testkeyring "github.com/xitcoin-org/pos-chain/testutil/keyring"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 func (s *TestSuite) TestGetERC20Balance() {

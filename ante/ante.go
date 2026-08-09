@@ -1,9 +1,9 @@
 package ante
 
 import (
-	anteinterfaces "github.com/cosmos/evm/ante/interfaces"
-	antetypes "github.com/cosmos/evm/ante/types"
-	"github.com/cosmos/evm/x/vm/types"
+	anteinterfaces "github.com/xitcoin-org/pos-chain/ante/interfaces"
+	antetypes "github.com/xitcoin-org/pos-chain/ante/types"
+	"github.com/xitcoin-org/pos-chain/x/vm/types"
 	"github.com/cosmos/gogoproto/proto"
 	ibckeeper "github.com/cosmos/ibc-go/v11/modules/core/keeper"
 

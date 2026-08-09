@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	evm "github.com/cosmos/evm"
-	"github.com/cosmos/evm/tests/integration/rpc/backend"
-	testapp "github.com/cosmos/evm/testutil/app"
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/tests/integration/rpc/backend"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
 )
 
 func TestBackend(t *testing.T) {

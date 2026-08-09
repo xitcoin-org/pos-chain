@@ -7,11 +7,11 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/testutil/constants"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	"github.com/cosmos/evm/wallets/ledger"
-	"github.com/cosmos/evm/wallets/ledger/mocks"
-	"github.com/cosmos/evm/wallets/usbwallet"
+	"github.com/xitcoin-org/pos-chain/testutil/constants"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	"github.com/xitcoin-org/pos-chain/wallets/ledger"
+	"github.com/xitcoin-org/pos-chain/wallets/ledger/mocks"
+	"github.com/xitcoin-org/pos-chain/wallets/usbwallet"
 
 	"cosmossdk.io/math"
 

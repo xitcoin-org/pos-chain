@@ -1,9 +1,9 @@
 package evmd
 
 import (
-	evmmempool "github.com/cosmos/evm/mempool"
-	"github.com/cosmos/evm/server"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	evmmempool "github.com/xitcoin-org/pos-chain/mempool"
+	"github.com/xitcoin-org/pos-chain/server"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	"cosmossdk.io/log/v2"
 

@@ -4,10 +4,10 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	evmaddress "github.com/cosmos/evm/encoding/address"
-	ibcutils "github.com/cosmos/evm/ibc"
-	cmn "github.com/cosmos/evm/precompiles/common"
-	erc20Keeper "github.com/cosmos/evm/x/erc20/keeper"
+	evmaddress "github.com/xitcoin-org/pos-chain/encoding/address"
+	ibcutils "github.com/xitcoin-org/pos-chain/ibc"
+	cmn "github.com/xitcoin-org/pos-chain/precompiles/common"
+	erc20Keeper "github.com/xitcoin-org/pos-chain/x/erc20/keeper"
 	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
 	channelkeeper "github.com/cosmos/ibc-go/v11/modules/core/04-channel/keeper"
 

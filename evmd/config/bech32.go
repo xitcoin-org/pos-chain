@@ -2,7 +2,7 @@ package config
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/evm/crypto/hd"
+	"github.com/xitcoin-org/pos-chain/crypto/hd"
 )
 
 const (

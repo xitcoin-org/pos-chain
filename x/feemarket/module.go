@@ -11,9 +11,9 @@ import (
 
 	abci "github.com/cometbft/cometbft/abci/types"
 
-	"github.com/cosmos/evm/x/feemarket/client/cli"
-	"github.com/cosmos/evm/x/feemarket/keeper"
-	"github.com/cosmos/evm/x/feemarket/types"
+	"github.com/xitcoin-org/pos-chain/x/feemarket/client/cli"
+	"github.com/xitcoin-org/pos-chain/x/feemarket/keeper"
+	"github.com/xitcoin-org/pos-chain/x/feemarket/types"
 
 	"cosmossdk.io/core/appmodule"
 

@@ -35,7 +35,7 @@ import (
 var ErrAlreadyReserved = fmt.Errorf("address already reserved")
 
 var (
-	meter = otel.Meter("github.com/cosmos/evm/mempool/reserver")
+	meter = otel.Meter("github.com/xitcoin-org/pos-chain/mempool/reserver")
 
 	// reservationsGauge is a per-subpool address reservation count, tagged with
 	// the subpool id.

@@ -1,9 +1,9 @@
 package distribution
 
 import (
-	evmaddress "github.com/cosmos/evm/encoding/address"
-	"github.com/cosmos/evm/precompiles/staking"
-	"github.com/cosmos/evm/testutil/keyring"
+	evmaddress "github.com/xitcoin-org/pos-chain/encoding/address"
+	"github.com/xitcoin-org/pos-chain/precompiles/staking"
+	"github.com/xitcoin-org/pos-chain/testutil/keyring"
 
 	"cosmossdk.io/math"
 

@@ -10,7 +10,7 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/cosmos/evm/x/validatoradmission/keeper"
+	"github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 )
 
 func NewAdmissionAnteHandler(admissionKeeper keeper.Keeper, next sdk.AnteHandler) sdk.AnteHandler {

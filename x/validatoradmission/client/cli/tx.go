@@ -3,7 +3,7 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/evm/x/validatoradmission/types"
+	"github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

@@ -12,7 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/params"
 
-	feemarkettypes "github.com/cosmos/evm/x/feemarket/types"
+	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
 	"github.com/cosmos/gogoproto/proto"
 
 	errorsmod "cosmossdk.io/errors"

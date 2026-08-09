@@ -3,10 +3,10 @@ package erc20
 import (
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	"github.com/cosmos/evm/x/erc20"
-	"github.com/cosmos/evm/x/erc20/types"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	"github.com/xitcoin-org/pos-chain/x/erc20"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
 	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
 
 	"cosmossdk.io/math"

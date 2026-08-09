@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	dbm "github.com/cosmos/cosmos-db"
-	"github.com/cosmos/evm/x/vm/store/snapshotkv"
+	"github.com/xitcoin-org/pos-chain/x/vm/store/snapshotkv"
 
 	"github.com/cosmos/cosmos-sdk/store/v2/cachekv"
 	"github.com/cosmos/cosmos-sdk/store/v2/dbadapter"

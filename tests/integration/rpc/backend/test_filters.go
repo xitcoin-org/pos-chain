@@ -6,9 +6,9 @@ import (
 
 	cmttypes "github.com/cometbft/cometbft/types"
 
-	"github.com/cosmos/evm/rpc/backend/mocks"
-	ethrpc "github.com/cosmos/evm/rpc/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/rpc/backend/mocks"
+	ethrpc "github.com/xitcoin-org/pos-chain/rpc/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 func (s *TestSuite) TestGetLogs() {

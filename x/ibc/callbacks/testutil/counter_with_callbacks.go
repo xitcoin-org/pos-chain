@@ -1,8 +1,8 @@
 package testutil
 
 import (
-	contractutils "github.com/cosmos/evm/contracts/utils"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	contractutils "github.com/xitcoin-org/pos-chain/contracts/utils"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
 func LoadCounterWithCallbacksContract() (evmtypes.CompiledContract, error) {

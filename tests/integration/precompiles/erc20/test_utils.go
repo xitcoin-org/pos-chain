@@ -13,14 +13,14 @@ import (
 	//nolint:revive // dot imports are fine for Gomega
 	. "github.com/onsi/gomega"
 
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	"github.com/cosmos/evm/precompiles/erc20"
-	"github.com/cosmos/evm/precompiles/testutil"
-	"github.com/cosmos/evm/testutil/integration/evm/network"
-	utiltx "github.com/cosmos/evm/testutil/tx"
-	testutiltypes "github.com/cosmos/evm/testutil/types"
-	erc20types "github.com/cosmos/evm/x/erc20/types"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	"github.com/xitcoin-org/pos-chain/precompiles/erc20"
+	"github.com/xitcoin-org/pos-chain/precompiles/testutil"
+	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
+	utiltx "github.com/xitcoin-org/pos-chain/testutil/tx"
+	testutiltypes "github.com/xitcoin-org/pos-chain/testutil/types"
+	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"

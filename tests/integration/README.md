@@ -38,9 +38,9 @@ import (
 
     "github.com/stretchr/testify/suite"
     "github.com/cosmos/cosmos-sdk/baseapp"
-    evm "github.com/cosmos/evm"
-    testapp "github.com/cosmos/evm/testutil/app"
-    "github.com/cosmos/evm/tests/integration/precompiles/bank"
+    evm "github.com/xitcoin-org/pos-chain"
+    testapp "github.com/xitcoin-org/pos-chain/testutil/app"
+    "github.com/xitcoin-org/pos-chain/tests/integration/precompiles/bank"
 )
 
 func TestBankPrecompileTestSuite(t *testing.T) {

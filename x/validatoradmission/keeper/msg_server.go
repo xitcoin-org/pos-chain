@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/cosmos/evm/x/validatoradmission/types"
+	"github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"

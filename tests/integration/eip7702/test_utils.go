@@ -8,8 +8,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/cosmos/evm/crypto/ethsecp256k1"
-	evmtypes "github.com/cosmos/evm/x/vm/types"
+	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
+	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 )

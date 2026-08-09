@@ -6,8 +6,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/evm/utils"
-	"github.com/cosmos/evm/x/erc20/types"
+	"github.com/xitcoin-org/pos-chain/utils"
+	"github.com/xitcoin-org/pos-chain/x/erc20/types"
 
 	"cosmossdk.io/math"
 
