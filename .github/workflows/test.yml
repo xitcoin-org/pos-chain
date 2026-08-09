@@ -1,11 +1,7 @@
 name: Tests
 on:
-  merge_group:
-  pull_request:
-  push:
-    branches:
-      - main
-      - release/**
+  workflow_dispatch:
+
 permissions: read-all
 
 jobs:

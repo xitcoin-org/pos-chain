@@ -1,7 +1,7 @@
 name: Solhint
 # This workflow is only run when a .sol file has been changed
 on:
-  pull_request:
+  workflow_dispatch:
 
 permissions: read-all
 

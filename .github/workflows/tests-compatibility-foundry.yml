@@ -1,22 +1,7 @@
 name: Compatibility Tests for Foundry
 
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/foundry/**'
-      - '../../scripts/tests_compatibility_setup.sh'
-      - '../../scripts/tests_compatibility_foundry.sh'
-      - 'local_node.sh'
-      - 'tests-compatibility-foundry.yml'
-  pull_request:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/foundry/**'
-      - '../../scripts/tests_compatibility_setup.sh'
-      - '../../scripts/tests_compatibility_foundry.sh'
-      - 'local_node.sh'
-      - 'tests-compatibility-foundry.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read

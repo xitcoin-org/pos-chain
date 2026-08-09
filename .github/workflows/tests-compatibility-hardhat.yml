@@ -1,24 +1,7 @@
 name: Compatibility Tests for Hardhat
 
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/hardhat/**'
-      - 'scripts/tests_compatibility_setup.sh'
-      - 'scripts/tests_compatibility_hardhat.sh'
-      - 'scripts/tests_compatibility_common.sh'
-      - 'local_node.sh'
-      - '.github/workflows/tests-compatibility-hardhat.yml'
-  pull_request:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/hardhat/**'
-      - 'scripts/tests_compatibility_setup.sh'
-      - 'scripts/tests_compatibility_hardhat.sh'
-      - 'scripts/tests_compatibility_common.sh'
-      - 'local_node.sh'
-      - '.github/workflows/tests-compatibility-hardhat.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read

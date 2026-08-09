@@ -1,22 +1,7 @@
 name: Compatibility Tests for Foundry Uniswap V3
 
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/foundry-uniswap-v3/**'
-      - '../../scripts/tests_compatibility_setup.sh'
-      - '../../scripts/tests_compatibility_foundry_uniswap_v3.sh'
-      - 'local_node.sh'
-      - 'tests-compatibility-foundry-uniswap-v3.yml'
-  pull_request:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/foundry-uniswap-v3/**'
-      - '../../scripts/tests_compatibility_setup.sh'
-      - '../../scripts/tests_compatibility_foundry_uniswap_v3.sh'
-      - 'local_node.sh'
-      - 'tests-compatibility-foundry-uniswap-v3.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read

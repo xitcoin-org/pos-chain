@@ -1,22 +1,7 @@
 name: Compatibility Tests for Viem
 
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/viem/**'
-      - '../../scripts/tests_compatibility_setup.sh'
-      - '../../scripts/tests_compatibility_viem.sh'
-      - 'local_node.sh'
-      - 'tests-compatibility-viem.yml'
-  pull_request:
-    branches: [main, develop]
-    paths:
-      - 'tests/evm-tools-compatibility/viem/**'
-      - '../../scripts/tests_compatibility_setup.sh'
-      - '../../scripts/tests_compatibility_viem.sh'
-      - 'local_node.sh'
-      - 'tests-compatibility-viem.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read

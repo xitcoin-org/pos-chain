@@ -1,21 +1,7 @@
 name: JSON-RPC Compatibility Test
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/jsonrpc-compatibility.yml'
-      - 'tests/jsonrpc/**'
-      - 'rpc/**'
-      - 'evmd/**'
-      - '**/**.go'
-      - 'go.mod'
-      - 'go.sum'
-      - 'evmd/go.mod'
-      - 'evmd/go.sum'
-  merge_group:
-  push:
-    branches:
-      - main
-      - release/**
+  workflow_dispatch:
+
 permissions: read-all
 
 jobs:

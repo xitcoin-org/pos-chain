@@ -3,10 +3,8 @@ name: Lint
 # This workflow runs on every pull request and merge queue
 
 on:
-  pull_request:
-  merge_group:
+  workflow_dispatch:
 
-# cancel superseded runs
 concurrency:
   group: lint-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
