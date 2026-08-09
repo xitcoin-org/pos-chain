@@ -1,0 +1,25 @@
+{
+  "name": "Xitcoin Testnet",
+  "status": "planned",
+  "cosmos_chain_id": "xitcoin-testnet-2026-1",
+  "evm_chain_id": 101089,
+  "evm_chain_id_hex": "0x18ae1",
+  "native_currency": {
+    "name": "Xitcoin",
+    "symbol": "XTC",
+    "decimals": 18,
+    "base_denom": "xits"
+  },
+  "rpc": [],
+  "explorers": [],
+  "faucets": [],
+  "genesis": {
+    "file": null,
+    "sha256": null
+  },
+  "notes": [
+    "No public endpoint is announced until the public testnet launch checklist is complete.",
+    "The public testnet must use a fresh genesis and must never reuse private-testnet state.",
+    "Testnet assets have no monetary value."
+  ]
+}

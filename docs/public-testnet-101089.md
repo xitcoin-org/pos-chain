@@ -1,29 +1,33 @@
 # Xitcoin Public Testnet
 
+## Status
+
+Planned. No public RPC, explorer, faucet, validator endpoint or genesis file is announced yet.
+
 ## Network identity
 
-| Item | Value |
+| Field | Value |
 | --- | --- |
-| Name | Xitcoin Testnet |
-| EVM Chain ID | 101089 |
+| Network name | Xitcoin Testnet |
+| Cosmos Chain ID | `xitcoin-testnet-2026-1` |
+| EVM Chain ID | `101089` (`0x18ae1`) |
 | Native asset | XTC |
-| Base denomination | xits |
+| Base denomination | `xits` |
 | Decimals | 18 |
-| Status | Planned; not live |
 
-## Release conditions
+The Cosmos Chain ID is intentionally different from the private validation network. The public testnet will use a fresh genesis and independent validator keys.
 
-The public testnet will be announced only after:
+## Launch prerequisites
 
-1. a separate public genesis is generated and verified;
-2. public validator keys are generated independently of private-testnet keys;
-3. independent validator hosts are deployed;
-4. RPC, explorer, faucet, TLS, rate limiting and monitoring are ready;
-5. the source release is reproducible and security-reviewed;
-6. a public ChainList submission is prepared for Chain ID 101089.
+- Independent public-testnet infrastructure and validator operators
+- Reproducible genesis ceremony and published SHA-256 hash
+- Public RPC with rate limiting and monitoring
+- Explorer and faucet
+- Security review of supply accounting and future external-chain migration design
+- Public validator, RPC and incident-response documentation
 
-## Important exclusions
+## Endpoint policy
 
-- The private testnet is not the public testnet.
-- Chain ID 101088 is reserved for the future Xitcoin mainnet.
-- No bridge or automatic supply synchronization with external Xitcoin assets is provided at this stage.
+Endpoints will be published only after launch validation. Do not use unofficial RPC URLs or send assets to addresses claiming to be Xitcoin Testnet before the official launch announcement.
+
+The machine-readable manifest is available at [`networks/testnet-101089/chain.json`](../networks/testnet-101089/chain.json).
