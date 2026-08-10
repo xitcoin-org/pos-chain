@@ -2,7 +2,11 @@
 
 ## Status
 
-Planned. No public RPC, explorer, faucet, validator endpoint or genesis file is announced yet.
+Genesis released. Public RPC, explorer, faucet and validator endpoints are not announced yet.
+
+## Genesis
+
+The official genesis file is [`genesis.json`](../networks/testnet-101089/genesis.json). Its SHA-256 hash is [`626f034f92f30cc6016b0175ea7b84e3f4b4b79543aea76352eeffc050d69a04`](../networks/testnet-101089/genesis.sha256).
 
 ## Network identity
 
