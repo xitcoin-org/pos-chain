@@ -52,7 +52,7 @@ build_tags := $(strip $(build_tags))
 
 # process linker flags
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=os \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=Xitcoin \
           -X github.com/cosmos/cosmos-sdk/version.AppName=$(EXAMPLE_BINARY) \
           -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
           -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
