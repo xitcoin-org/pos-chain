@@ -10,7 +10,7 @@ Xitcoin is under active engineering and private-testnet validation.
 - Mainnet: not launched
 - Mainnet Chain ID `101088`: reserved for the future Xitcoin public network
 - Native asset: `XTC`
-- Technical base denomination: `xits` (18 decimals)
+- Technical base denomination: `xtc` (18 decimals)
 - Inflation policy: 0%
 - Maximum supply policy: 5,250,000,000 XTC
 - Native EVM representation: XTC; no wrapped-XTC asset

@@ -12,7 +12,7 @@ Planned. No public RPC, explorer, faucet, validator endpoint or genesis file is 
 | Cosmos Chain ID | `xitcoin-testnet-2026-1` |
 | EVM Chain ID | `101089` (`0x18ae1`) |
 | Native asset | XTC |
-| Base denomination | `xits` |
+| Base denomination | `xtc` |
 | Decimals | 18 |
 
 The Cosmos Chain ID is intentionally different from the private validation network. The public testnet will use a fresh genesis and independent validator keys.

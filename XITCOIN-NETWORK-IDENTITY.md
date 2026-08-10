@@ -5,7 +5,7 @@
 - Nom : Xitcoin
 - Symbole : XTC
 - Précision : 18 décimales
-- Unité technique interne : xits
+- Unité technique interne : xtc
 
 ## Famille des Chain ID EVM
 
