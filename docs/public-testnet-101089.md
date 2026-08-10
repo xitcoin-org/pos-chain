@@ -2,7 +2,7 @@
 
 ## Status
 
-Genesis released. Public RPC, explorer, faucet and validator endpoints are not announced yet.
+Genesis released. P2P bootstrap endpoints are active. Public RPC, explorer and faucet are not announced yet.
 
 ## Genesis
 
@@ -29,6 +29,17 @@ The Cosmos Chain ID is intentionally different from the private validation netwo
 - Explorer and faucet
 - Security review of supply accounting and future external-chain migration design
 - Public validator, RPC and incident-response documentation
+
+## P2P bootstrap
+
+The initial Xitcoin Testnet validators are reachable at:
+
+- `c135bf79b66db802f93c46170a48a166d24c5167@51.68.54.120:27656`
+- `a494fded0411327150b57dabb1145d44c72cbd2a@51.68.54.120:27666`
+- `e9bf23858046dfa6a0f74f312765cc3ca43f697b@51.68.54.120:27676`
+- `f26c4c36a4a6049c4f3d709be3ccccacd28057bc@51.68.54.120:27686`
+
+These are P2P endpoints only. No public RPC endpoint is announced yet.
 
 ## Endpoint policy
 
