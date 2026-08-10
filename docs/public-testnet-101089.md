@@ -2,7 +2,7 @@
 
 ## Status
 
-Genesis released. P2P bootstrap endpoints are active. Public RPC, explorer and faucet are not announced yet.
+Genesis released. P2P bootstrap and the official public RPC endpoints are active. Explorer, faucet and public gRPC are not announced yet.
 
 ## Genesis
 
@@ -40,6 +40,16 @@ The initial Xitcoin Testnet validators are reachable at:
 - `f26c4c36a4a6049c4f3d709be3ccccacd28057bc@51.68.54.120:27686`
 
 These are P2P endpoints only. No public RPC endpoint is announced yet.
+
+## Public endpoints
+
+| Service | Official endpoint |
+| --- | --- |
+| Cosmos RPC / CometBFT | `https://rpc-testnet.xitcoin.org` |
+| EVM JSON-RPC | `https://evm-rpc-testnet.xitcoin.org` |
+| Cosmos REST API | `https://api-testnet.xitcoin.org` |
+
+The endpoints are protected by HTTPS and rate limiting. EVM Chain ID is `101089` (`0x18ae1`).
 
 ## Endpoint policy
 
