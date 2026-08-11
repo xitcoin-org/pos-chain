@@ -109,3 +109,28 @@ Marker: PUBLIC_E2E_SECURITY_2026_08_11
 2. Deploy Blockscout for the EVM explorer.
 3. Maintain faucet reserve and monitor operational alerts.
 4. Prepare independent validator infrastructure before mainnet.
+
+## EVM Blockscout public — 2026-08-11
+
+Marker: BLOCKSCOUT_PUBLIC_2026_08_11
+
+- Public explorer: https://evm-explorer-testnet.xitcoin.org/
+- Public API: https://evm-explorer-testnet.xitcoin.org/api/v2/main-page/blocks
+- Chain: Xitcoin Testnet, EVM chain ID `101089`.
+- Backend: Blockscout `9.0.2`; frontend image pinned by digest.
+- Dedicated Docker PostgreSQL and Redis only; host PostgreSQL untouched.
+- Local-only ports: backend `127.0.0.1:14000`, frontend `127.0.0.1:14001`.
+- Internal transactions and pending-transaction fetchers are disabled because the public RPC does not expose tracing.
+- External price fetches are disabled in Blockscout pending a separately verified CoinGecko-only configuration.
+- Verified: genesis block, current EVM block, public interface and public API.
+- Monitoring: `xitcoin-blockscout-testnet-healthcheck.timer`, every minute.
+
+### Remaining priorities
+
+1. Maintain faucet funding and review healthcheck alerts.
+2. Verify and, if desired, configure Blockscout with the real CoinGecko Xitcoin price source only.
+3. Perform public user-path tests: an EVM transaction, transaction detail, address page and contract verification when a real contract exists.
+4. Keep the Cosmos explorer limited to Xitcoin Testnet; do not add unrelated chains merely because the upstream interface supports multiple networks.
+5. Add State Sync only after snapshots and independent RPC infrastructure exist.
+6. Establish independent validator infrastructure before any mainnet preparation.
+7. Define a tested backup/restore procedure for Blockscout PostgreSQL and the faucet state.
