@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"strconv"
+
 	"github.com/spf13/cobra"
 
 	"github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
@@ -23,6 +25,7 @@ func NewTxCmd() *cobra.Command {
 	cmd.AddCommand(
 		NewApproveValidatorCmd(),
 		NewRevokeValidatorCmd(),
+		NewUpdateParamsCmd(),
 	)
 	return cmd
 }
@@ -81,6 +84,40 @@ func NewRevokeValidatorCmd() *cobra.Command {
 			msg := &types.MsgRevokeValidator{
 				Authority:        clientCtx.GetFromAddress().String(),
 				ValidatorAddress: args[0],
+			}
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	addXitcoinTxFlags(cmd)
+	return cmd
+}
+
+// NewUpdateParamsCmd updates Validator Admission policy parameters.
+func NewUpdateParamsCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "update-params MAX_APPROVED_VALIDATORS MINIMUM_SELF_DELEGATION",
+		Short: "Update Validator Admission policy parameters",
+		Args:  cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			maxApprovedValidators, err := strconv.ParseUint(args[0], 10, 32)
+			if err != nil {
+				return err
+			}
+
+			msg := &types.MsgUpdateParams{
+				Authority:             clientCtx.GetFromAddress().String(),
+				MaxApprovedValidators: uint32(maxApprovedValidators),
+				MinimumSelfDelegation: args[1],
 			}
 			if err := msg.ValidateBasic(); err != nil {
 				return err

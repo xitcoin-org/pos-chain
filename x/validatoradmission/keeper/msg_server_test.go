@@ -150,3 +150,67 @@ func TestRevokeExistingValidatorSuspendsIt(t *testing.T) {
 			staking.jailAddress, expected)
 	}
 }
+
+func TestPolicyCapacityAndUpdateParams(t *testing.T) {
+	key := storetypes.NewKVStoreKey(types.StoreKey)
+	ctx := sdktestutil.DefaultContext(
+		key,
+		storetypes.NewTransientStoreKey("validator_admission_policy_test"),
+	)
+
+	authority := sdk.AccAddress(bytes.Repeat([]byte{31}, 20)).String()
+	otherAuthority := sdk.AccAddress(bytes.Repeat([]byte{32}, 20)).String()
+	validatorOne := sdk.ValAddress(bytes.Repeat([]byte{33}, 20)).String()
+	validatorTwo := sdk.ValAddress(bytes.Repeat([]byte{34}, 20)).String()
+
+	k := NewKeeper(key)
+	k.SetAuthority(ctx, authority)
+	k.SetMaxApprovedValidators(ctx, 1)
+
+	server := NewMsgServer(k, &testStakingKeeper{getErr: stakingtypes.ErrNoValidatorFound})
+	goCtx := sdk.WrapSDKContext(ctx)
+
+	_, err := server.ApproveValidator(goCtx, &types.MsgApproveValidator{
+		Authority: authority, ValidatorAddress: validatorOne,
+	})
+	if err != nil {
+		t.Fatalf("first approval rejected: %v", err)
+	}
+
+	_, err = server.ApproveValidator(goCtx, &types.MsgApproveValidator{
+		Authority: authority, ValidatorAddress: validatorTwo,
+	})
+	if err == nil {
+		t.Fatal("approval above configured capacity was accepted")
+	}
+
+	_, err = server.UpdateParams(goCtx, &types.MsgUpdateParams{
+		Authority:             otherAuthority,
+		MaxApprovedValidators: 2,
+		MinimumSelfDelegation: types.DefaultMinimumSelfDelegation,
+	})
+	if err == nil {
+		t.Fatal("non-authority policy update was accepted")
+	}
+
+	_, err = server.UpdateParams(goCtx, &types.MsgUpdateParams{
+		Authority:             authority,
+		MaxApprovedValidators: 0,
+		MinimumSelfDelegation: types.DefaultMinimumSelfDelegation,
+	})
+	if err == nil {
+		t.Fatal("invalid capacity update was accepted")
+	}
+
+	_, err = server.UpdateParams(goCtx, &types.MsgUpdateParams{
+		Authority:             authority,
+		MaxApprovedValidators: 2,
+		MinimumSelfDelegation: types.DefaultMinimumSelfDelegation,
+	})
+	if err != nil {
+		t.Fatalf("authority policy update rejected: %v", err)
+	}
+	if got := k.GetMaxApprovedValidators(ctx); got != 2 {
+		t.Fatalf("wrong capacity after update: got %d want 2", got)
+	}
+}

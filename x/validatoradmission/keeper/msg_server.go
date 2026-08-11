@@ -46,6 +46,13 @@ func (s msgServer) ApproveValidator(goCtx context.Context, req *types.MsgApprove
 		return nil, err
 	}
 
+	if s.keeper.IsApprovedValidator(ctx, req.ValidatorAddress) {
+		return &types.MsgApproveValidatorResponse{}, nil
+	}
+	if s.keeper.ApprovedValidatorCount(ctx) >= s.keeper.GetMaxApprovedValidators(ctx) {
+		return nil, errors.New("Validator Admission: approved validator capacity reached")
+	}
+
 	s.keeper.SetApprovedValidator(ctx, req.ValidatorAddress, true)
 	return &types.MsgApproveValidatorResponse{}, nil
 }
@@ -92,4 +99,26 @@ func (s msgServer) RevokeValidator(goCtx context.Context, req *types.MsgRevokeVa
 	}
 
 	return &types.MsgRevokeValidatorResponse{}, nil
+}
+
+// UpdateParams updates policy parameters under the configured Xitcoin authority.
+func (s msgServer) UpdateParams(goCtx context.Context, req *types.MsgUpdateParams) (*types.MsgUpdateParamsResponse, error) {
+	if req == nil {
+		return nil, errors.New("Validator Admission: empty policy update request")
+	}
+
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	if err := s.validateAuthority(ctx, req.Authority); err != nil {
+		return nil, err
+	}
+	if err := req.ValidateBasic(); err != nil {
+		return nil, err
+	}
+	if req.MaxApprovedValidators < s.keeper.ApprovedValidatorCount(ctx) {
+		return nil, errors.New("Validator Admission: capacity cannot be below approved validator count")
+	}
+
+	s.keeper.SetMaxApprovedValidators(ctx, req.MaxApprovedValidators)
+	s.keeper.SetMinimumSelfDelegation(ctx, req.MinimumSelfDelegation)
+	return &types.MsgUpdateParamsResponse{}, nil
 }

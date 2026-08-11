@@ -9,6 +9,7 @@ import (
 var (
 	_ sdk.Msg = &MsgApproveValidator{}
 	_ sdk.Msg = &MsgRevokeValidator{}
+	_ sdk.Msg = &MsgUpdateParams{}
 )
 
 func validateAuthorityAndValidator(authority, validatorAddress string) error {
@@ -40,5 +41,18 @@ func (m *MsgRevokeValidator) ValidateBasic() error {
 
 // GetSignBytes returns legacy sign bytes.
 func (m MsgRevokeValidator) GetSignBytes() []byte {
+	return AminoCdc.MustMarshalJSON(&m)
+}
+
+// ValidateBasic validates a policy update request.
+func (m *MsgUpdateParams) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(m.Authority); err != nil {
+		return errorsmod.Wrap(err, "invalid Xitcoin authority address")
+	}
+	return ValidatePolicy(m.MaxApprovedValidators, m.MinimumSelfDelegation)
+}
+
+// GetSignBytes returns legacy sign bytes.
+func (m MsgUpdateParams) GetSignBytes() []byte {
 	return AminoCdc.MustMarshalJSON(&m)
 }

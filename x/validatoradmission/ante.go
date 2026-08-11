@@ -25,6 +25,24 @@ func NewAdmissionAnteHandler(admissionKeeper keeper.Keeper, next sdk.AnteHandler
 					)
 				}
 
+				minimumSelfDelegation, err := sdk.ParseCoinNormalized(
+					admissionKeeper.GetMinimumSelfDelegation(ctx),
+				)
+				if err != nil {
+					return ctx, errorsmod.Wrap(
+						sdkerrors.ErrInvalidRequest,
+						"Validator Admission: invalid on-chain minimum self delegation",
+					)
+				}
+				if msg.Value.Denom != minimumSelfDelegation.Denom ||
+					msg.Value.Amount.LT(minimumSelfDelegation.Amount) {
+					return ctx, errorsmod.Wrapf(
+						sdkerrors.ErrUnauthorized,
+						"Validator Admission: self delegation must be at least %s",
+						minimumSelfDelegation.String(),
+					)
+				}
+
 			case *slashingtypes.MsgUnjail:
 				if !admissionKeeper.IsApprovedValidator(ctx, msg.ValidatorAddr) {
 					return ctx, errorsmod.Wrap(
