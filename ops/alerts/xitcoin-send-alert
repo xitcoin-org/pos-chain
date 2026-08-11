@@ -2,12 +2,27 @@
 set -euo pipefail
 
 unit="${1:?missing unit name}"
+mode="${2:-}"
+
 source /etc/xitcoin-testnet/alerts.env
 
 state_dir=/var/lib/xitcoin-testnet-alerts
 safe_unit="$(printf '%s' "$unit" | tr -c 'A-Za-z0-9_.-' '_')"
 last_file="$state_dir/$safe_unit.last"
 now="$(date +%s)"
+
+if test "$mode" = --test; then
+  {
+    echo 'Test des alertes Xitcoin Testnet'
+    echo
+    echo 'Statut : envoi e-mail fonctionnel.'
+    echo "Serveur : $(hostname -f)"
+    echo "Date : $(date -Is)"
+    echo
+    echo 'Aucune action requise : ce message est un test.'
+  } | mail -s '[Xitcoin Testnet] TEST — alertes e-mail fonctionnelles' "$ALERT_TO"
+  exit 0
+fi
 
 mkdir -p "$state_dir"
 chmod 700 "$state_dir"
@@ -20,14 +35,16 @@ if test -f "$last_file"; then
 fi
 
 {
-  echo "Xitcoin testnet alert"
+  echo 'ALERTE Xitcoin Testnet'
   echo
-  echo "Host: $(hostname -f)"
-  echo "Time: $(date -Is)"
-  echo "Failed unit: $unit"
+  echo "Le controle suivant a echoue : $unit"
+  echo "Serveur : $(hostname -f)"
+  echo "Date : $(date -Is)"
   echo
-  echo "Recent journal:"
-  journalctl -u "$unit" -n 40 --no-pager || true
-} | mail -s "[Xitcoin testnet] failure: $unit" "$ALERT_TO"
+  echo 'Action : consulte le journal du service sur le serveur.'
+  echo
+  echo 'Dernieres lignes utiles :'
+  journalctl -u "$unit" -n 15 --no-pager || true
+} | mail -s "[Xitcoin Testnet] ALERTE — $unit" "$ALERT_TO"
 
 printf '%s\n' "$now" > "$last_file"
