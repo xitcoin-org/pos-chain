@@ -214,3 +214,42 @@ func TestPolicyCapacityAndUpdateParams(t *testing.T) {
 		t.Fatalf("wrong capacity after update: got %d want 2", got)
 	}
 }
+
+func TestQueryPolicyAndValidatorApproval(t *testing.T) {
+	key := storetypes.NewKVStoreKey(types.StoreKey)
+	ctx := sdktestutil.DefaultContext(
+		key,
+		storetypes.NewTransientStoreKey("validator_admission_query_test"),
+	)
+
+	authority := sdk.AccAddress(bytes.Repeat([]byte{41}, 20)).String()
+	validator := sdk.ValAddress(bytes.Repeat([]byte{42}, 20)).String()
+
+	k := NewKeeper(key)
+	k.SetAuthority(ctx, authority)
+	k.SetMaxApprovedValidators(ctx, 208)
+	k.SetMinimumSelfDelegation(ctx, types.DefaultMinimumSelfDelegation)
+	k.SetApprovedValidator(ctx, validator, true)
+
+	goCtx := sdk.WrapSDKContext(ctx)
+
+	params, err := k.Params(goCtx, &types.QueryParamsRequest{})
+	if err != nil {
+		t.Fatalf("policy query failed: %v", err)
+	}
+	if params.Authority != authority ||
+		params.MaxApprovedValidators != 208 ||
+		params.MinimumSelfDelegation != types.DefaultMinimumSelfDelegation {
+		t.Fatal("policy query returned incorrect values")
+	}
+
+	status, err := k.Validator(goCtx, &types.QueryValidatorRequest{
+		ValidatorAddress: validator,
+	})
+	if err != nil {
+		t.Fatalf("validator query failed: %v", err)
+	}
+	if !status.Approved {
+		t.Fatal("approved validator was reported as unapproved")
+	}
+}

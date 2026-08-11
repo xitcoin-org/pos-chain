@@ -1,6 +1,7 @@
 package validatoradmission
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -18,6 +19,7 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 
+	"github.com/xitcoin-org/pos-chain/x/validatoradmission/client/cli"
 	"github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 	"github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
 )
@@ -60,10 +62,18 @@ func (AppModuleBasic) ValidateGenesis(_ codec.JSONCodec, _ client.TxEncodingConf
 
 func (AppModuleBasic) RegisterRESTRoutes(_ client.Context, _ *mux.Router) {}
 
-func (AppModuleBasic) RegisterGRPCGatewayRoutes(_ client.Context, _ *runtime.ServeMux) {}
+func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, serveMux *runtime.ServeMux) {
+	if err := types.RegisterQueryHandlerClient(
+		context.Background(),
+		serveMux,
+		types.NewQueryClient(clientCtx),
+	); err != nil {
+		panic(err)
+	}
+}
 
 func (AppModuleBasic) GetQueryCmd() *cobra.Command {
-	return nil
+	return cli.GetQueryCmd()
 }
 
 func (AppModuleBasic) ConsensusVersion() uint64 {
@@ -89,6 +99,7 @@ func (AppModule) Name() string {
 }
 
 func (am AppModule) RegisterServices(cfg module.Configurator) {
+	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
 	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServer(am.keeper, am.stakingKeeper))
 }
 
