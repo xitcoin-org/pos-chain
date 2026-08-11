@@ -134,3 +134,26 @@ Marker: BLOCKSCOUT_PUBLIC_2026_08_11
 5. Add State Sync only after snapshots and independent RPC infrastructure exist.
 6. Establish independent validator infrastructure before any mainnet preparation.
 7. Define a tested backup/restore procedure for Blockscout PostgreSQL and the faucet state.
+
+## Explorer repositories and native EVM verification — 2026-08-11
+
+Marker: EXPLORER_REPOS_NATIVE_EVM_2026_08_11
+
+- Cosmos explorer source is versioned in the private repository:
+  `xitcoin-org/explorer-cosmos-testnet`
+  - Initial commit: `3765029`
+- EVM Blockscout deployment configuration is versioned in the private repository:
+  `xitcoin-org/explorer-evm-testnet`
+  - Initial commit: `f100269`
+- Each explorer repository has its own repository-specific deployment key.
+- No `.env`, private key, certificate, password, Docker volume or backup was committed.
+- The EVM explorer is public at:
+  `https://evm-explorer-testnet.xitcoin.org/`
+- A real Ethereum-native XTC testnet transfer was confirmed through EVM RPC and indexed by Blockscout:
+  - Hash: `0x78c73c13ea14aba627246f3da3f4c39d24eb2b4868e3344e6e52dc00c8b71069`
+  - EVM block: `15482`
+  - Status: successful
+  - Blockscout page:
+    `https://evm-explorer-testnet.xitcoin.org/tx/0x78c73c13ea14aba627246f3da3f4c39d24eb2b4868e3344e6e52dc00c8b71069`
+- This confirms the native EVM RPC → Blockscout indexing path. It does not represent a bridge:
+  Xitcoin exposes Cosmos (`xtc1...`) and EVM (`0x...`) address formats on the same testnet.
