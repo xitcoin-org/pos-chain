@@ -20,6 +20,7 @@ var (
 const (
 	approveValidatorName = "xitcoin/validatoradmission/MsgApproveValidator"
 	revokeValidatorName  = "xitcoin/validatoradmission/MsgRevokeValidator"
+	updateParamsName     = "xitcoin/validatoradmission/MsgUpdateParams"
 )
 
 func init() {
@@ -33,6 +34,7 @@ func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 		(*sdk.Msg)(nil),
 		&MsgApproveValidator{},
 		&MsgRevokeValidator{},
+		&MsgUpdateParams{},
 	)
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }
@@ -41,4 +43,5 @@ func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgApproveValidator{}, approveValidatorName, nil)
 	cdc.RegisterConcrete(&MsgRevokeValidator{}, revokeValidatorName, nil)
+	cdc.RegisterConcrete(&MsgUpdateParams{}, updateParamsName, nil)
 }

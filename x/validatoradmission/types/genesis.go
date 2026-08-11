@@ -8,15 +8,35 @@ import (
 )
 
 type GenesisState struct {
-	Authority          string   `json:"authority"`
-	ApprovedValidators []string `json:"approved_validators"`
+	Authority             string   `json:"authority"`
+	ApprovedValidators    []string `json:"approved_validators"`
+	MaxApprovedValidators uint32   `json:"max_approved_validators"`
+	MinimumSelfDelegation string   `json:"minimum_self_delegation"`
 }
 
 func DefaultGenesisState() GenesisState {
+	maxApprovedValidators, minimumSelfDelegation := DefaultPolicy()
 	return GenesisState{
-		Authority:          "",
-		ApprovedValidators: []string{},
+		Authority:             "",
+		ApprovedValidators:    []string{},
+		MaxApprovedValidators: maxApprovedValidators,
+		MinimumSelfDelegation: minimumSelfDelegation,
 	}
+}
+
+func (g GenesisState) Policy() (uint32, string) {
+	maxApprovedValidators := g.MaxApprovedValidators
+	minimumSelfDelegation := g.MinimumSelfDelegation
+	defaultMax, defaultMinimum := DefaultPolicy()
+
+	if maxApprovedValidators == 0 {
+		maxApprovedValidators = defaultMax
+	}
+	if minimumSelfDelegation == "" {
+		minimumSelfDelegation = defaultMinimum
+	}
+
+	return maxApprovedValidators, minimumSelfDelegation
 }
 
 func (g GenesisState) Validate() error {
@@ -29,6 +49,14 @@ func (g GenesisState) Validate() error {
 	}
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		return fmt.Errorf("invalid Xitcoin authority address: %w", err)
+	}
+
+	maxApprovedValidators, minimumSelfDelegation := g.Policy()
+	if err := ValidatePolicy(maxApprovedValidators, minimumSelfDelegation); err != nil {
+		return err
+	}
+	if uint32(len(g.ApprovedValidators)) > maxApprovedValidators {
+		return fmt.Errorf("approved validators exceed configured capacity")
 	}
 
 	if len(g.ApprovedValidators) == 0 {

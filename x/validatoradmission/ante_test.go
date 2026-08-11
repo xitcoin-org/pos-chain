@@ -40,6 +40,13 @@ func TestAdmissionAnteHandlerBlocksAndAllowsValidatorActions(t *testing.T) {
 	validatorAddress := sdk.ValAddress(bytes.Repeat([]byte{21}, 20)).String()
 	admissionKeeper := keeper.NewKeeper(key)
 
+	minimumSelfDelegation, err := sdk.ParseCoinNormalized(
+		types.DefaultMinimumSelfDelegation,
+	)
+	if err != nil {
+		t.Fatalf("minimum self delegation parsing failed: %v", err)
+	}
+
 	actions := []struct {
 		name string
 		tx   sdk.Tx
@@ -47,7 +54,10 @@ func TestAdmissionAnteHandlerBlocksAndAllowsValidatorActions(t *testing.T) {
 		{
 			name: "create validator",
 			tx: testTx{messages: []sdk.Msg{
-				&stakingtypes.MsgCreateValidator{ValidatorAddress: validatorAddress},
+				&stakingtypes.MsgCreateValidator{
+					ValidatorAddress: validatorAddress,
+					Value:            minimumSelfDelegation,
+				},
 			}},
 		},
 		{
