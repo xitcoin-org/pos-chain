@@ -46,3 +46,27 @@ Testnet XTC is not a market asset. No USD price, swap value, circulating-market 
 6. Add independent validators on separate infrastructure.
 7. Run wallet, transaction, staking, governance and EVM acceptance tests.
 8. Audit the chain and define final mainnet economics before any mainnet genesis.
+
+## Faucet public — 11 August 2026
+
+<!-- FAUCET_PUBLIC_2026_08_11 -->
+
+The Xitcoin public testnet faucet is active.
+
+- Public page: https://faucet-testnet.xitcoin.org/
+- Health endpoint: https://faucet-testnet.xitcoin.org/healthz
+- Claim endpoint: `POST https://faucet-testnet.xitcoin.org/claim`
+- Distribution: 100 XTC testnet per successful request
+- Limits: one request per address per 24 hours; three requests per IP per 24 hours
+- Faucet balance after the on-chain test: approximately 9,900 XTC testnet
+- Test transaction: `97772B9FA283A4B982D8F59790DAAE4220306F417FF95100FE4CB52BD49F43CD`
+
+Testnet tokens have no monetary value. No USD price or market-cap claim is displayed.
+
+### Next operational work
+
+1. Monitor faucet balance, failed requests, rate-limit events and certificate renewal.
+2. Finish the Cosmos explorer presentation using only live chain data.
+3. Deploy Blockscout for the EVM explorer at `evm-explorer-testnet.xitcoin.org`.
+4. Test wallet connection, transfers, staking, governance and EVM transactions end to end.
+5. Add independent validator infrastructure before mainnet planning.
