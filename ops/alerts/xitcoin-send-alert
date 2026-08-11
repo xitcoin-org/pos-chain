@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+unit="${1:?missing unit name}"
+source /etc/xitcoin-testnet/alerts.env
+
+state_dir=/var/lib/xitcoin-testnet-alerts
+safe_unit="$(printf '%s' "$unit" | tr -c 'A-Za-z0-9_.-' '_')"
+last_file="$state_dir/$safe_unit.last"
+now="$(date +%s)"
+
+mkdir -p "$state_dir"
+chmod 700 "$state_dir"
+
+if test -f "$last_file"; then
+  last="$(cat "$last_file" 2>/dev/null || echo 0)"
+  if test $((now - last)) -lt 3600; then
+    exit 0
+  fi
+fi
+
+{
+  echo "Xitcoin testnet alert"
+  echo
+  echo "Host: $(hostname -f)"
+  echo "Time: $(date -Is)"
+  echo "Failed unit: $unit"
+  echo
+  echo "Recent journal:"
+  journalctl -u "$unit" -n 40 --no-pager || true
+} | mail -s "[Xitcoin testnet] failure: $unit" "$ALERT_TO"
+
+printf '%s\n' "$now" > "$last_file"
