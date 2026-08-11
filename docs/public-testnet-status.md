@@ -91,3 +91,21 @@ Marker: PUBLIC_MONITORING_EXPLORER_2026_08_11
 2. Maintain faucet funding and review claim limits.
 3. Deploy Blockscout for the EVM explorer.
 4. Prepare independent validator infrastructure before mainnet.
+
+## Public end-to-end verification and faucet IP protection — 2026-08-11
+
+Marker: PUBLIC_E2E_SECURITY_2026_08_11
+
+- Faucet requests now use the original visitor IP supplied by Cloudflare only; client-provided forwarding headers are not trusted.
+- A public faucet request was tested through `https://faucet-testnet.xitcoin.org/claim`.
+- The faucet transaction was confirmed on-chain with code `0`.
+- A testnet delegation of 10 XTC to a bonded public validator was confirmed on-chain with code `0`.
+- The resulting transaction routes are available from the Cosmos explorer.
+- These checks used only XTC testnet. No mainnet asset or private validator was involved.
+
+### Remaining priorities
+
+1. Manual wallet-extension connection check in the public explorer.
+2. Deploy Blockscout for the EVM explorer.
+3. Maintain faucet reserve and monitor operational alerts.
+4. Prepare independent validator infrastructure before mainnet.
