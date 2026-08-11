@@ -70,3 +70,24 @@ Testnet tokens have no monetary value. No USD price or market-cap claim is displ
 3. Deploy Blockscout for the EVM explorer at `evm-explorer-testnet.xitcoin.org`.
 4. Test wallet connection, transfers, staking, governance and EVM transactions end to end.
 5. Add independent validator infrastructure before mainnet planning.
+
+## Explorer, faucet and monitoring — 2026-08-11
+
+Marker: PUBLIC_MONITORING_EXPLORER_2026_08_11
+
+- Cosmos explorer: `https://explorer-testnet.xitcoin.org`
+- Faucet: `https://faucet-testnet.xitcoin.org`
+- Public gRPC: `grpc-testnet.xitcoin.org:443`
+- Explorer is configured only for Xitcoin Testnet. No third-party blockchain is administered by this instance.
+- Explorer pages use live chain data: dashboard, governance, staking, blocks, transactions, uptime, IBC, supply, parameters, consensus and faucet.
+- Transaction history uses the Cosmos SDK query form required by the API.
+- XTC CoinGecko data is enabled. Market listings are displayed only from CoinGecko; no market is inserted manually.
+- Public healthcheck runs every minute and verifies the four public validators, RPC, API, explorer, faucet, gRPC and TLS certificate validity.
+- EVM explorer remains intentionally unavailable pending a separate Blockscout deployment.
+
+### Remaining priorities
+
+1. Perform and document the full public user-path test.
+2. Maintain faucet funding and review claim limits.
+3. Deploy Blockscout for the EVM explorer.
+4. Prepare independent validator infrastructure before mainnet.
