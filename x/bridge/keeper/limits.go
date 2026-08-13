@@ -22,11 +22,8 @@ var dailyUsagePrefix = []byte{0x03}
 // CheckAndRecordLimits uses the block timestamp, not relayer or user time.
 // The write participates in the surrounding transaction and rolls back with it.
 func (k Keeper) CheckAndRecordLimits(ctx sdk.Context, config types.RouteConfig, amountText string) error {
-	if err := config.Validate(); err != nil {
+	if err := k.RequireRouteAvailable(ctx, config); err != nil {
 		return err
-	}
-	if !config.Enabled {
-		return ErrRouteDisabled
 	}
 	amount, ok := new(big.Int).SetString(amountText, 10)
 	if !ok || amount.Sign() <= 0 {
