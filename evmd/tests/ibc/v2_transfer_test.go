@@ -19,13 +19,13 @@ import (
 
 	testifysuite "github.com/stretchr/testify/suite"
 
-	"github.com/xitcoin-org/pos-chain/evmd"
-	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
-	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
 	"github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
 	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
 	channeltypesv2 "github.com/cosmos/ibc-go/v11/modules/core/04-channel/v2/types"
+	"github.com/xitcoin-org/pos-chain/evmd"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
 
 	sdkmath "cosmossdk.io/math"
 
@@ -54,10 +54,10 @@ type TransferTestSuiteV2 struct {
 const invalidPortID = "invalidportid"
 
 func (suite *TransferTestSuiteV2) SetupTest() {
-	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 1, 2, integration.SetupEvmd)
+	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 3, 0, integration.SetupEvmd)
 	suite.evmChainA = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(1))
-	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetChainID(2))
-	suite.chainC = suite.coordinator.GetChain(evmibctesting.GetChainID(3))
+	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(2))
+	suite.chainC = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(3))
 
 	// setup between evmChainA and chainB
 	// NOTE:
@@ -273,8 +273,8 @@ func (suite *TransferTestSuiteV2) TestOnRecvPacket() {
 		suite.Run(tc.name, func() {
 			suite.SetupTest() // reset
 
-			simAppB := suite.chainB.GetSimApp()
-			originalBalance := simAppB.BankKeeper.GetBalance(
+			evmAppB := suite.chainB.App.(*evmd.EVMD)
+			originalBalance := evmAppB.BankKeeper.GetBalance(
 				suite.chainB.GetContext(),
 				suite.chainB.SenderAccount.GetAddress(),
 				tc.sourceDenomToTransfer,
@@ -295,7 +295,7 @@ func (suite *TransferTestSuiteV2) TestOnRecvPacket() {
 			_, err := suite.chainB.SendMsgs(msg)
 			suite.Require().NoError(err) // message committed
 
-			token, err := simAppB.TransferKeeper.TokenFromCoin(suite.chainB.GetContext(), originalCoin)
+			token, err := evmAppB.TransferKeeper.TokenFromCoin(suite.chainB.GetContext(), originalCoin)
 			suite.Require().NoError(err)
 
 			transferData := types.NewFungibleTokenPacketData(
@@ -330,7 +330,7 @@ func (suite *TransferTestSuiteV2) TestOnRecvPacket() {
 
 				escrowAddress := types.GetEscrowAddress(types.PortID, suite.pathBToA.EndpointB.ClientID)
 				// check that the balance for evmChainA is updated
-				chainBBalance := simAppB.BankKeeper.GetBalance(
+				chainBBalance := evmAppB.BankKeeper.GetBalance(
 					suite.chainB.GetContext(),
 					suite.chainB.SenderAccount.GetAddress(),
 					originalCoin.Denom,
@@ -338,7 +338,7 @@ func (suite *TransferTestSuiteV2) TestOnRecvPacket() {
 				suite.Require().Equal(originalBalance.Amount.Sub(amount).Int64(), chainBBalance.Amount.Int64())
 
 				// check that module account escrow address has locked the tokens
-				chainBEscrowBalance := simAppB.BankKeeper.GetBalance(
+				chainBEscrowBalance := evmAppB.BankKeeper.GetBalance(
 					suite.chainB.GetContext(),
 					escrowAddress,
 					originalCoin.Denom,
