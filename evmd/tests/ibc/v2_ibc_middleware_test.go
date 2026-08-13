@@ -10,6 +10,12 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	testifysuite "github.com/stretchr/testify/suite"
 
+	"github.com/cosmos/gogoproto/proto"
+	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
+	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
+	channeltypesv2 "github.com/cosmos/ibc-go/v11/modules/core/04-channel/v2/types"
+	ibctesting "github.com/cosmos/ibc-go/v11/testing"
+	ibcmockv2 "github.com/cosmos/ibc-go/v11/testing/mock/v2"
 	"github.com/xitcoin-org/pos-chain/evmd"
 	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
 	"github.com/xitcoin-org/pos-chain/testutil"
@@ -17,12 +23,6 @@ import (
 	erc20Keeper "github.com/xitcoin-org/pos-chain/x/erc20/keeper"
 	"github.com/xitcoin-org/pos-chain/x/erc20/types"
 	v2 "github.com/xitcoin-org/pos-chain/x/erc20/v2"
-	"github.com/cosmos/gogoproto/proto"
-	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
-	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
-	channeltypesv2 "github.com/cosmos/ibc-go/v11/modules/core/04-channel/v2/types"
-	ibctesting "github.com/cosmos/ibc-go/v11/testing"
-	ibcmockv2 "github.com/cosmos/ibc-go/v11/testing/mock/v2"
 
 	"cosmossdk.io/math"
 
@@ -46,9 +46,9 @@ type MiddlewareV2TestSuite struct {
 }
 
 func (suite *MiddlewareV2TestSuite) SetupTest() {
-	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 1, 1, integration.SetupEvmd)
+	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 2, 0, integration.SetupEvmd)
 	suite.evmChainA = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(1))
-	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetChainID(2))
+	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(2))
 
 	// setup between evmChainA and chainB
 	// pathAToB.EndpointA = endpoint on evmChainA
@@ -227,7 +227,7 @@ func (suite *MiddlewareV2TestSuite) TestOnRecvPacket() {
 		suite.Run(tc.name, func() {
 			suite.SetupTest()
 			ctx = suite.chainB.GetContext()
-			bondDenom, err := suite.chainB.GetSimApp().StakingKeeper.BondDenom(ctx)
+			bondDenom, err := suite.chainB.App.(*evmd.EVMD).StakingKeeper.BondDenom(ctx)
 			suite.Require().NoError(err)
 			receiver := suite.evmChainA.SenderAccount.GetAddress()
 			sendAmt := ibctesting.DefaultCoinAmount
