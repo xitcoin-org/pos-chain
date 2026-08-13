@@ -18,6 +18,19 @@ import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 
 	dbm "github.com/cosmos/cosmos-db"
+	"github.com/cosmos/gogoproto/proto"
+	ibccallbacks "github.com/cosmos/ibc-go/v11/modules/apps/callbacks"
+	transfer "github.com/cosmos/ibc-go/v11/modules/apps/transfer"
+	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
+	ibctransfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
+	transferv2 "github.com/cosmos/ibc-go/v11/modules/apps/transfer/v2"
+	ibc "github.com/cosmos/ibc-go/v11/modules/core"
+	porttypes "github.com/cosmos/ibc-go/v11/modules/core/05-port/types"
+	ibcapi "github.com/cosmos/ibc-go/v11/modules/core/api"
+	ibcexported "github.com/cosmos/ibc-go/v11/modules/core/exported"
+	ibckeeper "github.com/cosmos/ibc-go/v11/modules/core/keeper"
+	ibctm "github.com/cosmos/ibc-go/v11/modules/light-clients/07-tendermint"
+	ibctesting "github.com/cosmos/ibc-go/v11/testing"
 	evmante "github.com/xitcoin-org/pos-chain/ante"
 	antetypes "github.com/xitcoin-org/pos-chain/ante/types"
 	evmencoding "github.com/xitcoin-org/pos-chain/encoding"
@@ -40,19 +53,6 @@ import (
 	evmkeeper "github.com/xitcoin-org/pos-chain/x/vm/keeper"
 	vmrunner "github.com/xitcoin-org/pos-chain/x/vm/runner"
 	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
-	"github.com/cosmos/gogoproto/proto"
-	ibccallbacks "github.com/cosmos/ibc-go/v11/modules/apps/callbacks"
-	transfer "github.com/cosmos/ibc-go/v11/modules/apps/transfer"
-	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
-	ibctransfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
-	transferv2 "github.com/cosmos/ibc-go/v11/modules/apps/transfer/v2"
-	ibc "github.com/cosmos/ibc-go/v11/modules/core"
-	porttypes "github.com/cosmos/ibc-go/v11/modules/core/05-port/types"
-	ibcapi "github.com/cosmos/ibc-go/v11/modules/core/api"
-	ibcexported "github.com/cosmos/ibc-go/v11/modules/core/exported"
-	ibckeeper "github.com/cosmos/ibc-go/v11/modules/core/keeper"
-	ibctm "github.com/cosmos/ibc-go/v11/modules/light-clients/07-tendermint"
-	ibctesting "github.com/cosmos/ibc-go/v11/testing"
 
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 	reflectionv1 "cosmossdk.io/api/cosmos/reflection/v1"
@@ -127,6 +127,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
+	bridge "github.com/xitcoin-org/pos-chain/x/bridge"
+	bridgekeeper "github.com/xitcoin-org/pos-chain/x/bridge/keeper"
+	bridgetypes "github.com/xitcoin-org/pos-chain/x/bridge/types"
 	validatoradmission "github.com/xitcoin-org/pos-chain/x/validatoradmission"
 	validatoradmissionkeeper "github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 	validatoradmissiontypes "github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
@@ -169,6 +172,7 @@ type EVMD struct {
 	AccountKeeper            authkeeper.AccountKeeper
 	BankKeeper               bankkeeper.Keeper
 	StakingKeeper            *stakingkeeper.Keeper
+	BridgeKeeper             bridgekeeper.Keeper
 	ValidatorAdmissionKeeper validatoradmissionkeeper.Keeper
 	SlashingKeeper           slashingkeeper.Keeper
 	MintKeeper               mintkeeper.Keeper
@@ -246,6 +250,7 @@ func NewExampleApp(
 		ibcexported.StoreKey, ibctransfertypes.StoreKey,
 		// Cosmos EVM store keys
 		evmtypes.StoreKey, feemarkettypes.StoreKey, erc20types.StoreKey,
+		bridgetypes.StoreKey,
 		validatoradmissiontypes.StoreKey,
 	)
 	oKeys := storetypes.NewObjectStoreKeys(banktypes.ObjectStoreKey, evmtypes.ObjectKey)
@@ -342,6 +347,10 @@ func NewExampleApp(
 
 	app.ValidatorAdmissionKeeper = validatoradmissionkeeper.NewKeeper(
 		keys[validatoradmissiontypes.StoreKey],
+	)
+
+	app.BridgeKeeper = bridgekeeper.NewKeeper(
+		keys[bridgetypes.StoreKey],
 	)
 
 	app.MintKeeper = mintkeeper.NewKeeper(
@@ -581,6 +590,7 @@ func NewExampleApp(
 		distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper, nil),
 		staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper, nil),
 		validatoradmission.NewAppModule(app.ValidatorAdmissionKeeper, app.StakingKeeper),
+		bridge.NewAppModule(app.BridgeKeeper),
 		upgrade.NewAppModule(app.UpgradeKeeper, app.AccountKeeper.AddressCodec()),
 		evidence.NewAppModule(app.EvidenceKeeper),
 		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
@@ -669,7 +679,7 @@ func NewExampleApp(
 	// NOTE: The genutils module must also occur after auth so that it can access the params from auth.
 	genesisModuleOrder := []string{
 		authtypes.ModuleName, banktypes.ModuleName,
-		distrtypes.ModuleName, validatoradmissiontypes.ModuleName, stakingtypes.ModuleName, slashingtypes.ModuleName, govtypes.ModuleName,
+		distrtypes.ModuleName, validatoradmissiontypes.ModuleName, bridgetypes.ModuleName, stakingtypes.ModuleName, slashingtypes.ModuleName, govtypes.ModuleName,
 		minttypes.ModuleName,
 		ibcexported.ModuleName,
 
