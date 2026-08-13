@@ -64,8 +64,10 @@ type AppModule struct {
 func NewAppModule(k keeper.Keeper) AppModule {
 	return AppModule{AppModuleBasic: AppModuleBasic{}, keeper: k}
 }
-func (AppModule) Name() string                           { return types.ModuleName }
-func (AppModule) RegisterServices(_ module.Configurator) {}
+func (AppModule) Name() string { return types.ModuleName }
+func (am AppModule) RegisterServices(cfg module.Configurator) {
+	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServer(am.keeper))
+}
 func (am AppModule) InitGenesis(ctx sdk.Context, _ codec.JSONCodec, data json.RawMessage) []abci.ValidatorUpdate {
 	var state types.GenesisState
 	if err := json.Unmarshal(data, &state); err != nil {
