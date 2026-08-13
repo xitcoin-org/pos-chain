@@ -2,7 +2,7 @@
 
 ## Status
 
-Genesis released. P2P bootstrap and the official public RPC endpoints are active. Explorer, faucet and public gRPC are not announced yet.
+The public testnet is active. The four bootstrap validators, public RPC/API endpoints, faucet, Cosmos explorer and EVM explorer are operational. Public verification procedures are available in [`public-testnet-operations.md`](public-testnet-operations.md).
 
 ## Genesis
 

@@ -1,6 +1,26 @@
 # Xitcoin public testnet — operational status
 
-## Current public network
+## Current verified status — 2026-08-13
+
+The public testnet is synchronized and its public RPC, REST API, EVM JSON-RPC,
+faucet, Cosmos explorer, and EVM explorer are available.
+
+For reproducible public checks, see
+[`public-testnet-operations.md`](public-testnet-operations.md).
+
+The active public release is `v0.1.0-testnet.1`, built from source revision
+`46111748fc5002dc20f6a1b6ab57622cb0cc0e71`.
+
+The bridge remains disabled by default. No bridge route, relayer, settlement,
+custody, minting, vault, or real asset is enabled.
+
+## Historical deployment record
+
+The dated entries below are retained for traceability. The current verified
+status above takes precedence where an earlier entry describes a service before
+it was deployed.
+
+## Historical launch snapshot — 2026-08-11
 
 - Cosmos chain ID: `xitcoin-testnet-2026-1`
 - EVM chain ID: `101089`
