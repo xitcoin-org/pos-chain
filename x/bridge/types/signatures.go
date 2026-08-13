@@ -1,0 +1,97 @@
+package types
+
+import (
+	"errors"
+	"fmt"
+	"math/big"
+	"strings"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+)
+
+const SigningDomain = "xitcoin-bridge-testnet-attestation-v1"
+
+// SigningDigest domain-separates bridge approvals from every other signature.
+func SigningDigest(attestation Attestation) (common.Hash, error) {
+	id, err := attestation.ID()
+	if err != nil {
+		return common.Hash{}, err
+	}
+	return crypto.Keccak256Hash([]byte(SigningDomain), id[:]), nil
+}
+
+// VerifyApprovals recovers signer addresses and requires two distinct members
+// of the configured three-member bridge signer set.
+func VerifyApprovals(attestation Attestation, bridgeSigners []string, signatures [][]byte) ([]common.Address, error) {
+	allowed, err := configuredSigners(bridgeSigners)
+	if err != nil {
+		return nil, err
+	}
+	if len(signatures) < RequiredApprovals || len(signatures) > MaxBridgeSigners {
+		return nil, fmt.Errorf("signature count must be between %d and %d", RequiredApprovals, MaxBridgeSigners)
+	}
+	digest, err := SigningDigest(attestation)
+	if err != nil {
+		return nil, err
+	}
+
+	recovered := make([]common.Address, 0, len(signatures))
+	seen := make(map[common.Address]struct{}, len(signatures))
+	for _, signature := range signatures {
+		address, err := recoverSigner(digest, signature)
+		if err != nil {
+			return nil, err
+		}
+		if _, ok := allowed[address]; !ok {
+			return nil, errors.New("approval is not from a configured bridge signer")
+		}
+		if _, exists := seen[address]; exists {
+			return nil, errors.New("duplicate signer approval")
+		}
+		seen[address] = struct{}{}
+		recovered = append(recovered, address)
+	}
+	return recovered, nil
+}
+
+func configuredSigners(signers []string) (map[common.Address]struct{}, error) {
+	if len(signers) != MaxBridgeSigners {
+		return nil, fmt.Errorf("exactly %d bridge signers are required", MaxBridgeSigners)
+	}
+	allowed := make(map[common.Address]struct{}, MaxBridgeSigners)
+	for _, signer := range signers {
+		if !common.IsHexAddress(strings.TrimSpace(signer)) {
+			return nil, errors.New("invalid configured bridge signer")
+		}
+		address := common.HexToAddress(signer)
+		if _, exists := allowed[address]; exists {
+			return nil, errors.New("duplicate configured bridge signer")
+		}
+		allowed[address] = struct{}{}
+	}
+	return allowed, nil
+}
+
+func recoverSigner(digest common.Hash, signature []byte) (common.Address, error) {
+	if len(signature) != crypto.SignatureLength {
+		return common.Address{}, errors.New("invalid signature length")
+	}
+	sig := append([]byte(nil), signature...)
+	if sig[64] == 27 || sig[64] == 28 {
+		sig[64] -= 27
+	}
+	if sig[64] > 1 {
+		return common.Address{}, errors.New("invalid signature recovery ID")
+	}
+	r := new(big.Int).SetBytes(sig[:32])
+	s := new(big.Int).SetBytes(sig[32:64])
+	if !crypto.ValidateSignatureValues(sig[64], r, s, true) {
+		return common.Address{}, errors.New("invalid signature values")
+	}
+	pub, err := crypto.SigToPub(digest.Bytes(), sig)
+	if err != nil {
+		return common.Address{}, fmt.Errorf("recover signer: %w", err)
+	}
+	return crypto.PubkeyToAddress(*pub), nil
+}

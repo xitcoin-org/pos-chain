@@ -42,7 +42,13 @@ func (g GenesisState) Policy() (uint32, string) {
 func (g GenesisState) Validate() error {
 	authority := strings.TrimSpace(g.Authority)
 	if authority == "" {
-		return fmt.Errorf("validator admission authority is required")
+		// An entirely unconfigured module is disabled. This keeps default
+		// application genesis valid without granting any admission authority.
+		if len(g.ApprovedValidators) != 0 {
+			return fmt.Errorf("validator admission authority is required")
+		}
+		maxApprovedValidators, minimumSelfDelegation := g.Policy()
+		return ValidatePolicy(maxApprovedValidators, minimumSelfDelegation)
 	}
 	if authority != g.Authority {
 		return fmt.Errorf("validator admission authority contains surrounding spaces")
