@@ -11,6 +11,11 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	testifysuite "github.com/stretchr/testify/suite"
 
+	ibctransfer "github.com/cosmos/ibc-go/v11/modules/apps/transfer"
+	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
+	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
+	ibctesting "github.com/cosmos/ibc-go/v11/testing"
 	"github.com/xitcoin-org/pos-chain/contracts"
 	"github.com/xitcoin-org/pos-chain/evmd"
 	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
@@ -26,11 +31,6 @@ import (
 	callbacktypes "github.com/xitcoin-org/pos-chain/x/ibc/callbacks/types"
 	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
-	ibctransfer "github.com/cosmos/ibc-go/v11/modules/apps/transfer"
-	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
-	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
-	ibctesting "github.com/cosmos/ibc-go/v11/testing"
 
 	"cosmossdk.io/math"
 
@@ -53,9 +53,9 @@ type MiddlewareTestSuite struct {
 
 // SetupTest initializes the coordinator and test chains before each test.
 func (suite *MiddlewareTestSuite) SetupTest() {
-	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 1, 1, integration.SetupEvmd)
+	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 2, 0, integration.SetupEvmd)
 	suite.evmChainA = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(1))
-	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetChainID(2))
+	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(2))
 
 	// Setup path
 	suite.path = evmibctesting.NewPath(suite.evmChainA, suite.chainB)
@@ -386,7 +386,7 @@ func (suite *MiddlewareTestSuite) TestOnRecvPacketWithCallback() {
 			path = suite.path
 
 			ctxB := suite.chainB.GetContext()
-			bondDenom, err := suite.chainB.GetSimApp().StakingKeeper.BondDenom(ctxB)
+			bondDenom, err := suite.chainB.App.(*evmd.EVMD).StakingKeeper.BondDenom(ctxB)
 			suite.Require().NoError(err)
 
 			// Generate the isolated address for the sender
@@ -568,7 +568,7 @@ func (suite *MiddlewareTestSuite) TestOnRecvPacket() {
 			suite.SetupTest()
 
 			ctxB := suite.chainB.GetContext()
-			bondDenom, err := suite.chainB.GetSimApp().StakingKeeper.BondDenom(ctxB)
+			bondDenom, err := suite.chainB.App.(*evmd.EVMD).StakingKeeper.BondDenom(ctxB)
 			suite.Require().NoError(err)
 
 			sendAmt := ibctesting.DefaultCoinAmount
@@ -830,7 +830,6 @@ func (suite *MiddlewareTestSuite) TestOnRecvPacketNativeErc20() {
 					suite.evmChainA.SenderAccount.GetAddress(),
 				)
 				suite.Require().False(errAck.Success())
-
 
 				// SendEnabled=true causes our callback to succeed
 				evmApp.BankKeeper.SetSendEnabled(suite.evmChainA.GetContext(), nativeErc20.Denom, true)
