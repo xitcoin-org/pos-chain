@@ -10,11 +10,11 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
+	"github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
 	"github.com/xitcoin-org/pos-chain/evmd"
 	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
 	evmibctesting "github.com/xitcoin-org/pos-chain/testutil/ibc"
-	"github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
 
 	sdkmath "cosmossdk.io/math"
 
@@ -33,10 +33,10 @@ type TransferTestSuite struct {
 }
 
 func (suite *TransferTestSuite) SetupTest() {
-	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 1, 2, integration.SetupEvmd)
+	suite.coordinator = evmibctesting.NewCoordinator(suite.T(), 3, 0, integration.SetupEvmd)
 	suite.evmChainA = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(1))
-	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetChainID(2))
-	suite.chainC = suite.coordinator.GetChain(evmibctesting.GetChainID(3))
+	suite.chainB = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(2))
+	suite.chainC = suite.coordinator.GetChain(evmibctesting.GetEvmChainID(3))
 }
 
 // Constructs the following sends based on the established channels/connections
@@ -162,7 +162,7 @@ func (suite *TransferTestSuite) TestHandleMsgTransfer() {
 			suite.Require().True(transferAmount.Equal(chainAEscrowBalance.Amount))
 
 			// check that voucher exists on chain B
-			chainBApp := suite.chainB.GetSimApp()
+			chainBApp := suite.chainB.App.(*evmd.EVMD)
 			chainBDenom := types.NewDenom(originalCoin.Denom, traceAToB)
 			chainBBalance := chainBApp.BankKeeper.GetBalance(
 				suite.chainB.GetContext(),
@@ -204,7 +204,7 @@ func (suite *TransferTestSuite) TestHandleMsgTransfer() {
 			chainCDenom := types.NewDenom(originalCoin.Denom, traceBToC, traceAToB)
 
 			// check that the balance is updated on chainC
-			chainCApp := suite.chainC.GetSimApp()
+			chainCApp := suite.chainC.App.(*evmd.EVMD)
 			coinSentFromBToC := sdk.NewCoin(chainCDenom.IBCDenom(), transferAmount)
 			chainCBalance := chainCApp.BankKeeper.GetBalance(
 				suite.chainC.GetContext(),
