@@ -1,45 +1,41 @@
-# Xitcoin Bridge Testnet Acceptance Plan
+# Xitcoin Bridge Testnet Acceptance
 
-## Status
+## Environment
 
-Test plan only. No bridge contract, signer, reserve, route, asset or deployment is created by this document.
+Acceptance testing uses an isolated route and test assets. Production token governance and production bridge credentials are outside the test environment.
 
-## Test Environment
+## Required tests
 
-- Isolated testnet only.
-- Test assets only; no canonical Cronos XTC and no real user funds.
-- Separate test wallets and signer material.
-- The production XTC proxy and its voter wallets are not used.
+1. A finalized Cronos lock mints the exact native test XTC amount.
+2. A finalized native XTC burn unlocks the exact Cronos test-token amount.
+3. Minting without verified collateral is rejected.
+4. Unlocking without a finalized burn is rejected.
+5. A transfer identifier cannot be processed twice.
+6. A modified chain, route, transaction, destination, amount or nonce is rejected.
+7. A signer below the configured threshold cannot authorize settlement.
+8. The configured signer threshold authorizes a valid settlement.
+9. An unknown or retired signer is rejected.
+10. Pausing blocks new settlement and preserves accounting.
+11. The guardian cannot mint, burn, release collateral or resume settlement.
+12. Route closure blocks new transfers and preserves valid redemptions.
+13. Per-transfer, daily and outstanding-mint limits are enforced.
+14. Confirmation depth and source-chain reorganizations are handled correctly.
+15. A reconciliation mismatch pauses settlement.
+16. Native XTC minted minus native XTC burned equals represented collateral.
+17. A dead-address transfer cannot satisfy a burn requirement.
 
-## Required Test Cases
+## Evidence
 
-1. A valid Cronos test-token vault deposit releases the same amount from the Xitcoin test reserve.
-2. A valid return to the Xitcoin test reserve releases the same amount from the Cronos test vault.
-3. A transfer identifier cannot be processed twice.
-4. A conflicting destination, amount or nonce is rejected.
-5. One bridge signer alone cannot authorize settlement.
-6. Two authorized bridge signers can authorize settlement.
-7. A guardian pause prevents new transfers.
-8. Pausing does not erase valid recorded transfers or reserve accounting.
-9. Route closure prevents new transfers while preserving valid pending redemptions.
-10. Per-transfer and daily limits are enforced.
-11. Testnet fees remain disabled.
-12. Recovery rejects canonical bridge-reserve XTC and permits only unrelated test assets through the required approval path.
-13. Source-chain confirmation and reorganization handling are tested before settlement.
-14. Reserve reconciliation detects any accounting mismatch and blocks further settlement until reviewed.
+Each test record includes:
 
-## Evidence Required
-
-Each test records:
-
-- source transaction identifier;
-- destination transaction identifier;
-- amount and destination;
+- test identifier and software revision;
+- source event and destination transaction;
+- route, addresses and amount;
 - signer approvals;
-- reserve balances before and after;
-- expected result;
-- actual result.
+- supply and collateral before and after;
+- expected and observed results;
+- genesis hash.
 
-## Exit Criteria
+## Exit criteria
 
-No testnet bridge implementation can advance to audit until all required tests pass, replay protection is independently reviewed, and reserve reconciliation produces no mismatch.
+The testnet phase is complete when all required tests pass, authorization and replay protection are independently reviewed, accounting reconciles without mismatch, route limits and pause controls are validated, and operational procedures are approved.

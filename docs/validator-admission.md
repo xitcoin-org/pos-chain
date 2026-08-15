@@ -1,52 +1,45 @@
 # Validator Admission
 
-Xitcoin operates a permissioned validator admission model.
+Xitcoin uses an on-chain validator admission policy.
 
-## Authority
+## Policy
 
-A single on-chain authority is defined in the Validator Admission genesis state.
-Only this authority can:
-
-- approve a validator operator address;
-- revoke an approved validator;
-- update Validator Admission policy parameters.
-
-Approval is an explicit on-chain transaction. An operator cannot self-approve.
-
-## Validator requirements
-
-A validator creation transaction is accepted only when:
-
-1. the validator operator address is currently approved;
-2. the self-delegation meets the active minimum;
-3. the validator follows the network staking and consensus rules.
-
-The initial mainnet policy is:
-
-| Parameter | Value |
+| Parameter | Initial value |
 | --- | ---: |
-| Maximum approved validator addresses | 208 |
+| Maximum approved validator operators | 208 |
 | Minimum self-delegation | 5,000,000 XTC |
 
-Technical on-chain amounts use the native `xtc` denomination with 18 decimal places.
+Amounts are encoded in `axtc`, with 18 decimal places.
+
+## Admission flow
+
+1. An operator submits its validator operator address for review.
+2. The configured authority approves the operator address on-chain.
+3. The operator submits `MsgCreateValidator` with the required self-delegation.
+4. The ante handler verifies approval and the active policy.
+5. The staking module applies the standard consensus and staking checks.
 
 ## Revocation
 
-Revoking an operator removes its approval. If that validator already exists, the
-network jails it. A revoked validator cannot unjail unless it is approved again.
+Revocation removes the operator from the approval set. An existing validator is jailed and cannot unjail until it is approved again.
 
 ## Policy updates
 
-Policy updates are on-chain actions restricted to the configured Xitcoin
-authority. A capacity update cannot be reduced below the number of already
-approved validator addresses.
+The configured authority may update the approval capacity and minimum self-delegation. The approval capacity cannot be reduced below the number of approved operators.
 
-## Operator process
+## Query and transaction commands
 
-1. Submit the validator operator address for review.
-2. Receive explicit approval from the Xitcoin authority.
-3. Create the validator with at least the required self-delegation.
-4. Maintain operational, security and network-policy compliance.
+Discover available commands:
 
-This module does not alter the public testnet genesis or activate any mainnet
-configuration by itself.
+```bash
+xitcoind query validator-admission --help
+xitcoind tx validator-admission --help
+```
+
+Inspect transaction flags:
+
+```bash
+xitcoind tx validator-admission update-params --help
+```
+
+Always specify the intended chain ID, node endpoint and fee denomination when preparing a transaction.
