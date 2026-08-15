@@ -21,7 +21,7 @@ XTC is the native asset on both the Cosmos and EVM interfaces. The EVM interface
 | --- | --- |
 | [`pos-chain`](https://github.com/xitcoin-org/pos-chain) | Consensus, Cosmos and EVM execution, native XTC, genesis and network documentation |
 | [`contracts`](https://github.com/xitcoin-org/contracts) | Canonical Cronos V1, V2 and migration sources, deployments, audit scope and ecosystem references |
-| [`xitcoin-migration-v1-to-v2`](https://github.com/xitcoin-org/xitcoin-migration-v1-to-v2) | Migration interface, reproducible build and continuity documentation |
+| [`migration-v1-to-v2`](https://github.com/xitcoin-org/migration-v1-to-v2) | Migration interface, reproducible build and continuity documentation |
 | [`explorer-cosmos-testnet`](https://github.com/xitcoin-org/explorer-cosmos-testnet) | Cosmos testnet explorer source and network configuration |
 | [`explorer-evm-testnet`](https://github.com/xitcoin-org/explorer-evm-testnet) | Blockscout deployment configuration and EVM explorer branding |
 | [`brand`](https://github.com/xitcoin-org/brand) | Approved standalone Xitcoin token artwork and color references |
