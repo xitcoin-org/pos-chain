@@ -19,7 +19,10 @@ curl -fsS https://rpc-testnet.xitcoin.org/status |
 Check the EVM Chain ID:
 
 ```bash
-curl -fsS   -H 'content-type: application/json'   --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'   https://evm-rpc-testnet.xitcoin.org |
+curl -fsS \
+  -H 'content-type: application/json' \
+  --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
+  https://evm-rpc-testnet.xitcoin.org |
   jq -r '.result'
 ```
 
