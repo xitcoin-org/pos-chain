@@ -1,6 +1,6 @@
 {
   "name": "Xitcoin Testnet",
-  "status": "planned",
+  "status": "reset_candidate",
   "cosmos_chain_id": "xitcoin-testnet",
   "evm_chain_id": 101089,
   "evm_chain_id_hex": "0x18ae1",
@@ -18,8 +18,8 @@
     "sha256": "818096564a458b68ddd56ac95592ec7bac64c88f6fcbb9742cd39114229884b0"
   },
   "notes": [
-    "No public endpoint is announced until the public testnet launch checklist is complete.",
-    "The public testnet must use a fresh genesis and must never reuse private-testnet state.",
+    "Endpoint entries remain empty until this reset candidate is activated; current public endpoints continue serving the existing testnet.",
+    "The candidate uses a fresh genesis and does not reuse private-testnet state.",
     "Testnet assets have no monetary value."
   ]
 }
