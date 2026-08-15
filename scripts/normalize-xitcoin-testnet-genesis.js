@@ -8,7 +8,9 @@ if (!input) throw new Error('Usage: normalize-xitcoin-testnet-genesis.js <genesi
 const genesis = JSON.parse(fs.readFileSync(input, 'utf8'));
 const app = genesis.app_state;
 
-if (genesis.chain_id !== 'xitcoin-testnet-1') {
+app.bridge = { paused: false };
+
+if (genesis.chain_id !== 'xitcoin-testnet') {
   throw new Error(`Unexpected Cosmos chain ID: ${genesis.chain_id}`);
 }
 
@@ -23,7 +25,7 @@ function requirePath(object, keys) {
   return value;
 }
 
-const denom = 'xits';
+const denom = 'axtc';
 
 requirePath(app, ['evm', 'params']).evm_denom = denom;
 requirePath(app, ['evm', 'params', 'extended_denom_options']).extended_denom = denom;
@@ -49,13 +51,13 @@ for (const key of ['min_deposit', 'expedited_min_deposit']) {
 
 const bank = requirePath(app, ['bank']);
 bank.denom_metadata = [{
-  description: 'Native token of the Xitcoin blockchain',
+  description: 'Xitcoin public testnet',
   denom_units: [
-    { denom: 'xits', exponent: 0, aliases: [] },
-    { denom: 'XTC', exponent: 18, aliases: [] }
+    { denom: 'axtc', exponent: 0, aliases: [] },
+    { denom: 'xtc', exponent: 18, aliases: [] }
   ],
-  base: 'xits',
-  display: 'XTC',
+  base: 'axtc',
+  display: 'xtc',
   name: 'Xitcoin',
   symbol: 'XTC',
   uri: '',
@@ -66,6 +68,7 @@ const nativeEvmAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 const erc20 = requirePath(app, ['erc20']);
 
 erc20.params.enable_erc20 = true;
+erc20.params.permissionless_registration = false;
 erc20.token_pairs = [{
   erc20_address: nativeEvmAddress,
   denom: denom,
@@ -81,4 +84,4 @@ if (serialized.includes('"stake"')) {
 }
 
 fs.writeFileSync(input, `${JSON.stringify(genesis, null, 2)}\n`, { mode: 0o640 });
-console.log('Genesis normalized: Xitcoin / xits / XTC');
+console.log('Genesis normalized: Xitcoin / axtc / XTC');

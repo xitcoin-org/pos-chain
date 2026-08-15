@@ -34,10 +34,10 @@ func addXitcoinTxFlags(cmd *cobra.Command) {
 	flags.AddTxFlagsToCmd(cmd)
 
 	if flag := cmd.Flags().Lookup(flags.FlagFees); flag != nil {
-		flag.Usage = "Fees in xits, for example 1000000000000000xits"
+		flag.Usage = "Fees in axtc, for example 1000000000000000axtc"
 	}
 	if flag := cmd.Flags().Lookup(flags.FlagGasPrices); flag != nil {
-		flag.Usage = "Gas prices in xits, for example 1000000000xits"
+		flag.Usage = "Gas prices in axtc, for example 1000000000axtc"
 	}
 }
 

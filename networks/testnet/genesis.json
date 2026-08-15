@@ -2,7 +2,7 @@
   "app_name": "\u003cappd\u003e",
   "app_version": "",
   "genesis_time": "2026-08-10T12:50:02.541094542Z",
-  "chain_id": "xitcoin-testnet-2026-1",
+  "chain_id": "xitcoin-testnet",
   "initial_height": 1,
   "app_hash": null,
   "app_state": {
@@ -18,30 +18,65 @@
       "accounts": [
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc1h7j632zh3m50v5glwk556eu9c3feha4zfsrkv8",
+          "address": "xtc12gmhccfzvx9ewllucyqns28067hvths80qzlcy",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc14kej2dgedp4fcac7yumak7uauqes8kqjwzt32r",
+          "address": "xtc1tlc6jhz73vhwukjchzmh8rluxvpc952nmr74l5",
           "pub_key": null,
           "account_number": "1",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc18krvmewpj63kleqqudf5f5wmgjzqryzpv2nn9m",
+          "address": "xtc1tk9zhd3t4pglhjzuucmpzcxezhy9snul2g5vvd",
           "pub_key": null,
           "account_number": "2",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc1k5qm7sg6pzvk3gl2y7u5r7s542jhyqevqenctv",
+          "address": "xtc16uuf9z53kccp38xyjmw6gfqwx5n0z5kvsvq3qk",
           "pub_key": null,
           "account_number": "3",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "xtc1k0lfm53kzqves2lp00dq2lknc5k7yr8re6l0s2",
+          "pub_key": null,
+          "account_number": "4",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "xtc1rwqecmemygmar00cfqcql747f5jd9fmm7grax9",
+          "pub_key": null,
+          "account_number": "5",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "xtc1qfrg3jmkz6ef8f2aasstsg822py0vlxzqk9rt0",
+          "pub_key": null,
+          "account_number": "6",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "xtc1l4g4mamvunartpsj3emky7kuzn2k0v2nnxchgf",
+          "pub_key": null,
+          "account_number": "7",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "xtc1zwy88fth8xjvyd7sap6ur7n249lr54kjwl0uym",
+          "pub_key": null,
+          "account_number": "8",
           "sequence": "0"
         }
       ]
@@ -56,46 +91,91 @@
       },
       "balances": [
         {
-          "address": "xtc18krvmewpj63kleqqudf5f5wmgjzqryzpv2nn9m",
+          "address": "xtc1qfrg3jmkz6ef8f2aasstsg822py0vlxzqk9rt0",
           "coins": [
             {
-              "denom": "xtc",
-              "amount": "250000000000000000000000"
+              "denom": "axtc",
+              "amount": "50000000000000000000000000"
             }
           ]
         },
         {
-          "address": "xtc14kej2dgedp4fcac7yumak7uauqes8kqjwzt32r",
+          "address": "xtc1zwy88fth8xjvyd7sap6ur7n249lr54kjwl0uym",
           "coins": [
             {
-              "denom": "xtc",
-              "amount": "250000000000000000000000"
+              "denom": "axtc",
+              "amount": "20000000000000000000000000"
             }
           ]
         },
         {
-          "address": "xtc1k5qm7sg6pzvk3gl2y7u5r7s542jhyqevqenctv",
+          "address": "xtc1rwqecmemygmar00cfqcql747f5jd9fmm7grax9",
           "coins": [
             {
-              "denom": "xtc",
-              "amount": "250000000000000000000000"
+              "denom": "axtc",
+              "amount": "100000000000000000000000000"
             }
           ]
         },
         {
-          "address": "xtc1h7j632zh3m50v5glwk556eu9c3feha4zfsrkv8",
+          "address": "xtc12gmhccfzvx9ewllucyqns28067hvths80qzlcy",
           "coins": [
             {
-              "denom": "xtc",
-              "amount": "250000000000000000000000"
+              "denom": "axtc",
+              "amount": "5000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "xtc1tk9zhd3t4pglhjzuucmpzcxezhy9snul2g5vvd",
+          "coins": [
+            {
+              "denom": "axtc",
+              "amount": "5000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "xtc1tlc6jhz73vhwukjchzmh8rluxvpc952nmr74l5",
+          "coins": [
+            {
+              "denom": "axtc",
+              "amount": "5000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "xtc1k0lfm53kzqves2lp00dq2lknc5k7yr8re6l0s2",
+          "coins": [
+            {
+              "denom": "axtc",
+              "amount": "1020000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "xtc16uuf9z53kccp38xyjmw6gfqwx5n0z5kvsvq3qk",
+          "coins": [
+            {
+              "denom": "axtc",
+              "amount": "5000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "xtc1l4g4mamvunartpsj3emky7kuzn2k0v2nnxchgf",
+          "coins": [
+            {
+              "denom": "axtc",
+              "amount": "40000000000000000000000000"
             }
           ]
         }
       ],
       "supply": [
         {
-          "denom": "xtc",
-          "amount": "1000000000000000000000000"
+          "denom": "axtc",
+          "amount": "1250000000000000000000000000"
         }
       ],
       "denom_metadata": [
@@ -103,18 +183,18 @@
           "description": "Xitcoin public testnet",
           "denom_units": [
             {
-              "denom": "xtc",
+              "denom": "axtc",
               "exponent": 0,
               "aliases": []
             },
             {
-              "denom": "XTC",
+              "denom": "xtc",
               "exponent": 18,
               "aliases": []
             }
           ],
-          "base": "xtc",
-          "display": "XTC",
+          "base": "axtc",
+          "display": "xtc",
           "name": "Xitcoin",
           "symbol": "XTC",
           "uri": "",
@@ -122,6 +202,9 @@
         }
       ],
       "send_enabled": []
+    },
+    "bridge": {
+      "paused": false
     },
     "consensus": null,
     "distribution": {
@@ -146,11 +229,20 @@
     "erc20": {
       "params": {
         "enable_erc20": true,
-        "permissionless_registration": true
+        "permissionless_registration": false
       },
-      "token_pairs": [],
+      "token_pairs": [
+        {
+          "erc20_address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "denom": "axtc",
+          "enabled": true,
+          "contract_owner": 1
+        }
+      ],
       "allowances": [],
-      "native_precompiles": [],
+      "native_precompiles": [
+        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      ],
       "dynamic_precompiles": []
     },
     "evidence": {
@@ -159,7 +251,7 @@
     "evm": {
       "accounts": [],
       "params": {
-        "evm_denom": "xtc",
+        "evm_denom": "axtc",
         "extra_eips": [],
         "evm_channels": [],
         "access_control": {
@@ -175,7 +267,7 @@
         "active_static_precompiles": [],
         "history_serve_window": "8192",
         "extended_denom_options": {
-          "extended_denom": "xtc"
+          "extended_denom": "axtc"
         }
       },
       "preinstalls": []
@@ -203,70 +295,6 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "Xitcoin Testnet Validator 2",
-                  "identity": "",
-                  "website": "",
-                  "security_contact": "",
-                  "details": ""
-                },
-                "commission": {
-                  "rate": "0.100000000000000000",
-                  "max_rate": "0.200000000000000000",
-                  "max_change_rate": "0.010000000000000000"
-                },
-                "min_self_delegation": "1",
-                "delegator_address": "",
-                "validator_address": "xtcvaloper14kej2dgedp4fcac7yumak7uauqes8kqjcxdrhe",
-                "pubkey": {
-                  "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "eLonsEGIYs/teoVIpAoZZgAiOjHrsRwSER7pqigcYu8="
-                },
-                "value": {
-                  "denom": "xtc",
-                  "amount": "100000000000000000000000"
-                }
-              }
-            ],
-            "memo": "a494fded0411327150b57dabb1145d44c72cbd2a@51.68.54.120:27666",
-            "timeout_height": "0",
-            "unordered": false,
-            "timeout_timestamp": null,
-            "extension_options": [],
-            "non_critical_extension_options": []
-          },
-          "auth_info": {
-            "signer_infos": [
-              {
-                "public_key": {
-                  "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "AiqiiCDHE23YR+aO7NSErc+mWsQMJsZIlWgx+bpgLRM8"
-                },
-                "mode_info": {
-                  "single": {
-                    "mode": "SIGN_MODE_DIRECT"
-                  }
-                },
-                "sequence": "0"
-              }
-            ],
-            "fee": {
-              "amount": [],
-              "gas_limit": "200000",
-              "payer": "",
-              "granter": ""
-            },
-            "tip": null
-          },
-          "signatures": [
-            "KQ08GSO/AwSRM75AZm7KcrCTf5rkpsFUMT/6Y9/RKYY6ZO+AGo2KTYrEv3/YYeZjYiqME1ikqrl1mrpXdPzS3gA="
-          ]
-        },
-        {
-          "body": {
-            "messages": [
-              {
-                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
-                "description": {
                   "moniker": "Xitcoin Testnet Validator 1",
                   "identity": "",
                   "website": "",
@@ -278,20 +306,20 @@
                   "max_rate": "0.200000000000000000",
                   "max_change_rate": "0.010000000000000000"
                 },
-                "min_self_delegation": "1",
+                "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper1h7j632zh3m50v5glwk556eu9c3feha4zl59y3a",
+                "validator_address": "xtcvaloper12gmhccfzvx9ewllucyqns28067hvths8eyyd97",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "Fsh/qOlR7VaI2yybeaImjaj/3TuSPqx3BPS/7ZE3yco="
+                  "key": "FqO4rexvsompnc8eXJa/zSBxUwR6tkqmGvhlN0q08Xs="
                 },
                 "value": {
-                  "denom": "xtc",
-                  "amount": "100000000000000000000000"
+                  "denom": "axtc",
+                  "amount": "5000000000000000000000000"
                 }
               }
             ],
-            "memo": "c135bf79b66db802f93c46170a48a166d24c5167@51.68.54.120:27656",
+            "memo": "09b878679a9a0788f25b6ebc7d7de2aa2fff38f3@51.68.54.120:27656",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -303,7 +331,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "Ary7u4Zi1wrdyA7LfreJux/wfF/075j6ZTM/8ete//h+"
+                  "key": "A50sNbsNnSTE+RSWUsEQQQ6bsyQho3oemIucJWDEXy6+"
                 },
                 "mode_info": {
                   "single": {
@@ -322,7 +350,71 @@
             "tip": null
           },
           "signatures": [
-            "yX4GFgjPcN+gurtGcnoIPDNOLGotZ6TKBVEBfEUBLREUeM+X1WUo3uAszGVjvVXTcPQGU2zhQQcqvnogryJZTAA="
+            "3qaUWZ+fPvK2yMO6zMnvDzRl+VlQZ0yKAKPvTKO4ELpvjboQeN5qum6GninsOcssH7V9RJCiYcZCNFYDfxM5WgE="
+          ]
+        },
+        {
+          "body": {
+            "messages": [
+              {
+                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
+                "description": {
+                  "moniker": "Xitcoin Testnet Validator 2",
+                  "identity": "",
+                  "website": "",
+                  "security_contact": "",
+                  "details": ""
+                },
+                "commission": {
+                  "rate": "0.100000000000000000",
+                  "max_rate": "0.200000000000000000",
+                  "max_change_rate": "0.010000000000000000"
+                },
+                "min_self_delegation": "5000000000000000000000000",
+                "delegator_address": "",
+                "validator_address": "xtcvaloper1tlc6jhz73vhwukjchzmh8rluxvpc952nd8c8zw",
+                "pubkey": {
+                  "@type": "/cosmos.crypto.ed25519.PubKey",
+                  "key": "0GpvhwgFuRvYG3pkEBE2yBcx0SIwFOuM1e3oCSEiBQQ="
+                },
+                "value": {
+                  "denom": "axtc",
+                  "amount": "5000000000000000000000000"
+                }
+              }
+            ],
+            "memo": "162f2ab836f249d22bce0eeb8feccbe4792e3c84@51.68.54.120:27666",
+            "timeout_height": "0",
+            "unordered": false,
+            "timeout_timestamp": null,
+            "extension_options": [],
+            "non_critical_extension_options": []
+          },
+          "auth_info": {
+            "signer_infos": [
+              {
+                "public_key": {
+                  "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
+                  "key": "A1pRYSRDPxKkAG+kNH5CDga2U+fwuLVV/rUPLln59Rax"
+                },
+                "mode_info": {
+                  "single": {
+                    "mode": "SIGN_MODE_DIRECT"
+                  }
+                },
+                "sequence": "0"
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas_limit": "200000",
+              "payer": "",
+              "granter": ""
+            },
+            "tip": null
+          },
+          "signatures": [
+            "8yMJS9C6Xeum/Pg0YlaoLjK9eDc3yx+SQFPe2oWpzmc0ob9KXaLMG5H2JLQMCCx7TvAtRVAP4e+Pc+Zcv5k3KQE="
           ]
         },
         {
@@ -342,20 +434,20 @@
                   "max_rate": "0.200000000000000000",
                   "max_change_rate": "0.010000000000000000"
                 },
-                "min_self_delegation": "1",
+                "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper18krvmewpj63kleqqudf5f5wmgjzqryzp6w4pcp",
+                "validator_address": "xtcvaloper1tk9zhd3t4pglhjzuucmpzcxezhy9snuluvj73h",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "HCKeuOpuixhFZr77Cf6+X+LG01ACD1hywXNYWJMhQzU="
+                  "key": "obgHmzuZVQygIZaiH3V1P+vI6HdkE5r2TbiWemJUr1M="
                 },
                 "value": {
-                  "denom": "xtc",
-                  "amount": "100000000000000000000000"
+                  "denom": "axtc",
+                  "amount": "5000000000000000000000000"
                 }
               }
             ],
-            "memo": "e9bf23858046dfa6a0f74f312765cc3ca43f697b@51.68.54.120:27676",
+            "memo": "3a4a6d51d676ddec1c0c1d36ea40a15a73430714@51.68.54.120:27676",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -367,7 +459,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "A64lRaZuiknXyBjjp810eU+nx4MtsVF9Dk3wk8n0d/a0"
+                  "key": "AwKwlJMUuAVCdwdTfJ9Y4hwyfOkGrBvA5MbMOQxV07GE"
                 },
                 "mode_info": {
                   "single": {
@@ -386,7 +478,7 @@
             "tip": null
           },
           "signatures": [
-            "0zGi2mugGSGWo1SzOFp7UrCE8NT8SEXdifhhekSM7ZM+8xBTP7sliCVDgAluYFJFN2a9AKJs/S3PcZnJX3ERewE="
+            "DQD7utPMIn7dT0mvuG2bSpfr5veAsWm3txe03BB8t6sbMHXTwkcZVdfJceLHOkU2meLBYqgwqD1NTwHRbfyo3AE="
           ]
         },
         {
@@ -406,20 +498,20 @@
                   "max_rate": "0.200000000000000000",
                   "max_change_rate": "0.010000000000000000"
                 },
-                "min_self_delegation": "1",
+                "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper1k5qm7sg6pzvk3gl2y7u5r7s542jhyqevka42kk",
+                "validator_address": "xtcvaloper16uuf9z53kccp38xyjmw6gfqwx5n0z5kvxgxrav",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "re5Rq41RGSYs+EuZXm1fVxc9Nxqg9s3aSHtC+UEYV+s="
+                  "key": "TtJBsNDhbGA3AdiPrDndETtpQCtfC2xWrEXKFF9f990="
                 },
                 "value": {
-                  "denom": "xtc",
-                  "amount": "100000000000000000000000"
+                  "denom": "axtc",
+                  "amount": "5000000000000000000000000"
                 }
               }
             ],
-            "memo": "f26c4c36a4a6049c4f3d709be3ccccacd28057bc@51.68.54.120:27686",
+            "memo": "4eabec189b660ce251bee7016b3b4c6ea9b2e1db@51.68.54.120:27686",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -431,7 +523,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "A9jc/6to3yVIxnxP1TxSfEdJgkfXJ0i2W9BQ9WQigEn1"
+                  "key": "ArDB7i2oIMTUCcs0vrUr/DFh2fPKWPvqvEKiB62FFT8l"
                 },
                 "mode_info": {
                   "single": {
@@ -450,7 +542,7 @@
             "tip": null
           },
           "signatures": [
-            "rt3qvLj29FwPJhl+1COp/DqXqxFQqKRS54JraxxZrBkq1XWDnYRnA3loBVuafPDLXVYQeAkwietaHKqw4jVK4gE="
+            "RZTAUcsMTb5RsIVff0AMlbT4mzSI7sDGmuV6U/pARwkj8JIy70ZxazCzJZ7BZxOd/wYtEyO0umtMkUGzM1vPxAE="
           ]
         }
       ]
@@ -466,7 +558,7 @@
       "params": {
         "min_deposit": [
           {
-            "denom": "xtc",
+            "denom": "axtc",
             "amount": "10000000"
           }
         ],
@@ -482,7 +574,7 @@
         "expedited_threshold": "0.667000000000000000",
         "expedited_min_deposit": [
           {
-            "denom": "xtc",
+            "denom": "axtc",
             "amount": "50000000"
           }
         ],
@@ -541,13 +633,13 @@
         "annual_provisions": "0.000000000000000000"
       },
       "params": {
-        "mint_denom": "xtc",
+        "mint_denom": "axtc",
         "inflation_rate_change": "0.000000000000000000",
         "inflation_max": "0.000000000000000000",
         "inflation_min": "0.000000000000000000",
         "goal_bonded": "0.670000000000000000",
         "blocks_per_year": "6311520",
-        "max_supply": "0"
+        "max_supply": "5250000000000000000000000000"
       }
     },
     "slashing": {
@@ -567,7 +659,7 @@
         "max_validators": 100,
         "max_entries": 7,
         "historical_entries": 10000,
-        "bond_denom": "xtc",
+        "bond_denom": "axtc",
         "min_commission_rate": "0.000000000000000000"
       },
       "last_total_power": "0",
@@ -589,13 +681,15 @@
     },
     "upgrade": {},
     "validator_admission": {
-      "authority": "xtc1h7j632zh3m50v5glwk556eu9c3feha4zfsrkv8",
+      "authority": "xtc1l4g4mamvunartpsj3emky7kuzn2k0v2nnxchgf",
       "approved_validators": [
-        "xtcvaloper1h7j632zh3m50v5glwk556eu9c3feha4zl59y3a",
-        "xtcvaloper14kej2dgedp4fcac7yumak7uauqes8kqjcxdrhe",
-        "xtcvaloper18krvmewpj63kleqqudf5f5wmgjzqryzp6w4pcp",
-        "xtcvaloper1k5qm7sg6pzvk3gl2y7u5r7s542jhyqevka42kk"
-      ]
+        "xtcvaloper12gmhccfzvx9ewllucyqns28067hvths8eyyd97",
+        "xtcvaloper1tlc6jhz73vhwukjchzmh8rluxvpc952nd8c8zw",
+        "xtcvaloper1tk9zhd3t4pglhjzuucmpzcxezhy9snuluvj73h",
+        "xtcvaloper16uuf9z53kccp38xyjmw6gfqwx5n0z5kvxgxrav"
+      ],
+      "max_approved_validators": 208,
+      "minimum_self_delegation": "5000000000000000000000000axtc"
     },
     "vesting": {}
   },

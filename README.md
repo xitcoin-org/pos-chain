@@ -1,45 +1,54 @@
 # Xitcoin
 
-Xitcoin is an EVM-compatible Proof-of-Stake blockchain built with the Cosmos SDK, CometBFT and Cosmos EVM.
+Xitcoin is an EVM-compatible Proof-of-Stake blockchain built with Cosmos SDK, CometBFT and Cosmos EVM.
 
-## Status
+## Network
 
-Xitcoin is under active engineering and private-testnet validation.
+| Property | Testnet | Mainnet |
+| --- | --- | --- |
+| Status | Active; coordinated reset candidate under review | Not launched |
+| Cosmos Chain ID | `xitcoin-testnet` after reset | `xitcoin` |
+| EVM Chain ID | `101089` | `101088` |
+| Native asset | XTC | XTC |
+| Atomic denomination | `axtc` | `axtc` |
+| Decimals | 18 | 18 |
 
-- Public Testnet: planned, EVM Chain ID `101089`
-- Mainnet: not launched
-- Mainnet Chain ID `101088`: reserved for the future Xitcoin public network
-- Native asset: `XTC`
-- Technical base denomination: `xtc` (18 decimals)
-- Inflation policy: 0%
-- Maximum supply policy: 5,250,000,000 XTC
-- Native EVM representation: XTC; no wrapped-XTC asset
+XTC is the native asset on both the Cosmos and EVM interfaces. The EVM interface uses the canonical native precompile; no separate wrapped-XTC token is required.
 
-No public RPC, faucet, explorer, bridge or production service is announced by this repository yet.
+## Build
 
-## Scope
+Prerequisites: Go 1.25.9, Node.js 24 and the toolchain documented by the project.
 
-This repository contains the Xitcoin chain source code and its public technical documentation.
+```bash
+git clone https://github.com/xitcoin-org/pos-chain.git
+cd pos-chain
+make build
+```
 
-It does not contain:
+Run the core validation suites:
 
-- validator keys or node keys;
-- mnemonics, passwords, backup archives or private infrastructure;
-- private testnet topology or server addresses;
-- a bridge or migration system for the existing external Xitcoin asset on Cronos.
+```bash
+go test ./x/validatoradmission/...
+go test ./x/bridge/...
+go test ./evmd/config
+go test ./evmd/cmd/evmd/cmd
+go test -tags test ./evmd/tests/integration/precompiles/werc20
+```
 
-## Public Testnet
+## Documentation
 
-The future public testnet will use Chain ID `101089`. It will have a new genesis, separate validator keys and dedicated public infrastructure. The current private testnet is deliberately isolated and will never be exposed as the public testnet.
+- [Network identity](XITCOIN-NETWORK-IDENTITY.md)
+- [Testnet](docs/testnet.md)
+- [Testnet operations](docs/testnet-operations.md)
+- [Bridge architecture](docs/bridge-architecture.md)
+- [Bridge acceptance tests](docs/bridge-testnet-acceptance.md)
+- [Validator admission](docs/validator-admission.md)
+- [Development](docs/development.md)
 
-See [Public Testnet 101089](docs/public-testnet-101089.md).
+## Contributing
 
-## Development
-
-The chain is derived from the Cosmos EVM stack. Upstream attribution, licensing and maintenance references are listed in [UPSTREAMS.md](UPSTREAMS.md).
-
-Before contributing, read [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes. Security reports follow the process in [SECURITY.md](SECURITY.md).
 
 ## License
 
-The source code is distributed under the [Apache License 2.0](LICENSE).
+Licensed under the [Apache License 2.0](LICENSE).

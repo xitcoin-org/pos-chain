@@ -8,7 +8,7 @@ import (
 
 const (
 	DefaultMaxApprovedValidators uint32 = 208
-	DefaultMinimumSelfDelegation        = "5000000000000000000000000xtc"
+	DefaultMinimumSelfDelegation        = "5000000000000000000000000axtc"
 )
 
 func ValidatePolicy(maxApprovedValidators uint32, minimumSelfDelegation string) error {
@@ -20,8 +20,8 @@ func ValidatePolicy(maxApprovedValidators uint32, minimumSelfDelegation string) 
 	if err != nil {
 		return fmt.Errorf("invalid minimum self delegation: %w", err)
 	}
-	if coin.Denom != "xtc" {
-		return fmt.Errorf("minimum self delegation must use xtc")
+	if coin.Denom != "axtc" {
+		return fmt.Errorf("minimum self delegation must use axtc")
 	}
 	if !coin.IsValid() || !coin.IsPositive() {
 		return fmt.Errorf("minimum self delegation must be positive")

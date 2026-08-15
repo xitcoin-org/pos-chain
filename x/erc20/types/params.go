@@ -24,6 +24,6 @@ func NewParams(
 func DefaultParams() Params {
 	return Params{
 		EnableErc20:                true,
-		PermissionlessRegistration: true,
+		PermissionlessRegistration: false,
 	}
 }

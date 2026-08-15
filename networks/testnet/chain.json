@@ -1,21 +1,21 @@
 {
   "name": "Xitcoin Testnet",
   "status": "planned",
-  "cosmos_chain_id": "xitcoin-testnet-2026-1",
+  "cosmos_chain_id": "xitcoin-testnet",
   "evm_chain_id": 101089,
   "evm_chain_id_hex": "0x18ae1",
   "native_currency": {
     "name": "Xitcoin",
     "symbol": "XTC",
     "decimals": 18,
-    "base_denom": "xtc"
+    "base_denom": "axtc"
   },
   "rpc": [],
   "explorers": [],
   "faucets": [],
   "genesis": {
-    "file": null,
-    "sha256": null
+    "file": "genesis.json",
+    "sha256": "818096564a458b68ddd56ac95592ec7bac64c88f6fcbb9742cd39114229884b0"
   },
   "notes": [
     "No public endpoint is announced until the public testnet launch checklist is complete.",
