@@ -1,6 +1,7 @@
 package bridge
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -16,6 +17,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
+	"github.com/xitcoin-org/pos-chain/x/bridge/client/cli"
 	"github.com/xitcoin-org/pos-chain/x/bridge/keeper"
 	"github.com/xitcoin-org/pos-chain/x/bridge/types"
 )
@@ -51,10 +53,14 @@ func (AppModuleBasic) ValidateGenesis(_ codec.JSONCodec, _ client.TxEncodingConf
 	}
 	return state.Validate()
 }
-func (AppModuleBasic) RegisterRESTRoutes(_ client.Context, _ *mux.Router)              {}
-func (AppModuleBasic) RegisterGRPCGatewayRoutes(_ client.Context, _ *runtime.ServeMux) {}
-func (AppModuleBasic) GetQueryCmd() *cobra.Command                                     { return nil }
-func (AppModuleBasic) ConsensusVersion() uint64                                        { return consensusVersion }
+func (AppModuleBasic) RegisterRESTRoutes(_ client.Context, _ *mux.Router) {}
+func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, serveMux *runtime.ServeMux) {
+	if err := types.RegisterQueryHandlerClient(context.Background(), serveMux, types.NewQueryClient(clientCtx)); err != nil {
+		panic(err)
+	}
+}
+func (AppModuleBasic) GetQueryCmd() *cobra.Command { return cli.GetQueryCmd() }
+func (AppModuleBasic) ConsensusVersion() uint64    { return consensusVersion }
 
 type AppModule struct {
 	AppModuleBasic
@@ -66,6 +72,7 @@ func NewAppModule(k keeper.Keeper) AppModule {
 }
 func (AppModule) Name() string { return types.ModuleName }
 func (am AppModule) RegisterServices(cfg module.Configurator) {
+	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
 	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServer(am.keeper))
 }
 func (am AppModule) InitGenesis(ctx sdk.Context, _ codec.JSONCodec, data json.RawMessage) []abci.ValidatorUpdate {
