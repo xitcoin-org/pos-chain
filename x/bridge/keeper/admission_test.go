@@ -37,7 +37,8 @@ func TestAdmitAttestationRequiresMatchingEnabledRouteAndTwoSignatures(t *testing
 		RouteID:           "cronos-testnet-xitcoin-testnet",
 		BridgeSigners:     []string{crypto.PubkeyToAddress(first.PublicKey).Hex(), crypto.PubkeyToAddress(second.PublicKey).Hex(), crypto.PubkeyToAddress(third.PublicKey).Hex()},
 		Guardian:          crypto.PubkeyToAddress(guardian.PublicKey).Hex(),
-		MaxTransferAmount: "10", DailyLimit: "15", Enabled: true,
+		MaxTransferAmount: "10", DailyLimit: "15",
+		MaxOutstandingAmount: "1000000000000000000000000000", Enabled: true,
 	}
 	attestation := types.Attestation{
 		RouteID: config.RouteID, Direction: types.DirectionCronosToXitcoin,
@@ -92,7 +93,7 @@ func TestAdmitAttestationRejectsDisabledOrMismatchedRouteWithoutRecording(t *tes
 	if err != nil {
 		t.Fatal(err)
 	}
-	config := types.RouteConfig{RouteID: "cronos-testnet-xitcoin-testnet", BridgeSigners: []string{crypto.PubkeyToAddress(first.PublicKey).Hex(), crypto.PubkeyToAddress(second.PublicKey).Hex(), crypto.PubkeyToAddress(third.PublicKey).Hex()}, Guardian: crypto.PubkeyToAddress(guardian.PublicKey).Hex(), MaxTransferAmount: "10", DailyLimit: "15"}
+	config := types.RouteConfig{RouteID: "cronos-testnet-xitcoin-testnet", BridgeSigners: []string{crypto.PubkeyToAddress(first.PublicKey).Hex(), crypto.PubkeyToAddress(second.PublicKey).Hex(), crypto.PubkeyToAddress(third.PublicKey).Hex()}, Guardian: crypto.PubkeyToAddress(guardian.PublicKey).Hex(), MaxTransferAmount: "10", DailyLimit: "15", MaxOutstandingAmount: "100"}
 	attestation := types.Attestation{RouteID: config.RouteID, Direction: types.DirectionCronosToXitcoin, SourceChainID: "cronos-testnet", SourceRef: "0x" + strings.Repeat("b", 64), Nonce: 1, Destination: "xitcoin1testdestination", Amount: "1", DeadlineUnix: 1800003600}
 
 	if _, err := k.AdmitAttestation(ctx, config, attestation, nil); err != ErrRouteDisabled {

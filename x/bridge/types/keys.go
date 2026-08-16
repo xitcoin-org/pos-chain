@@ -6,3 +6,8 @@ const (
 )
 
 var KeyProcessedAttestationPrefix = []byte{0x01}
+
+var (
+	KeyOutstandingAmount = []byte{0x07}
+	KeyOutboundNonce     = []byte{0x08}
+)

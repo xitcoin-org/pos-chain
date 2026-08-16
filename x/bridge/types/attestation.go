@@ -1,5 +1,4 @@
-// Package types contains testnet-only bridge message primitives.
-// It has no bank, minting, reserve, or transfer capability.
+// Package types contains bridge admission and settlement primitives.
 package types
 
 import (

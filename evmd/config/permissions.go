@@ -9,12 +9,13 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
+	corevm "github.com/ethereum/go-ethereum/core/vm"
 	cosmosevmutils "github.com/xitcoin-org/pos-chain/utils"
+	bridgetypes "github.com/xitcoin-org/pos-chain/x/bridge/types"
 	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
 	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
 	vmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
-	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
-	corevm "github.com/ethereum/go-ethereum/core/vm"
 )
 
 // BlockedAddresses returns all the app's blocked account addresses.
@@ -63,6 +64,7 @@ var maccPerms = map[string][]string{
 	vmtypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 	feemarkettypes.ModuleName: nil,
 	erc20types.ModuleName:     {authtypes.Minter, authtypes.Burner},
+	bridgetypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 }
 
 // GetMaccPerms returns a copy of the module account permissions
