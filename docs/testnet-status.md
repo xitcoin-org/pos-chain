@@ -12,17 +12,23 @@
 | Faucet | Active | `https://faucet-testnet.xitcoin.org` |
 | Bridge route | Disabled | — |
 
-## Network transition
+## Canonical network configuration
 
-The running testnet and the coordinated-reset candidate are distinct states.
+The public testnet release is defined by one canonical network identity. Deployment and activation are coordinated operational procedures and do not alter these identifiers.
 
-| State | Cosmos Chain ID | Genesis SHA-256 |
-| --- | --- | --- |
-| Current network | `xitcoin-testnet-2026-1` | `626f034f92f30cc6016b0175ea7b84e3f4b4b79543aea76352eeffc050d69a04` |
-| Reset candidate | `xitcoin-testnet` | `818096564a458b68ddd56ac95592ec7bac64c88f6fcbb9742cd39114229884b0` |
+| Parameter | Canonical value |
+| --- | --- |
+| Cosmos Chain ID | `xitcoin-testnet` |
+| EVM Chain ID | `101089` (`0x18ae1`) |
+| Genesis SHA-256 | `818096564a458b68ddd56ac95592ec7bac64c88f6fcbb9742cd39114229884b0` |
+| Bridge route | Disabled until operational authorization |
 
-The candidate includes the `axtc` atomic denomination, zero inflation, the declared supply ceiling and the native XTC EVM representation. It is not active until the coordinated reset is completed.
+The canonical genesis defines the `axtc` atomic denomination, zero inflation, the declared supply ceiling and the native XTC EVM representation. Operators must verify the complete genesis SHA-256 before installation or activation.
+
+## Activation status
+
+The canonical release becomes active only through the coordinated testnet release procedure. Publication of the configuration does not authorize validator replacement, bridge activation, contract deployment or asset transfers.
 
 ## Verification
 
-Use the commands in [Testnet Operations](testnet-operations.md) to query the live network and verify the candidate genesis. Testnet XTC has no monetary value.
+Use the commands in [Testnet Operations](testnet-operations.md) to verify the active network and the canonical genesis independently. Testnet XTC has no monetary value.
