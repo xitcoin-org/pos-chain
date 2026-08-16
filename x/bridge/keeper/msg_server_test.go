@@ -1,11 +1,13 @@
 package keeper
 
 import (
+	"bytes"
 	"encoding/hex"
 	"strings"
 	"testing"
 	"time"
 
+	sdkmath "cosmossdk.io/math"
 	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 	sdktestutil "github.com/cosmos/cosmos-sdk/testutil"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -17,7 +19,10 @@ import (
 func TestSubmitAttestationRejectsDefaultUnconfiguredBridge(t *testing.T) {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_msg_disabled_test")).WithBlockTime(time.Unix(1800000000, 0))
-	k := NewKeeper(key)
+	k, err := NewSettlementKeeper(key, &fakeBankKeeper{supply: sdkmath.ZeroInt()}, "axtc", "1000")
+	if err != nil {
+		t.Fatal(err)
+	}
 	msg := validBridgeMessage(t, "cronos-testnet-xitcoin-testnet", nil)
 
 	if _, err := NewMsgServer(k).SubmitAttestation(sdk.WrapSDKContext(ctx), &msg); err != ErrRouteDisabled {
@@ -28,7 +33,11 @@ func TestSubmitAttestationRejectsDefaultUnconfiguredBridge(t *testing.T) {
 func TestSubmitAttestationRecordsOnlyApprovedAttestation(t *testing.T) {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_msg_admit_test")).WithBlockTime(time.Unix(1800000000, 0))
-	k := NewKeeper(key)
+	bank := &fakeBankKeeper{supply: sdkmath.ZeroInt()}
+	k, err := NewSettlementKeeper(key, bank, "axtc", "1000")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	first, err := crypto.GenerateKey()
 	if err != nil {
@@ -47,12 +56,13 @@ func TestSubmitAttestationRecordsOnlyApprovedAttestation(t *testing.T) {
 		t.Fatal(err)
 	}
 	config := types.RouteConfig{
-		RouteID:           "cronos-testnet-xitcoin-testnet",
-		BridgeSigners:     []string{crypto.PubkeyToAddress(first.PublicKey).Hex(), crypto.PubkeyToAddress(second.PublicKey).Hex(), crypto.PubkeyToAddress(third.PublicKey).Hex()},
-		Guardian:          crypto.PubkeyToAddress(guardian.PublicKey).Hex(),
-		MaxTransferAmount: "10",
-		DailyLimit:        "15",
-		Enabled:           true,
+		RouteID:              "cronos-testnet-xitcoin-testnet",
+		BridgeSigners:        []string{crypto.PubkeyToAddress(first.PublicKey).Hex(), crypto.PubkeyToAddress(second.PublicKey).Hex(), crypto.PubkeyToAddress(third.PublicKey).Hex()},
+		Guardian:             crypto.PubkeyToAddress(guardian.PublicKey).Hex(),
+		MaxTransferAmount:    "10",
+		DailyLimit:           "15",
+		MaxOutstandingAmount: "1000000000000000000000000000",
+		Enabled:              true,
 	}
 	if err := k.SetRouteConfig(ctx, config); err != nil {
 		t.Fatal(err)
@@ -98,7 +108,7 @@ func validBridgeMessage(t *testing.T, routeID string, signatures [][]byte) types
 		SourceChainId: "cronos-testnet",
 		SourceRef:     "0x" + strings.Repeat("c", 64),
 		Nonce:         1,
-		Destination:   "xitcoin1testdestination",
+		Destination:   sdk.AccAddress(bytes.Repeat([]byte{1}, 20)).String(),
 		Amount:        "10",
 		DeadlineUnix:  1800003600,
 		Signatures:    signatures,

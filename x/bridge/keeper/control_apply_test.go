@@ -26,11 +26,12 @@ func controlledRouteConfig(t *testing.T) (types.RouteConfig, []*ecdsa.PrivateKey
 		signers[i] = crypto.PubkeyToAddress(key.PublicKey).Hex()
 	}
 	return types.RouteConfig{
-		RouteID:           "cronos-testnet-xitcoin-testnet",
-		BridgeSigners:     signers,
-		Guardian:          common.HexToAddress("0x0000000000000000000000000000000000000004").Hex(),
-		MaxTransferAmount: "1000000000000000000",
-		DailyLimit:        "5000000000000000000",
+		RouteID:              "cronos-testnet-xitcoin-testnet",
+		BridgeSigners:        signers,
+		Guardian:             common.HexToAddress("0x0000000000000000000000000000000000000004").Hex(),
+		MaxTransferAmount:    "1000000000000000000",
+		DailyLimit:           "5000000000000000000",
+		MaxOutstandingAmount: "1000000000000000000000000000",
 	}, keys
 }
 

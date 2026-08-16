@@ -32,7 +32,8 @@ func pausedRouteForResume(t *testing.T) (sdkContext sdk.Context, k Keeper, confi
 	config = types.RouteConfig{
 		RouteID: "cronos-testnet-xitcoin-testnet", BridgeSigners: signers,
 		Guardian:          common.HexToAddress("0x0000000000000000000000000000000000000004").Hex(),
-		MaxTransferAmount: "10", DailyLimit: "15", Enabled: true,
+		MaxTransferAmount: "10", DailyLimit: "15",
+		MaxOutstandingAmount: "1000000000000000000000000000", Enabled: true,
 	}
 	sdkContext.KVStore(key).Set(routeStateKey, []byte(`{"paused":true}`))
 	return sdkContext, k, config, keys

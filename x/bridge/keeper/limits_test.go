@@ -18,10 +18,11 @@ func limitsConfig() types.RouteConfig {
 			"0x0000000000000000000000000000000000000002",
 			"0x0000000000000000000000000000000000000003",
 		},
-		Guardian:          "0x0000000000000000000000000000000000000004",
-		MaxTransferAmount: "10",
-		DailyLimit:        "15",
-		Enabled:           true,
+		Guardian:             "0x0000000000000000000000000000000000000004",
+		MaxTransferAmount:    "10",
+		DailyLimit:           "15",
+		MaxOutstandingAmount: "1000000000000000000000000000",
+		Enabled:              true,
 	}
 }
 

@@ -18,6 +18,7 @@ var (
 )
 
 const submitAttestationName = "xitcoin/bridge/MsgSubmitAttestation"
+const initiateOutboundTransferName = "xitcoin/bridge/MsgInitiateOutboundTransfer"
 
 func init() {
 	RegisterLegacyAminoCodec(amino)
@@ -29,6 +30,7 @@ func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterImplementations(
 		(*sdk.Msg)(nil),
 		&MsgSubmitAttestation{},
+		&MsgInitiateOutboundTransfer{},
 	)
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }
@@ -36,4 +38,5 @@ func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 // RegisterLegacyAminoCodec supports legacy sign bytes.
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSubmitAttestation{}, submitAttestationName, nil)
+	cdc.RegisterConcrete(&MsgInitiateOutboundTransfer{}, initiateOutboundTransferName, nil)
 }

@@ -11,12 +11,13 @@ import (
 // RouteConfig is the testnet route's immutable-format configuration.
 // Changes must later be authorized through a verified 2-of-3 message.
 type RouteConfig struct {
-	RouteID           string   `json:"route_id"`
-	BridgeSigners     []string `json:"bridge_signers"`
-	Guardian          string   `json:"guardian"`
-	MaxTransferAmount string   `json:"max_transfer_amount"`
-	DailyLimit        string   `json:"daily_limit"`
-	Enabled           bool     `json:"enabled"`
+	RouteID              string   `json:"route_id"`
+	BridgeSigners        []string `json:"bridge_signers"`
+	Guardian             string   `json:"guardian"`
+	MaxTransferAmount    string   `json:"max_transfer_amount"`
+	DailyLimit           string   `json:"daily_limit"`
+	MaxOutstandingAmount string   `json:"max_outstanding_amount"`
+	Enabled              bool     `json:"enabled"`
 }
 
 func (c RouteConfig) Validate() error {
@@ -40,6 +41,9 @@ func (c RouteConfig) Validate() error {
 	}
 	if !positiveAmount(c.DailyLimit) {
 		return errors.New("daily limit must be positive")
+	}
+	if !positiveAmount(c.MaxOutstandingAmount) {
+		return errors.New("max outstanding amount must be positive")
 	}
 	return nil
 }

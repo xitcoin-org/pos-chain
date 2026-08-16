@@ -31,3 +31,19 @@ func TestMsgSubmitAttestationValidateBasic(t *testing.T) {
 		t.Fatal("invalid submitter accepted")
 	}
 }
+
+func TestMsgInitiateOutboundTransferValidateBasic(t *testing.T) {
+	msg := MsgInitiateOutboundTransfer{
+		Sender:      sdk.AccAddress(make([]byte, 20)).String(),
+		RouteId:     "cronos-testnet-xitcoin-testnet",
+		Destination: "0x0000000000000000000000000000000000000001",
+		Amount:      "1",
+	}
+	if err := msg.ValidateBasic(); err != nil {
+		t.Fatalf("valid outbound transfer rejected: %v", err)
+	}
+	msg.Sender = "not-an-address"
+	if err := msg.ValidateBasic(); err == nil {
+		t.Fatal("invalid outbound sender accepted")
+	}
+}

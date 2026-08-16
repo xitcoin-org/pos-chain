@@ -349,8 +349,11 @@ func NewExampleApp(
 		keys[validatoradmissiontypes.StoreKey],
 	)
 
-	app.BridgeKeeper = bridgekeeper.NewKeeper(
+	app.BridgeKeeper = bridgekeeper.MustNewSettlementKeeper(
 		keys[bridgetypes.StoreKey],
+		app.BankKeeper,
+		evmconfig.NativeDenom,
+		evmconfig.MaximumSupplyAtomic,
 	)
 
 	app.MintKeeper = mintkeeper.NewKeeper(

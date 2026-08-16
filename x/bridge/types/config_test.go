@@ -10,10 +10,11 @@ func validRouteConfig() RouteConfig {
 			"0x0000000000000000000000000000000000000002",
 			"0x0000000000000000000000000000000000000003",
 		},
-		Guardian:          "0x0000000000000000000000000000000000000004",
-		MaxTransferAmount: "1000000000000000000",
-		DailyLimit:        "5000000000000000000",
-		Enabled:           false,
+		Guardian:             "0x0000000000000000000000000000000000000004",
+		MaxTransferAmount:    "1000000000000000000",
+		DailyLimit:           "5000000000000000000",
+		MaxOutstandingAmount: "1000000000000000000000000000",
+		Enabled:              false,
 	}
 }
 
