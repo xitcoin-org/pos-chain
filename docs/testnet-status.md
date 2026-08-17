@@ -20,7 +20,7 @@ The public testnet release is defined by one canonical network identity. Deploym
 | --- | --- |
 | Cosmos Chain ID | `xitcoin-testnet` |
 | EVM Chain ID | `101089` (`0x18ae1`) |
-| Genesis SHA-256 | `818096564a458b68ddd56ac95592ec7bac64c88f6fcbb9742cd39114229884b0` |
+| Genesis SHA-256 | `234f25a451e618c53a38efacb732484060b6d06a49f3c0e279ae026e693b744a` |
 | Bridge route | Disabled until operational authorization |
 
 The canonical genesis defines the `axtc` atomic denomination, zero inflation, the declared supply ceiling and the native XTC EVM representation. Operators must verify the complete genesis SHA-256 before installation or activation.
