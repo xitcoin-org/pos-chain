@@ -15,7 +15,7 @@
   "faucets": [],
   "genesis": {
     "file": "genesis.json",
-    "sha256": "818096564a458b68ddd56ac95592ec7bac64c88f6fcbb9742cd39114229884b0"
+    "sha256": "234f25a451e618c53a38efacb732484060b6d06a49f3c0e279ae026e693b744a"
   },
   "notes": [
     "Endpoint entries remain empty until this reset candidate is activated; current public endpoints continue serving the existing testnet.",
