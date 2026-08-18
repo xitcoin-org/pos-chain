@@ -656,7 +656,7 @@
     "staking": {
       "params": {
         "unbonding_time": "1814400s",
-        "max_validators": 100,
+        "max_validators": 258,
         "max_entries": 7,
         "historical_entries": 10000,
         "bond_denom": "axtc",
@@ -688,8 +688,8 @@
         "xtcvaloper1kplz0cp5w0r6nef4u43xrd27nmt6umzhvav35a",
         "xtcvaloper1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqcvh8hc"
       ],
-      "max_approved_validators": 208,
-      "minimum_self_delegation": "5000000000000000000000000axtc"
+      "max_approved_validators": 258,
+      "minimum_self_delegation": "1000000000000000000000000axtc"
     },
     "vesting": {}
   },
