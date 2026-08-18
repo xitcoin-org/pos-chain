@@ -5,5 +5,5 @@ const (
 	DefaultNodeHomeName        = ".xitcoind"
 	NativeDenom                = "axtc"
 	MaximumSupplyAtomic        = "5250000000000000000000000000"
-	TestnetEVMChainID   uint64 = 20260807
+	TestnetEVMChainID   uint64 = 101089
 )
