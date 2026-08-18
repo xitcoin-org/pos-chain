@@ -35,7 +35,7 @@ sha256sum -c genesis.sha256
 Expected SHA-256:
 
 ```text
-234f25a451e618c53a38efacb732484060b6d06a49f3c0e279ae026e693b744a
+7cc719c3d6a435b6972fd568365eb41ae81ff1e614be8e11d4029ee218318f10
 ```
 
 The candidate becomes authoritative only after the coordinated reset is announced and completed. Until then, public endpoints continue to report the active network state.

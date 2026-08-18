@@ -18,7 +18,7 @@
       "accounts": [
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc18m6nqjrgsjxhlp4cmquhqauhved3df27gdf269",
+          "address": "xtc1f7xdfjpnnj7pde86f56gnvvpm5xqvhxap6g6qr",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
@@ -118,7 +118,7 @@
           ]
         },
         {
-          "address": "xtc18m6nqjrgsjxhlp4cmquhqauhved3df27gdf269",
+          "address": "xtc1f7xdfjpnnj7pde86f56gnvvpm5xqvhxap6g6qr",
           "coins": [
             {
               "denom": "axtc",
@@ -500,10 +500,10 @@
                 },
                 "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper18m6nqjrgsjxhlp4cmquhqauhved3df277f0c8l",
+                "validator_address": "xtcvaloper1f7xdfjpnnj7pde86f56gnvvpm5xqvhxah7wgae",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "CLT5bWCPyIb7cf9ZpKBsZO12VCxeQGVMuMNLD2513sg="
+                  "key": "xYpu3s6v9zvhDWPUehEW+JM/8Gif1NuDVmn/SEC03E8="
                 },
                 "value": {
                   "denom": "axtc",
@@ -511,7 +511,7 @@
                 }
               }
             ],
-            "memo": "ed814a74fda95439ee4c802e1661b2946a854f07@51.68.54.120:26656",
+            "memo": "46174f39d1f79014824eeafcfad7871d2c5b9903@37.59.118.87:26656",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -523,7 +523,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "Asy4rbIPvMze32kj4nSCAsxWpFzVIrVzJOjhXB0lo/uh"
+                  "key": "Aia8CWBagAqKHu0q4QoF8uDrOEAGTMAOXbivsdAGurzy"
                 },
                 "mode_info": {
                   "single": {
@@ -542,7 +542,7 @@
             "tip": null
           },
           "signatures": [
-            "+PJCbDXMfaJTqU1mJS7yQ8B4zhuoY2lwufjO7q4w5mFbjg7DUJFwxST/xmuyzaMwkUhlMg2FPzX4J96RmVSd8AA="
+            "egUrKOm6R4u3/6qki1VXn5pFczaKiyoSegt4P9Z3oigskcfGj2FeuIglpJM8e+gugANxE+nIZHfc1LqZSMpr6AE="
           ]
         }
       ]
@@ -683,7 +683,7 @@
     "validator_admission": {
       "authority": "xtc1l4g4mamvunartpsj3emky7kuzn2k0v2nnxchgf",
       "approved_validators": [
-        "xtcvaloper18m6nqjrgsjxhlp4cmquhqauhved3df277f0c8l",
+        "xtcvaloper1f7xdfjpnnj7pde86f56gnvvpm5xqvhxah7wgae",
         "xtcvaloper19tztlxxa8nc2q7asl73tpvkrjf2zt0tl8yfcqt",
         "xtcvaloper1kplz0cp5w0r6nef4u43xrd27nmt6umzhvav35a",
         "xtcvaloper1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqcvh8hc"
