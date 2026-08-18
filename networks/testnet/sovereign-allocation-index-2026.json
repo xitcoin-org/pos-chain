@@ -1,0 +1,21 @@
+{
+  "consolidated_statistical_records": 39,
+  "demographic_pool_atomic": "97500000000000000000000000",
+  "demographic_weight_percent": 25,
+  "equal_pool_atomic": "292500000000000000000000000",
+  "equal_weight_percent": 75,
+  "population_date": "2026-07-01",
+  "population_transformation": "square_root",
+  "position_count": 195,
+  "reference_year": 2026,
+  "reserve_atomic": "390000000000000000000000000",
+  "reserve_xtc": "390000000.000000000000000000",
+  "source_sha256": "98e34d9b65b53858cd08a57a566e45050b08093ad85ba5714fe6fbd78055ae6d",
+  "un_member_positions": 193,
+  "un_observer_state_positions": 2,
+  "unassigned_statistical_records": [
+    "COK",
+    "ESH",
+    "NIU"
+  ]
+}
