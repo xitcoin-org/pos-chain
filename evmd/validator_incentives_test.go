@@ -5,7 +5,6 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
 	evmconfig "github.com/xitcoin-org/pos-chain/evmd/config"
@@ -48,10 +47,6 @@ func TestValidatorIncentivesWiring(t *testing.T) {
 		validatorincentivestypes.TreasuryAccountName,
 	)
 	require.NotEmpty(t, treasuryAddress)
-	require.True(
-		t,
-		evmconfig.BlockedAddresses()[
-			sdk.AccAddress(treasuryAddress).String()
-		],
-	)
+	blockedAddresses := evmconfig.BlockedAddresses()
+	require.True(t, blockedAddresses[treasuryAddress.String()])
 }
