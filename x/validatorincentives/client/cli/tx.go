@@ -106,7 +106,7 @@ func NewActivateFundedPeriodCmd() *cobra.Command {
 			}
 
 			msg := &types.MsgActivateFundedPeriod{
-				Authority: clientCtx.GetFromAddress().String(),
+				Authority:                   clientCtx.GetFromAddress().String(),
 				CommittedAnnualBudgetAtomic: args[0],
 			}
 			if err := msg.ValidateBasic(); err != nil {
