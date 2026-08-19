@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	evmaddress "github.com/xitcoin-org/pos-chain/encoding/address"
+	evmconfig "github.com/xitcoin-org/pos-chain/evmd/config"
 	"github.com/xitcoin-org/pos-chain/precompiles/gov"
 	testconstants "github.com/xitcoin-org/pos-chain/testutil/constants"
 	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
@@ -17,12 +18,24 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/bech32"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 )
+
+func canonicalAccountAddress(address sdk.AccAddress) string {
+	encoded, err := bech32.ConvertAndEncode(
+		evmconfig.Bech32PrefixAccAddr,
+		address,
+	)
+	if err != nil {
+		panic(err)
+	}
+	return encoded
+}
 
 type PrecompileTestSuite struct {
 	suite.Suite
@@ -73,7 +86,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 		Metadata:      "ipfs://CID",
 		Title:         "test prop",
 		Summary:       "test prop",
-		Proposer:      keyring.GetAccAddr(0).String(),
+		Proposer:      canonicalAccountAddress(keyring.GetAccAddr(0)),
 		Messages:      []*types.Any{anyMessage},
 	}
 
@@ -93,13 +106,13 @@ func (s *PrecompileTestSuite) SetupTest() {
 		Metadata:      "ipfs://CID",
 		Title:         "test prop",
 		Summary:       "test prop",
-		Proposer:      keyring.GetAccAddr(1).String(),
+		Proposer:      canonicalAccountAddress(keyring.GetAccAddr(1)),
 		Messages:      []*types.Any{anyMessage},
 	}
 
 	bankGen := banktypes.DefaultGenesisState()
 	bankGen.Balances = []banktypes.Balance{{
-		Address: authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		Address: canonicalAccountAddress(authtypes.NewModuleAddress(govtypes.ModuleName)),
 		Coins:   sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(200))),
 	}}
 	govGen := govv1.DefaultGenesisState()
@@ -107,17 +120,17 @@ func (s *PrecompileTestSuite) SetupTest() {
 	govGen.Deposits = []*govv1.Deposit{
 		{
 			ProposalId: 1,
-			Depositor:  keyring.GetAccAddr(0).String(),
+			Depositor:  canonicalAccountAddress(keyring.GetAccAddr(0)),
 			Amount:     sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(100))),
 		},
 		{
 			ProposalId: 2,
-			Depositor:  keyring.GetAccAddr(1).String(),
+			Depositor:  canonicalAccountAddress(keyring.GetAccAddr(1)),
 			Amount:     sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(100))),
 		},
 	}
 	govGen.Params.MinDeposit = sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(100)))
-	govGen.Params.ProposalCancelDest = keyring.GetAccAddr(2).String()
+	govGen.Params.ProposalCancelDest = canonicalAccountAddress(keyring.GetAccAddr(2))
 	govGen.Proposals = append(govGen.Proposals, prop)
 	govGen.Proposals = append(govGen.Proposals, prop2)
 	customGen[govtypes.ModuleName] = govGen
