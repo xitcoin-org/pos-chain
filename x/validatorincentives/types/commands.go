@@ -29,8 +29,8 @@ func (c UpdateParamsCommand) ValidateBasic() error {
 // reward period. Amounts are canonical base-10 atomic axtc strings.
 type ActivatePeriodCommand struct {
 	Authority                   string
-	EligibleBondedAtomic         string
-	TreasuryBalanceAtomic        string
+	EligibleBondedAtomic        string
+	TreasuryBalanceAtomic       string
 	CommittedAnnualBudgetAtomic string
 }
 

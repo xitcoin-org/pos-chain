@@ -34,8 +34,8 @@ func TestUpdateParamsCommandValidation(t *testing.T) {
 func TestActivatePeriodCommandValidation(t *testing.T) {
 	command := ActivatePeriodCommand{
 		Authority:                   commandAuthority(),
-		EligibleBondedAtomic:         "2000000000000000000000000000",
-		TreasuryBalanceAtomic:        "100000000000000000000000000",
+		EligibleBondedAtomic:        "2000000000000000000000000000",
+		TreasuryBalanceAtomic:       "100000000000000000000000000",
 		CommittedAnnualBudgetAtomic: "160000000000000000000000000",
 	}
 	require.NoError(t, command.ValidateBasic())
@@ -50,8 +50,8 @@ func TestActivatePeriodCommandValidation(t *testing.T) {
 func TestActivatePeriodCommandRejectsInvalidAmounts(t *testing.T) {
 	base := ActivatePeriodCommand{
 		Authority:                   commandAuthority(),
-		EligibleBondedAtomic:         "1",
-		TreasuryBalanceAtomic:        "1",
+		EligibleBondedAtomic:        "1",
+		TreasuryBalanceAtomic:       "1",
 		CommittedAnnualBudgetAtomic: "1",
 	}
 
