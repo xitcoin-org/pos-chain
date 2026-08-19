@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 
-	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 	sdkmath "cosmossdk.io/math"
+	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
