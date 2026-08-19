@@ -7,7 +7,7 @@ Xitcoin is an EVM-compatible Proof-of-Stake blockchain built with Cosmos SDK, Co
 | Property | Testnet | Mainnet |
 | --- | --- | --- |
 | Status | Active; coordinated reset candidate under review | Not launched |
-| Cosmos Chain ID | `xitcoin-testnet` after reset | `xitcoin` |
+| Cosmos Chain ID | `xitcoin-testnet-1` after reset | `xitcoin` |
 | EVM Chain ID | `101089` | `101088` |
 | Native asset | XTC | XTC |
 | Atomic denomination | `axtc` | `axtc` |

@@ -1,8 +1,8 @@
 {
   "app_name": "<appd>",
   "app_version": "",
-  "genesis_time": "2026-08-10T12:50:02.541094542Z",
-  "chain_id": "xitcoin-testnet",
+  "genesis_time": "2026-08-19T08:13:40Z",
+  "chain_id": "xitcoin-testnet-1",
   "initial_height": 1,
   "app_hash": null,
   "app_state": {
@@ -18,28 +18,28 @@
       "accounts": [
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc1f7xdfjpnnj7pde86f56gnvvpm5xqvhxap6g6qr",
+          "address": "xtc1p3j6unyzc8g7rx5kkeera0xhmd9ps9mnqzr7av",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc19tztlxxa8nc2q7asl73tpvkrjf2zt0tl3q02a3",
+          "address": "xtc1ak5jx9svd220csl42vymp6q5dw90nmpl28eptz",
           "pub_key": null,
           "account_number": "1",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqwg342z",
+          "address": "xtc1zuru3nycmng85kvl6zk9zgujryn0lf7x8f7cqy",
           "pub_key": null,
           "account_number": "2",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "xtc1kplz0cp5w0r6nef4u43xrd27nmt6umzh6e2rf8",
+          "address": "xtc1qmmvts8jqay7rm86x26x47ze9cac0n69q5afyf",
           "pub_key": null,
           "account_number": "3",
           "sequence": "0"
@@ -118,7 +118,7 @@
           ]
         },
         {
-          "address": "xtc1f7xdfjpnnj7pde86f56gnvvpm5xqvhxap6g6qr",
+          "address": "xtc1p3j6unyzc8g7rx5kkeera0xhmd9ps9mnqzr7av",
           "coins": [
             {
               "denom": "axtc",
@@ -127,7 +127,7 @@
           ]
         },
         {
-          "address": "xtc1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqwg342z",
+          "address": "xtc1zuru3nycmng85kvl6zk9zgujryn0lf7x8f7cqy",
           "coins": [
             {
               "denom": "axtc",
@@ -136,7 +136,7 @@
           ]
         },
         {
-          "address": "xtc19tztlxxa8nc2q7asl73tpvkrjf2zt0tl3q02a3",
+          "address": "xtc1ak5jx9svd220csl42vymp6q5dw90nmpl28eptz",
           "coins": [
             {
               "denom": "axtc",
@@ -154,7 +154,7 @@
           ]
         },
         {
-          "address": "xtc1kplz0cp5w0r6nef4u43xrd27nmt6umzh6e2rf8",
+          "address": "xtc1qmmvts8jqay7rm86x26x47ze9cac0n69q5afyf",
           "coins": [
             {
               "denom": "axtc",
@@ -295,11 +295,11 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "Xitcoin Testnet Validator 4",
+                  "moniker": "Xitcoin Atlas",
                   "identity": "",
-                  "website": "",
+                  "website": "https://xitcoin.org/",
                   "security_contact": "",
-                  "details": ""
+                  "details": "Core validator operated by KCALB Ltd for the Xitcoin public testnet, supporting network security, consensus testing, and ecosystem development."
                 },
                 "commission": {
                   "rate": "0.100000000000000000",
@@ -308,10 +308,10 @@
                 },
                 "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper1kplz0cp5w0r6nef4u43xrd27nmt6umzhvav35a",
+                "validator_address": "xtcvaloper1p3j6unyzc8g7rx5kkeera0xhmd9ps9mnkx9vqk",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "aDafIx2EF+QAlvjB+Hmx/d9eTRBqtxbojRMiDoyimqQ="
+                  "key": "jW6wzItRbOhuvLGtYq4yjgyOwf8JFoYDN38EWcMMZFg="
                 },
                 "value": {
                   "denom": "axtc",
@@ -319,7 +319,7 @@
                 }
               }
             ],
-            "memo": "46966515438273e41318c40b122ebc0a3e07d650@51.68.54.120:26656",
+            "memo": "32534f4d9f5452511131036c3c090cb280856b30@10.51.242.219:26656",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -331,7 +331,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "A2HBvW0L5C6WwAbPBtrV0Nydda0uAGFG8l2aIhVNpCzL"
+                  "key": "AtI6sH13Rwxg4J2xYo8y2tbNAJfCoDmkYC2W8DAF075v"
                 },
                 "mode_info": {
                   "single": {
@@ -350,7 +350,7 @@
             "tip": null
           },
           "signatures": [
-            "uwopIuLj5yM7odPI86jkH9/irrL/8+sVN0qzVi5S9yhNFFxziC5nbBhA1Tk2kcph5Up+KU90zNiksvg/kXvjqQE="
+            "bXNr7A5dA/tg3IK1967KVWaNzofWYq7lfEoMk740Oa5upuVCSKwZ6soAdsBIoCPhHraxvUShOqbP627cUiIKaQA="
           ]
         },
         {
@@ -359,11 +359,11 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "Xitcoin Testnet Validator 2",
+                  "moniker": "Xitcoin Borealis",
                   "identity": "",
-                  "website": "",
+                  "website": "https://xitcoin.org/",
                   "security_contact": "",
-                  "details": ""
+                  "details": "Core validator operated by KCALB Ltd for the Xitcoin public testnet, supporting network security, consensus testing, and ecosystem development."
                 },
                 "commission": {
                   "rate": "0.100000000000000000",
@@ -372,10 +372,10 @@
                 },
                 "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper19tztlxxa8nc2q7asl73tpvkrjf2zt0tl8yfcqt",
+                "validator_address": "xtcvaloper1ak5jx9svd220csl42vymp6q5dw90nmplurlnkc",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "TGCVk+1eb/vU2Ea9NjvJp8R3iKYerD3mTslIYQzGJT8="
+                  "key": "DYxaiadStU6Th7bMNyYqsAX5gQWorAiLuLkXsg8x2jo="
                 },
                 "value": {
                   "denom": "axtc",
@@ -383,7 +383,7 @@
                 }
               }
             ],
-            "memo": "6c1c5735518de3847c004960f353f0ac6e54a554@51.68.54.120:26656",
+            "memo": "0a8271eb02973b573e00a60c7f12bca7ea8a1105@10.51.242.219:26656",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -395,7 +395,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "AkAz4DKWsspMZyU0XfmUcy6j7I2lzzWay5nAjlw5fSXV"
+                  "key": "Ak7Uu1LXeUuNwkex1LcmOYgFSnR2M55BmIypsOFTbDem"
                 },
                 "mode_info": {
                   "single": {
@@ -414,7 +414,7 @@
             "tip": null
           },
           "signatures": [
-            "c7J6YjgWZ/dDorTudPKwztkkkVQjMmMMTVXP92bhJwd1/MeFDiiYfquue7/sZ/8p1CaLzdH8jyCND/FMqsA7YAE="
+            "tgkDNhYz8EtDy7w2C1xhIAGKcZPBu/F8awdEWZ4KNUYDAzTnULOSeRuXSP8zBFWcdufsQiFhGobc6cl/FmB/qgE="
           ]
         },
         {
@@ -423,11 +423,11 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "Xitcoin Testnet Validator 3",
+                  "moniker": "Xitcoin Meridian",
                   "identity": "",
-                  "website": "",
+                  "website": "https://xitcoin.org/",
                   "security_contact": "",
-                  "details": ""
+                  "details": "Core validator operated by KCALB Ltd for the Xitcoin public testnet, supporting network security, consensus testing, and ecosystem development."
                 },
                 "commission": {
                   "rate": "0.100000000000000000",
@@ -436,10 +436,10 @@
                 },
                 "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqcvh8hc",
+                "validator_address": "xtcvaloper1zuru3nycmng85kvl6zk9zgujryn0lf7x3dc2a7",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "XA0LoaSM630Em8f8KwnbwRUxtGISNpHg3YXo7fyCZoc="
+                  "key": "JRxaFs8MoWuYyLj70KCrj31l+41zsp19QCeo1ZnST+E="
                 },
                 "value": {
                   "denom": "axtc",
@@ -447,7 +447,7 @@
                 }
               }
             ],
-            "memo": "9698d6388361589f9170fad08fa3e19da30bd8dc@51.68.54.120:26656",
+            "memo": "7b84f355b2880edbcfc54ee24233a8a46fd4510e@10.51.242.219:26656",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -459,7 +459,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "AryjxcwebAk/DeSH+XKKcH2PC9a1xExSJwaYyDTWp09w"
+                  "key": "AxjB1RrHycDLbqpzrg3AoY9OI0lWuCQsKvzfM/gQDqJe"
                 },
                 "mode_info": {
                   "single": {
@@ -478,7 +478,7 @@
             "tip": null
           },
           "signatures": [
-            "A+J5gGbUhRf8hP/g2DXyZ2JFnPJeS3cIc0FOju1PZgpUmuv0je5StSBl363L9L+Il4AHweeXnaEkG2Dd/7j7cQE="
+            "tEkJ1SSdZK1AbrlOMuXYmqM2wCHC13T5ZwJPxp8KkJpdBkyatL4dZDX0MJ82nzeD4m/gi9DmawCh75Cm9SxYJQE="
           ]
         },
         {
@@ -487,11 +487,11 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "Xitcoin Testnet Validator 1",
+                  "moniker": "Xitcoin Zenith",
                   "identity": "",
-                  "website": "",
+                  "website": "https://xitcoin.org/",
                   "security_contact": "",
-                  "details": ""
+                  "details": "Core validator operated by KCALB Ltd for the Xitcoin public testnet, supporting network security, consensus testing, and ecosystem development."
                 },
                 "commission": {
                   "rate": "0.100000000000000000",
@@ -500,10 +500,10 @@
                 },
                 "min_self_delegation": "5000000000000000000000000",
                 "delegator_address": "",
-                "validator_address": "xtcvaloper1f7xdfjpnnj7pde86f56gnvvpm5xqvhxah7wgae",
+                "validator_address": "xtcvaloper1qmmvts8jqay7rm86x26x47ze9cac0n69ksmmen",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "xYpu3s6v9zvhDWPUehEW+JM/8Gif1NuDVmn/SEC03E8="
+                  "key": "CrGJm/snLy+fyNsimyTagBJGot0Uwwa8V5FITm7Cj8I="
                 },
                 "value": {
                   "denom": "axtc",
@@ -511,7 +511,7 @@
                 }
               }
             ],
-            "memo": "46174f39d1f79014824eeafcfad7871d2c5b9903@37.59.118.87:26656",
+            "memo": "182fa5af4ed0a08811981707c9ff6f7e260e3c34@10.51.242.219:26656",
             "timeout_height": "0",
             "unordered": false,
             "timeout_timestamp": null,
@@ -523,7 +523,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
-                  "key": "Aia8CWBagAqKHu0q4QoF8uDrOEAGTMAOXbivsdAGurzy"
+                  "key": "Ah8t2eY+9oCJSMSHJsdzJ72GHI6JpJwwjuK7xj0GLnAj"
                 },
                 "mode_info": {
                   "single": {
@@ -542,7 +542,7 @@
             "tip": null
           },
           "signatures": [
-            "egUrKOm6R4u3/6qki1VXn5pFczaKiyoSegt4P9Z3oigskcfGj2FeuIglpJM8e+gugANxE+nIZHfc1LqZSMpr6AE="
+            "SFoYA657R6wSEhkw6+IUBcVyzC6McgZmBNIuzbmp65U/WLjDf9zzVzDfKdahZ5OnMPZPEnc58qsHliWjZDegbwE="
           ]
         }
       ]
@@ -683,10 +683,10 @@
     "validator_admission": {
       "authority": "xtc1e3q4pm23ky0qetnep33j4yezq6c3lc7fcds4je",
       "approved_validators": [
-        "xtcvaloper1f7xdfjpnnj7pde86f56gnvvpm5xqvhxah7wgae",
-        "xtcvaloper19tztlxxa8nc2q7asl73tpvkrjf2zt0tl8yfcqt",
-        "xtcvaloper1kplz0cp5w0r6nef4u43xrd27nmt6umzhvav35a",
-        "xtcvaloper1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqcvh8hc"
+        "xtcvaloper1p3j6unyzc8g7rx5kkeera0xhmd9ps9mnkx9vqk",
+        "xtcvaloper1ak5jx9svd220csl42vymp6q5dw90nmplurlnkc",
+        "xtcvaloper1qmmvts8jqay7rm86x26x47ze9cac0n69ksmmen",
+        "xtcvaloper1zuru3nycmng85kvl6zk9zgujryn0lf7x3dc2a7"
       ],
       "max_approved_validators": 258,
       "minimum_self_delegation": "5000000000000000000000000axtc"
