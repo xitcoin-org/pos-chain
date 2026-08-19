@@ -2,7 +2,9 @@
 
 Xitcoin is an EVM-compatible Proof-of-Stake blockchain built with Cosmos SDK, CometBFT and Cosmos EVM.
 
-It is designed as a common, verifiable infrastructure layer through which public-sector participants, sovereign operators, companies, institutions, DeFi applications, communities and developers can use compatible transaction and application interfaces. This describes the protocol's intended capability and participation framework; it does not claim adoption, endorsement or active operation by any government, institution or company.
+It is conceived as a common and evolving infrastructure layer through which public-sector participants, sovereign operators, companies, institutions, DeFi applications, communities and developers can interact using compatible transaction and application standards.
+
+The network provides a shared technical language while each participant retains its own identity, authority, legal framework and operational responsibilities. Access to the protocol is based on published rules rather than institutional hierarchy or political alignment.
 
 ## Architecture and interoperability
 
@@ -43,7 +45,9 @@ The candidate network aligns staking and validator-admission capacity at 258 pos
 - 1,000,000 XTC protocol minimum self-delegation;
 - 5,000,000 XTC initial self-delegation for each core validator.
 
-A reference or reserved position does not transfer assets, activate a validator or create an automatic right. Every validator remains subject to explicit on-chain admission and the published staking, security and operational requirements.
+The sovereign framework keeps a defined participation pathway available for every reference position. Activation remains voluntary and begins only through the relevant participant's own initiative, an authorized operator and the same published admission, security and operational standards that apply across the network.
+
+A reference or reserved position does not itself transfer assets or activate a validator. It preserves future access to the framework while the network continues to develop its public infrastructure, applications, developer ecosystem and community participation.
 
 ## Project repositories
 
