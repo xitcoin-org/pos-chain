@@ -24,4 +24,8 @@ var (
 
 	// TotalDistributedKey stores the cumulative treasury-funded distribution.
 	TotalDistributedKey = []byte{0x03}
+
+	// AuthorityKey stores the governance or security authority permitted to
+	// update parameters and activate a fully funded reward period.
+	AuthorityKey = []byte{0x04}
 )
