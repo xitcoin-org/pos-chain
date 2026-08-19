@@ -46,8 +46,8 @@ func TestHandleActivatePeriodCommand(t *testing.T) {
 
 	command := types.ActivatePeriodCommand{
 		Authority:                   authority,
-		EligibleBondedAtomic:         keeperTestXTC(2_000_000_000).String(),
-		TreasuryBalanceAtomic:        keeperTestXTC(100_000_000).String(),
+		EligibleBondedAtomic:        keeperTestXTC(2_000_000_000).String(),
+		TreasuryBalanceAtomic:       keeperTestXTC(100_000_000).String(),
 		CommittedAnnualBudgetAtomic: keeperTestXTC(160_000_000).String(),
 	}
 
@@ -69,8 +69,8 @@ func TestInvalidCommandCannotMutateState(t *testing.T) {
 
 	command := types.ActivatePeriodCommand{
 		Authority:                   authority,
-		EligibleBondedAtomic:         "not-an-integer",
-		TreasuryBalanceAtomic:        keeperTestXTC(100_000_000).String(),
+		EligibleBondedAtomic:        "not-an-integer",
+		TreasuryBalanceAtomic:       keeperTestXTC(100_000_000).String(),
 		CommittedAnnualBudgetAtomic: keeperTestXTC(160_000_000).String(),
 	}
 
