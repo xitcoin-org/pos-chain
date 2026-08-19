@@ -1,6 +1,6 @@
 # Validator Incentive governance operations
 
-Status: development branch, not deployed  
+Status: development branch, not deployed
 Reference date: 20 August 2026
 
 ## Authority model
