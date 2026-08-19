@@ -104,6 +104,11 @@ func (p PeriodState) RemainingProvision() (sdkmath.Int, error) {
 	return provision.Sub(distributed), nil
 }
 
+// ParseStoredAtomicAmount parses a canonical base-10 atomic axtc state value.
+func ParseStoredAtomicAmount(value string) (sdkmath.Int, error) {
+	return parseAtomicAmount(value)
+}
+
 func parseAtomicAmount(value string) (sdkmath.Int, error) {
 	parsed, ok := new(big.Int).SetString(value, 10)
 	if !ok {
