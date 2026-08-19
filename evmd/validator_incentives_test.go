@@ -1,6 +1,7 @@
 package evmd
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -24,7 +25,7 @@ func TestValidatorIncentivesWiring(t *testing.T) {
 	require.NotEmpty(t, raw)
 
 	var state validatorincentivestypes.GenesisState
-	app.AppCodec().MustUnmarshalJSON(raw, &state)
+	require.NoError(t, json.Unmarshal(raw, &state))
 	require.NoError(t, state.Validate())
 	require.Empty(t, state.Authority)
 	require.Equal(
