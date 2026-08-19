@@ -49,6 +49,10 @@ The sovereign framework keeps a defined participation pathway available for ever
 
 A reference or reserved position does not itself transfer assets or activate a validator. It preserves future access to the framework while the network continues to develop its public infrastructure, applications, developer ecosystem and community participation.
 
+The current release candidate approves only Atlas, Borealis, Meridian and Zenith. The remaining capacity does not announce future operators. Each additional validator would require separate authorization.
+
+During the current launch phase, only the canonical on-chain validator-admission authority can approve or revoke validators. Token balances, staking weight, delegations and ordinary governance voting do not grant or override that authority.
+
 ## Project repositories
 
 | Repository | Responsibility |
