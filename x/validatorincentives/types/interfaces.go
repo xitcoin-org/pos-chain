@@ -3,6 +3,7 @@ package types
 import (
 	"context"
 
+	sdkmath "cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -27,4 +28,10 @@ type BankKeeper interface {
 		recipientAddr sdk.AccAddress,
 		amt sdk.Coins,
 	) error
+}
+
+// StakingKeeper exposes the canonical bonded-token total used to calculate
+// eligible stake. The value is read from on-chain staking state.
+type StakingKeeper interface {
+	TotalValidatorPower(ctx context.Context) (sdkmath.Int, error)
 }
