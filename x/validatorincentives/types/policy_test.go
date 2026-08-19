@@ -54,6 +54,14 @@ func TestAnnualProvision(t *testing.T) {
 			expected: xtc(4_000_000),
 		},
 		{
+			name:     "governance may raise the cap while the eight percent rate remains binding",
+			bonded:   xtc(500_000_000),
+			treasury: xtc(100_000_000),
+			cap:      xtc(40_000_000),
+			rateBPS:  800,
+			expected: xtc(40_000_000),
+		},
+		{
 			name:     "funded balance is a hard limit",
 			bonded:   xtc(200_000_000),
 			treasury: xtc(1_000_000),
@@ -78,10 +86,10 @@ func TestAnnualProvision(t *testing.T) {
 			expectError: true,
 		},
 		{
-			name:        "annual cap above ten million rejected",
-			bonded:      xtc(200_000_000),
+			name:        "annual cap above forty million rejected",
+			bonded:      xtc(500_000_000),
 			treasury:    xtc(100_000_000),
-			cap:         xtc(10_000_001),
+			cap:         xtc(40_000_001),
 			rateBPS:     800,
 			expectError: true,
 		},
