@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	sdkmath "cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
@@ -18,7 +19,7 @@ func (k Keeper) InitGenesis(
 	}
 	if err := k.SetTotalDistributed(
 		ctx,
-		sdk.ZeroInt(),
+		sdkmath.ZeroInt(),
 	); err != nil {
 		return err
 	}
