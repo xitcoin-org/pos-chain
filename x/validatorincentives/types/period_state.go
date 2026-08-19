@@ -12,13 +12,13 @@ import (
 // PeriodState is the deterministic, auditable snapshot used for one funded
 // reward period. Amounts are stored as base-10 atomic axtc strings.
 type PeriodState struct {
-	StartBlock			uint64 `json:"start_block"`
-	EndBlock			uint64 `json:"end_block"`
-	AnnualRateBasisPoints		uint32 `json:"annual_rate_basis_points"`
-	EligibleBondedAtomic		string `json:"eligible_bonded_atomic"`
-	CommittedAnnualBudgetAtomic	string `json:"committed_annual_budget_atomic"`
-	PeriodProvisionAtomic		string `json:"period_provision_atomic"`
-	DistributedAtomic		string `json:"distributed_atomic"`
+	StartBlock                  uint64 `json:"start_block"`
+	EndBlock                    uint64 `json:"end_block"`
+	AnnualRateBasisPoints       uint32 `json:"annual_rate_basis_points"`
+	EligibleBondedAtomic        string `json:"eligible_bonded_atomic"`
+	CommittedAnnualBudgetAtomic string `json:"committed_annual_budget_atomic"`
+	PeriodProvisionAtomic       string `json:"period_provision_atomic"`
+	DistributedAtomic           string `json:"distributed_atomic"`
 }
 
 func NewPeriodState(
@@ -48,13 +48,13 @@ func NewPeriodState(
 	}
 
 	return PeriodState{
-		StartBlock:                    startBlock,
-		EndBlock:                      startBlock + params.RewardPeriodBlocks,
-		AnnualRateBasisPoints:         params.AnnualRateBasisPoints,
-		EligibleBondedAtomic:          eligibleBonded.String(),
-		CommittedAnnualBudgetAtomic:   committedAnnualBudget.String(),
-		PeriodProvisionAtomic:         provision.String(),
-		DistributedAtomic:             "0",
+		StartBlock:                  startBlock,
+		EndBlock:                    startBlock + params.RewardPeriodBlocks,
+		AnnualRateBasisPoints:       params.AnnualRateBasisPoints,
+		EligibleBondedAtomic:        eligibleBonded.String(),
+		CommittedAnnualBudgetAtomic: committedAnnualBudget.String(),
+		PeriodProvisionAtomic:       provision.String(),
+		DistributedAtomic:           "0",
 	}, nil
 }
 
