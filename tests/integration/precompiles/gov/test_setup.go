@@ -51,7 +51,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 	inOneHour := now.Add(time.Hour)
 
 	var err error
-	anyMessage, err := types.NewAnyWithValue(TestProposalMsgs[0])
+	anyMessage, err := types.NewAnyWithValue(testProposalMsgs()[0])
 	if err != nil {
 		panic(err)
 	}
@@ -136,6 +136,9 @@ func (s *PrecompileTestSuite) SetupTest() {
 		if err := govKeeperForGenesis.SetDeposit(nw.GetContext(), *deposit); err != nil {
 			panic(err)
 		}
+	}
+	if err := nw.NextBlock(); err != nil {
+		panic(err)
 	}
 	grpcHandler := grpc.NewIntegrationHandler(nw)
 	txFactory := factory.New(nw, grpcHandler)
