@@ -13,18 +13,19 @@
 - EVM addresses: `0x...`
 - Node program: `xitcoind`
 
-The public network name and the technical Cosmos chain ID serve different purposes. Version labels such as V1 or V2 are not public network names.
+Version labels such as V1 or V2 are not public network names.
 
 ## Admission rule
 
 Xitcoin is a permissioned-validator network.
 
-Holding, receiving or staking XTC does not automatically grant the right to become a validator. A validator may be created only when its validator operator address is present in the on-chain approval list and all staking and operational requirements are satisfied.
+Holding, receiving, staking or delegating XTC does not grant validator-admission authority. A validator may be created only when its operator address has been explicitly approved by the canonical on-chain authority and all staking, security and operational requirements are satisfied.
 
 ## Candidate network parameters
 
 - Maximum validator and admission capacity: 258
-- Initial approved validators: 4
+- Initially approved validators: 4
+- Additional validators currently announced: 0
 - Protocol minimum self-delegation: 1,000,000 XTC
 - Initial self-delegation of each core validator: 5,000,000 XTC
 - Initial core validators:
@@ -33,33 +34,34 @@ Holding, receiving or staking XTC does not automatically grant the right to beco
   - Xitcoin Meridian
   - Xitcoin Zenith
 
-The protocol minimum is an admission floor. The larger initial core-validator self-delegation is a deployment value and does not change that floor.
+The maximum is capacity, not a target count. Any expansion beyond the four initial validators requires separate review and authorization.
 
 ## Participation framework
 
-The 258-position planning model contains:
+The planning model contains:
 
-- 195 sovereign reference positions:
-  - 193 United Nations Member States;
-  - the Holy See;
-  - the State of Palestine.
+- 195 sovereign reference positions;
 - 63 public positions.
 
-The sovereign allocation index is a deterministic planning and reference record. It does not transfer funds, approve a validator, activate a validator or create an automatic entitlement.
+These positions are future capacity only. They do not transfer funds, approve operators, activate validators or create automatic entitlements.
 
-The 39 territorial consolidations in the allocation dataset are statistical population mappings. They do not create additional validator positions.
+The 39 territorial consolidations in the allocation dataset are statistical population mappings and do not create additional positions.
 
-## Authority and on-chain record
+## Authority and governance boundary
 
 The approval list and its authority are blockchain state initialized in genesis. They are not read from a private server-side allowlist.
 
-The admission authority can execute the defined on-chain approval and revocation actions. Production authority, multisignature custody and signer-change procedures must be documented and verified before mainnet.
+Only the canonical validator-admission authority can execute the defined approval and revocation actions during the current launch phase. The authority is controlled through the project's authorized custody process.
+
+Token balances, staking balances, delegation weight and ordinary governance voting do not approve or revoke validators and do not override the admission authority. The technical presence of Cosmos governance infrastructure does not change this boundary.
+
+Production custody, recovery and signer-change procedures must be documented and verified before mainnet.
 
 ## Required actions
 
 - Approve: add a validator address to the on-chain approval list.
-- Revoke: remove an address from the approval list and deactivate the associated validator according to protocol rules.
-- Protect: a revoked validator must not be able to recreate or unjail itself without renewed approval.
+- Revoke: remove an address and deactivate the associated validator according to protocol rules.
+- Protect: a revoked validator must not recreate or unjail itself without renewed approval.
 - Audit: approvals, revocations and parameter updates must remain visible in blockchain state and transaction history.
 
 ## Mandatory validation
