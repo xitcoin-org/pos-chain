@@ -172,21 +172,21 @@ type EVMD struct {
 	oKeys map[string]*storetypes.ObjectStoreKey
 
 	// keepers
-	AccountKeeper            authkeeper.AccountKeeper
-	BankKeeper               bankkeeper.Keeper
-	StakingKeeper            *stakingkeeper.Keeper
-	BridgeKeeper             bridgekeeper.Keeper
-	ValidatorAdmissionKeeper validatoradmissionkeeper.Keeper
+	AccountKeeper             authkeeper.AccountKeeper
+	BankKeeper                bankkeeper.Keeper
+	StakingKeeper             *stakingkeeper.Keeper
+	BridgeKeeper              bridgekeeper.Keeper
+	ValidatorAdmissionKeeper  validatoradmissionkeeper.Keeper
 	ValidatorIncentivesKeeper validatorincentiveskeeper.Keeper
-	SlashingKeeper           slashingkeeper.Keeper
-	MintKeeper               mintkeeper.Keeper
-	DistrKeeper              distrkeeper.Keeper
-	GovKeeper                govkeeper.Keeper
-	UpgradeKeeper            *upgradekeeper.Keeper
-	AuthzKeeper              authzkeeper.Keeper
-	EvidenceKeeper           evidencekeeper.Keeper
-	FeeGrantKeeper           feegrantkeeper.Keeper
-	ConsensusParamsKeeper    consensusparamkeeper.Keeper
+	SlashingKeeper            slashingkeeper.Keeper
+	MintKeeper                mintkeeper.Keeper
+	DistrKeeper               distrkeeper.Keeper
+	GovKeeper                 govkeeper.Keeper
+	UpgradeKeeper             *upgradekeeper.Keeper
+	AuthzKeeper               authzkeeper.Keeper
+	EvidenceKeeper            evidencekeeper.Keeper
+	FeeGrantKeeper            feegrantkeeper.Keeper
+	ConsensusParamsKeeper     consensusparamkeeper.Keeper
 
 	// IBC keepers
 	IBCKeeper      *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly

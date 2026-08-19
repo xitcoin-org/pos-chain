@@ -62,9 +62,9 @@ var maccPerms = map[string][]string{
 	govtypes.ModuleName:            {authtypes.Burner},
 
 	// Cosmos EVM modules
-	vmtypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
-	feemarkettypes.ModuleName: nil,
-	erc20types.ModuleName:     {authtypes.Minter, authtypes.Burner},
+	vmtypes.ModuleName:                  {authtypes.Minter, authtypes.Burner},
+	feemarkettypes.ModuleName:           nil,
+	erc20types.ModuleName:               {authtypes.Minter, authtypes.Burner},
 	bridgetypes.ModuleName:              {authtypes.Minter, authtypes.Burner},
 	validatorincentivestypes.ModuleName: nil,
 }
