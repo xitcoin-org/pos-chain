@@ -5,13 +5,13 @@ import (
 	"os"
 
 	dbm "github.com/cosmos/cosmos-db"
+	ibctesting "github.com/cosmos/ibc-go/v11/testing"
 	"github.com/xitcoin-org/pos-chain"
 	"github.com/xitcoin-org/pos-chain/evmd"
 	evmconfig "github.com/xitcoin-org/pos-chain/evmd/config"
 	srvflags "github.com/xitcoin-org/pos-chain/server/flags"
 	"github.com/xitcoin-org/pos-chain/testutil/constants"
 	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
-	ibctesting "github.com/cosmos/ibc-go/v11/testing"
 
 	"cosmossdk.io/log/v2"
 
