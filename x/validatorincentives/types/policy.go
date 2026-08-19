@@ -11,19 +11,28 @@ const (
 	// BasisPointDenominator represents 100%.
 	BasisPointDenominator uint32 = 10_000
 
-	// DefaultAnnualRateBasisPoints is the maximum treasury-funded annual rate:
+	// MaxAnnualRateBasisPoints is the hard treasury-funded annual-rate ceiling:
 	// 8% of the current bonded stake.
-	DefaultAnnualRateBasisPoints uint32 = 800
+	MaxAnnualRateBasisPoints uint32 = 800
+
+	// DefaultAnnualRateBasisPoints starts at the hard 8% ceiling. Governance
+	// may configure a lower value without a software upgrade.
+	DefaultAnnualRateBasisPoints uint32 = MaxAnnualRateBasisPoints
 
 	// DefaultBlocksPerYear matches the verified candidate-testnet mint params.
 	DefaultBlocksPerYear uint64 = 6_311_520
 )
 
 var (
-	// DefaultAnnualDistributionCap is 10,000,000 XTC at 18 decimals.
-	DefaultAnnualDistributionCap = sdkmath.NewIntFromBigInt(mustInt(
+	// MaxAnnualDistributionCap is the hard 10,000,000 XTC annual ceiling at
+	// 18 decimals.
+	MaxAnnualDistributionCap = sdkmath.NewIntFromBigInt(mustInt(
 		"10000000000000000000000000",
 	))
+
+	// DefaultAnnualDistributionCap starts at the hard ceiling. Governance may
+	// configure a lower funded-distribution cap without a software upgrade.
+	DefaultAnnualDistributionCap = MaxAnnualDistributionCap
 
 	// DefaultInitialTreasuryReference is the non-binding mainnet planning
 	// reference of 100,000,000 XTC at 18 decimals.
@@ -55,8 +64,11 @@ func AnnualProvision(
 	if annualCap.IsNegative() {
 		return sdkmath.Int{}, errors.New("annual cap cannot be negative")
 	}
-	if rateBasisPoints > BasisPointDenominator {
-		return sdkmath.Int{}, errors.New("annual rate cannot exceed 100%")
+	if annualCap.GT(MaxAnnualDistributionCap) {
+		return sdkmath.Int{}, errors.New("annual cap exceeds the protocol ceiling")
+	}
+	if rateBasisPoints > MaxAnnualRateBasisPoints {
+		return sdkmath.Int{}, errors.New("annual rate exceeds the protocol ceiling")
 	}
 
 	rateLimited := bonded.
