@@ -27,11 +27,17 @@ var (
 	_, _, addr = testdata.KeyTestPubAddr()
 	// gov account authority address
 	govAcct = authtypes.NewModuleAddress(govtypes.ModuleName)
-	// TestProposalMsgs are msgs used on a proposal.
-	TestProposalMsgs = []sdk.Msg{
-		banktypes.NewMsgSend(govAcct, addr, sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(1000)))),
-	}
 )
+
+func testProposalMsgs() []sdk.Msg {
+	return []sdk.Msg{
+		banktypes.NewMsgSend(
+			govAcct,
+			addr,
+			sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(1000))),
+		),
+	}
+}
 
 func (s *PrecompileTestSuite) TestGetVotes() {
 	var ctx sdk.Context
@@ -396,7 +402,7 @@ func (s *PrecompileTestSuite) TestGetTallyResult() {
 		{
 			name: "valid query",
 			malleate: func() (gov.TallyResultData, uint64) {
-				proposal, err := s.network.App.GetGovKeeper().SubmitProposal(s.network.GetContext(), TestProposalMsgs, "", "Proposal", "testing proposal", s.keyring.GetAccAddr(0), false)
+				proposal, err := s.network.App.GetGovKeeper().SubmitProposal(s.network.GetContext(), testProposalMsgs(), "", "Proposal", "testing proposal", s.keyring.GetAccAddr(0), false)
 				s.Require().NoError(err)
 				votingStarted, err := s.network.App.GetGovKeeper().AddDeposit(s.network.GetContext(), proposal.Id, s.keyring.GetAccAddr(0), sdk.NewCoins(sdk.NewCoin(s.network.GetBaseDenom(), math.NewInt(100))))
 				s.Require().NoError(err)
