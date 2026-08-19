@@ -24,15 +24,19 @@ const (
 )
 
 var (
-	// MaxAnnualDistributionCap is the hard 10,000,000 XTC annual ceiling at
-	// 18 decimals.
+	// MaxAnnualDistributionCap is the hard 40,000,000 XTC annual safety
+	// ceiling at 18 decimals. Governance may never exceed this value without
+	// an explicit software upgrade.
 	MaxAnnualDistributionCap = sdkmath.NewIntFromBigInt(mustInt(
-		"10000000000000000000000000",
+		"40000000000000000000000000",
 	))
 
-	// DefaultAnnualDistributionCap starts at the hard ceiling. Governance may
-	// configure a lower funded-distribution cap without a software upgrade.
-	DefaultAnnualDistributionCap = MaxAnnualDistributionCap
+	// DefaultAnnualDistributionCap starts conservatively at 10,000,000 XTC.
+	// Governance may adjust it between zero and the hard safety ceiling without
+	// changing the 8% rate ceiling or granting mint authority.
+	DefaultAnnualDistributionCap = sdkmath.NewIntFromBigInt(mustInt(
+		"10000000000000000000000000",
+	))
 
 	// DefaultInitialTreasuryReference is the non-binding mainnet planning
 	// reference of 100,000,000 XTC at 18 decimals.
