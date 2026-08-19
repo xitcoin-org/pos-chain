@@ -40,9 +40,7 @@ func TestValidatorIncentivesWiring(t *testing.T) {
 	)
 
 	permissions := evmconfig.GetMaccPerms()
-	modulePermissions, found := permissions[
-		validatorincentivestypes.TreasuryAccountName
-	]
+	modulePermissions, found := permissions[validatorincentivestypes.TreasuryAccountName]
 	require.True(t, found)
 	require.Empty(t, modulePermissions)
 
