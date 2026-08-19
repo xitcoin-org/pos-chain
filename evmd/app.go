@@ -133,6 +133,9 @@ import (
 	validatoradmission "github.com/xitcoin-org/pos-chain/x/validatoradmission"
 	validatoradmissionkeeper "github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 	validatoradmissiontypes "github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
+	validatorincentives "github.com/xitcoin-org/pos-chain/x/validatorincentives"
+	validatorincentiveskeeper "github.com/xitcoin-org/pos-chain/x/validatorincentives/keeper"
+	validatorincentivestypes "github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
 )
 
 func init() {
@@ -174,6 +177,7 @@ type EVMD struct {
 	StakingKeeper            *stakingkeeper.Keeper
 	BridgeKeeper             bridgekeeper.Keeper
 	ValidatorAdmissionKeeper validatoradmissionkeeper.Keeper
+	ValidatorIncentivesKeeper validatorincentiveskeeper.Keeper
 	SlashingKeeper           slashingkeeper.Keeper
 	MintKeeper               mintkeeper.Keeper
 	DistrKeeper              distrkeeper.Keeper
@@ -252,6 +256,7 @@ func NewExampleApp(
 		evmtypes.StoreKey, feemarkettypes.StoreKey, erc20types.StoreKey,
 		bridgetypes.StoreKey,
 		validatoradmissiontypes.StoreKey,
+		validatorincentivestypes.StoreKey,
 	)
 	oKeys := storetypes.NewObjectStoreKeys(banktypes.ObjectStoreKey, evmtypes.ObjectKey)
 
@@ -347,6 +352,10 @@ func NewExampleApp(
 
 	app.ValidatorAdmissionKeeper = validatoradmissionkeeper.NewKeeper(
 		keys[validatoradmissiontypes.StoreKey],
+	)
+
+	app.ValidatorIncentivesKeeper = validatorincentiveskeeper.NewKeeper(
+		keys[validatorincentivestypes.StoreKey],
 	)
 
 	app.BridgeKeeper = bridgekeeper.MustNewSettlementKeeper(
@@ -593,6 +602,14 @@ func NewExampleApp(
 		distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper, nil),
 		staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper, nil),
 		validatoradmission.NewAppModule(app.ValidatorAdmissionKeeper, app.StakingKeeper),
+		validatorincentives.NewAppModule(
+			app.ValidatorIncentivesKeeper,
+			app.StakingKeeper,
+			validatorincentiveskeeper.NewTreasury(
+				app.AccountKeeper,
+				app.BankKeeper,
+			),
+		),
 		bridge.NewAppModule(app.BridgeKeeper),
 		upgrade.NewAppModule(app.UpgradeKeeper, app.AccountKeeper.AddressCodec()),
 		evidence.NewAppModule(app.EvidenceKeeper),
@@ -655,6 +672,7 @@ func NewExampleApp(
 		authz.ModuleName, feegrant.ModuleName,
 		consensusparamtypes.ModuleName,
 		vestingtypes.ModuleName,
+		validatorincentivestypes.ModuleName,
 	)
 
 	// NOTE: the feemarket module should go last in order of end blockers that are actually doing something,
@@ -675,6 +693,7 @@ func NewExampleApp(
 		genutiltypes.ModuleName, evidencetypes.ModuleName, authz.ModuleName,
 		feegrant.ModuleName, upgradetypes.ModuleName, consensusparamtypes.ModuleName,
 		vestingtypes.ModuleName,
+		validatorincentivestypes.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -682,7 +701,7 @@ func NewExampleApp(
 	// NOTE: The genutils module must also occur after auth so that it can access the params from auth.
 	genesisModuleOrder := []string{
 		authtypes.ModuleName, banktypes.ModuleName,
-		distrtypes.ModuleName, validatoradmissiontypes.ModuleName, bridgetypes.ModuleName, stakingtypes.ModuleName, slashingtypes.ModuleName, govtypes.ModuleName,
+		distrtypes.ModuleName, validatoradmissiontypes.ModuleName, validatorincentivestypes.ModuleName, bridgetypes.ModuleName, stakingtypes.ModuleName, slashingtypes.ModuleName, govtypes.ModuleName,
 		minttypes.ModuleName,
 		ibcexported.ModuleName,
 
