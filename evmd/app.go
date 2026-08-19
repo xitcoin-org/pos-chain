@@ -211,6 +211,17 @@ type EVMD struct {
 	configurator module.Configurator
 }
 
+func mustGovernanceAuthority() string {
+	authority, err := bech32.ConvertAndEncode(
+		sdk.GetConfig().GetBech32AccountAddrPrefix(),
+		authtypes.NewModuleAddress(govtypes.ModuleName),
+	)
+	if err != nil {
+		panic(fmt.Errorf("encode governance authority: %w", err))
+	}
+	return authority
+}
+
 // NewExampleApp returns a reference to an initialized EVMD.
 func NewExampleApp(
 	logger log.Logger,
@@ -295,16 +306,8 @@ func NewExampleApp(
 
 	// removed x/params: no ParamsKeeper initialization
 
-	// Encode the governance module authority with the canonical account HRP.
-	// Avoid AccAddress.String here because its global cache may contain a value
-	// produced with another chain prefix in multi-chain integration tests.
-	authAddr, err := bech32.ConvertAndEncode(
-		sdk.GetConfig().GetBech32AccountAddrPrefix(),
-		authtypes.NewModuleAddress(govtypes.ModuleName),
-	)
-	if err != nil {
-		panic(fmt.Errorf("encode governance authority: %w", err))
-	}
+	// get authority address using the canonical account HRP
+	authAddr := mustGovernanceAuthority()
 
 	// set the BaseApp's parameter store
 	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(
@@ -340,7 +343,7 @@ func NewExampleApp(
 		EnabledSignModes:           enabledSignModes,
 		TextualCoinMetadataQueryFn: txmodule.NewBankKeeperCoinMetadataQueryFn(app.BankKeeper),
 	}
-	txConfig, err = authtx.NewTxConfigWithOptions(
+	txConfig, err := authtx.NewTxConfigWithOptions(
 		appCodec,
 		txConfigOpts,
 	)
@@ -1035,9 +1038,7 @@ func (app *EVMD) DefaultGenesis() map[string]json.RawMessage {
 	genesis[erc20types.ModuleName] = app.appCodec.MustMarshalJSON(erc20GenState)
 
 	incentiveGenState := validatorincentivestypes.DefaultGenesisState()
-	incentiveGenState.Authority = authtypes.NewModuleAddress(
-		govtypes.ModuleName,
-	).String()
+	incentiveGenState.Authority = mustGovernanceAuthority()
 	incentiveGenesis, err := json.Marshal(incentiveGenState)
 	if err != nil {
 		panic(err)
