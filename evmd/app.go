@@ -79,6 +79,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkmempool "github.com/cosmos/cosmos-sdk/types/mempool"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	"github.com/cosmos/cosmos-sdk/types/bech32"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
 	signingtypes "github.com/cosmos/cosmos-sdk/types/tx/signing"
 	"github.com/cosmos/cosmos-sdk/version"
@@ -294,8 +295,16 @@ func NewExampleApp(
 
 	// removed x/params: no ParamsKeeper initialization
 
-	// get authority address
-	authAddr := authtypes.NewModuleAddress(govtypes.ModuleName).String()
+	// Encode the governance module authority with the canonical account HRP.
+	// Avoid AccAddress.String here because its global cache may contain a value
+	// produced with another chain prefix in multi-chain integration tests.
+	authAddr, err := bech32.ConvertAndEncode(
+		sdk.GetConfig().GetBech32AccountAddrPrefix(),
+		authtypes.NewModuleAddress(govtypes.ModuleName),
+	)
+	if err != nil {
+		panic(fmt.Errorf("encode governance authority: %w", err))
+	}
 
 	// set the BaseApp's parameter store
 	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(
