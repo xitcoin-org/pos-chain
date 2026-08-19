@@ -49,6 +49,18 @@ The sovereign framework keeps a defined participation pathway available for ever
 
 A reference or reserved position does not itself transfer assets or activate a validator. It preserves future access to the framework while the network continues to develop its public infrastructure, applications, developer ecosystem and community participation.
 
+The sovereign reference methodology totals 390,000,000 XTC: 292,500,000 XTC in an equal component and 97,500,000 XTC in a square-root demographic component. This is a planning reference, not an executed transfer or automatic economic entitlement.
+
+## Candidate testnet supply
+
+The verified candidate genesis contains 1,250,000,000 testnet XTC:
+
+- 20,000,000 XTC bonded by the four initial validators;
+- 1,230,000,000 XTC remaining in five non-zero liquid genesis balances;
+- zero mint inflation in the candidate genesis.
+
+These quantities are testnet release accounting. They do not define the planned 5,250,000,000 XTC mainnet maximum supply or assign mainnet ownership. Exact account roles are published only after formal verification; the canonical genesis remains authoritative.
+
 ## Project repositories
 
 | Repository | Responsibility |
