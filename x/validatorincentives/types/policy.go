@@ -2,6 +2,7 @@ package types
 
 import (
 	"errors"
+	"math/big"
 
 	sdkmath "cosmossdk.io/math"
 )
@@ -128,6 +129,14 @@ func minInt(values ...sdkmath.Int) sdkmath.Int {
 		if value.LT(result) {
 			result = value
 		}
+	}
+	return result
+}
+
+func mustInt(value string) *big.Int {
+	result, ok := new(big.Int).SetString(value, 10)
+	if !ok {
+		panic("invalid integer constant")
 	}
 	return result
 }
