@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
 	evmconfig "github.com/xitcoin-org/pos-chain/evmd/config"
 	validatorincentivestypes "github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
@@ -27,7 +28,11 @@ func TestValidatorIncentivesWiring(t *testing.T) {
 	var state validatorincentivestypes.GenesisState
 	require.NoError(t, json.Unmarshal(raw, &state))
 	require.NoError(t, state.Validate())
-	require.Empty(t, state.Authority)
+	require.Equal(
+		t,
+		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		state.Authority,
+	)
 	require.Equal(
 		t,
 		validatorincentivestypes.DefaultParams(),
