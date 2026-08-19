@@ -1,6 +1,7 @@
 package validatorincentives
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -70,9 +71,16 @@ func (AppModuleBasic) RegisterRESTRoutes(
 }
 
 func (AppModuleBasic) RegisterGRPCGatewayRoutes(
-	_ client.Context,
-	_ *runtime.ServeMux,
+	clientCtx client.Context,
+	serveMux *runtime.ServeMux,
 ) {
+	if err := types.RegisterQueryHandlerClient(
+		context.Background(),
+		serveMux,
+		types.NewQueryClient(clientCtx),
+	); err != nil {
+		panic(err)
+	}
 }
 
 func (AppModuleBasic) GetQueryCmd() *cobra.Command {
@@ -108,6 +116,10 @@ func (AppModule) Name() string {
 }
 
 func (am AppModule) RegisterServices(cfg module.Configurator) {
+	types.RegisterQueryServer(
+		cfg.QueryServer(),
+		keeper.NewQueryServer(am.keeper, am.treasury),
+	)
 	types.RegisterMsgServer(
 		cfg.MsgServer(),
 		keeper.NewMsgServerImpl(
