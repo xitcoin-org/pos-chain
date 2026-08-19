@@ -18,10 +18,8 @@ var (
 )
 
 const (
-	updateParamsName =
-		"xitcoin/validatorincentives/MsgUpdateParams"
-	activateFundedPeriodName =
-		"xitcoin/validatorincentives/MsgActivateFundedPeriod"
+	updateParamsName         = "xitcoin/validatorincentives/MsgUpdateParams"
+	activateFundedPeriodName = "xitcoin/validatorincentives/MsgActivateFundedPeriod"
 )
 
 func init() {
