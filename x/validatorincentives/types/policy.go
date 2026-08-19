@@ -12,31 +12,18 @@ const (
 	BasisPointDenominator uint32 = 10_000
 
 	// MaxAnnualRateBasisPoints is the hard treasury-funded annual-rate ceiling:
-	// 8% of the current bonded stake.
-	MaxAnnualRateBasisPoints uint32 = 800
+	// 20% of eligible bonded stake. Exceeding it requires a software upgrade.
+	MaxAnnualRateBasisPoints uint32 = 2_000
 
-	// DefaultAnnualRateBasisPoints starts at the hard 8% ceiling. Governance
-	// may configure a lower value without a software upgrade.
-	DefaultAnnualRateBasisPoints uint32 = MaxAnnualRateBasisPoints
+	// DefaultAnnualRateBasisPoints starts at the conservative 8% operating
+	// target. Governance may adjust it within the hard safety ceiling.
+	DefaultAnnualRateBasisPoints uint32 = 800
 
 	// DefaultBlocksPerYear matches the verified candidate-testnet mint params.
 	DefaultBlocksPerYear uint64 = 6_311_520
 )
 
 var (
-	// MaxAnnualDistributionCap is the hard 40,000,000 XTC annual safety
-	// ceiling at 18 decimals. Governance may never exceed this value without
-	// an explicit software upgrade.
-	MaxAnnualDistributionCap = sdkmath.NewIntFromBigInt(mustInt(
-		"40000000000000000000000000",
-	))
-
-	// DefaultAnnualDistributionCap starts conservatively at 10,000,000 XTC.
-	// Governance may adjust it between zero and the hard safety ceiling without
-	// changing the 8% rate ceiling or granting mint authority.
-	DefaultAnnualDistributionCap = sdkmath.NewIntFromBigInt(mustInt(
-		"10000000000000000000000000",
-	))
 
 	// DefaultInitialTreasuryReference is the non-binding mainnet planning
 	// reference of 100,000,000 XTC at 18 decimals.
@@ -49,14 +36,14 @@ var (
 //
 // The result is the minimum of:
 //   - bonded stake multiplied by the configured annual rate;
-//   - the configured annual distribution cap;
+//   - the annual budget already funded and committed;
 //   - the available funded treasury balance.
 //
 // The function never mints tokens and always rounds down to atomic units.
 func AnnualProvision(
 	bonded sdkmath.Int,
 	treasuryBalance sdkmath.Int,
-	annualCap sdkmath.Int,
+	annualBudget sdkmath.Int,
 	rateBasisPoints uint32,
 ) (sdkmath.Int, error) {
 	if bonded.IsNegative() {
@@ -65,11 +52,8 @@ func AnnualProvision(
 	if treasuryBalance.IsNegative() {
 		return sdkmath.Int{}, errors.New("treasury balance cannot be negative")
 	}
-	if annualCap.IsNegative() {
-		return sdkmath.Int{}, errors.New("annual cap cannot be negative")
-	}
-	if annualCap.GT(MaxAnnualDistributionCap) {
-		return sdkmath.Int{}, errors.New("annual cap exceeds the protocol ceiling")
+	if annualBudget.IsNegative() {
+		return sdkmath.Int{}, errors.New("annual funded budget cannot be negative")
 	}
 	if rateBasisPoints > MaxAnnualRateBasisPoints {
 		return sdkmath.Int{}, errors.New("annual rate exceeds the protocol ceiling")
@@ -79,7 +63,7 @@ func AnnualProvision(
 		MulRaw(int64(rateBasisPoints)).
 		QuoRaw(int64(BasisPointDenominator))
 
-	return minInt(rateLimited, annualCap, treasuryBalance), nil
+	return minInt(rateLimited, annualBudget, treasuryBalance), nil
 }
 
 // CumulativeProvision returns the cumulative amount that may have been released
