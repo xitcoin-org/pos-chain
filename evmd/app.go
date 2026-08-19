@@ -1025,6 +1025,16 @@ func (app *EVMD) DefaultGenesis() map[string]json.RawMessage {
 	erc20GenState := NewErc20GenesisState()
 	genesis[erc20types.ModuleName] = app.appCodec.MustMarshalJSON(erc20GenState)
 
+	incentiveGenState := validatorincentivestypes.DefaultGenesisState()
+	incentiveGenState.Authority = authtypes.NewModuleAddress(
+		govtypes.ModuleName,
+	).String()
+	incentiveGenesis, err := json.Marshal(incentiveGenState)
+	if err != nil {
+		panic(err)
+	}
+	genesis[validatorincentivestypes.ModuleName] = incentiveGenesis
+
 	return genesis
 }
 
