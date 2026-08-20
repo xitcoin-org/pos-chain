@@ -57,10 +57,10 @@ verified:
 - the State identity and ISO3 position;
 - a valid institutional controller;
 - a dated operational mandate;
-- a compliant validator operator and consensus key;
+- compliant validator infrastructure operated under the active mandate;
 - at least 5,000,000 XTC of State-provided self-delegation;
 - approved reward and withdrawal destinations;
-- acceptance of uptime, slashing, reporting and key-rotation requirements.
+- acceptance of uptime, slashing, reporting and operational-security requirements.
 
 The sovereign allocation does not satisfy the minimum self-delegation. The
 State must provide the required commitment independently.
