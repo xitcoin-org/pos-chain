@@ -58,15 +58,10 @@ func NewAdmissionAnteHandler(admissionKeeper keeper.Keeper, next sdk.AnteHandler
 				)
 
 			case *govtypes.MsgSubmitProposal:
-				for _, proposedMessage := range msg.Messages {
-					if proposedMessage != nil &&
-						proposedMessage.TypeUrl == "/cosmos.mint.v1beta1.MsgUpdateParams" {
-						return ctx, errorsmod.Wrap(
-							sdkerrors.ErrUnauthorized,
-							"Fixed monetary policy: Mint parameter proposals are disabled",
-						)
-					}
-				}
+				return ctx, errorsmod.Wrap(
+					sdkerrors.ErrUnauthorized,
+					"Governance safeguards: executable on-chain proposals are disabled",
+				)
 			}
 		}
 

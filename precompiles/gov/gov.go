@@ -48,6 +48,7 @@ type Precompile struct {
 	govQuerier   govtypes.QueryServer
 	codec        codec.Codec
 	addrCdc      address.Codec
+	allowSubmit  bool
 }
 
 // NewPrecompile creates a new gov Precompile instance as a
@@ -71,7 +72,15 @@ func NewPrecompile(
 		govQuerier:   govQuerier,
 		codec:        codec,
 		addrCdc:      addrCdc,
+		allowSubmit:  true,
 	}
+}
+
+// DisableProposalSubmission keeps governance queries and voting available but
+// prevents the EVM precompile from bypassing the Cosmos proposal safeguard.
+func (p *Precompile) DisableProposalSubmission() *Precompile {
+	p.allowSubmit = false
+	return p
 }
 
 func (Precompile) Name() string {
@@ -116,6 +125,9 @@ func (p Precompile) Execute(ctx sdk.Context, stateDB vm.StateDB, contract *vm.Co
 	case VoteWeightedMethod:
 		bz, err = p.VoteWeighted(ctx, contract, stateDB, method, args)
 	case SubmitProposalMethod:
+		if !p.allowSubmit {
+			return nil, fmt.Errorf(ErrProposalSubmissionDisabled)
+		}
 		bz, err = p.SubmitProposal(ctx, contract, stateDB, method, args)
 	case DepositMethod:
 		bz, err = p.Deposit(ctx, contract, stateDB, method, args)

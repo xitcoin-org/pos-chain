@@ -681,7 +681,7 @@
     },
     "upgrade": {},
     "validator_admission": {
-      "authority": "xtc1l4g4mamvunartpsj3emky7kuzn2k0v2nnxchgf",
+      "authority": "xtc1e3q4pm23ky0qetnep33j4yezq6c3lc7fcds4je",
       "approved_validators": [
         "xtcvaloper1f7xdfjpnnj7pde86f56gnvvpm5xqvhxah7wgae",
         "xtcvaloper19tztlxxa8nc2q7asl73tpvkrjf2zt0tl8yfcqt",
@@ -689,7 +689,15 @@
         "xtcvaloper1n3hymsy5p7dgz6t7lrdk3ccyrlefpwvqcvh8hc"
       ],
       "max_approved_validators": 258,
-      "minimum_self_delegation": "1000000000000000000000000axtc"
+      "minimum_self_delegation": "5000000000000000000000000axtc"
+    },
+    "validator_incentives": {
+      "authority": "xtc1e3q4pm23ky0qetnep33j4yezq6c3lc7fcds4je",
+      "params": {
+        "annual_rate_basis_points": 800,
+        "blocks_per_year": 6311520,
+        "reward_period_blocks": 1577880
+      }
     },
     "vesting": {}
   },

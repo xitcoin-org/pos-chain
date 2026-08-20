@@ -1,6 +1,8 @@
 package gov
 
 const (
+	// ErrProposalSubmissionDisabled is raised on protected Xitcoin networks.
+	ErrProposalSubmissionDisabled = "governance proposal submission is disabled"
 	// ErrInvalidVoter is raised when the voter address is not valid.
 	ErrInvalidVoter = "invalid voter address: %s"
 	// ErrInvalidProposalID invalid proposal id.

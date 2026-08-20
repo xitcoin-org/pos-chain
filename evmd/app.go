@@ -426,14 +426,15 @@ func NewExampleApp(
 		skipUpgradeHeights[int64(h)] = true
 	}
 	homePath := cast.ToString(appOpts.Get(flags.FlagHome))
-	// set the governance module account as the authority for conducting upgrades
+	// Software upgrades require the dedicated 2-of-3 administrative
+	// multisignature. Executable governance proposals are rejected by ante.
 	app.UpgradeKeeper = upgradekeeper.NewKeeper(
 		skipUpgradeHeights,
 		runtime.NewKVStoreService(keys[upgradetypes.StoreKey]),
 		appCodec,
 		homePath,
 		app.BaseApp,
-		authAddr,
+		mustKCALBAdministrativeAuthority(),
 	)
 
 	// Create IBC Keeper
@@ -525,6 +526,9 @@ func NewExampleApp(
 			app.GovKeeper,
 			app.SlashingKeeper,
 			appCodec,
+			precompiletypes.WithGovernanceProposalSubmission(
+				cast.ToBool(appOpts.Get(UnsafeEnableGovernanceProposalSubmissionOption)),
+			),
 		),
 	)
 
@@ -1038,7 +1042,7 @@ func (app *EVMD) DefaultGenesis() map[string]json.RawMessage {
 	genesis[erc20types.ModuleName] = app.appCodec.MustMarshalJSON(erc20GenState)
 
 	incentiveGenState := validatorincentivestypes.DefaultGenesisState()
-	incentiveGenState.Authority = mustGovernanceAuthority()
+	incentiveGenState.Authority = mustKCALBAdministrativeAuthority()
 	incentiveGenesis, err := json.Marshal(incentiveGenState)
 	if err != nil {
 		panic(err)

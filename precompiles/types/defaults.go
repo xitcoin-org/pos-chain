@@ -28,6 +28,7 @@ type Optionals struct {
 	AddressCodec       address.Codec // used by gov/staking
 	ValidatorAddrCodec address.Codec // used by slashing
 	ConsensusAddrCodec address.Codec // used by slashing
+	AllowGovSubmit     bool          // used by governance
 }
 
 func defaultOptionals() Optionals {
@@ -35,6 +36,7 @@ func defaultOptionals() Optionals {
 		AddressCodec:       evmaddress.NewEvmCodec(sdktypes.GetConfig().GetBech32AccountAddrPrefix()),
 		ValidatorAddrCodec: evmaddress.NewEvmCodec(sdktypes.GetConfig().GetBech32ValidatorAddrPrefix()),
 		ConsensusAddrCodec: evmaddress.NewEvmCodec(sdktypes.GetConfig().GetBech32ConsensusAddrPrefix()),
+		AllowGovSubmit:     true,
 	}
 }
 
@@ -55,6 +57,13 @@ func WithValidatorAddrCodec(codec address.Codec) Option {
 func WithConsensusAddrCodec(codec address.Codec) Option {
 	return func(opts *Optionals) {
 		opts.ConsensusAddrCodec = codec
+	}
+}
+
+// WithGovernanceProposalSubmission configures the EVM governance precompile.
+func WithGovernanceProposalSubmission(enabled bool) Option {
+	return func(opts *Optionals) {
+		opts.AllowGovSubmit = enabled
 	}
 }
 

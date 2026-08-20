@@ -160,6 +160,9 @@ func (s StaticPrecompiles) WithGovPrecompile(
 		codec,
 		options.AddressCodec,
 	)
+	if !options.AllowGovSubmit {
+		govPrecompile.DisableProposalSubmission()
+	}
 
 	s[govPrecompile.Address()] = govPrecompile
 	return s
