@@ -85,10 +85,10 @@ must supply this commitment independently; its sovereign allocation cannot be
 counted toward the activation minimum.
 
 Validator admission remains subject to the validator-admission module. The
-current development branch still defines a 1,000,000 XTC protocol minimum and
-does not yet implement the sovereign position, mandate or five-year release
-controls. Those differences must be resolved, tested and independently
-reviewed before activation.
+development branch defines the 5,000,000 XTC protocol minimum but does not yet
+implement the sovereign position, institutional succession, mandate or
+five-year release controls. Those remaining controls must be implemented,
+tested and independently reviewed before activation.
 
 ## Institutional continuity
 
