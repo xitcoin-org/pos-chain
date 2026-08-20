@@ -6,8 +6,8 @@ Reference date: 20 August 2026
 ## Purpose
 
 The framework reserves one institutional validator position for each of the
-195 sovereign references recorded in the Xitcoin 2026 Sovereign Allocation
-Index. A position is attached permanently to the relevant State, identified
+193 United Nations Member States recorded in the Xitcoin 2026 Sovereign
+Allocation Index. A position is attached permanently to the relevant State, identified
 by its canonical ISO3 code. It is not attached to a president, minister,
 administration, signatory or infrastructure provider.
 
@@ -20,13 +20,24 @@ allocation.
 
 The target validator capacity is:
 
-- 195 reserved sovereign positions;
-- 63 public positions;
+- 193 reserved Member-State positions;
+- 65 general validator positions;
 - 258 positions in total;
 - 5,000,000 XTC minimum self-delegation for every activated validator.
 
-The same minimum applies to founder, sovereign and public validators. A
-reserved sovereign position is not active and receives no reward while its
+The same minimum applies to founder, institutional and general validators. A
+The total capacity remains fixed at 258 positions. A governance-approved
+increase in the reserved Member-State category reduces the general category
+one-for-one; a decrease increases the general category one-for-one. Any change
+to the total capacity requires a separate governance decision.
+
+The reserved registry follows the published United Nations Member-State list.
+Adding or removing a reserved position requires an on-chain proposal supported
+by an objective membership change. The proposal must identify any allocation
+funding and cannot create supply, rewrite vested allocations or reduce accrued
+rights.
+
+A reserved Member-State position is not active and receives no reward while its
 admission conditions are not satisfied.
 
 ## Institutional control
@@ -67,7 +78,7 @@ State must provide the required commitment independently.
 
 ## Sovereign allocation reserve
 
-The fixed reserve remains 390,000,000 XTC. The allocation of each ISO3
+The fixed reserve remains 386,000,000 XTC. The allocation of each ISO3
 position remains calculated by the canonical 75% equal / 25% demographic
 formula recorded in `docs/sovereign-allocation-2026.md` and the associated CSV
 and JSON files.
@@ -166,8 +177,8 @@ State position to the buyer.
 This policy requires explicit implementation and independent review before it
 can be activated. At minimum, the protocol must provide:
 
-- a unique 195-entry ISO3 sovereign position registry;
-- separate sovereign and public admission capacity;
+- a unique 193-entry ISO3 Member-State position registry;
+- separate reserved and general admission capacity;
 - institutional-controller and dated-mandate records;
 - safe institutional succession between successive governance and operating
   mandates of the same State;
@@ -183,3 +194,4 @@ can be activated. At minimum, the protocol must provide:
 Until those controls are implemented, tested, audited and activated by the
 required governance process, the allocation index remains a reference only and
 does not transfer tokens or activate validators.
+
