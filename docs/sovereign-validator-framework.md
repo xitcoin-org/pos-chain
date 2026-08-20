@@ -76,17 +76,28 @@ The allocation is a finite protocol-funded support grant for an activated
 sovereign validator position. It is separate from ordinary validator rewards,
 does not create new supply and does not grant automatic admission.
 
-## Five-year release
+## Activation-based five-year release
 
-After activation, the position's fixed allocation is released over five years
-in 20 quarterly tranches:
+Each position receives its own deterministic vesting schedule when it is
+activated. A position may therefore join years or decades after network launch
+without requiring a global calendar change.
+
+The schedule accrues linearly for five years of eligible service, measured by
+the chain's canonical block accounting:
 
 ```text
-quarterly tranche = canonical ISO3 allocation / 20
+vested allocation =
+canonical ISO3 allocation x eligible service blocks / five-year service blocks
+
+claimable allocation = vested allocation - allocation already released
 ```
 
-A tranche becomes claimable only if the position satisfies the applicable
-service conditions for the quarter, including:
+No quarterly transaction or recurring company intervention is required. The
+authorized institutional controller may claim the amount accrued at any time.
+An unclaimed amount remains recorded as claimable.
+
+Accrual continues only while the position satisfies the applicable service
+conditions, including:
 
 - minimum self-delegation;
 - valid institutional and operational mandates;
@@ -94,9 +105,11 @@ service conditions for the quarter, including:
 - absence of unresolved double-signing or other disqualifying fault;
 - compliance with reporting and security obligations.
 
-A failed condition pauses the affected tranche and opens a defined remediation
-period. It must not permit arbitrary seizure of already vested tranches.
-Cancelled or unvested amounts remain in the sovereign allocation reserve.
+A failed condition pauses future accrual and opens a defined remediation
+period. Reactivation resumes the schedule without retroactive accrual for the
+suspended interval. It must not permit arbitrary seizure of an amount already
+vested. Cancelled or unvested amounts remain in the sovereign allocation
+reserve.
 
 After all 20 valid tranches have been released, no further sovereign allocation
 is created. The validator continues under the same staking, commission,
@@ -147,7 +160,8 @@ can be activated. At minimum, the protocol must provide:
 - institutional-controller and dated-mandate records;
 - safe institutional succession between successive governance and operating
   mandates of the same State;
-- quarterly vesting and remaining-allocation accounting;
+- per-position activation height, eligible-service vesting and
+  remaining-allocation accounting;
 - reward accounting separated from sovereign allocation accounting;
 - suspension, remediation and reactivation procedures;
 - immutable events and public read-only queries;
