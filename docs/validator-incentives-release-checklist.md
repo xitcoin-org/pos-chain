@@ -55,8 +55,8 @@ rollback preparation.
   downstream cache refreshes.
 - DefiLlama Chainlist PR #3073: open and mergeable; wait for two maintainer
   approvals and do not rewrite the branch unless CI or reviewers request it.
-- GitBook separation PR: review and merge after confirming that every removed
-  technical claim has a canonical GitHub reference.
+- Xitcoin Guide PR #6: merged; public documentation now links product explanations
+  to canonical GitHub technical records.
 
 ## Release rule
 
