@@ -14,7 +14,7 @@ type activationStakingKeeper struct {
 	err    error
 }
 
-func (k activationStakingKeeper) TotalBondedTokens(
+func (k activationStakingKeeper) TotalValidatorPower(
 	context.Context,
 ) (sdkmath.Int, error) {
 	return k.bonded, k.err
