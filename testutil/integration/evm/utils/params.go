@@ -3,7 +3,6 @@ package utils
 import (
 	"fmt"
 
-	"github.com/xitcoin-org/pos-chain/evmd/config"
 	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/factory"
 	"github.com/xitcoin-org/pos-chain/testutil/integration/evm/network"
 	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
@@ -27,7 +26,7 @@ type UpdateParamsInput struct {
 
 func governanceAuthority() string {
 	authority, err := bech32.ConvertAndEncode(
-		config.Bech32PrefixAccAddr,
+		sdk.GetConfig().GetBech32AccountAddrPrefix(),
 		authtypes.NewModuleAddress(govtypes.ModuleName),
 	)
 	if err != nil {
