@@ -30,8 +30,9 @@ type BankKeeper interface {
 	) error
 }
 
-// StakingKeeper exposes the canonical bonded-token total used to calculate
-// eligible stake. The value is read from on-chain staking state.
+// StakingKeeper exposes the canonical bonded-token total in atomic units used
+// to calculate eligible stake. Consensus power must never be substituted for
+// this amount because it is reduced by the SDK power-reduction factor.
 type StakingKeeper interface {
-	TotalValidatorPower(ctx context.Context) (sdkmath.Int, error)
+	TotalBondedTokens(ctx context.Context) (sdkmath.Int, error)
 }
