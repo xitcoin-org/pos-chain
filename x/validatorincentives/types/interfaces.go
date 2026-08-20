@@ -31,8 +31,8 @@ type BankKeeper interface {
 }
 
 // StakingKeeper exposes the canonical bonded-token total in atomic units used
-// to calculate eligible stake. Consensus power must never be substituted for
-// this amount because it is reduced by the SDK power-reduction factor.
+// to calculate eligible stake. In Cosmos SDK v0.54, TotalValidatorPower reads
+// the bonded pool balance in the staking denomination despite its method name.
 type StakingKeeper interface {
-	TotalBondedTokens(ctx context.Context) (sdkmath.Int, error)
+	TotalValidatorPower(ctx context.Context) (sdkmath.Int, error)
 }
