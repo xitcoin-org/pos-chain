@@ -17,6 +17,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
@@ -111,35 +113,28 @@ func (s *PrecompileTestSuite) SetupTest() {
 	}
 	govGen.Params.MinDeposit = sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(100)))
 	govGen.Params.ProposalCancelDest = keyring.GetAccAddr(2).String()
+	govGen.Deposits = seedDeposits
 	govGen.Proposals = append(govGen.Proposals, prop)
 	govGen.Proposals = append(govGen.Proposals, prop2)
 	customGen[govtypes.ModuleName] = govGen
 
+	govBalance := sdk.NewCoins()
+	for _, deposit := range seedDeposits {
+		govBalance = govBalance.Add(deposit.Amount...)
+	}
+	govModuleBalance := banktypes.Balance{
+		Address: authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		Coins:   govBalance,
+	}
+
 	options := []network.ConfigOption{
 		network.WithPreFundedAccounts(keyring.GetAllAccAddrs()...),
+		network.WithAdditionalBalances(govModuleBalance),
 		network.WithCustomGenesis(customGen),
 	}
 	options = append(options, s.options...)
 	nw := network.NewUnitTestNetwork(s.create, options...)
 
-	bankKeeper := nw.App.GetBankKeeper()
-	govKeeperForGenesis := nw.App.GetGovKeeper()
-	for i, deposit := range seedDeposits {
-		if err := bankKeeper.SendCoinsFromAccountToModule(
-			nw.GetContext(),
-			keyring.GetAccAddr(i),
-			govtypes.ModuleName,
-			deposit.Amount,
-		); err != nil {
-			panic(err)
-		}
-		if err := govKeeperForGenesis.SetDeposit(nw.GetContext(), *deposit); err != nil {
-			panic(err)
-		}
-	}
-	if err := nw.NextBlock(); err != nil {
-		panic(err)
-	}
 	grpcHandler := grpc.NewIntegrationHandler(nw)
 	txFactory := factory.New(nw, grpcHandler)
 
