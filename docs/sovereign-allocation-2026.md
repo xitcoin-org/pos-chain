@@ -2,8 +2,8 @@
 
 ## Reference framework
 
-The index defines a deterministic reference allocation for 195 positions: 193
-United Nations Member States, the Holy See and the State of Palestine.
+The index defines a deterministic reference allocation for the 193 United
+Nations Member States recorded at the 2026 reference date.
 
 The index records the fixed allocation assigned to each State position. It
 does not, by itself, transfer tokens, activate a validator or create automatic
@@ -12,17 +12,17 @@ controls defined in `docs/sovereign-validator-framework.md`.
 
 ## Reserve and formula
 
-The fixed reference reserve is 390,000,000 XTC:
+The fixed reference reserve is 386,000,000 XTC:
 
-- 292,500,000 XTC equal component (75%);
-- 97,500,000 XTC demographic component (25%).
+- 289,500,000 XTC equal component (75%);
+- 96,500,000 XTC demographic component (25%).
 
 Each position receives an equal base of 1,500,000 XTC. The demographic
 component is calculated as follows:
 
 ```text
-allocation_i = 390,000,000 x (
-  0.75 / 195
+allocation_i = 386,000,000 x (
+  0.75 / 193
   + 0.25 x sqrt(population_i_2026)
     / sum(sqrt(population_2026))
 )
@@ -32,7 +32,7 @@ Calculations use deterministic decimal arithmetic. Final atomic-unit
 remainders are distributed by descending fractional remainder, with ISO3 code
 as the deterministic tie-breaker.
 
-The aggregate allocation is exactly 390,000,000.000000000000000000 XTC.
+The aggregate allocation is exactly 386,000,000.000000000000000000 XTC.
 
 ## Economic function
 
@@ -78,11 +78,22 @@ included in another position's population value.
 The target protocol configuration provides:
 
 - 258 maximum validators;
-- 195 sovereign positions;
-- 63 public positions;
+- 193 reserved Member-State positions;
+- 65 general validator positions;
 - 5,000,000 XTC minimum self-delegation for every activated validator.
 
-The same minimum applies to founder, sovereign and public validators. A State
+The 258-position capacity is conserved. A governance-approved increase in the
+reserved Member-State category reduces the general category by the same number
+of positions. A decrease increases the general category by the same number.
+Changing the total validator capacity requires a separate governance decision.
+
+Changes to the reserved registry require an on-chain governance proposal tied
+to an objective change in United Nations membership. A registry change cannot
+create tokens, rewrite vested allocations or reduce an active position's
+accrued rights. Any new allocation must be funded from an identified,
+unallocated reserve approved in the same governance process.
+
+The same minimum applies to founder, institutional and general validators. A State
 must supply this commitment independently; its sovereign allocation cannot be
 counted toward the activation minimum.
 
@@ -114,3 +125,4 @@ their source and licence are recorded.
 - `networks/testnet/sovereign-allocation-index-2026.csv`
 - `networks/testnet/sovereign-allocation-index-2026.json`
 - `networks/testnet/territorial-consolidation-2026.csv`
+
