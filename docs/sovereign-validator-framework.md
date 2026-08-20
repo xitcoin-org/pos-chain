@@ -25,7 +25,7 @@ The target validator capacity is:
 - 258 positions in total;
 - 5,000,000 XTC minimum self-delegation for every activated validator.
 
-The same minimum applies to founder, institutional and general validators. A
+The same minimum applies to founder, institutional and general validators.
 The total capacity remains fixed at 258 positions. A governance-approved
 increase in the reserved Member-State category reduces the general category
 one-for-one; a decrease increases the general category one-for-one. Any change
