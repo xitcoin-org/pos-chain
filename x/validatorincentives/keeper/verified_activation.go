@@ -27,7 +27,7 @@ func (k Keeper) ActivatePeriodFromChainState(
 		return types.PeriodState{}, err
 	}
 
-	eligibleBonded, err := stakingKeeper.TotalValidatorPower(ctx)
+	eligibleBonded, err := stakingKeeper.TotalBondedTokens(ctx)
 	if err != nil {
 		return types.PeriodState{}, err
 	}
