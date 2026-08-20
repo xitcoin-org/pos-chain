@@ -40,8 +40,10 @@ The allocation is a finite protocol-funded contribution supporting an
 activated sovereign validator position. It is additional to, and never a
 substitute for, the State-provided minimum self-delegation.
 
-After activation, the fixed ISO3 allocation is intended to vest over five
-years in 20 quarterly tranches, subject to the institutional, staking,
+After activation, the fixed ISO3 allocation is intended to vest linearly over
+five years of eligible service under a schedule created specifically for that
+position. Activation may occur at any future date and requires no global
+calendar change. The schedule is subject to the institutional, staking,
 availability and security conditions defined by the sovereign validator
 framework. It does not create new supply.
 
@@ -87,8 +89,8 @@ counted toward the activation minimum.
 Validator admission remains subject to the validator-admission module. The
 development branch defines the 5,000,000 XTC protocol minimum but does not yet
 implement the sovereign position, institutional succession, mandate or
-five-year release controls. Those remaining controls must be implemented,
-tested and independently reviewed before activation.
+activation-based five-year vesting controls. Those remaining controls must be
+implemented, tested and independently reviewed before activation.
 
 ## Institutional continuity
 
