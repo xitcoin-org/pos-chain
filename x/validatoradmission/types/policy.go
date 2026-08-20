@@ -8,7 +8,7 @@ import (
 
 const (
 	DefaultMaxApprovedValidators uint32 = 258
-	DefaultMinimumSelfDelegation        = "1000000000000000000000000axtc"
+	DefaultMinimumSelfDelegation        = "5000000000000000000000000axtc"
 )
 
 func ValidatePolicy(maxApprovedValidators uint32, minimumSelfDelegation string) error {
