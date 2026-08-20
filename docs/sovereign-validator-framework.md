@@ -82,6 +82,11 @@ Each position receives its own deterministic vesting schedule when it is
 activated. A position may therefore join years or decades after network launch
 without requiring a global calendar change.
 
+Activation stores the applicable schedule version, activation reference,
+fixed allocation, vesting duration and amount already released in on-chain
+state. Later protocol upgrades may introduce a new schedule version for future
+activations, but must not silently rewrite an active position's accrued rights.
+
 The schedule accrues linearly for five years of eligible service, measured by
 the chain's canonical block accounting:
 
@@ -111,9 +116,15 @@ suspended interval. It must not permit arbitrary seizure of an amount already
 vested. Cancelled or unvested amounts remain in the sovereign allocation
 reserve.
 
-After all 20 valid tranches have been released, no further sovereign allocation
-is created. The validator continues under the same staking, commission,
-delegation, fee-distribution and slashing rules as other validators.
+An inactive position's allocation remains reserved in the protocol account
+until valid activation or an explicit network-governance decision governed by
+the published reserve rules. Company availability must not be required for the
+vesting calculation to continue.
+
+After five years of eligible service have fully vested, no further sovereign
+allocation is created. The validator continues under the same staking,
+commission, delegation, fee-distribution and slashing rules as other
+validators.
 
 ## Ordinary validator rewards
 
@@ -162,6 +173,7 @@ can be activated. At minimum, the protocol must provide:
   mandates of the same State;
 - per-position activation height, eligible-service vesting and
   remaining-allocation accounting;
+- immutable schedule versioning and reviewed upgrade migration rules;
 - reward accounting separated from sovereign allocation accounting;
 - suspension, remediation and reactivation procedures;
 - immutable events and public read-only queries;
