@@ -1,6 +1,6 @@
 # Validator Incentives public release checklist
 
-Status date: 20 August 2026
+Status date: 21 August 2026
 
 This checklist is the canonical technical release record. The public GitBook
 describes the product and links here instead of duplicating test logs, audit
@@ -29,7 +29,7 @@ rollback preparation.
 - [x] CLI and Cosmos message handlers;
 - [x] application, store, keeper and genesis wiring;
 - [x] governance, staking and EIP integration regression tests;
-- [x] canonical Chainlist registry merge for chain IDs 101088 and 101089;
+- [x] initial Ethereum Lists metadata merged through PR #8608;
 - [x] DefiLlama Chainlist correction submitted as PR #3073;
 - [x] public guide separated from technical verification records.
 
@@ -51,12 +51,12 @@ rollback preparation.
 
 ## External publication follow-up
 
-- Ethereum Lists PR #8608: merged; verify both networks remain visible after
-  downstream cache refreshes.
+- Ethereum Lists PR #8608: merged; corrective PR #8621 is open, CI-green and
+  ready for maintainer review.
 - DefiLlama Chainlist PR #3073: open and mergeable; wait for two maintainer
   approvals and do not rewrite the branch unless CI or reviewers request it.
-- Xitcoin Guide PR #6: merged; public documentation now links product explanations
-  to canonical GitHub technical records.
+- Xitcoin Guide PRs #9 and #10: merged; obsolete staging and pending-cutover
+  language is removed and protected by Guide CI.
 
 ## Release rule
 

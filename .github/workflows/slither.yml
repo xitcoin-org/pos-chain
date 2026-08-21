@@ -1,6 +1,11 @@
 name: Slither Analysis
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'contracts/**/*.sol'
+      - '.github/workflows/slither.yml'
   workflow_dispatch:
 
 permissions: read-all
@@ -14,7 +19,7 @@ jobs:
       security-events: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Get Diff
         uses: technote-space/get-diff-action@v6.1.2
         with:
@@ -25,9 +30,8 @@ jobs:
           cd contracts && npm i
           cp -r node_modules/@openzeppelin .
       - name: Run Slither Action
-        uses: crytic/slither-action@v0.4.0
-        continue-on-error: true
-        id: slither
+        uses: crytic/slither-action@v0.4.2
+                id: slither
         with:
           target: contracts/
         if: "env.GIT_DIFF"
