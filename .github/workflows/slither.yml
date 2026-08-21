@@ -41,4 +41,11 @@ jobs:
           target: contracts
           solc-version: 0.8.20
           node-version: 24
+          # Dependencies and deliberately adversarial test fixtures are still
+          # compiled so imports resolve, but their findings are not attributed
+          # to this repository. Medium/high findings in project contracts keep
+          # failing the job.
+          slither-args: >-
+            --exclude-dependencies
+            --filter-paths "(^|/)(node_modules|@openzeppelin|testdata|tests|testutil)(/|$)"
           fail-on: medium
