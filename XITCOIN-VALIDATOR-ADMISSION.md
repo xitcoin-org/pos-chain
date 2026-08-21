@@ -13,7 +13,7 @@
 - EVM addresses: `0x...`
 - Node program: `xitcoind`
 
-Version labels such as V1 or V2 are not public network names.
+The public name is `Xitcoin Testnet`. `xitcoin-testnet-1` is its technical Cosmos chain ID, not a public version or server name.
 
 ## Admission rule
 
@@ -21,7 +21,7 @@ Xitcoin is a permissioned-validator network.
 
 Holding, receiving, staking or delegating XTC does not grant validator-admission authority. A validator may be created only when its operator address has been explicitly approved by the canonical on-chain authority and all staking, security and operational requirements are satisfied.
 
-## Candidate network parameters
+## Canonical testnet parameters
 
 - Maximum validator and admission capacity: 258
 - Initially approved validators: 4
@@ -76,6 +76,6 @@ Production custody, recovery and signer-change procedures must be documented and
 
 ## Current release status
 
-The `xitcoin-testnet-1` release candidate is running as an isolated four-validator staging network. Consensus, peer connectivity, binary identity, genesis identity, Cosmos identity and local-only EVM JSON-RPC have been validated.
+Xitcoin Testnet is running as an isolated four-validator staging network. Its technical Cosmos chain ID is `xitcoin-testnet-1`. Consensus, peer connectivity, binary identity, genesis identity, Cosmos identity and local-only EVM JSON-RPC have been validated.
 
-Cosmos and EVM transaction validation remains a release gate. The currently published testnet remains unchanged until coordinated activation.
+Cosmos and EVM transaction validation remains a public-release gate. Existing public endpoints continue serving the historical testnet until the coordinated canonical cutover.

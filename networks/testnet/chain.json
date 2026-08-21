@@ -1,6 +1,6 @@
 {
   "name": "Xitcoin Testnet",
-  "status": "reset_candidate",
+  "status": "staging",
   "cosmos_chain_id": "xitcoin-testnet-1",
   "evm_chain_id": 101089,
   "evm_chain_id_hex": "0x18ae1",
@@ -18,8 +18,10 @@
     "sha256": "7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414"
   },
   "notes": [
-    "Endpoint entries remain empty until this reset candidate is activated; current public endpoints continue serving the existing testnet.",
-    "The candidate uses a fresh genesis and does not reuse private-testnet state.",
+    "The public network name is Xitcoin Testnet.",
+    "The technical Cosmos chain ID xitcoin-testnet-1 identifies the current genesis and is not a public version label.",
+    "The canonical four-validator network is active in staging; public endpoint cutover remains pending.",
+    "Existing public endpoints continue serving the historical testnet until the coordinated cutover.",
     "Testnet assets have no monetary value."
   ]
 }
