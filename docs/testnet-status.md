@@ -17,8 +17,7 @@ Meridian and Xitcoin Zenith.
 
 ## Current release state
 
-The canonical four-validator network is active in staging. Its binary, genesis,
-validator identities, consensus and local RPC interfaces have been validated.
+The canonical four-validator testnet is publicly active. Its binary, genesis, validator identities, consensus, transactions and public interfaces have been validated.
 
 The coordinated public endpoint cutover was completed on 2026-08-21. The
 published domains now serve the canonical network.
@@ -51,13 +50,13 @@ published domains now serve the canonical network.
 | Minimum self-delegation | 5,000,000 XTC |
 | Administrative authority | `xtc1e3q4pm23ky0qetnep33j4yezq6c3lc7fcds4je` |
 
-## Remaining public-release gates
+## Completed public-testnet acceptance
 
-- complete Cosmos and EVM transaction validation;
-- validate admission, revocation and administrative signing;
-- complete the public endpoint cutover;
-- reconcile explorers and faucet with the canonical genesis;
-- complete monitoring and rollback acceptance;
-- validate the Cronos bridge independently before route activation.
+- Cosmos and EVM transactions validated;
+- admission, revocation and administrative signing validated;
+- public RPC, API, explorer and faucet cutover completed;
+- monitoring and rollback acceptance completed;
+- historical public services stopped with recoverable data retained;
+- Cronos bridge remains inactive and separately gated.
 
 Testnet XTC has no monetary value.
