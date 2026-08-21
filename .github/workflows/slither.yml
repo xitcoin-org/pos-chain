@@ -28,6 +28,9 @@ jobs:
           cd contracts
           npm ci
           cp -r node_modules/@openzeppelin .
+          # Hardhat 3 prefixes build-info sources with `project/`. Slither's
+          # resolver expects that virtual prefix to exist below the project.
+          ln -s . project
 
       - name: Run Slither Action
         id: slither
