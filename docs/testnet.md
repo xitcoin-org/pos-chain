@@ -20,11 +20,9 @@ not a public version label and does not represent a validator or server number.
 
 ## Deployment state
 
-The canonical network is active as a four-validator staging network. Public
-endpoint cutover remains pending.
-
-Existing public domains continue serving the historical testnet and must not
-yet be used as evidence that the canonical genesis is publicly active.
+The canonical four-validator testnet is publicly active. The coordinated
+endpoint cutover was completed on 2026-08-21, and the published domains now
+serve the canonical genesis.
 
 ## Public endpoint transition
 
