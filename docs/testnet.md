@@ -35,8 +35,8 @@ serve the canonical genesis.
 | EVM explorer | `https://evm-explorer-testnet.xitcoin.org` |
 | Faucet | `https://faucet-testnet.xitcoin.org` |
 
-These endpoints remain associated with the historical public environment until
-the coordinated canonical cutover is completed.
+These endpoints serve the canonical public testnet. The coordinated cutover
+was completed and validated on 2026-08-21.
 
 ## Canonical genesis
 
