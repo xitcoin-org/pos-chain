@@ -6,7 +6,7 @@ Xitcoin Testnet provides public Cosmos and EVM interfaces for application, walle
 
 | Field | Value |
 | --- | --- |
-| Cosmos Chain ID | `xitcoin-testnet` after the coordinated reset |
+| Cosmos Chain ID | `xitcoin-testnet-1` after the coordinated reset |
 | EVM Chain ID | `101089` (`0x18ae1`) |
 | Native asset | XTC |
 | Atomic denomination | `axtc` |
@@ -35,7 +35,7 @@ sha256sum -c genesis.sha256
 Expected SHA-256:
 
 ```text
-a0f835a5e12101382475ff50ba31f947ab703a072258d5ad2a0e62a8d9faf997
+7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414
 ```
 
 The candidate becomes authoritative only after the coordinated reset is announced and completed. Until then, public endpoints continue to report the active network state.

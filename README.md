@@ -2,18 +2,55 @@
 
 Xitcoin is an EVM-compatible Proof-of-Stake blockchain built with Cosmos SDK, CometBFT and Cosmos EVM.
 
+It is conceived as a common and evolving infrastructure layer through which public-sector participants, sovereign operators, companies, institutions, DeFi applications, communities and developers can interact using compatible transaction and application standards.
+
+The network provides a shared technical language while each participant retains its own identity, authority, legal framework and operational responsibilities. Access to the protocol is based on published rules rather than institutional hierarchy or political alignment.
+
+## Architecture and interoperability
+
+Xitcoin combines:
+
+- CometBFT consensus and Cosmos SDK protocol modules;
+- native EVM execution and Ethereum-compatible tooling;
+- Cosmos RPC, REST and gRPC interfaces;
+- one canonical native-XTC economy across Cosmos and EVM execution;
+- on-chain validator admission separated from staking, governance and operations;
+- public source, release checksums and verifiable network state.
+
+Cosmos and EVM activity execute on the same sovereign chain and use the same native XTC accounting. A future Cronos bridge is a separate security boundary using auditable lock/mint and burn/unlock accounting. It is not implied to be active by the existence of bridge source code.
+
 ## Network
 
 | Property | Testnet | Mainnet |
 | --- | --- | --- |
+| Public name | Xitcoin Testnet | Xitcoin |
 | Status | Active; coordinated reset candidate under review | Not launched |
-| Cosmos Chain ID | `xitcoin-testnet` after reset | `xitcoin` |
+| Cosmos Chain ID | `xitcoin-testnet-1` after reset | `xitcoin` |
 | EVM Chain ID | `101089` | `101088` |
 | Native asset | XTC | XTC |
 | Atomic denomination | `axtc` | `axtc` |
 | Decimals | 18 | 18 |
 
-XTC is the native asset on both the Cosmos and EVM interfaces. The EVM interface uses the canonical native precompile; no separate wrapped-XTC token is required.
+XTC is the native asset on both the Cosmos and EVM interfaces. The EVM interface uses the canonical native precompile; no separate wrapped-XTC token is required inside the Xitcoin network.
+
+Technical service suffixes used during staging are not public network version names.
+
+## Participation model
+
+The candidate network aligns staking and validator-admission capacity at 258 positions:
+
+- 193 reserved Member-State positions;
+- 65 general validator positions;
+- 4 initially approved core validators;
+- 5,000,000 XTC minimum self-delegation for every validator.
+
+The sovereign framework keeps a defined participation pathway available for every reference position. Activation remains voluntary and begins only through the relevant participant's own initiative, an authorized operator and the same published admission, security and operational standards that apply across the network.
+
+A reference or reserved position does not itself transfer assets or activate a validator. It preserves future access to the framework while the network continues to develop its public infrastructure, applications, developer ecosystem and community participation.
+
+The current release candidate approves only Atlas, Borealis, Meridian and Zenith. The remaining capacity does not announce future operators. Each additional validator would require separate authorization.
+
+During the current launch phase, only the canonical on-chain validator-admission authority can approve or revoke validators. Token balances, staking weight, delegations and ordinary governance voting do not grant or override that authority.
 
 ## Project repositories
 

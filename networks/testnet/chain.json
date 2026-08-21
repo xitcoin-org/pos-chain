@@ -1,7 +1,7 @@
 {
   "name": "Xitcoin Testnet",
   "status": "reset_candidate",
-  "cosmos_chain_id": "xitcoin-testnet",
+  "cosmos_chain_id": "xitcoin-testnet-1",
   "evm_chain_id": 101089,
   "evm_chain_id_hex": "0x18ae1",
   "native_currency": {
@@ -15,7 +15,7 @@
   "faucets": [],
   "genesis": {
     "file": "genesis.json",
-    "sha256": "a0f835a5e12101382475ff50ba31f947ab703a072258d5ad2a0e62a8d9faf997"
+    "sha256": "7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414"
   },
   "notes": [
     "Endpoint entries remain empty until this reset candidate is activated; current public endpoints continue serving the existing testnet.",
