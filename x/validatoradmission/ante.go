@@ -13,7 +13,14 @@ import (
 	"github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 )
 
-func NewAdmissionAnteHandler(admissionKeeper keeper.Keeper, next sdk.AnteHandler) sdk.AnteHandler {
+func NewAdmissionAnteHandler(
+	admissionKeeper keeper.Keeper,
+	next sdk.AnteHandler,
+	allowGovernanceProposalSubmission ...bool,
+) sdk.AnteHandler {
+	allowGovernance := len(allowGovernanceProposalSubmission) > 0 &&
+		allowGovernanceProposalSubmission[0]
+
 	return func(ctx sdk.Context, tx sdk.Tx, simulate bool) (sdk.Context, error) {
 		for _, message := range tx.GetMsgs() {
 			switch msg := message.(type) {
@@ -58,15 +65,13 @@ func NewAdmissionAnteHandler(admissionKeeper keeper.Keeper, next sdk.AnteHandler
 				)
 
 			case *govtypes.MsgSubmitProposal:
-				for _, proposedMessage := range msg.Messages {
-					if proposedMessage != nil &&
-						proposedMessage.TypeUrl == "/cosmos.mint.v1beta1.MsgUpdateParams" {
-						return ctx, errorsmod.Wrap(
-							sdkerrors.ErrUnauthorized,
-							"Fixed monetary policy: Mint parameter proposals are disabled",
-						)
-					}
+				if allowGovernance {
+					continue
 				}
+				return ctx, errorsmod.Wrap(
+					sdkerrors.ErrUnauthorized,
+					"Governance safeguards: executable on-chain proposals are disabled",
+				)
 			}
 		}
 

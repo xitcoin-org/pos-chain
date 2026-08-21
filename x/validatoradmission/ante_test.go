@@ -12,7 +12,6 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	gogoany "github.com/cosmos/gogoproto/types/any"
 
 	"github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 	"github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
@@ -101,50 +100,34 @@ func TestAdmissionAnteHandlerBlocksAndAllowsValidatorActions(t *testing.T) {
 	}
 }
 
-func TestAdmissionAnteHandlerBlocksMintParameterProposal(t *testing.T) {
+func TestAdmissionAnteHandlerRejectsOnChainGovernanceProposals(t *testing.T) {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(
 		key,
 		storetypes.NewTransientStoreKey("fixed_policy_test"),
 	)
 
-	blocked := NewAdmissionAnteHandler(
-		keeper.NewKeeper(key),
-		func(ctx sdk.Context, _ sdk.Tx, _ bool) (sdk.Context, error) {
-			t.Fatal("Mint proposal reached normal handler")
-			return ctx, nil
-		},
-	)
-
-	mintProposal := &govtypes.MsgSubmitProposal{
-		Messages: []*gogoany.Any{{
-			TypeUrl: "/cosmos.mint.v1beta1.MsgUpdateParams",
-		}},
-	}
-
-	if _, err := blocked(ctx, testTx{messages: []sdk.Msg{mintProposal}}, false); err == nil {
-		t.Fatal("Mint parameter proposal was accepted")
-	}
-
+	admissionKeeper := keeper.NewKeeper(key)
 	nextCalled := false
-	allowed := NewAdmissionAnteHandler(
-		keeper.NewKeeper(key),
+	handler := NewAdmissionAnteHandler(
+		admissionKeeper,
 		func(ctx sdk.Context, _ sdk.Tx, _ bool) (sdk.Context, error) {
 			nextCalled = true
 			return ctx, nil
 		},
 	)
 
-	normalProposal := &govtypes.MsgSubmitProposal{
-		Messages: []*gogoany.Any{{
-			TypeUrl: "/cosmos.bank.v1beta1.MsgSend",
-		}},
+	proposal := &govtypes.MsgSubmitProposal{
+		Proposer: sdk.AccAddress(bytes.Repeat([]byte{31}, 20)).String(),
+		Metadata: "ipfs://xitcoin-governance-proposal",
+		Title:    "Network proposal",
+		Summary:  "This proposal must not reach the governance message server.",
 	}
 
-	if _, err := allowed(ctx, testTx{messages: []sdk.Msg{normalProposal}}, false); err != nil {
-		t.Fatalf("normal proposal rejected: %v", err)
+	if _, err := handler(ctx, testTx{messages: []sdk.Msg{proposal}}, false); err == nil {
+		t.Fatal("on-chain governance proposal was accepted")
 	}
-	if !nextCalled {
-		t.Fatal("normal proposal did not reach handler")
+	if nextCalled {
+		t.Fatal("rejected governance proposal reached the next ante handler")
 	}
 }

@@ -426,14 +426,15 @@ func NewExampleApp(
 		skipUpgradeHeights[int64(h)] = true
 	}
 	homePath := cast.ToString(appOpts.Get(flags.FlagHome))
-	// set the governance module account as the authority for conducting upgrades
+	// Software upgrades require the dedicated 2-of-3 administrative
+	// multisignature. Executable governance proposals are rejected by ante.
 	app.UpgradeKeeper = upgradekeeper.NewKeeper(
 		skipUpgradeHeights,
 		runtime.NewKVStoreService(keys[upgradetypes.StoreKey]),
 		appCodec,
 		homePath,
 		app.BaseApp,
-		authAddr,
+		mustKCALBAdministrativeAuthority(),
 	)
 
 	// Create IBC Keeper
@@ -525,6 +526,9 @@ func NewExampleApp(
 			app.GovKeeper,
 			app.SlashingKeeper,
 			appCodec,
+			precompiletypes.WithGovernanceProposalSubmission(
+				cast.ToBool(appOpts.Get(UnsafeEnableGovernanceProposalSubmissionOption)),
+			),
 		),
 	)
 
@@ -778,7 +782,11 @@ func NewExampleApp(
 	app.SetBeginBlocker(app.BeginBlocker)
 	app.SetEndBlocker(app.EndBlocker)
 
-	app.setAnteHandler(app.txConfig, maxGasWanted)
+	app.setAnteHandler(
+		app.txConfig,
+		maxGasWanted,
+		cast.ToBool(appOpts.Get(UnsafeEnableGovernanceProposalSubmissionOption)),
+	)
 
 	// set the EVM priority nonce mempool
 	// if you wish to use the noop mempool, remove this codeblock
@@ -847,7 +855,11 @@ func NewExampleApp(
 	return app
 }
 
-func (app *EVMD) setAnteHandler(txConfig client.TxConfig, maxGasWanted uint64) {
+func (app *EVMD) setAnteHandler(
+	txConfig client.TxConfig,
+	maxGasWanted uint64,
+	allowGovernanceProposalSubmission bool,
+) {
 	options := evmante.HandlerOptions{
 		Cdc:                    app.appCodec,
 		AccountKeeper:          app.AccountKeeper,
@@ -869,7 +881,11 @@ func (app *EVMD) setAnteHandler(txConfig client.TxConfig, maxGasWanted uint64) {
 
 	baseAnteHandler := evmante.NewAnteHandler(options)
 	app.SetAnteHandler(
-		validatoradmission.NewAdmissionAnteHandler(app.ValidatorAdmissionKeeper, baseAnteHandler),
+		validatoradmission.NewAdmissionAnteHandler(
+			app.ValidatorAdmissionKeeper,
+			baseAnteHandler,
+			allowGovernanceProposalSubmission,
+		),
 	)
 }
 
@@ -1038,7 +1054,7 @@ func (app *EVMD) DefaultGenesis() map[string]json.RawMessage {
 	genesis[erc20types.ModuleName] = app.appCodec.MustMarshalJSON(erc20GenState)
 
 	incentiveGenState := validatorincentivestypes.DefaultGenesisState()
-	incentiveGenState.Authority = mustGovernanceAuthority()
+	incentiveGenState.Authority = mustKCALBAdministrativeAuthority()
 	incentiveGenesis, err := json.Marshal(incentiveGenState)
 	if err != nil {
 		panic(err)

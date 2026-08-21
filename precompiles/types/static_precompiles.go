@@ -7,6 +7,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 
+	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
+	channelkeeper "github.com/cosmos/ibc-go/v11/modules/core/04-channel/keeper"
 	ibcutils "github.com/xitcoin-org/pos-chain/ibc"
 	bankprecompile "github.com/xitcoin-org/pos-chain/precompiles/bank"
 	"github.com/xitcoin-org/pos-chain/precompiles/bech32"
@@ -19,8 +21,6 @@ import (
 	slashingprecompile "github.com/xitcoin-org/pos-chain/precompiles/slashing"
 	stakingprecompile "github.com/xitcoin-org/pos-chain/precompiles/staking"
 	erc20Keeper "github.com/xitcoin-org/pos-chain/x/erc20/keeper"
-	transferkeeper "github.com/cosmos/ibc-go/v11/modules/apps/transfer/keeper"
-	channelkeeper "github.com/cosmos/ibc-go/v11/modules/core/04-channel/keeper"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	distributionkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
@@ -160,6 +160,9 @@ func (s StaticPrecompiles) WithGovPrecompile(
 		codec,
 		options.AddressCodec,
 	)
+	if !options.AllowGovSubmit {
+		govPrecompile.DisableProposalSubmission()
+	}
 
 	s[govPrecompile.Address()] = govPrecompile
 	return s
