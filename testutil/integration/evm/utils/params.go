@@ -11,6 +11,7 @@ import (
 
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/bech32"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1types "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
@@ -23,7 +24,16 @@ type UpdateParamsInput struct {
 	Params  interface{}
 }
 
-var authority = authtypes.NewModuleAddress(govtypes.ModuleName).String()
+func governanceAuthority() string {
+	authority, err := bech32.ConvertAndEncode(
+		sdk.GetConfig().GetBech32AccountAddrPrefix(),
+		authtypes.NewModuleAddress(govtypes.ModuleName),
+	)
+	if err != nil {
+		panic(fmt.Errorf("encode governance authority: %w", err))
+	}
+	return authority
+}
 
 // UpdateEvmParams helper function to update the EVM module parameters
 // It submits an update params proposal, votes for it, and waits till it passes
@@ -72,13 +82,13 @@ func updateModuleParams[T interface{}](input UpdateParamsInput, moduleName strin
 func createProposalMsg(params interface{}, name string) sdk.Msg {
 	switch name {
 	case evmtypes.ModuleName:
-		return &evmtypes.MsgUpdateParams{Authority: authority, Params: params.(evmtypes.Params)}
+		return &evmtypes.MsgUpdateParams{Authority: governanceAuthority(), Params: params.(evmtypes.Params)}
 	case govtypes.ModuleName:
-		return &govv1types.MsgUpdateParams{Authority: authority, Params: params.(govv1types.Params)}
+		return &govv1types.MsgUpdateParams{Authority: governanceAuthority(), Params: params.(govv1types.Params)}
 	case feemarkettypes.ModuleName:
-		return &feemarkettypes.MsgUpdateParams{Authority: authority, Params: params.(feemarkettypes.Params)}
+		return &feemarkettypes.MsgUpdateParams{Authority: governanceAuthority(), Params: params.(feemarkettypes.Params)}
 	case erc20types.ModuleName:
-		return &erc20types.MsgUpdateParams{Authority: authority, Params: params.(erc20types.Params)}
+		return &erc20types.MsgUpdateParams{Authority: governanceAuthority(), Params: params.(erc20types.Params)}
 	default:
 		return nil
 	}

@@ -53,7 +53,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 	inOneHour := now.Add(time.Hour)
 
 	var err error
-	anyMessage, err := types.NewAnyWithValue(TestProposalMsgs[0])
+	anyMessage, err := types.NewAnyWithValue(testProposalMsgs()[0])
 	if err != nil {
 		panic(err)
 	}
@@ -97,14 +97,9 @@ func (s *PrecompileTestSuite) SetupTest() {
 		Messages:      []*types.Any{anyMessage},
 	}
 
-	bankGen := banktypes.DefaultGenesisState()
-	bankGen.Balances = []banktypes.Balance{{
-		Address: authtypes.NewModuleAddress(govtypes.ModuleName).String(),
-		Coins:   sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(200))),
-	}}
 	govGen := govv1.DefaultGenesisState()
 	govGen.StartingProposalId = 3
-	govGen.Deposits = []*govv1.Deposit{
+	seedDeposits := []*govv1.Deposit{
 		{
 			ProposalId: 1,
 			Depositor:  keyring.GetAccAddr(0).String(),
@@ -118,17 +113,28 @@ func (s *PrecompileTestSuite) SetupTest() {
 	}
 	govGen.Params.MinDeposit = sdk.NewCoins(sdk.NewCoin(testconstants.ExampleAttoDenom, math.NewInt(100)))
 	govGen.Params.ProposalCancelDest = keyring.GetAccAddr(2).String()
+	govGen.Deposits = seedDeposits
 	govGen.Proposals = append(govGen.Proposals, prop)
 	govGen.Proposals = append(govGen.Proposals, prop2)
 	customGen[govtypes.ModuleName] = govGen
-	customGen[banktypes.ModuleName] = bankGen
+
+	govBalance := sdk.NewCoins()
+	for _, deposit := range seedDeposits {
+		govBalance = govBalance.Add(deposit.Amount...)
+	}
+	govModuleBalance := banktypes.Balance{
+		Address: authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		Coins:   govBalance,
+	}
 
 	options := []network.ConfigOption{
 		network.WithPreFundedAccounts(keyring.GetAllAccAddrs()...),
+		network.WithAdditionalBalances(govModuleBalance),
 		network.WithCustomGenesis(customGen),
 	}
 	options = append(options, s.options...)
 	nw := network.NewUnitTestNetwork(s.create, options...)
+
 	grpcHandler := grpc.NewIntegrationHandler(nw)
 	txFactory := factory.New(nw, grpcHandler)
 

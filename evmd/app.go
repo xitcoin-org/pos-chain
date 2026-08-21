@@ -77,6 +77,7 @@ import (
 	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 	testdata_pulsar "github.com/cosmos/cosmos-sdk/testutil/testdata/testpb"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/bech32"
 	sdkmempool "github.com/cosmos/cosmos-sdk/types/mempool"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
@@ -133,6 +134,9 @@ import (
 	validatoradmission "github.com/xitcoin-org/pos-chain/x/validatoradmission"
 	validatoradmissionkeeper "github.com/xitcoin-org/pos-chain/x/validatoradmission/keeper"
 	validatoradmissiontypes "github.com/xitcoin-org/pos-chain/x/validatoradmission/types"
+	validatorincentives "github.com/xitcoin-org/pos-chain/x/validatorincentives"
+	validatorincentiveskeeper "github.com/xitcoin-org/pos-chain/x/validatorincentives/keeper"
+	validatorincentivestypes "github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
 )
 
 func init() {
@@ -169,20 +173,21 @@ type EVMD struct {
 	oKeys map[string]*storetypes.ObjectStoreKey
 
 	// keepers
-	AccountKeeper            authkeeper.AccountKeeper
-	BankKeeper               bankkeeper.Keeper
-	StakingKeeper            *stakingkeeper.Keeper
-	BridgeKeeper             bridgekeeper.Keeper
-	ValidatorAdmissionKeeper validatoradmissionkeeper.Keeper
-	SlashingKeeper           slashingkeeper.Keeper
-	MintKeeper               mintkeeper.Keeper
-	DistrKeeper              distrkeeper.Keeper
-	GovKeeper                govkeeper.Keeper
-	UpgradeKeeper            *upgradekeeper.Keeper
-	AuthzKeeper              authzkeeper.Keeper
-	EvidenceKeeper           evidencekeeper.Keeper
-	FeeGrantKeeper           feegrantkeeper.Keeper
-	ConsensusParamsKeeper    consensusparamkeeper.Keeper
+	AccountKeeper             authkeeper.AccountKeeper
+	BankKeeper                bankkeeper.Keeper
+	StakingKeeper             *stakingkeeper.Keeper
+	BridgeKeeper              bridgekeeper.Keeper
+	ValidatorAdmissionKeeper  validatoradmissionkeeper.Keeper
+	ValidatorIncentivesKeeper validatorincentiveskeeper.Keeper
+	SlashingKeeper            slashingkeeper.Keeper
+	MintKeeper                mintkeeper.Keeper
+	DistrKeeper               distrkeeper.Keeper
+	GovKeeper                 govkeeper.Keeper
+	UpgradeKeeper             *upgradekeeper.Keeper
+	AuthzKeeper               authzkeeper.Keeper
+	EvidenceKeeper            evidencekeeper.Keeper
+	FeeGrantKeeper            feegrantkeeper.Keeper
+	ConsensusParamsKeeper     consensusparamkeeper.Keeper
 
 	// IBC keepers
 	IBCKeeper      *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
@@ -204,6 +209,17 @@ type EVMD struct {
 
 	// module configurator
 	configurator module.Configurator
+}
+
+func mustGovernanceAuthority() string {
+	authority, err := bech32.ConvertAndEncode(
+		sdk.GetConfig().GetBech32AccountAddrPrefix(),
+		authtypes.NewModuleAddress(govtypes.ModuleName),
+	)
+	if err != nil {
+		panic(fmt.Errorf("encode governance authority: %w", err))
+	}
+	return authority
 }
 
 // NewExampleApp returns a reference to an initialized EVMD.
@@ -252,6 +268,7 @@ func NewExampleApp(
 		evmtypes.StoreKey, feemarkettypes.StoreKey, erc20types.StoreKey,
 		bridgetypes.StoreKey,
 		validatoradmissiontypes.StoreKey,
+		validatorincentivestypes.StoreKey,
 	)
 	oKeys := storetypes.NewObjectStoreKeys(banktypes.ObjectStoreKey, evmtypes.ObjectKey)
 
@@ -289,8 +306,8 @@ func NewExampleApp(
 
 	// removed x/params: no ParamsKeeper initialization
 
-	// get authority address
-	authAddr := authtypes.NewModuleAddress(govtypes.ModuleName).String()
+	// get authority address using the canonical account HRP
+	authAddr := mustGovernanceAuthority()
 
 	// set the BaseApp's parameter store
 	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(
@@ -347,6 +364,10 @@ func NewExampleApp(
 
 	app.ValidatorAdmissionKeeper = validatoradmissionkeeper.NewKeeper(
 		keys[validatoradmissiontypes.StoreKey],
+	)
+
+	app.ValidatorIncentivesKeeper = validatorincentiveskeeper.NewKeeper(
+		keys[validatorincentivestypes.StoreKey],
 	)
 
 	app.BridgeKeeper = bridgekeeper.MustNewSettlementKeeper(
@@ -593,6 +614,14 @@ func NewExampleApp(
 		distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper, nil),
 		staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper, nil),
 		validatoradmission.NewAppModule(app.ValidatorAdmissionKeeper, app.StakingKeeper),
+		validatorincentives.NewAppModule(
+			app.ValidatorIncentivesKeeper,
+			app.StakingKeeper,
+			validatorincentiveskeeper.NewTreasury(
+				app.AccountKeeper,
+				app.BankKeeper,
+			),
+		),
 		bridge.NewAppModule(app.BridgeKeeper),
 		upgrade.NewAppModule(app.UpgradeKeeper, app.AccountKeeper.AddressCodec()),
 		evidence.NewAppModule(app.EvidenceKeeper),
@@ -655,6 +684,7 @@ func NewExampleApp(
 		authz.ModuleName, feegrant.ModuleName,
 		consensusparamtypes.ModuleName,
 		vestingtypes.ModuleName,
+		validatorincentivestypes.ModuleName,
 	)
 
 	// NOTE: the feemarket module should go last in order of end blockers that are actually doing something,
@@ -675,6 +705,7 @@ func NewExampleApp(
 		genutiltypes.ModuleName, evidencetypes.ModuleName, authz.ModuleName,
 		feegrant.ModuleName, upgradetypes.ModuleName, consensusparamtypes.ModuleName,
 		vestingtypes.ModuleName,
+		validatorincentivestypes.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -682,7 +713,7 @@ func NewExampleApp(
 	// NOTE: The genutils module must also occur after auth so that it can access the params from auth.
 	genesisModuleOrder := []string{
 		authtypes.ModuleName, banktypes.ModuleName,
-		distrtypes.ModuleName, validatoradmissiontypes.ModuleName, bridgetypes.ModuleName, stakingtypes.ModuleName, slashingtypes.ModuleName, govtypes.ModuleName,
+		distrtypes.ModuleName, validatoradmissiontypes.ModuleName, validatorincentivestypes.ModuleName, bridgetypes.ModuleName, stakingtypes.ModuleName, slashingtypes.ModuleName, govtypes.ModuleName,
 		minttypes.ModuleName,
 		ibcexported.ModuleName,
 
@@ -1005,6 +1036,14 @@ func (app *EVMD) DefaultGenesis() map[string]json.RawMessage {
 	// which is the base denomination of the chain (i.e. the WEVMOS contract)
 	erc20GenState := NewErc20GenesisState()
 	genesis[erc20types.ModuleName] = app.appCodec.MustMarshalJSON(erc20GenState)
+
+	incentiveGenState := validatorincentivestypes.DefaultGenesisState()
+	incentiveGenState.Authority = mustGovernanceAuthority()
+	incentiveGenesis, err := json.Marshal(incentiveGenState)
+	if err != nil {
+		panic(err)
+	}
+	genesis[validatorincentivestypes.ModuleName] = incentiveGenesis
 
 	return genesis
 }

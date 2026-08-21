@@ -1,0 +1,51 @@
+syntax = "proto3";
+package cosmos.evm.validatorincentives.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/xitcoin-org/pos-chain/x/validatorincentives/types";
+
+// Msg defines the authority-controlled Validator Incentive operations.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams updates funded incentive operating parameters.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // ActivateFundedPeriod opens one period using canonical staking and bank
+  // state. Neither eligible stake nor treasury balance is caller-supplied.
+  rpc ActivateFundedPeriod(MsgActivateFundedPeriod)
+      returns (MsgActivateFundedPeriodResponse);
+}
+
+// MsgUpdateParams updates all funded incentive operating parameters.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "xitcoin/validatorincentives/MsgUpdateParams";
+
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint32 annual_rate_basis_points = 2;
+  uint64 blocks_per_year = 3;
+  uint64 reward_period_blocks = 4;
+}
+
+message MsgUpdateParamsResponse {}
+
+// MsgActivateFundedPeriod supplies only an authorized annual budget. Eligible
+// bonded XTC and the available treasury balance are read from on-chain state.
+message MsgActivateFundedPeriod {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) =
+      "xitcoin/validatorincentives/MsgActivateFundedPeriod";
+
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string committed_annual_budget_atomic = 2;
+}
+
+message MsgActivateFundedPeriodResponse {
+  uint64 start_block = 1;
+  uint64 end_block = 2;
+  string period_provision_atomic = 3;
+}

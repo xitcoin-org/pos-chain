@@ -21,6 +21,7 @@ import (
 	srvflags "github.com/xitcoin-org/pos-chain/server/flags"
 	"github.com/xitcoin-org/pos-chain/utils"
 	validatoradmissioncli "github.com/xitcoin-org/pos-chain/x/validatoradmission/client/cli"
+	validatorincentivescli "github.com/xitcoin-org/pos-chain/x/validatorincentives/client/cli"
 
 	"cosmossdk.io/log/v2"
 	confixcmd "cosmossdk.io/tools/confix/cmd"
@@ -253,6 +254,7 @@ func txCommand() *cobra.Command {
 		authcmd.GetDecodeCommand(),
 		authcmd.GetSimulateCmd(),
 		validatoradmissioncli.NewTxCmd(),
+		validatorincentivescli.NewTxCmd(),
 	)
 
 	cmd.PersistentFlags().String(flags.FlagChainID, "", "The network chain ID")

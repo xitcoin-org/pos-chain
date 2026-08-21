@@ -42,9 +42,10 @@ type Config struct {
 	initialAmounts InitialAmounts
 	// otherCoinDenoms represents the other possible coin denominations that can be passed during
 	// test suite intialization to provide other coins initial balances.
-	otherCoinDenoms   []string
-	preFundedAccounts []sdktypes.AccAddress
-	balances          []banktypes.Balance
+	otherCoinDenoms    []string
+	preFundedAccounts  []sdktypes.AccAddress
+	balances           []banktypes.Balance
+	additionalBalances []banktypes.Balance
 }
 
 type CustomGenesisState map[string]interface{}
@@ -106,6 +107,7 @@ func getGenAccountsAndBalances(cfg Config, validators []stakingtypes.Validator) 
 		valAccs[i] = sdktypes.AccAddress(valAddr.Bytes())
 	}
 	genAccounts = append(genAccounts, createGenesisAccounts(valAccs)...)
+	balances = append(balances, cfg.additionalBalances...)
 
 	return genAccounts, balances
 }
@@ -159,6 +161,16 @@ func WithPreFundedAccounts(accounts ...sdktypes.AccAddress) ConfigOption {
 func WithBalances(balances ...banktypes.Balance) ConfigOption {
 	return func(cfg *Config) {
 		cfg.balances = append(cfg.balances, balances...)
+	}
+}
+
+// WithAdditionalBalances appends balances for accounts that are already
+// registered by another module, such as module accounts. Unlike WithBalances,
+// it preserves the standard pre-funded accounts and does not create auth
+// genesis accounts for the supplied addresses.
+func WithAdditionalBalances(balances ...banktypes.Balance) ConfigOption {
+	return func(cfg *Config) {
+		cfg.additionalBalances = append(cfg.additionalBalances, balances...)
 	}
 }
 

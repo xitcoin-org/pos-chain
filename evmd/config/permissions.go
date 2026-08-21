@@ -15,6 +15,7 @@ import (
 	bridgetypes "github.com/xitcoin-org/pos-chain/x/bridge/types"
 	erc20types "github.com/xitcoin-org/pos-chain/x/erc20/types"
 	feemarkettypes "github.com/xitcoin-org/pos-chain/x/feemarket/types"
+	validatorincentivestypes "github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
 	vmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
 )
 
@@ -61,10 +62,11 @@ var maccPerms = map[string][]string{
 	govtypes.ModuleName:            {authtypes.Burner},
 
 	// Cosmos EVM modules
-	vmtypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
-	feemarkettypes.ModuleName: nil,
-	erc20types.ModuleName:     {authtypes.Minter, authtypes.Burner},
-	bridgetypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+	vmtypes.ModuleName:                  {authtypes.Minter, authtypes.Burner},
+	feemarkettypes.ModuleName:           nil,
+	erc20types.ModuleName:               {authtypes.Minter, authtypes.Burner},
+	bridgetypes.ModuleName:              {authtypes.Minter, authtypes.Burner},
+	validatorincentivestypes.ModuleName: nil,
 }
 
 // GetMaccPerms returns a copy of the module account permissions

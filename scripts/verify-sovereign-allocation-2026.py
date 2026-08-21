@@ -16,11 +16,12 @@ with (network / "sovereign-allocation-index-2026.json").open(encoding="utf-8") a
     metadata = json.load(handle)
 
 assert isinstance(metadata, dict)
-assert len(allocations) == 195
+assert metadata["selection_basis"] == "united_nations_member_states"
+assert len(allocations) == 193
 assert len(mappings) == 39
-assert len({row["iso3"] for row in allocations}) == 195
-assert sum(int(row["allocation_atomic"]) for row in allocations) == 390_000_000 * 10**18
-assert sum(Decimal(row["allocation_xtc"]) for row in allocations) == Decimal("390000000.000000000000000000")
+assert len({row["iso3"] for row in allocations}) == 193
+assert sum(int(row["allocation_atomic"]) for row in allocations) == 386_000_000 * 10**18
+assert sum(Decimal(row["allocation_xtc"]) for row in allocations) == Decimal("386000000.000000000000000000")
 
 china = {
     row["source_iso3"]: row["target_iso3"]
@@ -30,8 +31,9 @@ china = {
 assert china == {"HKG": "CHN", "MAC": "CHN", "TWN": "CHN"}
 assert not {"COK", "NIU", "ESH"}.intersection(row["source_iso3"] for row in mappings)
 
-print("positions=195")
+print("positions=193")
 print("consolidated_records=39")
-print("allocation_total_xtc=390000000.000000000000000000")
+print("allocation_total_xtc=386000000.000000000000000000")
 print("china_components=HKG,MAC,TWN")
 print("validation=OK")
+

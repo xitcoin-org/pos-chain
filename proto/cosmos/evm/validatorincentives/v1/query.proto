@@ -1,0 +1,57 @@
+syntax = "proto3";
+package cosmos.evm.validatorincentives.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/xitcoin-org/pos-chain/x/validatorincentives/types";
+
+// Query exposes read-only Validator Incentive state.
+service Query {
+  // Params returns the active policy and its on-chain authority.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get =
+      "/cosmos/evm/validatorincentives/v1/params";
+  }
+
+  // Period returns the current funded reward period, when one exists.
+  rpc Period(QueryPeriodRequest) returns (QueryPeriodResponse) {
+    option (google.api.http).get =
+      "/cosmos/evm/validatorincentives/v1/period";
+  }
+
+  // Treasury returns the real balance of the non-minting module account.
+  rpc Treasury(QueryTreasuryRequest) returns (QueryTreasuryResponse) {
+    option (google.api.http).get =
+      "/cosmos/evm/validatorincentives/v1/treasury";
+  }
+}
+
+message QueryParamsRequest {}
+
+message QueryParamsResponse {
+  string authority = 1;
+  uint32 annual_rate_basis_points = 2;
+  uint64 blocks_per_year = 3;
+  uint64 reward_period_blocks = 4;
+}
+
+message QueryPeriodRequest {}
+
+message QueryPeriodResponse {
+  bool active = 1;
+  uint64 start_block = 2;
+  uint64 end_block = 3;
+  uint32 annual_rate_basis_points = 4;
+  string eligible_bonded_atomic = 5;
+  string committed_annual_budget_atomic = 6;
+  string period_provision_atomic = 7;
+  string distributed_atomic = 8;
+  string total_distributed_atomic = 9;
+}
+
+message QueryTreasuryRequest {}
+
+message QueryTreasuryResponse {
+  string denom = 1;
+  string balance_atomic = 2;
+}
