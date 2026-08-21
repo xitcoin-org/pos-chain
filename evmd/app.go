@@ -782,7 +782,11 @@ func NewExampleApp(
 	app.SetBeginBlocker(app.BeginBlocker)
 	app.SetEndBlocker(app.EndBlocker)
 
-	app.setAnteHandler(app.txConfig, maxGasWanted)
+	app.setAnteHandler(
+		app.txConfig,
+		maxGasWanted,
+		cast.ToBool(appOpts.Get(UnsafeEnableGovernanceProposalSubmissionOption)),
+	)
 
 	// set the EVM priority nonce mempool
 	// if you wish to use the noop mempool, remove this codeblock
@@ -851,7 +855,11 @@ func NewExampleApp(
 	return app
 }
 
-func (app *EVMD) setAnteHandler(txConfig client.TxConfig, maxGasWanted uint64) {
+func (app *EVMD) setAnteHandler(
+	txConfig client.TxConfig,
+	maxGasWanted uint64,
+	allowGovernanceProposalSubmission bool,
+) {
 	options := evmante.HandlerOptions{
 		Cdc:                    app.appCodec,
 		AccountKeeper:          app.AccountKeeper,
@@ -873,7 +881,11 @@ func (app *EVMD) setAnteHandler(txConfig client.TxConfig, maxGasWanted uint64) {
 
 	baseAnteHandler := evmante.NewAnteHandler(options)
 	app.SetAnteHandler(
-		validatoradmission.NewAdmissionAnteHandler(app.ValidatorAdmissionKeeper, baseAnteHandler),
+		validatoradmission.NewAdmissionAnteHandler(
+			app.ValidatorAdmissionKeeper,
+			baseAnteHandler,
+			allowGovernanceProposalSubmission,
+		),
 	)
 }
 
