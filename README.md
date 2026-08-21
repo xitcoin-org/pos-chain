@@ -39,11 +39,10 @@ Technical service suffixes used during staging are not public network version na
 
 The candidate network aligns staking and validator-admission capacity at 258 positions:
 
-- 195 sovereign reference positions;
-- 63 public positions;
+- 193 reserved Member-State positions;
+- 65 general validator positions;
 - 4 initially approved core validators;
-- 1,000,000 XTC protocol minimum self-delegation;
-- 5,000,000 XTC initial self-delegation for each core validator.
+- 5,000,000 XTC minimum self-delegation for every validator.
 
 The sovereign framework keeps a defined participation pathway available for every reference position. Activation remains voluntary and begins only through the relevant participant's own initiative, an authorized operator and the same published admission, security and operational standards that apply across the network.
 

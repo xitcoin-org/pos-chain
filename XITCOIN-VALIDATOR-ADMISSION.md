@@ -26,7 +26,7 @@ Holding, receiving, staking or delegating XTC does not grant validator-admission
 - Maximum validator and admission capacity: 258
 - Initially approved validators: 4
 - Additional validators currently announced: 0
-- Protocol minimum self-delegation: 1,000,000 XTC
+- Protocol minimum self-delegation: 5,000,000 XTC
 - Initial self-delegation of each core validator: 5,000,000 XTC
 - Initial core validators:
   - Xitcoin Atlas
@@ -40,8 +40,8 @@ The maximum is capacity, not a target count. Any expansion beyond the four initi
 
 The planning model contains:
 
-- 195 sovereign reference positions;
-- 63 public positions.
+- 193 reserved Member-State positions;
+- 65 general validator positions.
 
 These positions are future capacity only. They do not transfer funds, approve operators, activate validators or create automatic entitlements.
 
