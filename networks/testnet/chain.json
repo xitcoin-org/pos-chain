@@ -20,8 +20,8 @@
   "notes": [
     "The public network name is Xitcoin Testnet.",
     "The technical Cosmos chain ID xitcoin-testnet-1 identifies the current genesis and is not a public version label.",
-    "The canonical four-validator network is active in staging; public endpoint cutover remains pending.",
-    "Existing public endpoints continue serving the historical testnet until the coordinated cutover.",
+    "The canonical four-validator testnet is publicly active.",
+    "The coordinated public endpoint cutover was completed on 2026-08-21.",
     "Testnet assets have no monetary value."
   ]
 }

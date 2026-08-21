@@ -24,7 +24,7 @@ Cosmos and EVM activity execute on the same sovereign chain and use the same nat
 | Property | Testnet | Mainnet |
 | --- | --- | --- |
 | Public name | Xitcoin Testnet | Xitcoin |
-| Status | Canonical staging network active; public cutover pending | Not launched |
+| Status | Canonical public testnet active | Not launched |
 | Cosmos Chain ID | `xitcoin-testnet-1` | `xitcoin` |
 | EVM Chain ID | `101089` | `101088` |
 | Native asset | XTC | XTC |

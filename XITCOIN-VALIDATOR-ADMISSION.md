@@ -76,6 +76,6 @@ Production custody, recovery and signer-change procedures must be documented and
 
 ## Current release status
 
-Xitcoin Testnet is running as an isolated four-validator staging network. Its technical Cosmos chain ID is `xitcoin-testnet-1`. Consensus, peer connectivity, binary identity, genesis identity, Cosmos identity and local-only EVM JSON-RPC have been validated.
+Xitcoin Testnet is publicly active as a four-validator canonical testnet network. Its technical Cosmos chain ID is `xitcoin-testnet-1`. Consensus, peer connectivity, binary identity, genesis identity, Cosmos transactions, EVM transactions and the public interfaces have been validated.
 
-Cosmos and EVM transaction validation remains a public-release gate. Existing public endpoints continue serving the historical testnet until the coordinated canonical cutover.
+Cosmos and EVM transaction validation and the coordinated public endpoint cutover were completed on 2026-08-21. The published endpoints now serve the canonical network.

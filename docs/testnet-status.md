@@ -20,20 +20,19 @@ Meridian and Xitcoin Zenith.
 The canonical four-validator network is active in staging. Its binary, genesis,
 validator identities, consensus and local RPC interfaces have been validated.
 
-The public endpoint cutover has not yet been completed. Existing public domains
-continue serving the historical testnet until the coordinated canonical
-cutover.
+The coordinated public endpoint cutover was completed on 2026-08-21. The
+published domains now serve the canonical network.
 
 ## Public services
 
 | Component | Current status | Endpoint |
 | --- | --- | --- |
-| Cosmos RPC | Historical network; canonical cutover pending | `https://rpc-testnet.xitcoin.org` |
-| Cosmos REST API | Historical network; canonical cutover pending | `https://api-testnet.xitcoin.org` |
-| EVM JSON-RPC | Historical network; canonical cutover pending | `https://evm-rpc-testnet.xitcoin.org` |
-| Cosmos explorer | Historical network; canonical cutover pending | `https://explorer-testnet.xitcoin.org` |
-| EVM explorer | Historical network; canonical cutover pending | `https://evm-explorer-testnet.xitcoin.org` |
-| Faucet | Historical network; canonical cutover pending | `https://faucet-testnet.xitcoin.org` |
+| Cosmos RPC | Canonical network active | `https://rpc-testnet.xitcoin.org` |
+| Cosmos REST API | Canonical network active | `https://api-testnet.xitcoin.org` |
+| EVM JSON-RPC | Canonical network active | `https://evm-rpc-testnet.xitcoin.org` |
+| Cosmos explorer | Canonical network active | `https://explorer-testnet.xitcoin.org` |
+| EVM explorer | Canonical network active | `https://evm-explorer-testnet.xitcoin.org` |
+| Faucet | Canonical network active | `https://faucet-testnet.xitcoin.org` |
 | Bridge route | Not configured; disabled | — |
 
 ## Canonical configuration
