@@ -24,8 +24,8 @@ Cosmos and EVM activity execute on the same sovereign chain and use the same nat
 | Property | Testnet | Mainnet |
 | --- | --- | --- |
 | Public name | Xitcoin Testnet | Xitcoin |
-| Status | Active; coordinated reset candidate under review | Not launched |
-| Cosmos Chain ID | `xitcoin-testnet-1` after reset | `xitcoin` |
+| Status | Canonical staging network active; public cutover pending | Not launched |
+| Cosmos Chain ID | `xitcoin-testnet-1` | `xitcoin` |
 | EVM Chain ID | `101089` | `101088` |
 | Native asset | XTC | XTC |
 | Atomic denomination | `axtc` | `axtc` |
@@ -33,11 +33,11 @@ Cosmos and EVM activity execute on the same sovereign chain and use the same nat
 
 XTC is the native asset on both the Cosmos and EVM interfaces. The EVM interface uses the canonical native precompile; no separate wrapped-XTC token is required inside the Xitcoin network.
 
-Technical service suffixes used during staging are not public network version names.
+The public name is **Xitcoin Testnet**. The technical Cosmos chain ID `xitcoin-testnet-1` identifies the current genesis; it is not a public version or server name.
 
 ## Participation model
 
-The candidate network aligns staking and validator-admission capacity at 258 positions:
+The canonical testnet aligns staking and validator-admission capacity at 258 positions:
 
 - 193 reserved Member-State positions;
 - 65 general validator positions;
@@ -48,7 +48,7 @@ The sovereign framework keeps a defined participation pathway available for ever
 
 A reference or reserved position does not itself transfer assets or activate a validator. It preserves future access to the framework while the network continues to develop its public infrastructure, applications, developer ecosystem and community participation.
 
-The current release candidate approves only Atlas, Borealis, Meridian and Zenith. The remaining capacity does not announce future operators. Each additional validator would require separate authorization.
+The canonical testnet currently approves only Atlas, Borealis, Meridian and Zenith. The remaining capacity does not announce future operators. Each additional validator would require separate authorization.
 
 During the current launch phase, only the canonical on-chain validator-admission authority can approve or revoke validators. Token balances, staking weight, delegations and ordinary governance voting do not grant or override that authority.
 

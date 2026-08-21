@@ -1,34 +1,64 @@
 # Xitcoin Testnet Status
 
-## Current services
+## Network naming
 
-| Component | Status | Endpoint |
-| --- | --- | --- |
-| Cosmos RPC | Active | `https://rpc-testnet.xitcoin.org` |
-| Cosmos REST API | Active | `https://api-testnet.xitcoin.org` |
-| EVM JSON-RPC | Active | `https://evm-rpc-testnet.xitcoin.org` |
-| Cosmos explorer | Active | `https://explorer-testnet.xitcoin.org` |
-| EVM explorer | Active | `https://evm-explorer-testnet.xitcoin.org` |
-| Faucet | Active | `https://faucet-testnet.xitcoin.org` |
-| Bridge route | Disabled | — |
+The public network name is **Xitcoin Testnet**.
 
-## Canonical network configuration
-
-The public testnet release is defined by one canonical network identity. Deployment and activation are coordinated operational procedures and do not alter these identifiers.
-
-| Parameter | Canonical value |
+| Identifier | Value |
 | --- | --- |
 | Cosmos Chain ID | `xitcoin-testnet-1` |
 | EVM Chain ID | `101089` (`0x18ae1`) |
+
+The Cosmos Chain ID identifies the current genesis. The `-1` suffix is not a
+public version label and does not represent a validator or server number.
+
+The four initial validators are Xitcoin Atlas, Xitcoin Borealis, Xitcoin
+Meridian and Xitcoin Zenith.
+
+## Current release state
+
+The canonical four-validator network is active in staging. Its binary, genesis,
+validator identities, consensus and local RPC interfaces have been validated.
+
+The public endpoint cutover has not yet been completed. Existing public domains
+continue serving the historical testnet until the coordinated canonical
+cutover.
+
+## Public services
+
+| Component | Current status | Endpoint |
+| --- | --- | --- |
+| Cosmos RPC | Historical network; canonical cutover pending | `https://rpc-testnet.xitcoin.org` |
+| Cosmos REST API | Historical network; canonical cutover pending | `https://api-testnet.xitcoin.org` |
+| EVM JSON-RPC | Historical network; canonical cutover pending | `https://evm-rpc-testnet.xitcoin.org` |
+| Cosmos explorer | Historical network; canonical cutover pending | `https://explorer-testnet.xitcoin.org` |
+| EVM explorer | Historical network; canonical cutover pending | `https://evm-explorer-testnet.xitcoin.org` |
+| Faucet | Historical network; canonical cutover pending | `https://faucet-testnet.xitcoin.org` |
+| Bridge route | Not configured; disabled | — |
+
+## Canonical configuration
+
+| Parameter | Canonical value |
+| --- | --- |
+| Public name | Xitcoin Testnet |
+| Cosmos Chain ID | `xitcoin-testnet-1` |
+| EVM Chain ID | `101089` (`0x18ae1`) |
+| Native asset | XTC |
+| Atomic denomination | `axtc` |
+| Decimals | 18 |
 | Genesis SHA-256 | `7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414` |
-| Bridge route | Disabled until operational authorization |
+| Initial validators | Atlas, Borealis, Meridian and Zenith |
+| Validator capacity | 258 |
+| Minimum self-delegation | 5,000,000 XTC |
+| Administrative authority | `xtc1e3q4pm23ky0qetnep33j4yezq6c3lc7fcds4je` |
 
-The canonical genesis defines the `axtc` atomic denomination, zero inflation, the declared supply ceiling and the native XTC EVM representation. Operators must verify the complete genesis SHA-256 before installation or activation.
+## Remaining public-release gates
 
-## Activation status
+- complete Cosmos and EVM transaction validation;
+- validate admission, revocation and administrative signing;
+- complete the public endpoint cutover;
+- reconcile explorers and faucet with the canonical genesis;
+- complete monitoring and rollback acceptance;
+- validate the Cronos bridge independently before route activation.
 
-The canonical release becomes active only through the coordinated testnet release procedure. Publication of the configuration does not authorize validator replacement, bridge activation, contract deployment or asset transfers.
-
-## Verification
-
-Use the commands in [Testnet Operations](testnet-operations.md) to verify the active network and the canonical genesis independently. Testnet XTC has no monetary value.
+Testnet XTC has no monetary value.

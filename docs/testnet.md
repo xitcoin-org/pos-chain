@@ -1,20 +1,34 @@
 # Xitcoin Testnet
 
-Xitcoin Testnet provides public Cosmos and EVM interfaces for application, wallet, validator and protocol testing.
+**Xitcoin Testnet** is the public network name.
 
-## Network identity
+The technical Cosmos Chain ID of the current genesis is
+`xitcoin-testnet-1`. The `-1` suffix identifies the genesis generation. It is
+not a public version label and does not represent a validator or server number.
+
+## Canonical identity
 
 | Field | Value |
 | --- | --- |
-| Cosmos Chain ID | `xitcoin-testnet-1` after the coordinated reset |
+| Public name | Xitcoin Testnet |
+| Cosmos Chain ID | `xitcoin-testnet-1` |
 | EVM Chain ID | `101089` (`0x18ae1`) |
 | Native asset | XTC |
 | Atomic denomination | `axtc` |
 | Decimals | 18 |
+| Genesis SHA-256 | `7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414` |
 
-## Public services
+## Deployment state
 
-| Service | Endpoint |
+The canonical network is active as a four-validator staging network. Public
+endpoint cutover remains pending.
+
+Existing public domains continue serving the historical testnet and must not
+yet be used as evidence that the canonical genesis is publicly active.
+
+## Public endpoint transition
+
+| Service | Current endpoint |
 | --- | --- |
 | Cosmos RPC | `https://rpc-testnet.xitcoin.org` |
 | Cosmos REST API | `https://api-testnet.xitcoin.org` |
@@ -23,21 +37,17 @@ Xitcoin Testnet provides public Cosmos and EVM interfaces for application, walle
 | EVM explorer | `https://evm-explorer-testnet.xitcoin.org` |
 | Faucet | `https://faucet-testnet.xitcoin.org` |
 
-## Genesis candidate
+These endpoints remain associated with the historical public environment until
+the coordinated canonical cutover is completed.
 
-The candidate for the coordinated reset is published at [`networks/testnet/genesis.json`](../networks/testnet/genesis.json). Verify it before use:
+## Canonical genesis
 
-```bash
-cd networks/testnet
-sha256sum -c genesis.sha256
-```
+The canonical genesis is published at
+[`networks/testnet/genesis.json`](../networks/testnet/genesis.json).
 
 Expected SHA-256:
 
-```text
-7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414
-```
+`7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414`
 
-The candidate becomes authoritative only after the coordinated reset is announced and completed. Until then, public endpoints continue to report the active network state.
-
-See [Testnet Operations](testnet-operations.md) for verification commands.
+See [Testnet Status](testnet-status.md) for the current deployment boundary and
+[Testnet Operations](testnet-operations.md) for verification commands.
