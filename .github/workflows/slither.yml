@@ -33,5 +33,9 @@ jobs:
         id: slither
         uses: crytic/slither-action@v0.4.2
         with:
-          target: contracts/
+          # Point Crytic at the Hardhat project itself so build-info source
+          # paths are resolved relative to contracts/, not the repository root.
+          target: contracts/hardhat.config.js
+          solc-version: 0.8.20
+          node-version: 24
           fail-on: medium

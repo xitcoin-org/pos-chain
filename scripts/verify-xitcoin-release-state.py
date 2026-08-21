@@ -30,6 +30,19 @@ readme = (root / "README.md").read_text()
 status = (root / "docs/testnet-status.md").read_text()
 testnet = (root / "docs/testnet.md").read_text()
 
+prohibited_test_credentials = (
+    "gesture inject test cycle",
+    "copper push brief egg",
+    "maximum display century economy",
+    "will wear settle write",
+    "doll midnight silk carpet",
+    "aunt imitate maximum student",
+    "88cbead91aee890d",
+    "741de4f8988ea941",
+    "3b7955d25189c99a",
+    "8a36c69d940a92fc",
+)
+
 for text in (identity, normalizer, readme, status, testnet):
     assert "xitcoin-testnet-1" in text
 
@@ -41,14 +54,34 @@ assert "| Status | Canonical public testnet active | Not launched |" in readme
 for path in root.rglob("*"):
     if not path.is_file() or ".git" in path.parts:
         continue
+    if path.resolve() == Path(__file__).resolve():
+        continue
     if path.suffix not in {".md", ".json", ".js", ".py", ".sh", ".yml", ".yaml"}:
         continue
     text = path.read_text(encoding="utf-8", errors="ignore")
+    for credential in prohibited_test_credentials:
+        if credential in text:
+            raise AssertionError(
+                f"stored legacy test credential in {path.relative_to(root)}"
+            )
     if "xitcoin-testnet" in text and "xitcoin-testnet-1" not in text:
         raise AssertionError(f"obsolete testnet identity in {path.relative_to(root)}")
+
+for path in (
+    root / "local_node.sh",
+    root / "tests/jsonrpc/docker-compose.yml",
+    root / "tests/jsonrpc/scripts/evmd/start-evmd.sh",
+):
+    assert "--privileged" not in path.read_text()
+
+policy = (root / "x/validatoradmission/types/policy.go").read_text()
+assert 'coin.Denom != "axtc"' in policy
+assert "ValidateGenesisPolicy" in policy
 
 print("canonical_identity=OK")
 print("genesis_checksum=OK")
 print("currency_identity=OK")
 print("mainnet_boundary=OK")
 print("release_state_validation=OK")
+print("legacy_test_credentials=ABSENT")
+print("local_validator_policy=OK")

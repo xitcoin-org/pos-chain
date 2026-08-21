@@ -16,25 +16,20 @@ TMP_GENESIS="$CHAINDIR/config/tmp_genesis.json"
 CHAIN_ID="local-4221"
 BASEFEE=10000000
 
-# Standard test keys (same as start-evmd.sh)
+# Deterministic local-only identities. No reusable credential is stored in Git.
+local_test_private_key() {
+    printf 'xitcoin-local-test-only:%s' "$1" | sha256sum | awk '{print $1}'
+}
+
 VAL_KEY="mykey"
-VAL_MNEMONIC="gesture inject test cycle original hollow east ridge hen combine junk child bacon zero hope comfort vacuum milk pitch cage oppose unhappy lunar seat"
-
 USER1_KEY="dev0"
-USER1_MNEMONIC="copper push brief egg scan entry inform record adjust fossil boss egg comic alien upon aspect dry avoid interest fury window hint race symptom"
-
 USER2_KEY="dev1"
-USER2_MNEMONIC="maximum display century economy unlock van census kite error heart snow filter midnight usage egg venture cash kick motor survey drastic edge muffin visual"
-
 USER3_KEY="dev2"
-USER3_MNEMONIC="will wear settle write dance topic tape sea glory hotel oppose rebel client problem era video gossip glide during yard balance cancel file rose"
-
 USER4_KEY="dev3"
-USER4_MNEMONIC="doll midnight silk carpet brush boring pluck office gown inquiry duck chief aim exit gain never tennis crime fragile ship cloud surface exotic patch"
 
 # Initialize chain directly (no Docker wrapper)
 echo "🔧 Initializing chain..."
-echo "$VAL_MNEMONIC" | evmd init localtestnet -o --chain-id "$CHAIN_ID" --recover --home "$CHAINDIR"
+evmd init localtestnet -o --chain-id "$CHAIN_ID" --home "$CHAINDIR"
 
 # Set client config
 evmd config set client chain-id "$CHAIN_ID" --home "$CHAINDIR"
@@ -42,11 +37,11 @@ evmd config set client keyring-backend "$KEYRING" --home "$CHAINDIR"
 
 # Add keys
 echo "🔧 Adding standard test keys..."
-echo "$VAL_MNEMONIC" | evmd keys add "$VAL_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$CHAINDIR"
-echo "$USER1_MNEMONIC" | evmd keys add "$USER1_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$CHAINDIR"
-echo "$USER2_MNEMONIC" | evmd keys add "$USER2_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$CHAINDIR"
-echo "$USER3_MNEMONIC" | evmd keys add "$USER3_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$CHAINDIR"
-echo "$USER4_MNEMONIC" | evmd keys add "$USER4_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$CHAINDIR"
+for keyname in "$VAL_KEY" "$USER1_KEY" "$USER2_KEY" "$USER3_KEY" "$USER4_KEY"; do
+    private_key="$(local_test_private_key "$keyname")"
+    printf '\n' | evmd keys unsafe-import-eth-key "$keyname" "$private_key" --keyring-backend "$KEYRING" --home "$CHAINDIR"
+    unset private_key
+done
 
 # Configure genesis file
 echo "🔧 Configuring genesis file..."
@@ -69,6 +64,9 @@ evmd genesis add-genesis-account "$USER4_KEY" 1000000000000000000000atest --keyr
 # Generate validator transaction
 evmd genesis gentx "$VAL_KEY" 1000000000000000000000atest --gas-prices "${BASEFEE}atest" --keyring-backend "$KEYRING" --chain-id "$CHAIN_ID" --home "$CHAINDIR"
 evmd genesis collect-gentxs --home "$CHAINDIR"
+admission_authority="$(evmd keys show "$VAL_KEY" -a --keyring-backend "$KEYRING" --home "$CHAINDIR")"
+admission_validator="$(evmd keys show "$VAL_KEY" -a --bech val --keyring-backend "$KEYRING" --home "$CHAINDIR")"
+jq --arg authority "$admission_authority" --arg validator "$admission_validator" '.app_state.validator_admission={authority:$authority,approved_validators:[$validator],max_approved_validators:1,minimum_self_delegation:"1000000000000000000000atest"}' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 evmd genesis validate-genesis --home "$CHAINDIR"
 
 # Reduce block time by adjusting consensus timeouts

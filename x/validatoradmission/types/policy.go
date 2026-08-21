@@ -12,22 +12,39 @@ const (
 )
 
 func ValidatePolicy(maxApprovedValidators uint32, minimumSelfDelegation string) error {
-	if maxApprovedValidators == 0 {
-		return fmt.Errorf("max approved validators must be greater than zero")
-	}
-
-	coin, err := sdk.ParseCoinNormalized(minimumSelfDelegation)
+	coin, err := validatePolicyAmount(maxApprovedValidators, minimumSelfDelegation)
 	if err != nil {
-		return fmt.Errorf("invalid minimum self delegation: %w", err)
+		return err
 	}
 	if coin.Denom != "axtc" {
 		return fmt.Errorf("minimum self delegation must use axtc")
 	}
-	if !coin.IsValid() || !coin.IsPositive() {
-		return fmt.Errorf("minimum self delegation must be positive")
-	}
 
 	return nil
+}
+
+// ValidateGenesisPolicy permits an isolated development chain to use its
+// configured genesis denomination. Runtime policy updates remain restricted
+// to axtc by ValidatePolicy.
+func ValidateGenesisPolicy(maxApprovedValidators uint32, minimumSelfDelegation string) error {
+	_, err := validatePolicyAmount(maxApprovedValidators, minimumSelfDelegation)
+	return err
+}
+
+func validatePolicyAmount(maxApprovedValidators uint32, minimumSelfDelegation string) (sdk.Coin, error) {
+	if maxApprovedValidators == 0 {
+		return sdk.Coin{}, fmt.Errorf("max approved validators must be greater than zero")
+	}
+
+	coin, err := sdk.ParseCoinNormalized(minimumSelfDelegation)
+	if err != nil {
+		return sdk.Coin{}, fmt.Errorf("invalid minimum self delegation: %w", err)
+	}
+	if !coin.IsValid() || !coin.IsPositive() {
+		return sdk.Coin{}, fmt.Errorf("minimum self delegation must be positive")
+	}
+
+	return coin, nil
 }
 
 func DefaultPolicy() (uint32, string) {

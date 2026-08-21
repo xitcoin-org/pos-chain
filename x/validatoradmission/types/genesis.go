@@ -48,7 +48,7 @@ func (g GenesisState) Validate() error {
 			return fmt.Errorf("validator admission authority is required")
 		}
 		maxApprovedValidators, minimumSelfDelegation := g.Policy()
-		return ValidatePolicy(maxApprovedValidators, minimumSelfDelegation)
+		return ValidateGenesisPolicy(maxApprovedValidators, minimumSelfDelegation)
 	}
 	if authority != g.Authority {
 		return fmt.Errorf("validator admission authority contains surrounding spaces")
@@ -58,7 +58,7 @@ func (g GenesisState) Validate() error {
 	}
 
 	maxApprovedValidators, minimumSelfDelegation := g.Policy()
-	if err := ValidatePolicy(maxApprovedValidators, minimumSelfDelegation); err != nil {
+	if err := ValidateGenesisPolicy(maxApprovedValidators, minimumSelfDelegation); err != nil {
 		return err
 	}
 	if uint32(len(g.ApprovedValidators)) > maxApprovedValidators {

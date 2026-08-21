@@ -26,6 +26,10 @@ jobs:
           go install golang.org/x/vuln/cmd/govulncheck@latest
           govulncheck ./...
 
+      - name: Run evmd govulncheck
+        working-directory: evmd
+        run: govulncheck ./...
+
   contract-dependencies:
     runs-on: ubuntu-24.04
     steps:
