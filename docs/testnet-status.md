@@ -17,10 +17,24 @@ Meridian and Xitcoin Zenith.
 
 ## Current release state
 
-The canonical four-validator testnet is publicly active. Its binary, genesis, validator identities, consensus, transactions and public interfaces have been validated.
+The canonical four-validator testnet is publicly active. Its binary, genesis,
+validator identities, consensus, transactions and public interfaces have been
+validated.
 
 The coordinated public endpoint cutover was completed on 2026-08-21. The
-published domains now serve the canonical network.
+canonical release was deployed across the sentry and all four validators on
+2026-08-22 using a rolling, rollback-protected procedure.
+
+| Release property | Canonical value |
+| --- | --- |
+| Source revision | `2aa39b8c2ce7ac06278d58f2970225fd450e2c2c` |
+| Linux AMD64 binary SHA-256 | `1958ca411353e79d3ff62a262960378141afb0343ab22689a759dffc610a9ecc` |
+| Genesis SHA-256 | `7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414` |
+| Release build record | [GitHub Actions run 32563535992](https://github.com/xitcoin-org/pos-chain/actions/runs/32563535992) |
+
+The release artifact is retained temporarily by GitHub Actions as a build and
+checksum record. It is not a node key, wallet secret, genesis authority or
+active network dependency.
 
 ## Public services
 
@@ -56,7 +70,16 @@ published domains now serve the canonical network.
 - admission, revocation and administrative signing validated;
 - public RPC, API, explorer and faucet cutover completed;
 - monitoring and rollback acceptance completed;
-- historical public services stopped with recoverable data retained;
+- the same verified release binary deployed on the sentry and four validators;
+- validator identities, voting power, genesis and blockchain state preserved;
+- obsolete deployment directories, temporary artifacts and disabled legacy
+  service units removed from every testnet node;
+- one verified rollback binary retained per node;
+- system journals compressed, rotated and bounded to a 30-day retention policy;
 - Cronos bridge remains inactive and separately gated.
+
+No production key, mnemonic, password, node key, validator private key or private
+backup is stored in this repository. Testnet and mainnet must use independent
+keys, genesis files, state and operational directories.
 
 Testnet XTC has no monetary value.
