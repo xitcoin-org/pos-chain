@@ -52,16 +52,6 @@ func NewAPI(
 	}
 }
 
-// ImportRawKey armors and encrypts a given raw hex encoded ECDSA key and stores it into the key directory.
-// The name of the key will have the format "personal_<length-keys>", where <length-keys> is the total number of
-// keys stored on the keyring.
-//
-// NOTE: The key will be both armored and encrypted using the same passphrase.
-func (api *PrivateAccountAPI) ImportRawKey(privkey, password string) (common.Address, error) {
-	api.logger.Debug("personal_importRawKey")
-	return api.backend.ImportRawKey(privkey, password)
-}
-
 // ListAccounts will return a list of addresses for accounts this node manages.
 func (api *PrivateAccountAPI) ListAccounts() ([]common.Address, error) {
 	api.logger.Debug("personal_listAccounts")

@@ -8,11 +8,9 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/crypto"
 
 	cmttypes "github.com/cometbft/cometbft/types"
 
-	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
 	rpctypes "github.com/xitcoin-org/pos-chain/rpc/types"
 	"github.com/xitcoin-org/pos-chain/server/config"
 	"github.com/xitcoin-org/pos-chain/testutil/constants"
@@ -24,7 +22,6 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	sdkcrypto "github.com/cosmos/cosmos-sdk/crypto"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdkconfig "github.com/cosmos/cosmos-sdk/server/config"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -190,42 +187,6 @@ func (b *Backend) SetEtherbase(ctx context.Context, etherbase common.Address) bo
 
 	b.Logger.Debug("broadcasted tx to set miner withdraw address (etherbase)", "hash", tmHash.String())
 	return true
-}
-
-// ImportRawKey armors and encrypts a given raw hex encoded ECDSA key and stores it into the key directory.
-// The name of the key will have the format "personal_<length-keys>", where <length-keys> is the total number of
-// keys stored on the keyring.
-//
-// NOTE: The key will be both armored and encrypted using the same passphrase.
-func (b *Backend) ImportRawKey(privkey, password string) (common.Address, error) {
-	priv, err := crypto.HexToECDSA(privkey)
-	if err != nil {
-		return common.Address{}, err
-	}
-
-	privKey := &ethsecp256k1.PrivKey{Key: crypto.FromECDSA(priv)}
-
-	addr := sdk.AccAddress(privKey.PubKey().Address().Bytes())
-	ethereumAddr := common.BytesToAddress(addr)
-
-	// return if the key has already been imported
-	if _, err := b.ClientCtx.Keyring.KeyByAddress(addr); err == nil {
-		return ethereumAddr, nil
-	}
-
-	// ignore error as we only care about the length of the list
-	list, _ := b.ClientCtx.Keyring.List() // #nosec G703
-	privKeyName := fmt.Sprintf("personal_%d", len(list))
-
-	armor := sdkcrypto.EncryptArmorPrivKey(privKey, password, ethsecp256k1.KeyType)
-
-	if err := b.ClientCtx.Keyring.ImportPrivKey(privKeyName, armor, password); err != nil {
-		return common.Address{}, err
-	}
-
-	b.Logger.Info("key successfully imported", "name", privKeyName, "address", ethereumAddr.String())
-
-	return ethereumAddr, nil
 }
 
 // ListAccounts will return a list of addresses for accounts this node manages.

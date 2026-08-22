@@ -124,7 +124,6 @@ func GetTestCases() []types.TestCase {
 					return utils.Skip(ns.MethodNamePersonalUnpair, "personal", "Cosmos EVM always returns false for personal namespace methods")
 				}},
 				// Key Management subcategory
-				{Name: ns.MethodNamePersonalImportRawKey, Handler: ns.PersonalImportRawKey},
 				{Name: ns.MethodNamePersonalUnlockAccount, Handler: func(_ *types.RPCContext) (*types.RpcResult, error) {
 					return utils.Skip(ns.MethodNamePersonalUnlockAccount, "personal", "Cosmos EVM always returns false for personal namespace methods")
 				}},

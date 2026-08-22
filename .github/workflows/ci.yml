@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Go vulnerability analysis
         run: |
-          go install golang.org/x/vuln/cmd/govulncheck@latest
+          go install golang.org/x/vuln/cmd/govulncheck@v1.7.0
           bash scripts/run-govulncheck.sh ./...
 
       - name: Run Go tests
@@ -40,6 +40,9 @@ jobs:
 
       - name: Build xitcoind
         run: make build
+
+      - name: Scan the release binary
+        run: bash scripts/run-govulncheck.sh -mode=binary build/xitcoind
 
       - name: Package Linux release artifact
         shell: bash

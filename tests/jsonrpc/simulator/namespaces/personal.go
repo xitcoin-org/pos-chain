@@ -13,7 +13,6 @@ const (
 	MethodNamePersonalListAccounts     types.RpcName = "personal_listAccounts"
 	MethodNamePersonalDeriveAccount    types.RpcName = "personal_deriveAccount"
 	MethodNamePersonalEcRecover        types.RpcName = "personal_ecRecover"
-	MethodNamePersonalImportRawKey     types.RpcName = "personal_importRawKey"
 	MethodNamePersonalListWallets      types.RpcName = "personal_listWallets"
 	MethodNamePersonalNewAccount       types.RpcName = "personal_newAccount"
 	MethodNamePersonalOpenWallet       types.RpcName = "personal_openWallet"
@@ -107,39 +106,6 @@ func PersonalSign(rCtx *types.RPCContext) (*types.RpcResult, error) {
 	}
 	return &types.RpcResult{
 		Method:   MethodNamePersonalSign,
-		Status:   types.Legacy,
-		Value:    "Personal namespace deprecated - but functional: " + result,
-		Category: NamespacePersonal,
-	}, nil
-}
-
-// PersonalImportRawKey tests personal_importRawKey with a test private key
-func PersonalImportRawKey(rCtx *types.RPCContext) (*types.RpcResult, error) {
-	var result string
-	testPrivateKey := "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // test private key
-	err := rCtx.Evmd.RPCClient().Call(&result, "personal_importRawKey", testPrivateKey, "test_passphrase")
-	if err != nil {
-		// Check for expected security/passphrase errors
-		errMsg := err.Error()
-		if strings.Contains(errMsg, "too many failed passphrase attempts") ||
-			strings.Contains(errMsg, "passphrase") ||
-			strings.Contains(errMsg, "authentication") {
-			return &types.RpcResult{
-				Method:   MethodNamePersonalImportRawKey,
-				Status:   types.Legacy,
-				Value:    "Personal namespace deprecated - API functional but security restricted: " + errMsg,
-				Category: NamespacePersonal,
-			}, nil
-		}
-		return &types.RpcResult{
-			Method:   MethodNamePersonalImportRawKey,
-			Status:   types.Error,
-			ErrMsg:   err.Error(),
-			Category: NamespacePersonal,
-		}, nil
-	}
-	return &types.RpcResult{
-		Method:   MethodNamePersonalImportRawKey,
 		Status:   types.Legacy,
 		Value:    "Personal namespace deprecated - but functional: " + result,
 		Category: NamespacePersonal,

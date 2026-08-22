@@ -11,7 +11,6 @@ import (
 
 	cmtrpcclient "github.com/cometbft/cometbft/rpc/client"
 
-	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
 	"github.com/xitcoin-org/pos-chain/rpc/backend/mocks"
 	"github.com/xitcoin-org/pos-chain/server/config"
 	"github.com/xitcoin-org/pos-chain/testutil/constants"
@@ -312,53 +311,6 @@ func (s *TestSuite) TestSetEtherbase() {
 			output := s.backend.SetEtherbase(s.Ctx(), tc.etherbase)
 
 			s.Require().Equal(tc.expResult, output)
-		})
-	}
-}
-
-func (s *TestSuite) TestImportRawKey() {
-	priv, _ := ethsecp256k1.GenerateKey()
-	privHex := common.Bytes2Hex(priv.Bytes())
-	pubAddr := common.BytesToAddress(priv.PubKey().Address().Bytes())
-
-	testCases := []struct {
-		name         string
-		registerMock func()
-		privKey      string
-		password     string
-		expAddr      common.Address
-		expPass      bool
-	}{
-		{
-			"fail - not a valid private key",
-			func() {},
-			"",
-			"",
-			common.Address{},
-			false,
-		},
-		{
-			"pass - returning correct address",
-			func() {},
-			privHex,
-			"",
-			pubAddr,
-			true,
-		},
-	}
-
-	for _, tc := range testCases {
-		s.Run(fmt.Sprintf("case %s", tc.name), func() {
-			s.SetupTest() // reset test and queries
-			tc.registerMock()
-
-			output, err := s.backend.ImportRawKey(tc.privKey, tc.password)
-			if tc.expPass {
-				s.Require().NoError(err)
-				s.Require().Equal(tc.expAddr, output)
-			} else {
-				s.Require().Error(err)
-			}
 		})
 	}
 }
