@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bufio"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -11,6 +12,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	bip39 "github.com/tyler-smith/go-bip39"
 
 	cmtconfig "github.com/cometbft/cometbft/config"
 	"github.com/cometbft/cometbft/types"
@@ -71,13 +73,6 @@ var (
 )
 
 const TEST_DENOM = "atest"
-
-var mnemonics = []string{
-	"copper push brief egg scan entry inform record adjust fossil boss egg comic alien upon aspect dry avoid interest fury window hint race symptom",
-	"maximum display century economy unlock van census kite error heart snow filter midnight usage egg venture cash kick motor survey drastic edge muffin visual",
-	"will wear settle write dance topic tape sea glory hotel oppose rebel client problem era video gossip glide during yard balance cancel file rose",
-	"doll midnight silk carpet brush boring pluck office gown inquiry duck chief aim exit gain never tennis crime fragile ship cloud surface exotic patch",
-}
 
 type UnsafeStartValidatorCmdCreator func(ac appCreator) *cobra.Command
 
@@ -525,6 +520,8 @@ func initTestnetFiles(
 }
 
 func addExtraAccounts(kb keyring.Keyring, algo keyring.SignatureAlgo) ([]banktypes.Balance, []authtypes.GenesisAccount) {
+	const extraAccountCount = 4
+
 	accTokens := sdk.TokensFromConsensusPower(1000, sdk.DefaultPowerReduction)
 	accStakingTokens := sdk.TokensFromConsensusPower(500, sdk.DefaultPowerReduction)
 	coins := sdk.Coins{
@@ -533,10 +530,15 @@ func addExtraAccounts(kb keyring.Keyring, algo keyring.SignatureAlgo) ([]banktyp
 	}
 	coins = coins.Sort()
 
-	genBalances := make([]banktypes.Balance, 0, len(mnemonics))
-	genAccounts := make([]authtypes.GenesisAccount, 0, len(mnemonics))
+	genBalances := make([]banktypes.Balance, 0, extraAccountCount)
+	genAccounts := make([]authtypes.GenesisAccount, 0, extraAccountCount)
 
-	for i, mnemonic := range mnemonics {
+	for i := 0; i < extraAccountCount; i++ {
+		entropy := sha256.Sum256([]byte(fmt.Sprintf("xitcoin-local-test-only:extra-account-%d", i)))
+		mnemonic, err := bip39.NewMnemonic(entropy[:])
+		if err != nil {
+			panic(err)
+		}
 		addr, _, err := testutil.GenerateSaveCoinKey(kb, fmt.Sprintf("account%d", i), mnemonic, true, algo)
 		if err != nil {
 			panic(err)

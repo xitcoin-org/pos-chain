@@ -1,6 +1,11 @@
 name: Slither Analysis
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'contracts/**/*.sol'
+      - '.github/workflows/slither.yml'
   workflow_dispatch:
 
 permissions: read-all
@@ -14,20 +19,33 @@ jobs:
       security-events: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Get Diff
-        uses: technote-space/get-diff-action@v6.1.2
+        uses: actions/checkout@v6
         with:
-          PATTERNS: |
-            **/*.sol
-      - name: Node dependencies Install
+          persist-credentials: false
+
+      - name: Install contract dependencies
         run: |
-          cd contracts && npm i
+          cd contracts
+          npm ci
           cp -r node_modules/@openzeppelin .
+          # Hardhat 3 prefixes build-info sources with `project/`. Slither's
+          # resolver expects that virtual prefix to exist below the project.
+          ln -s . project
+
       - name: Run Slither Action
-        uses: crytic/slither-action@v0.4.0
-        continue-on-error: true
         id: slither
+        uses: crytic/slither-action@v0.4.2
         with:
-          target: contracts/
-        if: "env.GIT_DIFF"
+          # Point Crytic at the Hardhat project directory. Passing the config
+          # file itself makes Crytic treat JavaScript as a Solidity source.
+          target: contracts
+          solc-version: 0.8.20
+          node-version: 24
+          # Dependencies and deliberately adversarial test fixtures/harnesses
+          # are still compiled so imports resolve, but their findings are not
+          # attributed to production code. Medium/high findings everywhere
+          # else keep failing the job.
+          slither-args: >-
+            --exclude-dependencies
+            --filter-paths "(^|/)(node_modules|@openzeppelin|testdata|tests|testutil)(/|$)|/(ContractCreationTester|ERC20RecursiveNonRevertingPrecompileCall|ERC20RecursiveRevertingPrecompileCall|ERC20WithNativeTransfers|ICS20TransferTester|SequentialICS20Sender|SequentialOperationsTester)\.sol$"
+          fail-on: medium

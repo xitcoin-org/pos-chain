@@ -41,10 +41,9 @@ Available flags are:
 
 For the sake of this example, we'll be using Metamask:
 
-1. Use the following seed phrase when adding a new wallet:
-`gesture inject test cycle original hollow east ridge hen combine
-junk child bacon zero hope comfort vacuum milk pitch cage oppose
-unhappy lunar seat`
+1. Start the local chain and import one of the accounts generated for that
+   run. Local test credentials are created at execution time and are never
+   stored in this repository.
 2. On the top left of the Metamask extension, click the Network button.
 3. Click Add custom network from the bottom of the modal.
 4. Under Default RPC URL, add the RPC URL as http://localhost:8545. Ensure your chain is running.

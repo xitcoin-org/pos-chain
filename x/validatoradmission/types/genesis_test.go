@@ -33,3 +33,20 @@ func TestGenesisStateValidate(t *testing.T) {
 		}
 	}
 }
+
+func TestGenesisStateAllowsLocalTestDenomination(t *testing.T) {
+	authority := sdk.AccAddress(bytes.Repeat([]byte{3}, 20)).String()
+	validator := sdk.ValAddress(bytes.Repeat([]byte{4}, 20)).String()
+	state := GenesisState{
+		Authority:             authority,
+		ApprovedValidators:    []string{validator},
+		MaxApprovedValidators: 1,
+		MinimumSelfDelegation: "1000000000000000000atest",
+	}
+	if err := state.Validate(); err != nil {
+		t.Fatalf("local genesis denomination rejected: %v", err)
+	}
+	if err := ValidatePolicy(state.MaxApprovedValidators, state.MinimumSelfDelegation); err == nil {
+		t.Fatal("runtime policy must remain restricted to axtc")
+	}
+}

@@ -2,6 +2,8 @@ package config
 
 import (
 	"crypto/ecdsa"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"os"
 	"time"
@@ -12,17 +14,23 @@ import (
 
 const (
 	GethVersion = "1.16.3"
-
-	Dev0PrivateKey = "88cbead91aee890d27bf06e003ade3d4e952427e88f88d31d61d3ef5e5d54305" // dev0
-	Dev1PrivateKey = "741de4f8988ea941d3ff0287911ca4074e62b7d45c991a51186455366f10b544" // dev1
-	Dev2PrivateKey = "3b7955d25189c99a7468192fcbc6429205c158834053ebe3f78f4512ab432db9" // dev2
-	Dev3PrivateKey = "8a36c69d940a92fcea94b36d0f2928c7a0ee19a90073eda769693298dfa9603b" // dev3
-
 	EvmdHttpEndpoint = "http://localhost:8545"
 	EvmdWsEndpoint   = "ws://localhost:8546"
 	GethHttpEndpoint = "http://localhost:8547"
 	GethWsEndpoint   = "ws://localhost:8548"
 )
+
+var (
+	Dev0PrivateKey = localTestPrivateKey("dev0")
+	Dev1PrivateKey = localTestPrivateKey("dev1")
+	Dev2PrivateKey = localTestPrivateKey("dev2")
+	Dev3PrivateKey = localTestPrivateKey("dev3")
+)
+
+func localTestPrivateKey(name string) string {
+	digest := sha256.Sum256([]byte("xitcoin-local-test-only:" + name))
+	return hex.EncodeToString(digest[:])
+}
 
 type Config struct {
 	EvmdHttpEndpoint string `yaml:"evmd_http_endpoint"`

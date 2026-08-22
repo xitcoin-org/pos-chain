@@ -2,6 +2,7 @@ package utils_test
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"fmt"
 	"math/big"
 	"testing"
@@ -10,6 +11,7 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/stretchr/testify/require"
+	bip39 "github.com/tyler-smith/go-bip39"
 
 	cryptocodec "github.com/xitcoin-org/pos-chain/crypto/codec"
 	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
@@ -408,7 +410,11 @@ func TestAccountEquivalence(t *testing.T) {
 	cdc := codec.NewProtoCodec(registry)
 
 	uid := "inMemory"
-	mnemonic := "aunt imitate maximum student guard unhappy guard rotate marine panel negative merit record priority zoo voice mixture boost describe fruit often occur expect teach"
+	// Deterministic local-test identity. The mnemonic is derived during the
+	// test and is never stored as a reusable credential in the repository.
+	entropy := sha256.Sum256([]byte("xitcoin-local-test-only:account-equivalence"))
+	mnemonic, err := bip39.NewMnemonic(entropy[:])
+	require.NoError(t, err)
 
 	// create a keyring with support for ethsecp and secp (default supported)
 	kb, err := keyring.New("keybasename", keyring.BackendMemory, t.TempDir(), nil, cdc, hd.EthSecp256k1Option())

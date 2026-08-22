@@ -54,39 +54,39 @@ CONFIG_TOML="$CHAINDIR/config/config.toml"
 APP_TOML="$CHAINDIR/config/app.toml"
 BASEFEE=10000000
 
-# Standard test keys (same as local_node.sh)
+# Deterministic local-only identities. No reusable key or mnemonic is stored in
+# Git, and these values must never be used outside this disposable test chain.
+local_test_private_key() {
+    printf 'xitcoin-local-test-only:%s' "$1" | sha256sum | awk '{print $1}'
+}
+
 VAL_KEY="mykey"
-VAL_MNEMONIC="gesture inject test cycle original hollow east ridge hen combine junk child bacon zero hope comfort vacuum milk pitch cage oppose unhappy lunar seat"
-
 USER1_KEY="dev0"
-USER1_MNEMONIC="copper push brief egg scan entry inform record adjust fossil boss egg comic alien upon aspect dry avoid interest fury window hint race symptom"
-
 USER2_KEY="dev1"
-USER2_MNEMONIC="maximum display century economy unlock van census kite error heart snow filter midnight usage egg venture cash kick motor survey drastic edge muffin visual"
-
 USER3_KEY="dev2"
-USER3_MNEMONIC="will wear settle write dance topic tape sea glory hotel oppose rebel client problem era video gossip glide during yard balance cancel file rose"
-
 USER4_KEY="dev3"
-USER4_MNEMONIC="doll midnight silk carpet brush boring pluck office gown inquiry duck chief aim exit gain never tennis crime fragile ship cloud surface exotic patch"
+VAL_PRIVATE_KEY="$(local_test_private_key "$VAL_KEY")"
+USER1_PRIVATE_KEY="$(local_test_private_key "$USER1_KEY")"
+USER2_PRIVATE_KEY="$(local_test_private_key "$USER2_KEY")"
+USER3_PRIVATE_KEY="$(local_test_private_key "$USER3_KEY")"
+USER4_PRIVATE_KEY="$(local_test_private_key "$USER4_KEY")"
 
 # Initialize using single Docker container with initialization script
 echo -e "${GREEN}Initializing chain with single Docker container...${NC}"
 
-docker run --rm --privileged -v "$DATA_DIR:/data" --user root --entrypoint="" cosmos/evmd bash -c "
+docker run --rm -v "$DATA_DIR:/data" --user root --entrypoint="" cosmos/evmd bash -c "
     # Initialize chain
-    echo '$VAL_MNEMONIC' | evmd init localtestnet -o --chain-id '$CHAIN_ID' --recover --home /data
+    evmd init localtestnet -o --chain-id '$CHAIN_ID' --home /data
     
     # Set client config
     evmd config set client chain-id '$CHAIN_ID' --home /data
     evmd config set client keyring-backend '$KEYRING' --home /data
     
-    # Import keys from mnemonics
-    echo '$VAL_MNEMONIC' | evmd keys add '$VAL_KEY' --recover --keyring-backend '$KEYRING' --algo '$KEYALGO' --home /data
-    echo '$USER1_MNEMONIC' | evmd keys add '$USER1_KEY' --recover --keyring-backend '$KEYRING' --algo '$KEYALGO' --home /data  
-    echo '$USER2_MNEMONIC' | evmd keys add '$USER2_KEY' --recover --keyring-backend '$KEYRING' --algo '$KEYALGO' --home /data
-    echo '$USER3_MNEMONIC' | evmd keys add '$USER3_KEY' --recover --keyring-backend '$KEYRING' --algo '$KEYALGO' --home /data
-    echo '$USER4_MNEMONIC' | evmd keys add '$USER4_KEY' --recover --keyring-backend '$KEYRING' --algo '$KEYALGO' --home /data
+    printf '\n' | evmd keys unsafe-import-eth-key '$VAL_KEY' '$VAL_PRIVATE_KEY' --keyring-backend '$KEYRING' --home /data
+    printf '\n' | evmd keys unsafe-import-eth-key '$USER1_KEY' '$USER1_PRIVATE_KEY' --keyring-backend '$KEYRING' --home /data
+    printf '\n' | evmd keys unsafe-import-eth-key '$USER2_KEY' '$USER2_PRIVATE_KEY' --keyring-backend '$KEYRING' --home /data
+    printf '\n' | evmd keys unsafe-import-eth-key '$USER3_KEY' '$USER3_PRIVATE_KEY' --keyring-backend '$KEYRING' --home /data
+    printf '\n' | evmd keys unsafe-import-eth-key '$USER4_KEY' '$USER4_PRIVATE_KEY' --keyring-backend '$KEYRING' --home /data
 "
 
 # Configure genesis file using jq directly on host
@@ -118,7 +118,7 @@ jq '.consensus.params.block.max_gas="10000000"' "$DATA_DIR/config/genesis.json" 
 # Add genesis accounts and generate validator transaction
 echo -e "${GREEN}Setting up genesis accounts and validator...${NC}"
 
-docker run --rm --privileged -v "$DATA_DIR:/data" --user root --entrypoint="" cosmos/evmd bash -c "
+docker run --rm -v "$DATA_DIR:/data" --user root --entrypoint="" cosmos/evmd bash -c "
     # Allocate genesis accounts
     evmd genesis add-genesis-account '$VAL_KEY' 100000000000000000000000000atest --keyring-backend '$KEYRING' --home /data
     evmd genesis add-genesis-account '$USER1_KEY' 1000000000000000000000atest --keyring-backend '$KEYRING' --home /data
@@ -129,13 +129,17 @@ docker run --rm --privileged -v "$DATA_DIR:/data" --user root --entrypoint="" co
     # Generate and collect validator transaction
     evmd genesis gentx '$VAL_KEY' 1000000000000000000000atest --gas-prices '${BASEFEE}atest' --keyring-backend '$KEYRING' --chain-id '$CHAIN_ID' --home /data
     evmd genesis collect-gentxs --home /data
+    authority=\$(evmd keys show '$VAL_KEY' -a --keyring-backend '$KEYRING' --home /data)
+    validator=\$(evmd keys show '$VAL_KEY' -a --bech val --keyring-backend '$KEYRING' --home /data)
+    jq --arg authority \"\$authority\" --arg validator \"\$validator\" '.app_state.validator_admission={authority:\$authority,approved_validators:[\$validator],max_approved_validators:1,minimum_self_delegation:\"1000000000000000000000atest\"}' /data/config/genesis.json >/data/config/tmp_genesis.json
+    mv /data/config/tmp_genesis.json /data/config/genesis.json
     evmd genesis validate-genesis --home /data
 "
 
 # Configure node settings using Docker
 echo -e "${GREEN}Configuring node settings...${NC}"
 
-docker run --rm --privileged -v "$DATA_DIR:/data" --user root --entrypoint="" cosmos/evmd bash -c "
+docker run --rm -v "$DATA_DIR:/data" --user root --entrypoint="" cosmos/evmd bash -c "
     # Configure consensus timeouts for faster block times (500ms block time)
     sed -i 's/timeout_propose = \"3s\"/timeout_propose = \"1s\"/g' /data/config/config.toml
     sed -i 's/timeout_propose_delta = \"500ms\"/timeout_propose_delta = \"100ms\"/g' /data/config/config.toml
