@@ -67,7 +67,7 @@ Contract addresses and audit claims are maintained only in `contracts`. Network 
 
 ## Build
 
-Prerequisites: Go 1.25.9, Node.js 24 and the toolchain documented by the project.
+Prerequisites: Go 1.25.13, Node.js 24 and the toolchain documented by the project.
 
 ```bash
 git clone https://github.com/xitcoin-org/pos-chain.git
