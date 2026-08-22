@@ -1,6 +1,6 @@
 # Validator Incentives public release checklist
 
-Status date: 21 August 2026
+Status date: 22 August 2026
 
 This checklist is the canonical technical release record. The public GitBook
 describes the product and links here instead of duplicating test logs, audit
@@ -8,15 +8,15 @@ evidence or deployment procedures.
 
 ## Current readiness
 
-- Module implementation: **97%**
-- Public production readiness: **72%**
-- Production deployment: **not performed**
+- Canonical public-testnet acceptance: **complete** on 21 August 2026
+- Final source and CI security lock: **merged** through PR #25
+- Reproducible release-artifact workflow: **merged** through PR #26
+- Mainnet release authorization: **not granted**
+- Mainnet deployment: **not performed**
 - Production funds moved: **none**
 
-The implementation percentage measures source completion. Public production
-readiness also includes independent review, governance rehearsal, supply and
-bridge reconciliation, release engineering, testnet evidence, monitoring and
-rollback preparation.
+Readiness is recorded through evidence-backed gates rather than a percentage.
+Completion of the public testnet does not by itself authorize a mainnet launch.
 
 ## Completed
 
@@ -42,11 +42,11 @@ rollback preparation.
 - [ ] define the initial treasury funding transaction and source-of-funds record;
 - [ ] rehearse parameter update and funded-period activation through governance;
 - [ ] publish the exact genesis migration or chain-upgrade plan;
-- [ ] execute a persistent testnet deployment with public endpoints;
+- [x] execute a persistent testnet deployment with public endpoints;
 - [ ] run load, failure, restart, upgrade and rollback exercises on testnet;
 - [ ] configure metrics, alerts, dashboards and incident runbooks;
 - [ ] obtain release approval with reproducible build artifacts and checksums;
-- [ ] publish final user documentation and deployment evidence;
+- [x] publish final public-testnet user documentation and deployment evidence;
 - [ ] perform a limited production rollout before unrestricted activation.
 
 ## External publication follow-up
@@ -57,6 +57,8 @@ rollback preparation.
   approvals and do not rewrite the branch unless CI or reviewers request it.
 - Xitcoin Guide PRs #9 and #10: merged; obsolete staging and pending-cutover
   language is removed and protected by Guide CI.
+- Xitcoin PoS Chain PRs #25 and #26: merged; source-security gates and the
+  checksummed Linux AMD64 `xitcoind` release workflow are on `main`.
 
 ## Release rule
 
