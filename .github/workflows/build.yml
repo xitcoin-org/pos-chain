@@ -1,96 +1,66 @@
-name: Build
+name: Build Xitcoind Release
 
 on:
   workflow_dispatch:
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-xitcoind-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  build:
-    timeout-minutes: 15
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - goarch: amd64
-            runner: depot-ubuntu-22.04-4
-          - goarch: arm64
-            runner: depot-ubuntu-22.04-arm-4
-
+  build-linux-amd64:
+    timeout-minutes: 30
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0  # Required for git describe to get version tags
+          fetch-depth: 0
+          persist-credentials: false
 
-      - name: Setup Go
-        uses: actions/setup-go@v5
+      - name: Set up Go
+        uses: actions/setup-go@v7
         with:
-          go-version: "1.25"
-          check-latest: true
+          go-version: "1.25.9"
           cache: true
           cache-dependency-path: |
             go.sum
             evmd/go.sum
 
-      - name: Get version info
-        id: version
+      - name: Verify canonical release state
+        run: python3 scripts/verify-xitcoin-release-state.py
+
+      - name: Verify Go modules
+        run: |
+          go mod verify
+          cd evmd
+          go mod verify
+
+      - name: Build Linux AMD64 release
+        run: |
+          mkdir -p dist
+          make BUILDDIR="$GITHUB_WORKSPACE/dist" build-linux
+
+      - name: Verify and package release
         shell: bash
         run: |
-          VERSION=$(git describe --tags --always | sed 's/^v//')
-          COMMIT=$(git log -1 --format='%H')
-          COMMIT_SHORT=$(git log -1 --format='%h')
-          TMVERSION=$(go list -m github.com/cometbft/cometbft | sed 's:.* ::')
-          BRANCH_NAME=$(echo "${{ github.ref_name }}" | sed 's|/|-|g')
+          set -euo pipefail
+          test -x dist/xitcoind
+          dist/xitcoind version --long > dist/version-long.txt
+          grep -F "commit: $GITHUB_SHA" dist/version-long.txt
+          cp networks/testnet/genesis.json dist/genesis.json
+          sha256sum dist/xitcoind > dist/xitcoind.sha256
+          sha256sum dist/genesis.json > dist/genesis.json.sha256
+          grep -F "$(awk '{print $1}' networks/testnet/genesis.sha256)" \
+            dist/genesis.json.sha256
 
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "commit=${COMMIT}" >> "$GITHUB_OUTPUT"
-          echo "commit_short=${COMMIT_SHORT}" >> "$GITHUB_OUTPUT"
-          echo "tmversion=${TMVERSION}" >> "$GITHUB_OUTPUT"
-          echo "branch=${BRANCH_NAME}" >> "$GITHUB_OUTPUT"
-
-      - name: Build evmd
-        working-directory: evmd
-        env:
-          GOOS: linux
-          GOARCH: ${{ matrix.goarch }}
-          CGO_ENABLED: "1"
-        shell: bash
-        run: |
-          BINARY_NAME="evmd-${{ steps.version.outputs.branch }}-${{ steps.version.outputs.commit_short }}-linux-${{ matrix.goarch }}"
-
-          go build \
-            -trimpath \
-            -tags "netgo" \
-            -ldflags "-w -s \
-              -X github.com/cosmos/cosmos-sdk/version.Name=evmd \
-              -X github.com/cosmos/cosmos-sdk/version.AppName=evmd \
-              -X github.com/cosmos/cosmos-sdk/version.Version=${{ steps.version.outputs.version }} \
-              -X github.com/cosmos/cosmos-sdk/version.Commit=${{ steps.version.outputs.commit }} \
-              -X github.com/cometbft/cometbft/version.TMCoreSemVer=${{ steps.version.outputs.tmversion }} \
-              -X github.com/cosmos/cosmos-sdk/version.BuildTags=netgo" \
-            -o "${BINARY_NAME}" \
-            ./cmd/evmd
-
-      - name: Generate checksum
-        working-directory: evmd
-        shell: bash
-        run: |
-          BINARY_NAME="evmd-${{ steps.version.outputs.branch }}-${{ steps.version.outputs.commit_short }}-linux-${{ matrix.goarch }}"
-          sha256sum "${BINARY_NAME}" > "${BINARY_NAME}.sha256"
-
-      - name: Upload binary
+      - name: Upload Linux AMD64 release
         uses: actions/upload-artifact@v4
         with:
-          name: evmd-${{ steps.version.outputs.branch }}-${{ steps.version.outputs.commit_short }}-linux-${{ matrix.goarch }}
-          path: |
-            evmd/evmd-${{ steps.version.outputs.branch }}-${{ steps.version.outputs.commit_short }}-linux-${{ matrix.goarch }}
-            evmd/evmd-${{ steps.version.outputs.branch }}-${{ steps.version.outputs.commit_short }}-linux-${{ matrix.goarch }}.sha256
+          name: xitcoind-${{ github.ref_name }}-${{ github.sha }}-linux-amd64
+          path: dist/
           retention-days: 30
           if-no-files-found: error

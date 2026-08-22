@@ -6,7 +6,7 @@ Xitcoin uses an on-chain validator admission policy.
 
 | Parameter | Initial value |
 | --- | ---: |
-| Maximum approved validator operators | 208 |
+| Maximum approved validator operators | 258 |
 | Minimum self-delegation | 5,000,000 XTC |
 
 Amounts are encoded in `axtc`, with 18 decimal places.
