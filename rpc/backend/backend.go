@@ -50,7 +50,6 @@ type EVMBackend interface {
 	Syncing(ctx context.Context) (interface{}, error)
 	SetEtherbase(ctx context.Context, etherbase common.Address) bool
 	SetGasPrice(ctx context.Context, gasPrice hexutil.Big) bool
-	ImportRawKey(privkey, password string) (common.Address, error)
 	ListAccounts() ([]common.Address, error)
 	NewMnemonic(uid string, language keyring.Language, hdPath, bip39Passphrase string, algo keyring.SignatureAlgo) (*keyring.Record, error)
 	UnprotectedAllowed() bool
