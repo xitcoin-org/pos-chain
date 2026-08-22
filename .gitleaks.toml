@@ -16,8 +16,6 @@ paths = [
     '''gitleaks.toml''',
     '''(.*?)(jpg|gif|pdf|png|svg)$''',
     '''(go.mod|go.sum|go.work|go.work.sum)$''',
-    '''tests/evm-tools-compatibility/.*''',
-    '''tests/.*''',
 ]
 stopwords = [
     '''secp256k1''',
