@@ -1,0 +1,59 @@
+syntax = "proto3";
+package cosmos.evm.validatoradmission.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/xitcoin-org/pos-chain/x/validatoradmission/types";
+
+// Msg defines Xitcoin Validator Admission actions.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // ApproveValidator authorizes a validator address to join Xitcoin.
+  rpc ApproveValidator(MsgApproveValidator) returns (MsgApproveValidatorResponse);
+
+  // RevokeValidator removes authorization and deactivates an existing validator.
+  rpc RevokeValidator(MsgRevokeValidator) returns (MsgRevokeValidatorResponse);
+
+  // UpdateParams updates Validator Admission policy parameters.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+}
+
+// MsgApproveValidator authorizes one validator address.
+message MsgApproveValidator {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "xitcoin/validatoradmission/MsgApproveValidator";
+
+  string authority = 1 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+  string validator_address = 2 [ (cosmos_proto.scalar) = "cosmos.ValidatorAddressString" ];
+}
+
+// MsgApproveValidatorResponse is returned after approval.
+message MsgApproveValidatorResponse {}
+
+// MsgRevokeValidator removes authorization from one validator address.
+message MsgRevokeValidator {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "xitcoin/validatoradmission/MsgRevokeValidator";
+
+  string authority = 1 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+  string validator_address = 2 [ (cosmos_proto.scalar) = "cosmos.ValidatorAddressString" ];
+}
+
+// MsgRevokeValidatorResponse is returned after revocation.
+message MsgRevokeValidatorResponse {}
+
+// MsgUpdateParams updates the Validator Admission policy.
+// All fields must be supplied by the Xitcoin authority.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "xitcoin/validatoradmission/MsgUpdateParams";
+
+  string authority = 1 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+  uint32 max_approved_validators = 2;
+  string minimum_self_delegation = 3;
+}
+
+message MsgUpdateParamsResponse {}

@@ -1,0 +1,15 @@
+name: "Pull Request Labeler"
+on:
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # For reading the PR and adding the label
+    steps:
+      - uses: actions/labeler@v7
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"

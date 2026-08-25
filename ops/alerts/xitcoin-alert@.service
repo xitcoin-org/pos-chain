@@ -1,0 +1,7 @@
+[Unit]
+Description=Xitcoin alert notification for %i
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/xitcoin-testnet/alerts.env
+ExecStart=/usr/local/sbin/xitcoin-send-alert %i

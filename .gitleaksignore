@@ -1,0 +1,17 @@
+# Exact false-positive fingerprints reviewed before the initial release.
+# Generated code, deterministic tests and checksum-pinned public genesis only.
+# New or modified findings remain blocked by Gitleaks.
+
+api/cosmos/evm/erc20/v1/erc20.pulsar.go:generic-api-key:168
+api/cosmos/evm/erc20/v1/erc20.pulsar.go:generic-api-key:224
+evmd/tests/ibc/ics20_recursive_precompile_calls_test.go:generic-api-key:538
+evmd/tests/ibc/ics20_recursive_precompile_calls_test.go:generic-api-key:747
+networks/xitcoin-testnet-1/genesis.json:generic-api-key:314
+networks/xitcoin-testnet-1/genesis.json:generic-api-key:334
+networks/xitcoin-testnet-1/genesis.json:generic-api-key:398
+networks/xitcoin-testnet-1/genesis.json:generic-api-key:684
+networks/xitcoin-testnet-1/genesis.json:generic-api-key:695
+server/config/config.go:generic-api-key:482
+tests/evm-tools-compatibility/foundry-uniswap-v3/.env.example:generic-api-key:6
+tests/evm-tools-compatibility/foundry/.env.example:generic-api-key:6
+x/erc20/types/proposal_test.go:generic-api-key:181

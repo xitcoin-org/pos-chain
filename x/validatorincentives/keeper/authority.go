@@ -1,0 +1,59 @@
+package keeper
+
+import (
+	"errors"
+
+	sdkmath "cosmossdk.io/math"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+
+	"github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
+)
+
+// RequireAuthority rejects unset, empty or non-matching callers. The stored
+// authority is expected to be the governance or security authority configured
+// by the application.
+func (k Keeper) RequireAuthority(
+	ctx sdk.Context,
+	caller string,
+) error {
+	authority := k.GetAuthority(ctx)
+	if authority == "" {
+		return errors.New("validator incentive authority is not configured")
+	}
+	if caller == "" {
+		return errors.New("validator incentive caller is empty")
+	}
+	if caller != authority {
+		return errors.New("validator incentive caller is not authorized")
+	}
+	return nil
+}
+
+func (k Keeper) UpdateParamsAuthorized(
+	ctx sdk.Context,
+	caller string,
+	next types.Params,
+) error {
+	if err := k.RequireAuthority(ctx, caller); err != nil {
+		return err
+	}
+	return k.UpdateParams(ctx, next)
+}
+
+func (k Keeper) ActivateFundedPeriodAuthorized(
+	ctx sdk.Context,
+	caller string,
+	eligibleBonded sdkmath.Int,
+	treasuryBalance sdkmath.Int,
+	committedAnnualBudget sdkmath.Int,
+) (types.PeriodState, error) {
+	if err := k.RequireAuthority(ctx, caller); err != nil {
+		return types.PeriodState{}, err
+	}
+	return k.ActivateFundedPeriod(
+		ctx,
+		eligibleBonded,
+		treasuryBalance,
+		committedAnnualBudget,
+	)
+}

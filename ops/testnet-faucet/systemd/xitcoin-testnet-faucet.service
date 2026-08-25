@@ -1,0 +1,22 @@
+[Unit]
+Description=Xitcoin public testnet faucet
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=xitcoin-faucet
+Group=xitcoin-faucet
+WorkingDirectory=/var/lib/xitcoin-faucet/app
+EnvironmentFile=/etc/xitcoin-testnet/faucet.env
+ExecStart=/usr/bin/node /var/lib/xitcoin-faucet/app/server.js
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/xitcoin-faucet
+
+[Install]
+WantedBy=multi-user.target

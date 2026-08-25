@@ -1,0 +1,17 @@
+package mempool
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/suite"
+
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/evmd/tests/integration"
+	"github.com/xitcoin-org/pos-chain/tests/integration/mempool"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
+)
+
+func TestMempoolIntegrationTestSuite(t *testing.T) {
+	create := testapp.ToEvmAppCreator[evm.IntegrationNetworkApp](integration.CreateEvmd, "evm.IntegrationNetworkApp")
+	suite.Run(t, mempool.NewMempoolIntegrationTestSuite(create))
+}

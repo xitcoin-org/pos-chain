@@ -1,0 +1,87 @@
+name: Build Xitcoind Release
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/build.yml'
+      - 'Makefile'
+      - 'go.mod'
+      - 'go.sum'
+      - 'evmd/**'
+      - 'networks/xitcoin-testnet-1/**'
+      - 'scripts/verify-xitcoin-release-state.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build.yml'
+      - 'Makefile'
+      - 'go.mod'
+      - 'go.sum'
+      - 'evmd/**'
+      - 'networks/xitcoin-testnet-1/**'
+      - 'scripts/verify-xitcoin-release-state.py'
+
+concurrency:
+  group: build-xitcoind-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64:
+    timeout-minutes: 30
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+          cache-dependency-path: |
+            go.sum
+            evmd/go.sum
+
+      - name: Verify canonical release state
+        run: python3 scripts/verify-xitcoin-release-state.py
+
+      - name: Verify Go modules
+        run: |
+          go mod verify
+          cd evmd
+          go mod verify
+
+      - name: Build Linux AMD64 release
+        run: |
+          mkdir -p dist
+          make BUILDDIR="$GITHUB_WORKSPACE/dist" build-linux
+
+      - name: Verify and package release
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x dist/xitcoind
+          dist/xitcoind version --long > dist/version-long.txt
+          grep -F "commit: $GITHUB_SHA" dist/version-long.txt
+          cp networks/xitcoin-testnet-1/genesis.json dist/genesis.json
+          sha256sum dist/xitcoind > dist/xitcoind.sha256
+          sha256sum dist/genesis.json > dist/genesis.json.sha256
+          grep -F "$(awk '{print $1}' networks/xitcoin-testnet-1/genesis.sha256)" \
+            dist/genesis.json.sha256
+
+      - name: Upload Linux AMD64 release
+        uses: actions/upload-artifact@v7
+        with:
+          name: xitcoind-${{ github.sha }}-linux-amd64
+          path: dist/
+          retention-days: 30
+          if-no-files-found: error

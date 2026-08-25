@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xitcoin Testnet Faucet</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#10182d;color:#eef2ff;font-family:system-ui,sans-serif}
+main{width:min(620px,calc(100% - 32px));box-sizing:border-box;padding:32px;border:1px solid #33476e;border-radius:18px;background:#1d2946}
+h1{margin-top:0;color:#c59b3a}p{line-height:1.55;color:#cbd5e1}input,button{width:100%;box-sizing:border-box;padding:14px;border-radius:10px;font:inherit}input{background:#10182d;color:#fff;border:1px solid #4d608a}button{margin-top:14px;border:0;background:#c59b3a;color:#19130a;font-weight:700;cursor:pointer}button:disabled{opacity:.6}#result{margin-top:18px;padding:14px;background:#10182d;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere}.small{font-size:.9rem;color:#94a3b8}
+</style>
+</head>
+<body>
+<main>
+<h1>Xitcoin Testnet Faucet</h1>
+<p>Receive <strong>100 XTC testnet</strong> for development and testing. These tokens have no monetary value.</p>
+<p class="small">Limit: one request per address per 24 hours; three requests per IP per 24 hours.</p>
+<input id="address" placeholder="xtc1…" autocomplete="off" spellcheck="false">
+<button id="claim">Request 100 XTC testnet</button>
+<div id="result">Checking faucet status…</div>
+</main>
+<script>
+const out=document.getElementById('result'),btn=document.getElementById('claim'),input=document.getElementById('address');
+async function health(){const r=await fetch('/healthz');const x=await r.json();out.textContent=x.funded?'Faucet ready: 100 XTC testnet per request.':'Faucet temporarily unavailable.';btn.disabled=!x.funded}
+btn.onclick=async()=>{btn.disabled=true;out.textContent='Submitting request…';try{const r=await fetch('/claim',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:input.value.trim()})});const x=await r.json();out.textContent=x.ok?`Success.\n100 XTC testnet sent.\nTransaction: ${x.txhash}`:`Request refused: ${x.error||'unknown_error'}`}catch(e){out.textContent='Network error. Please retry later.'}finally{btn.disabled=false}};
+health().catch(()=>{out.textContent='Faucet status unavailable.';btn.disabled=true});
+</script>
+</body>
+</html>

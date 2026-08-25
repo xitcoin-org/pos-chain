@@ -1,0 +1,14 @@
+package integration
+
+import (
+	"testing"
+
+	evm "github.com/xitcoin-org/pos-chain"
+	"github.com/xitcoin-org/pos-chain/tests/integration/indexer"
+	testapp "github.com/xitcoin-org/pos-chain/testutil/app"
+)
+
+func TestKVIndexer(t *testing.T) {
+	create := testapp.ToEvmAppCreator[evm.IntegrationNetworkApp](CreateEvmd, "evm.IntegrationNetworkApp")
+	indexer.TestKVIndexer(t, create)
+}

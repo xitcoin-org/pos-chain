@@ -1,0 +1,6 @@
+.env
+faucet.env
+keyring/
+state/
+*.wallet.json
+*.enc

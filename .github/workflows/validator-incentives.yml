@@ -1,0 +1,70 @@
+name: Validator incentives
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/validator-incentives.yml"
+      - "x/validatorincentives/**"
+      - "proto/cosmos/evm/validatorincentives/**"
+      - "evmd/**"
+      - "testutil/integration/evm/**"
+      - "tests/integration/precompiles/gov/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validator-incentives-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  module:
+    name: Module and application
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Test validator incentives
+        run: go test ./x/validatorincentives/...
+
+      - name: Compile EVMD integration
+        working-directory: evmd
+        run: go test . ./cmd/evmd/cmd -run '^$'
+
+  integration:
+    name: EVM regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Run EIP, staking and governance regressions
+        working-directory: evmd
+        run: >-
+          go test -tags=test
+          ./tests/integration/eips
+          ./tests/integration/precompiles/staking
+          ./tests/integration/precompiles/gov
+          -count=1
