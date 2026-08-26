@@ -2,9 +2,9 @@
 
 **Xitcoin Testnet** is the public network name.
 
-The technical Cosmos Chain ID of the current genesis is
-`xitcoin-testnet-1`. The `-1` suffix identifies the genesis generation. It is
-not a public version label and does not represent a validator or server number.
+The technical Cosmos Chain ID is `xitcoin-testnet-1`. The `-1` suffix
+identifies this genesis generation; it is not a public version label or a
+validator number.
 
 ## Canonical identity
 
@@ -16,17 +16,19 @@ not a public version label and does not represent a validator or server number.
 | Native asset | XTC |
 | Atomic denomination | `axtc` |
 | Decimals | 18 |
-| Genesis SHA-256 | `7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414` |
+| Genesis time | `2026-08-25T21:48:17.77229Z` |
+| Genesis supply | 457,000,000 XTC |
+| Genesis SHA-256 | `55c8756a212b9e92c0e8427ea61caff7fa9dca40e801e4b848f59d1aa5f6dae6` |
 
 ## Deployment state
 
-The canonical four-validator testnet is publicly active. The coordinated
-endpoint cutover was completed on 2026-08-21, and the published domains now
-serve the canonical genesis.
+The canonical four-validator testnet is publicly active. The sentry, all four
+validators, public endpoints, explorers, Blockscout and faucet were certified
+together on 2026-08-26.
 
-## Public endpoint transition
+## Public services
 
-| Service | Current endpoint |
+| Service | Endpoint |
 | --- | --- |
 | Cosmos RPC | `https://rpc-testnet.xitcoin.org` |
 | Cosmos REST API | `https://api-testnet.xitcoin.org` |
@@ -35,17 +37,33 @@ serve the canonical genesis.
 | EVM explorer | `https://evm-explorer-testnet.xitcoin.org` |
 | Faucet | `https://faucet-testnet.xitcoin.org` |
 
-These endpoints serve the canonical public testnet. The coordinated cutover
-was completed and validated on 2026-08-21.
+The faucet sends 10 testnet XTC per accepted request. Address and IP windows are
+24 hours, with at most three accepted requests per IP in that window. It spends
+from a finite 50,000,000 XTC genesis allocation and does not mint automatically.
+
+## Validator and allocation policy
+
+- Four initial validators: Atlas, Borealis, Meridian and Zenith.
+- 5,000,000 XTC self-delegated by each validator.
+- 10,000 liquid XTC per validator account for operational gas.
+- Validator capacity and admission cap: 258.
+- Genesis allocations: 386,000,000 XTC sovereign reserve; 50,000,000 XTC
+  faucet; 960,000 XTC security reserve; 20,000,000 XTC total validator
+  self-delegation; 40,000 XTC total validator liquid gas.
+- No separate bridge allocation or settlement route is active. The bridge
+  remains disabled until explicitly configured and approved.
 
 ## Canonical genesis
 
 The canonical genesis is published at
 [`networks/xitcoin-testnet-1/genesis.json`](../networks/xitcoin-testnet-1/genesis.json).
 
-Expected SHA-256:
+Verify it with:
 
-`7d13d7ed6a19ea48e2ce3c408f1f457e0961e72df6dd480d8200a6db5bae8414`
+```bash
+cd networks/xitcoin-testnet-1
+sha256sum -c genesis.sha256
+```
 
 See [Testnet Status](testnet-status.md) for the current deployment boundary and
 [Testnet Operations](testnet-operations.md) for verification commands.
