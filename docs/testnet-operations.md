@@ -2,19 +2,19 @@
 
 ## Network verification
 
-Check CometBFT synchronization:
+Check CometBFT identity and synchronization:
 
 ```bash
 curl -fsS https://rpc-testnet.xitcoin.org/status |
-  jq '.result.sync_info | {latest_block_height, latest_block_time, catching_up}'
+  jq '.result | {
+    chain_id: .node_info.network,
+    height: .sync_info.latest_block_height,
+    catching_up: .sync_info.catching_up
+  }'
 ```
 
-Check the active Cosmos Chain ID:
-
-```bash
-curl -fsS https://rpc-testnet.xitcoin.org/status |
-  jq -r '.result.node_info.network'
-```
+Expected Chain ID: `xitcoin-testnet-1`. The node must report
+`catching_up=false`.
 
 Check the EVM Chain ID:
 
@@ -26,27 +26,70 @@ curl -fsS \
   jq -r '.result'
 ```
 
-Expected EVM result: `0x18ae1`.
+Expected result: `0x18ae1`.
+
+Check Cosmos staking parameters:
+
+```bash
+curl -fsS \
+  https://api-testnet.xitcoin.org/cosmos/staking/v1beta1/params |
+  jq '.params | {max_validators, bond_denom}'
+```
+
+Expected values: `max_validators=258`, `bond_denom=axtc`.
 
 ## Genesis verification
 
 ```bash
-git clone https://github.com/xitcoin-org/pos-chain.git
+git clone --recurse-submodules https://github.com/xitcoin-org/pos-chain.git
 cd pos-chain/networks/xitcoin-testnet-1
 sha256sum -c genesis.sha256
 ```
 
-## Native asset
+Expected SHA-256:
 
-```text
-symbol: XTC
-atomic denomination: axtc
-decimals: 18
+`55c8756a212b9e92c0e8427ea61caff7fa9dca40e801e4b848f59d1aa5f6dae6`
+
+## Blockscout indexing
+
+Compare the chain and explorer heights:
+
+```bash
+CHAIN_HEIGHT="$(
+  curl -fsS https://rpc-testnet.xitcoin.org/status |
+    jq -r '.result.sync_info.latest_block_height'
+)"
+BLOCKSCOUT_HEIGHT="$(
+  curl -fsS https://evm-explorer-testnet.xitcoin.org/api/v2/stats |
+    jq -r '.total_blocks'
+)"
+printf 'chain=%s blockscout=%s lag=%s\n' \
+  "$CHAIN_HEIGHT" "$BLOCKSCOUT_HEIGHT" \
+  "$((CHAIN_HEIGHT - BLOCKSCOUT_HEIGHT))"
 ```
+
+A short moving lag is expected because indexing happens after block production.
+Investigate a lag that persists, grows across repeated measurements, or makes
+the explorer unavailable.
+
+## Faucet policy
+
+- Amount per accepted request: 10 XTC.
+- Address cooldown: 24 hours.
+- IP window: 24 hours.
+- Maximum accepted requests per IP per window: 3.
+- Genesis faucet allocation: 50,000,000 XTC.
+- Automatic minting: disabled.
+
+If the faucet allocation becomes low, refill it by an explicitly approved
+on-chain transfer from an authorized testnet reserve. Do not change genesis on
+a running chain and do not enable automatic minting as an operational shortcut.
 
 ## Release verification
 
-A release record must identify the source revision, binary checksum, genesis checksum and compatibility notes. Source changes do not activate a genesis or network upgrade automatically.
+A release record must identify a reachable source revision, binary checksum,
+genesis checksum and compatibility notes. Source changes do not activate a
+genesis or network upgrade automatically.
 
 ## Operational principles
 
@@ -55,3 +98,4 @@ A release record must identify the source revision, binary checksum, genesis che
 - Apply rate limiting and monitoring to public endpoints.
 - Test backup, restoration and rollback procedures before upgrades.
 - Coordinate genesis resets and consensus upgrades with every validator.
+- Keep testnet and mainnet keys, genesis, state, services and backups separate.
