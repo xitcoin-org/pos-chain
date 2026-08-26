@@ -1,6 +1,6 @@
 module github.com/xitcoin-org/pos-chain/evmd
 
-go 1.26.5
+go 1.26.7
 
 require (
 	cosmossdk.io/api v1.0.0
