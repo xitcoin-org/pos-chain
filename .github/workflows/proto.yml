@@ -12,10 +12,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           submodules: recursive
-      - uses: technote-space/get-diff-action@v6.1.2
+      - uses: technote-space/get-diff-action@f27caffdd0fb9b13f4fc191c016bb4e0632844af # v6.1.2
         id: git_diff
         with:
           PATTERNS: |
@@ -31,22 +31,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           submodules: recursive
-      - uses: bufbuild/buf-setup-action@v1.50.0
-      - uses: bufbuild/buf-lint-action@v1
+      - uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99 # v1.50.0
+      - uses: bufbuild/buf-lint-action@06f9dd823d873146471cfaaf108a993fe00e5325 # v1
         with:
           input: "proto"
 
   break-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           submodules: recursive
-      - uses: bufbuild/buf-setup-action@v1.50.0
-      - uses: bufbuild/buf-breaking-action@v1
+      - uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99 # v1.50.0
+      - uses: bufbuild/buf-breaking-action@c57b3d842a5c3f3b454756ef65305a50a587c5ba # v1
         with:
           input: "proto"
           against: "https://github.com/${{ github.repository }}.git#branch=${{ github.event.pull_request.base.ref }},ref=HEAD~1,subdir=proto"

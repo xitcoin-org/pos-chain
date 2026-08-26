@@ -42,7 +42,10 @@ func (b *Backend) BlockNumber(ctx context.Context) (result hexutil.Uint64, err e
 		return 0, fmt.Errorf("unexpected '%s' gRPC header length; got %d, expected: %d", grpctypes.GRPCBlockHeightHeader, headerLen, 1)
 	}
 
-	height, err := strconv.ParseUint(blockHeightHeader[0], 10, 64)
+	// CometBFT and the Cosmos SDK represent block heights as signed int64
+	// values. Enforce that boundary at the point where the gRPC header enters
+	// the JSON-RPC backend so every downstream conversion remains safe.
+	height, err := strconv.ParseUint(blockHeightHeader[0], 10, 63)
 	if err != nil {
 		return 0, fmt.Errorf("failed to parse block height: %w", err)
 	}

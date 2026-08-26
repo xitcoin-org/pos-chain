@@ -13,7 +13,7 @@ fi
 accepted=(
   GO-2023-1821 # x/crisis is compiled upstream but not imported or registered by Xitcoin.
   GO-2023-1881 # x/crisis is compiled upstream but not imported or registered by Xitcoin.
-  GO-2024-2584 # Cosmos SDK 0.54.3 is newer than the advisory's <0.47.10 range.
+  GO-2024-2584 # Cosmos SDK 0.54.4 is newer than the advisory's <0.47.10 range.
   GO-2025-3442 # CometBFT 0.39 has no compatible fixed release; exact version is locked.
   GO-2026-4479 # Pion DTLS v2 has no fixed release; v3 is not API-compatible.
   GO-2026-5932 # OpenPGP is pulled by Cosmos keyring; no x/crypto version fixes it.
@@ -41,8 +41,8 @@ require_replacement() {
   fi
 }
 
-require_module github.com/cosmos/cosmos-sdk v0.54.3
-require_module github.com/cometbft/cometbft v0.39.3
+require_module github.com/cosmos/cosmos-sdk v0.54.4
+require_module github.com/cometbft/cometbft v0.39.4
 require_module github.com/pion/dtls/v2 v2.2.12
 require_module golang.org/x/crypto v0.53.0
 require_replacement github.com/ethereum/go-ethereum github.com/cosmos/go-ethereum v1.17.2-cosmos-0
