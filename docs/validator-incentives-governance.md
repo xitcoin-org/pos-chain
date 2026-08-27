@@ -1,100 +1,144 @@
 # Validator Incentive governance operations
 
-Status: development branch, not deployed
-Reference date: 20 August 2026
+Status: approved economic specification; implementation alignment pending
+Reference date: 27 August 2026
 
 ## Authority model
 
 The Validator Incentive module uses the Cosmos governance module account as
-its default on-chain authority.
+its on-chain authority. The module account has no private key. A personal
+account cannot impersonate it.
 
-This authority applies only to:
+This authority may update the treasury release policy or pause future reward
+calculation after the applicable governance process. It does not approve or
+revoke validators. Validator admission remains a separate policy and execution
+path.
 
-- updating funded incentive parameters;
-- activating a fully funded reward period.
+## Launch parameters
 
-It does not approve or revoke validators. Validator admission remains a
-separate policy and execution path.
+| Parameter | Mainnet launch value |
+| --- | ---: |
+| Initial eligible bonded stake | 20,000,000 XTC |
+| Initial Validator Incentive Treasury | 20,000,000 XTC |
+| Treasury annual release rate | 1,000 basis points (10%) |
+| Recalculation interval | One day |
+| Protocol inflation | 0% |
+| Treasury mint or burn permission | None |
 
-The module account has no private key. An authorized message is executed
-through the network governance process. A direct transaction signed by a
-personal account cannot impersonate the governance module account.
+The release rate applies to the current funded treasury balance. It is not a
+fixed APR target, an APY promise or a percentage of global token supply.
+
+## Deterministic daily calculation
+
+At each daily boundary, the module reads the canonical Bank and Staking keeper
+state. Neither balance may be supplied by a transaction.
+
+```text
+annualized_reward_capacity
+= current_treasury_balance * release_rate_basis_points / 10,000
+
+derived_apy
+= annualized_reward_capacity / current_eligible_bonded_stake
+
+daily_reward_pool
+= annualized_reward_capacity / days_per_year
+
+participant_daily_share
+= daily_reward_pool
+  * participant_eligible_stake
+  / total_eligible_bonded_stake
+```
+
+The implementation uses the network's canonical block-year constant to map one
+day and one year to block intervals. Integer rounding must be deterministic and
+must never make cumulative distributions exceed the funded balance.
 
 ## Safety boundaries
 
-The module enforces the following boundaries:
+The module must enforce all of the following:
 
-- initial annual rate: 800 basis points (8%);
-- protocol ceiling: 2,000 basis points (20%);
-- maximum increase: 100 basis points per reward period;
-- each reward period must be funded before activation;
+- the treasury balance is read from the Bank keeper;
 - eligible bonded stake is read from the Staking keeper;
-- treasury balance is read from the Bank keeper;
-- the transaction cannot provide either value;
+- the next daily capacity is derived from those live balances;
+- no message accepts a manually selected APR or reward budget;
+- a treasury deposit affects the next daily calculation without changing the
+  release-rate parameter;
+- zero treasury balance produces zero treasury-funded rewards;
+- zero eligible stake produces no distribution and no division by zero;
 - the treasury module account has no mint or burn permission;
-- a distribution cannot exceed the active period provision;
-- failed bank transfers do not advance distribution accounting.
+- cumulative transfers cannot exceed verified treasury funding;
+- failed bank transfers do not advance distribution accounting;
+- reward accounting remains separate from validator admission;
+- bridge lock/mint and burn/unlock accounting remains separate from rewards.
 
-The bridge is a separate subsystem. Its verified lock/mint and burn/unlock
-operations do not grant mint authority to the Validator Incentive module.
+The launch release rate is 10%. A future rate change requires an authorized,
+observable on-chain parameter update and does not retroactively alter completed
+daily calculations.
 
-## Read-only endpoints
+## Fees and other funding
 
-The module exposes:
+Ordinary transaction-fee distribution follows the active chain distribution
+parameters. Fees do not enter the Validator Incentive Treasury unless a
+separately reviewed protocol route transfers them there.
 
-- `GET /cosmos/evm/validatorincentives/v1/params`
-- `GET /cosmos/evm/validatorincentives/v1/period`
-- `GET /cosmos/evm/validatorincentives/v1/treasury`
+Verified bridge funding, approved application revenue or approved buybacks may
+credit the treasury. Once credited, the new balance is included in the next
+daily calculation. Funding grants no withdrawal or governance authority.
 
-These routes expose no state mutation.
+## Supply boundary
 
-## Governance message templates
+The current Cronos contract `totalSupply` is reconciled independently of the
+staking calculation. Confirmed burns reduce that value. The global supply is
+not the denominator of the derived APY.
 
-Replace `<GOVERNANCE_MODULE_ADDRESS>` with the governance module address
-derived for the target network. Do not substitute a personal wallet address
-when governance is the configured authority.
+The bridge must preserve:
 
-### Update funded incentive parameters
-
-```json
-{
-  "@type": "/cosmos.evm.validatorincentives.v1.MsgUpdateParams",
-  "authority": "<GOVERNANCE_MODULE_ADDRESS>",
-  "annual_rate_basis_points": 800,
-  "blocks_per_year": "6311520",
-  "reward_period_blocks": "1577880"
-}
+```text
+bridge_authorized_xtc_on_xitcoin
+<= canonical_xtc_locked_on_cronos
 ```
 
-### Activate a funded period
+The incentive treasury must preserve:
 
-The budget is expressed in atomic `axtc`. Eligible stake and treasury
-balance are intentionally absent.
-
-```json
-{
-  "@type": "/cosmos.evm.validatorincentives.v1.MsgActivateFundedPeriod",
-  "authority": "<GOVERNANCE_MODULE_ADDRESS>",
-  "committed_annual_budget_atomic": "<POSITIVE_INTEGER_AXTC>"
-}
+```text
+cumulative_treasury_rewards
+<= cumulative_verified_treasury_funding
 ```
 
-## Pre-submission checks
+## Required read-only endpoints
 
-Before submitting an activation proposal:
+The aligned implementation must expose enough state to reproduce the daily
+calculation independently:
 
-1. query the live module parameters;
-2. query the current period and confirm there is no overlap;
-3. query the actual treasury balance;
-4. verify the proposed annual budget does not exceed available funding;
-5. verify the calculated period provision;
-6. verify the proposed rate transition is permitted;
-7. publish the proposal payload and expected accounting result;
-8. execute only after the normal governance process succeeds.
+- release rate in basis points;
+- daily and annual block constants;
+- current funded treasury balance;
+- current eligible bonded stake;
+- current annualized reward capacity;
+- current derived APY;
+- current daily reward pool;
+- last calculation height and next calculation height;
+- cumulative funded distributions.
+
+## Implementation migration
+
+The implementation on `main` still represents an earlier fixed-APR,
+funded-period design. It must not be activated for mainnet in that form.
+
+Alignment requires:
+
+1. replace the fixed APR parameter with a treasury release-rate parameter;
+2. remove the 20% APR ceiling and quarterly rate-transition rule;
+3. remove governance-supplied annual budgets and manual period activation;
+4. add deterministic daily snapshots and derived metrics;
+5. integrate automatic funded distribution with staking/distribution accounting;
+6. update protobuf messages, queries, CLI, genesis validation and migrations;
+7. add unit, integration, invariant, restart and upgrade tests;
+8. complete independent review before any production activation.
 
 ## Release boundary
 
-These instructions describe the development implementation. They are not a
-deployment record. Production activation additionally requires integration
-tests, supply reconciliation, an upgrade or genesis plan, independent security
+This document is the approved economic specification, not a deployment record.
+Production activation additionally requires final code review, full CI,
+testnet rehearsal, supply reconciliation, a genesis or upgrade plan, security
 review and public deployment evidence.
