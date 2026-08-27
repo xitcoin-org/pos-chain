@@ -124,7 +124,7 @@ func TestProcessBlockDefersNewFundingUntilNextSnapshot(t *testing.T) {
 
 func TestZeroEligibleStakeProducesNoDistribution(t *testing.T) {
 	ctx, k := keeperTestContext(t)
-	reasury, bank := testTreasury(1_000)
+	treasury, bank := testTreasury(1_000)
 	ctx = ctx.WithBlockHeight(1)
 	require.NoError(t, k.ProcessBlock(
 		ctx,

@@ -31,10 +31,6 @@ func (p Params) Validate() error {
 	if p.CalculationPeriodBlocks > p.BlocksPerYear {
 		return fmt.Errorf("calculation period cannot exceed one year")
 	}
-	if p.BlocksPerYear%p.CalculationPeriodBlocks != 0 {
-		return fmt.Errorf("calculation period must divide blocks per year exactly")
-	}
-
 	return nil
 }
 
