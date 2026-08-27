@@ -1,6 +1,6 @@
 # Validator Incentives public release checklist
 
-Status date: 22 August 2026
+Status date: 27 August 2026
 
 This checklist is the canonical technical release record. The public GitBook
 describes the product and links here instead of duplicating test logs, audit
@@ -20,7 +20,7 @@ Completion of the public testnet does not by itself authorize a mainnet launch.
 
 ## Completed
 
-- [x] funded-period reward policy and bounded APR parameters;
+- [x] daily balance-derived reward policy specified;
 - [x] canonical Staking keeper used for eligible bonded stake;
 - [x] canonical Bank keeper used for treasury balance;
 - [x] governance module account configured as authority;
@@ -33,9 +33,17 @@ Completion of the public testnet does not by itself authorize a mainnet launch.
 - [x] DefiLlama Chainlist correction submitted as PR #3073;
 - [x] public guide separated from technical verification records.
 
+The existing funded-period implementation predates the approved daily dynamic
+model. Its fixed APR, 20% ceiling, quarterly transition and manually committed
+annual budget are not authorized mainnet parameters.
+
 ## Required before public activation
 
 - [ ] complete an independent security review of the final module diff;
+- [ ] align the module with the 10% treasury-release policy and daily derived APY;
+- [ ] remove fixed-APR, 20%-ceiling, quarterly-transition and manual-budget paths;
+- [ ] expose reproducible daily calculation state through read-only queries;
+- [ ] integrate and test automatic proportional funded distribution;
 - [ ] resolve all review findings and rerun the full repository CI matrix;
 - [ ] reconcile canonical total supply across PoS, Xitcoin EVM and Cronos EVM;
 - [ ] document bridge lock/mint and burn/unlock accounting with invariants;
