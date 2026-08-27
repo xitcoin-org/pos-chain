@@ -24,6 +24,11 @@ const UpgradeName = "v0.6.0-to-v0.7.0"
 // transfers security-sensitive authorities to the KCALB 2-of-3 multisig.
 const GovernanceSafeguardsUpgradeName = "xitcoin-governance-safeguards-v1"
 
+// ValidatorIncentivesDailyV2UpgradeName activates the funded daily
+// treasury-derived validator incentive policy. This upgrade changes module
+// state only and does not add or remove a store.
+const ValidatorIncentivesDailyV2UpgradeName = "xitcoin-validator-incentives-daily-v2"
+
 func (app EVMD) RegisterUpgradeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(
 		UpgradeName,
@@ -64,6 +69,13 @@ func (app EVMD) RegisterUpgradeHandlers() {
 				app.ValidatorIncentivesKeeper.SetAuthority(sdkCtx, authority)
 			}
 
+			return app.ModuleManager.RunMigrations(ctx, app.Configurator(), fromVM)
+		},
+	)
+
+	app.UpgradeKeeper.SetUpgradeHandler(
+		ValidatorIncentivesDailyV2UpgradeName,
+		func(ctx context.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 			return app.ModuleManager.RunMigrations(ctx, app.Configurator(), fromVM)
 		},
 	)
