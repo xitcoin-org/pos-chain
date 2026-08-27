@@ -9,86 +9,108 @@ import (
 	sdkmath "cosmossdk.io/math"
 )
 
-// PeriodState is the deterministic, auditable snapshot used for one funded
-// reward period. Amounts are stored as base-10 atomic axtc strings.
+// PeriodState is the deterministic snapshot used for one daily calculation
+// period. Amounts are canonical base-10 atomic axtc strings.
 type PeriodState struct {
-	StartBlock                  uint64 `json:"start_block"`
-	EndBlock                    uint64 `json:"end_block"`
-	AnnualRateBasisPoints       uint32 `json:"annual_rate_basis_points"`
-	EligibleBondedAtomic        string `json:"eligible_bonded_atomic"`
-	CommittedAnnualBudgetAtomic string `json:"committed_annual_budget_atomic"`
-	PeriodProvisionAtomic       string `json:"period_provision_atomic"`
-	DistributedAtomic           string `json:"distributed_atomic"`
+	StartBlock                    uint64 `json:"start_block"`
+	EndBlock                      uint64 `json:"end_block"`
+	TreasuryReleaseRateBasisPoints uint32 `json:"treasury_release_rate_basis_points"`
+	TreasuryBalanceAtomic         string `json:"treasury_balance_atomic"`
+	EligibleBondedAtomic          string `json:"eligible_bonded_atomic"`
+	AnnualizedCapacityAtomic      string `json:"annualized_capacity_atomic"`
+	DerivedAPYBasisPoints         string `json:"derived_apy_basis_points"`
+	PeriodProvisionAtomic         string `json:"period_provision_atomic"`
+	DistributedAtomic             string `json:"distributed_atomic"`
 }
 
 func NewPeriodState(
 	startBlock uint64,
 	eligibleBonded sdkmath.Int,
 	treasuryBalance sdkmath.Int,
-	committedAnnualBudget sdkmath.Int,
 	params Params,
 ) (PeriodState, error) {
 	if err := params.Validate(); err != nil {
 		return PeriodState{}, err
 	}
-	if startBlock > math.MaxUint64-params.RewardPeriodBlocks {
-		return PeriodState{}, errors.New("reward period end block overflows")
+	if startBlock > math.MaxUint64-params.CalculationPeriodBlocks {
+		return PeriodState{}, errors.New("calculation period end block overflows")
+	}
+	if eligibleBonded.IsNegative() {
+		return PeriodState{}, errors.New("eligible bonded stake cannot be negative")
 	}
 
-	provision, err := ValidateFundedRewardPeriod(
-		eligibleBonded,
+	annualized, err := AnnualizedRewardCapacity(
 		treasuryBalance,
-		committedAnnualBudget,
-		params.AnnualRateBasisPoints,
-		params.RewardPeriodBlocks,
-		params.BlocksPerYear,
+		params.TreasuryReleaseRateBasisPoints,
 	)
 	if err != nil {
 		return PeriodState{}, err
 	}
+	apy, err := DerivedAPYBasisPoints(annualized, eligibleBonded)
+	if err != nil {
+		return PeriodState{}, err
+	}
+
+	provision := sdkmath.ZeroInt()
+	if eligibleBonded.IsPositive() {
+		provision, err = PeriodProvision(
+			annualized,
+			params.CalculationPeriodBlocks,
+			params.BlocksPerYear,
+		)
+		if err != nil {
+			return PeriodState{}, err
+		}
+	}
 
 	return PeriodState{
-		StartBlock:                  startBlock,
-		EndBlock:                    startBlock + params.RewardPeriodBlocks,
-		AnnualRateBasisPoints:       params.AnnualRateBasisPoints,
-		EligibleBondedAtomic:        eligibleBonded.String(),
-		CommittedAnnualBudgetAtomic: committedAnnualBudget.String(),
-		PeriodProvisionAtomic:       provision.String(),
-		DistributedAtomic:           "0",
+		StartBlock:                     startBlock,
+		EndBlock:                       startBlock + params.CalculationPeriodBlocks,
+		TreasuryReleaseRateBasisPoints: params.TreasuryReleaseRateBasisPoints,
+		TreasuryBalanceAtomic:          treasuryBalance.String(),
+		EligibleBondedAtomic:           eligibleBonded.String(),
+		AnnualizedCapacityAtomic:       annualized.String(),
+		DerivedAPYBasisPoints:          apy.String(),
+		PeriodProvisionAtomic:          provision.String(),
+		DistributedAtomic:              "0",
 	}, nil
 }
 
 func (p PeriodState) Validate() error {
 	if p.EndBlock <= p.StartBlock {
-		return errors.New("reward period end block must follow start block")
+		return errors.New("calculation period end block must follow start block")
 	}
-	if p.AnnualRateBasisPoints > MaxAnnualRateBasisPoints {
-		return errors.New("reward period rate exceeds the protocol ceiling")
-	}
-
-	eligible, err := parseAtomicAmount(p.EligibleBondedAtomic)
-	if err != nil {
-		return fmt.Errorf("invalid eligible bonded amount: %w", err)
-	}
-	budget, err := parseAtomicAmount(p.CommittedAnnualBudgetAtomic)
-	if err != nil {
-		return fmt.Errorf("invalid committed annual budget: %w", err)
-	}
-	provision, err := parseAtomicAmount(p.PeriodProvisionAtomic)
-	if err != nil {
-		return fmt.Errorf("invalid period provision: %w", err)
-	}
-	distributed, err := parseAtomicAmount(p.DistributedAtomic)
-	if err != nil {
-		return fmt.Errorf("invalid distributed amount: %w", err)
+	if p.TreasuryReleaseRateBasisPoints > BasisPointDenominator {
+		return errors.New("treasury release rate exceeds 100 percent")
 	}
 
-	if eligible.IsNegative() || budget.IsNegative() ||
-		provision.IsNegative() || distributed.IsNegative() {
-		return errors.New("reward period amounts cannot be negative")
+	fields := []struct {
+		name  string
+		value string
+	}{
+		{"treasury balance", p.TreasuryBalanceAtomic},
+		{"eligible bonded", p.EligibleBondedAtomic},
+		{"annualized capacity", p.AnnualizedCapacityAtomic},
+		{"derived APY", p.DerivedAPYBasisPoints},
+		{"period provision", p.PeriodProvisionAtomic},
+		{"distributed", p.DistributedAtomic},
 	}
-	if distributed.GT(provision) {
+	parsed := make([]sdkmath.Int, len(fields))
+	for index, field := range fields {
+		amount, err := parseAtomicAmount(field.value)
+		if err != nil {
+			return fmt.Errorf("invalid %s amount: %w", field.name, err)
+		}
+		if amount.IsNegative() {
+			return fmt.Errorf("%s amount cannot be negative", field.name)
+		}
+		parsed[index] = amount
+	}
+	if parsed[5].GT(parsed[4]) {
 		return errors.New("distributed amount exceeds period provision")
+	}
+	if parsed[4].GT(parsed[0]) {
+		return errors.New("period provision exceeds treasury snapshot")
 	}
 
 	return nil
@@ -98,13 +120,11 @@ func (p PeriodState) RemainingProvision() (sdkmath.Int, error) {
 	if err := p.Validate(); err != nil {
 		return sdkmath.Int{}, err
 	}
-
 	provision, _ := parseAtomicAmount(p.PeriodProvisionAtomic)
 	distributed, _ := parseAtomicAmount(p.DistributedAtomic)
 	return provision.Sub(distributed), nil
 }
 
-// ParseStoredAtomicAmount parses a canonical base-10 atomic axtc state value.
 func ParseStoredAtomicAmount(value string) (sdkmath.Int, error) {
 	return parseAtomicAmount(value)
 }

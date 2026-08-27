@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
@@ -13,21 +12,11 @@ import (
 var _ types.MsgServer = msgServer{}
 
 type msgServer struct {
-	keeper        Keeper
-	stakingKeeper types.StakingKeeper
-	treasury      Treasury
+	keeper Keeper
 }
 
-func NewMsgServerImpl(
-	keeper Keeper,
-	stakingKeeper types.StakingKeeper,
-	treasury Treasury,
-) types.MsgServer {
-	return msgServer{
-		keeper:        keeper,
-		stakingKeeper: stakingKeeper,
-		treasury:      treasury,
-	}
+func NewMsgServerImpl(keeper Keeper) types.MsgServer {
+	return msgServer{keeper: keeper}
 }
 
 func (s msgServer) UpdateParams(
@@ -42,9 +31,9 @@ func (s msgServer) UpdateParams(
 	command := types.UpdateParamsCommand{
 		Authority: message.Authority,
 		Params: types.Params{
-			AnnualRateBasisPoints: message.AnnualRateBasisPoints,
-			BlocksPerYear:         message.BlocksPerYear,
-			RewardPeriodBlocks:    message.RewardPeriodBlocks,
+			TreasuryReleaseRateBasisPoints: message.TreasuryReleaseRateBasisPoints,
+			BlocksPerYear:                  message.BlocksPerYear,
+			CalculationPeriodBlocks:        message.CalculationPeriodBlocks,
 		},
 	}
 	if err := s.keeper.HandleUpdateParamsCommand(
@@ -54,51 +43,4 @@ func (s msgServer) UpdateParams(
 		return nil, err
 	}
 	return &types.MsgUpdateParamsResponse{}, nil
-}
-
-func (s msgServer) ActivateFundedPeriod(
-	goCtx context.Context,
-	message *types.MsgActivateFundedPeriod,
-) (*types.MsgActivateFundedPeriodResponse, error) {
-	if message == nil {
-		return nil, errors.New("activate funded period message is nil")
-	}
-	if _, err := sdk.AccAddressFromBech32(
-		message.Authority,
-	); err != nil {
-		return nil, fmt.Errorf("invalid authority address: %w", err)
-	}
-
-	budget, err := types.ParseStoredAtomicAmount(
-		message.CommittedAnnualBudgetAtomic,
-	)
-	if err != nil {
-		return nil, fmt.Errorf(
-			"invalid committed annual budget: %w",
-			err,
-		)
-	}
-	if !budget.IsPositive() {
-		return nil, errors.New(
-			"committed annual budget must be positive",
-		)
-	}
-
-	ctx := sdk.UnwrapSDKContext(goCtx)
-	state, err := s.keeper.ActivatePeriodFromChainState(
-		ctx,
-		message.Authority,
-		budget,
-		s.stakingKeeper,
-		s.treasury,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	return &types.MsgActivateFundedPeriodResponse{
-		StartBlock:            state.StartBlock,
-		EndBlock:              state.EndBlock,
-		PeriodProvisionAtomic: state.PeriodProvisionAtomic,
-	}, nil
 }

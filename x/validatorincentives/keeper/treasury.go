@@ -71,55 +71,29 @@ func (t Treasury) Send(
 	)
 }
 
-// DistributeFunded validates all period constraints before requesting a bank
-// transfer. Accounting is advanced only after the bank transfer succeeds.
-// Cosmos transaction caching rolls back both operations if a later error is
-// returned before transaction commit.
-func (k Keeper) DistributeFunded(
+func (t Treasury) SendToModule(
 	ctx sdk.Context,
-	treasury Treasury,
-	recipient sdk.AccAddress,
+	recipientModule string,
 	amount sdkmath.Int,
 ) error {
-	if err := k.validateDistribution(ctx, amount); err != nil {
-		return err
+	if recipientModule == "" {
+		return errors.New("reward recipient module is empty")
 	}
-	if err := treasury.Send(ctx, recipient, amount); err != nil {
-		return err
-	}
-	return k.RecordDistribution(ctx, amount)
-}
-
-func (k Keeper) validateDistribution(
-	ctx sdk.Context,
-	amount sdkmath.Int,
-) error {
 	if !amount.IsPositive() {
-		return errors.New("distribution amount must be positive")
+		return errors.New("reward amount must be positive")
 	}
-	if ctx.BlockHeight() < 0 {
-		return errors.New("block height cannot be negative")
-	}
-
-	state, found, err := k.GetPeriodState(ctx)
+	balance, err := t.Balance(ctx)
 	if err != nil {
 		return err
 	}
-	if !found {
-		return errors.New("no incentive period has been configured")
+	if balance.Amount.LT(amount) {
+		return errors.New("incentive treasury balance is insufficient")
 	}
 
-	height := uint64(ctx.BlockHeight())
-	if height < state.StartBlock || height >= state.EndBlock {
-		return errors.New("distribution attempted outside the active period")
-	}
-
-	remaining, err := state.RemainingProvision()
-	if err != nil {
-		return err
-	}
-	if amount.GT(remaining) {
-		return errors.New("distribution exceeds the remaining period provision")
-	}
-	return nil
+	return t.bankKeeper.SendCoinsFromModuleToModule(
+		ctx,
+		types.TreasuryAccountName,
+		recipientModule,
+		sdk.NewCoins(sdk.NewCoin(IncentiveDenom, amount)),
+	)
 }

@@ -17,10 +17,7 @@ var (
 	AminoCdc = codec.NewAminoCodec(amino) //nolint:staticcheck
 )
 
-const (
-	updateParamsName         = "xitcoin/validatorincentives/MsgUpdateParams"
-	activateFundedPeriodName = "xitcoin/validatorincentives/MsgActivateFundedPeriod"
-)
+const updateParamsName = "xitcoin/validatorincentives/MsgUpdateParams"
 
 func init() {
 	RegisterLegacyAminoCodec(amino)
@@ -33,7 +30,6 @@ func RegisterInterfaces(
 	registry.RegisterImplementations(
 		(*sdk.Msg)(nil),
 		&MsgUpdateParams{},
-		&MsgActivateFundedPeriod{},
 	)
 	msgservice.RegisterMsgServiceDesc(
 		registry,
@@ -45,11 +41,6 @@ func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(
 		&MsgUpdateParams{},
 		updateParamsName,
-		nil,
-	)
-	cdc.RegisterConcrete(
-		&MsgActivateFundedPeriod{},
-		activateFundedPeriodName,
 		nil,
 	)
 }

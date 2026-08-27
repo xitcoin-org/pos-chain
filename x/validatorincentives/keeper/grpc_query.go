@@ -33,10 +33,10 @@ func (s queryServer) Params(
 	params := s.keeper.GetParams(ctx)
 
 	return &types.QueryParamsResponse{
-		Authority:             s.keeper.GetAuthority(ctx),
-		AnnualRateBasisPoints: params.AnnualRateBasisPoints,
-		BlocksPerYear:         params.BlocksPerYear,
-		RewardPeriodBlocks:    params.RewardPeriodBlocks,
+		Authority:                      s.keeper.GetAuthority(ctx),
+		TreasuryReleaseRateBasisPoints: params.TreasuryReleaseRateBasisPoints,
+		BlocksPerYear:                  params.BlocksPerYear,
+		CalculationPeriodBlocks:        params.CalculationPeriodBlocks,
 	}, nil
 }
 
@@ -69,12 +69,16 @@ func (s queryServer) Period(
 		uint64(height) < state.EndBlock
 	response.StartBlock = state.StartBlock
 	response.EndBlock = state.EndBlock
-	response.AnnualRateBasisPoints =
-		state.AnnualRateBasisPoints
+	response.TreasuryReleaseRateBasisPoints =
+		state.TreasuryReleaseRateBasisPoints
+	response.TreasuryBalanceAtomic =
+		state.TreasuryBalanceAtomic
 	response.EligibleBondedAtomic =
 		state.EligibleBondedAtomic
-	response.CommittedAnnualBudgetAtomic =
-		state.CommittedAnnualBudgetAtomic
+	response.AnnualizedCapacityAtomic =
+		state.AnnualizedCapacityAtomic
+	response.DerivedApyBasisPoints =
+		state.DerivedAPYBasisPoints
 	response.PeriodProvisionAtomic =
 		state.PeriodProvisionAtomic
 	response.DistributedAtomic =

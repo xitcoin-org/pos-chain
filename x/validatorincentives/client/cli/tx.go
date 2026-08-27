@@ -24,7 +24,6 @@ func NewTxCmd() *cobra.Command {
 
 	cmd.AddCommand(
 		NewUpdateParamsCmd(),
-		NewActivateFundedPeriodCmd(),
 	)
 	return cmd
 }
@@ -43,8 +42,8 @@ func addXitcoinTxFlags(cmd *cobra.Command) {
 // NewUpdateParamsCmd updates funded incentive operating parameters.
 func NewUpdateParamsCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "update-params ANNUAL_RATE_BASIS_POINTS " +
-			"BLOCKS_PER_YEAR REWARD_PERIOD_BLOCKS",
+		Use: "update-params TREASURY_RELEASE_RATE_BASIS_POINTS " +
+			"BLOCKS_PER_YEAR CALCULATION_PERIOD_BLOCKS",
 		Short: "Update validator incentive parameters",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -61,7 +60,7 @@ func NewUpdateParamsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			rewardPeriodBlocks, err := strconv.ParseUint(
+			calculationPeriodBlocks, err := strconv.ParseUint(
 				args[2],
 				10,
 				64,
@@ -71,43 +70,10 @@ func NewUpdateParamsCmd() *cobra.Command {
 			}
 
 			msg := &types.MsgUpdateParams{
-				Authority:             clientCtx.GetFromAddress().String(),
-				AnnualRateBasisPoints: uint32(rate),
-				BlocksPerYear:         blocksPerYear,
-				RewardPeriodBlocks:    rewardPeriodBlocks,
-			}
-			if err := msg.ValidateBasic(); err != nil {
-				return err
-			}
-
-			return tx.GenerateOrBroadcastTxCLI(
-				clientCtx,
-				cmd.Flags(),
-				msg,
-			)
-		},
-	}
-
-	addXitcoinTxFlags(cmd)
-	return cmd
-}
-
-// NewActivateFundedPeriodCmd activates a period using a committed annual
-// budget. Eligible bonded stake and the treasury balance are read on-chain.
-func NewActivateFundedPeriodCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "activate-funded-period COMMITTED_ANNUAL_BUDGET_ATOMIC",
-		Short: "Activate a prefunded validator incentive period",
-		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			msg := &types.MsgActivateFundedPeriod{
-				Authority:                   clientCtx.GetFromAddress().String(),
-				CommittedAnnualBudgetAtomic: args[0],
+				Authority:                      clientCtx.GetFromAddress().String(),
+				TreasuryReleaseRateBasisPoints: uint32(rate),
+				BlocksPerYear:                  blocksPerYear,
+				CalculationPeriodBlocks:        calculationPeriodBlocks,
 			}
 			if err := msg.ValidateBasic(); err != nil {
 				return err

@@ -30,9 +30,9 @@ message QueryParamsRequest {}
 
 message QueryParamsResponse {
   string authority = 1;
-  uint32 annual_rate_basis_points = 2;
+  uint32 treasury_release_rate_basis_points = 2;
   uint64 blocks_per_year = 3;
-  uint64 reward_period_blocks = 4;
+  uint64 calculation_period_blocks = 4;
 }
 
 message QueryPeriodRequest {}
@@ -41,12 +41,14 @@ message QueryPeriodResponse {
   bool active = 1;
   uint64 start_block = 2;
   uint64 end_block = 3;
-  uint32 annual_rate_basis_points = 4;
-  string eligible_bonded_atomic = 5;
-  string committed_annual_budget_atomic = 6;
-  string period_provision_atomic = 7;
-  string distributed_atomic = 8;
-  string total_distributed_atomic = 9;
+  uint32 treasury_release_rate_basis_points = 4;
+  string treasury_balance_atomic = 5;
+  string eligible_bonded_atomic = 6;
+  string annualized_capacity_atomic = 7;
+  string derived_apy_basis_points = 8;
+  string period_provision_atomic = 9;
+  string distributed_atomic = 10;
+  string total_distributed_atomic = 11;
 }
 
 message QueryTreasuryRequest {}

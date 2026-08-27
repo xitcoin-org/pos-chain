@@ -2,6 +2,8 @@ package keeper
 
 import (
 	"bytes"
+	"context"
+	"errors"
 	"testing"
 
 	sdkmath "cosmossdk.io/math"
@@ -15,7 +17,6 @@ import (
 
 func keeperTestContext(t *testing.T) (sdk.Context, Keeper) {
 	t.Helper()
-
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(
 		key,
@@ -24,60 +25,137 @@ func keeperTestContext(t *testing.T) (sdk.Context, Keeper) {
 	return ctx, NewKeeper(key)
 }
 
-func keeperTestXTC(value int64) sdkmath.Int {
-	return sdkmath.NewInt(value).MulRaw(1_000_000_000_000_000_000)
+type testAccountKeeper struct{ address sdk.AccAddress }
+
+func (k testAccountKeeper) GetModuleAddress(string) sdk.AccAddress { return k.address }
+
+type testBankKeeper struct {
+	balance sdk.Coin
+	sent sdk.Coins
+	sendErr error
 }
 
-func TestKeeperParamsAndAuthority(t *testing.T) {
-	ctx, k := keeperTestContext(t)
-
-	require.Equal(t, types.DefaultParams(), k.GetParams(ctx))
-
-	authority := sdk.AccAddress(bytes.Repeat([]byte{1}, 20)).String()
-	k.SetAuthority(ctx, authority)
-	require.Equal(t, authority, k.GetAuthority(ctx))
-
-	next := types.DefaultParams()
-	next.AnnualRateBasisPoints = 900
-	require.NoError(t, k.UpdateParams(ctx, next))
-	require.Equal(t, next, k.GetParams(ctx))
-
-	invalid := next
-	invalid.AnnualRateBasisPoints = 1_001
-	require.Error(t, k.UpdateParams(ctx, invalid))
-	require.Equal(t, next, k.GetParams(ctx))
+func (k *testBankKeeper) GetBalance(context.Context, sdk.AccAddress, string) sdk.Coin {
+	return k.balance
 }
 
-func TestKeeperPeriodState(t *testing.T) {
+func (k *testBankKeeper) SendCoinsFromModuleToAccount(
+	context.Context, string, sdk.AccAddress, sdk.Coins,
+) error { return errors.New("account transfer is not used") }
+
+func (k *testBankKeeper) SendCoinsFromModuleToModule(
+	_ context.Context, _ string, _ string, amount sdk.Coins,
+) error {
+	if k.sendErr != nil { return k.sendErr }
+	k.sent = k.sent.Add(amount...)
+	k.balance = sdk.NewCoin(IncentiveDenom, k.balance.Amount.Sub(amount.AmountOf(IncentiveDenom)))
+	return nil
+}
+
+type testStakingKeeper struct {
+	bonded sdkmath.Int
+	err error
+}
+
+func (k testStakingKeeper) TotalValidatorPower(context.Context) (sdkmath.Int, error) {
+	return k.bonded, k.err
+}
+
+func testTreasury(amount int64) (Treasury, *testBankKeeper) {
+	bank := &testBankKeeper{balance: sdk.NewInt64Coin(IncentiveDenom, amount)}
+	account := testAccountKeeper{address: sdk.AccAddress(bytes.Repeat([]byte{1}, 20))}
+	return NewTreasury(account, bank), bank
+}
+
+func TestProcessBlockUsesDailySnapshotAndCumulativeRelease(t *testing.T) {
 	ctx, k := keeperTestContext(t)
+	params := types.Params{
+		TreasuryReleaseRateBasisPoints: 1_000,
+		BlocksPerYear: 10,
+		CalculationPeriodBlocks: 2,
+	}
+	require.NoError(t, k.SetParams(ctx, params))
+	treasury, bank := testTreasury(1_000)
+	staking := testStakingKeeper{bonded: sdkmath.NewInt(1_000)}
 
-	state, err := types.NewPeriodState(
-		100,
-		keeperTestXTC(2_000_000_000),
-		keeperTestXTC(100_000_000),
-		keeperTestXTC(160_000_000),
-		types.DefaultParams(),
-	)
-	require.NoError(t, err)
-	require.NoError(t, k.SetPeriodState(ctx, state))
+	ctx = ctx.WithBlockHeight(10)
+	require.NoError(t, k.ProcessBlock(ctx, staking, treasury, "fee_collector"))
+	require.Equal(t, sdkmath.NewInt(10), bank.sent.AmountOf(IncentiveDenom))
 
-	stored, found, err := k.GetPeriodState(ctx)
+	ctx = ctx.WithBlockHeight(11)
+	require.NoError(t, k.ProcessBlock(ctx, staking, treasury, "fee_collector"))
+	require.Equal(t, sdkmath.NewInt(20), bank.sent.AmountOf(IncentiveDenom))
+
+	state, found, err := k.GetPeriodState(ctx)
 	require.NoError(t, err)
 	require.True(t, found)
-	require.Equal(t, state, stored)
+	require.Equal(t, "20", state.DistributedAtomic)
+	require.Equal(t, "1000", state.DerivedAPYBasisPoints)
+
+	ctx = ctx.WithBlockHeight(12)
+	require.NoError(t, k.ProcessBlock(ctx, staking, treasury, "fee_collector"))
+	state, _, err = k.GetPeriodState(ctx)
+	require.NoError(t, err)
+	require.Equal(t, "980", state.TreasuryBalanceAtomic)
+	require.Equal(t, "98", state.AnnualizedCapacityAtomic)
 }
 
-func TestKeeperTotalDistributed(t *testing.T) {
+func TestProcessBlockDefersNewFundingUntilNextSnapshot(t *testing.T) {
 	ctx, k := keeperTestContext(t)
+	require.NoError(t, k.SetParams(ctx, types.Params{1_000, 10, 2}))
+	treasury, bank := testTreasury(1_000)
+	staking := testStakingKeeper{bonded: sdkmath.NewInt(1_000)}
 
-	total, err := k.GetTotalDistributed(ctx)
+	ctx = ctx.WithBlockHeight(20)
+	require.NoError(t, k.ProcessBlock(ctx, staking, treasury, "fee_collector"))
+	bank.balance = sdk.NewInt64Coin(IncentiveDenom, 1_990)
+	ctx = ctx.WithBlockHeight(21)
+	require.NoError(t, k.ProcessBlock(ctx, staking, treasury, "fee_collector"))
+	state, _, err := k.GetPeriodState(ctx)
 	require.NoError(t, err)
-	require.True(t, total.IsZero())
+	require.Equal(t, "1000", state.TreasuryBalanceAtomic)
 
-	require.NoError(t, k.SetTotalDistributed(ctx, keeperTestXTC(12_345)))
-	total, err = k.GetTotalDistributed(ctx)
+	ctx = ctx.WithBlockHeight(22)
+	require.NoError(t, k.ProcessBlock(ctx, staking, treasury, "fee_collector"))
+	state, _, err = k.GetPeriodState(ctx)
 	require.NoError(t, err)
-	require.True(t, total.Equal(keeperTestXTC(12_345)))
+	require.Equal(t, "1980", state.TreasuryBalanceAtomic)
+}
 
-	require.Error(t, k.SetTotalDistributed(ctx, sdkmath.NewInt(-1)))
+func TestZeroEligibleStakeProducesNoDistribution(t *testing.T) {
+	ctx, k := keeperTestContext(t)
+	reasury, bank := testTreasury(1_000)
+	ctx = ctx.WithBlockHeight(1)
+	require.NoError(t, k.ProcessBlock(
+		ctx,
+		testStakingKeeper{bonded: sdkmath.ZeroInt()},
+		treasury,
+		"fee_collector",
+	))
+	require.True(t, bank.sent.Empty())
+}
+
+func TestFailedTransferDoesNotAdvanceAccounting(t *testing.T) {
+	ctx, k := keeperTestContext(t)
+	require.NoError(t, k.SetParams(ctx, types.Params{1_000, 10, 2}))
+	treasury, bank := testTreasury(1_000)
+	bank.sendErr = errors.New("rejected")
+	ctx = ctx.WithBlockHeight(1)
+	require.ErrorContains(t, k.ProcessBlock(
+		ctx,
+		testStakingKeeper{bonded: sdkmath.NewInt(1_000)},
+		treasury,
+		"fee_collector",
+	), "rejected")
+	state, _, err := k.GetPeriodState(ctx)
+	require.NoError(t, err)
+	require.Equal(t, "0", state.DistributedAtomic)
+}
+
+func TestMigrationResetsObsoleteState(t *testing.T) {
+	ctx, k := keeperTestContext(t)
+	ctx.KVStore(k.storeKey).Set(types.PeriodStateKey, []byte("obsolete"))
+	require.NoError(t, k.Migrate1to2(ctx))
+	require.Nil(t, ctx.KVStore(k.storeKey).Get(types.PeriodStateKey))
+	require.Equal(t, types.DefaultParams(), k.GetParams(ctx))
 }

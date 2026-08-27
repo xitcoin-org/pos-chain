@@ -21,26 +21,3 @@ func (k Keeper) HandleUpdateParamsCommand(
 		command.Params,
 	)
 }
-
-// HandleActivatePeriodCommand validates and parses canonical atomic amounts
-// before delegating to the authority-protected period activation.
-func (k Keeper) HandleActivatePeriodCommand(
-	ctx sdk.Context,
-	command types.ActivatePeriodCommand,
-) (types.PeriodState, error) {
-	if err := command.ValidateBasic(); err != nil {
-		return types.PeriodState{}, err
-	}
-
-	eligible, treasury, budget, err := command.Amounts()
-	if err != nil {
-		return types.PeriodState{}, err
-	}
-	return k.ActivateFundedPeriodAuthorized(
-		ctx,
-		command.Authority,
-		eligible,
-		treasury,
-		budget,
-	)
-}

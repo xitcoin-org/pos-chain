@@ -28,6 +28,12 @@ type BankKeeper interface {
 		recipientAddr sdk.AccAddress,
 		amt sdk.Coins,
 	) error
+	SendCoinsFromModuleToModule(
+		ctx context.Context,
+		senderModule string,
+		recipientModule string,
+		amt sdk.Coins,
+	) error
 }
 
 // StakingKeeper exposes the canonical bonded-token total in atomic units used

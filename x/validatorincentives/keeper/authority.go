@@ -3,7 +3,6 @@ package keeper
 import (
 	"errors"
 
-	sdkmath "cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
@@ -38,22 +37,4 @@ func (k Keeper) UpdateParamsAuthorized(
 		return err
 	}
 	return k.UpdateParams(ctx, next)
-}
-
-func (k Keeper) ActivateFundedPeriodAuthorized(
-	ctx sdk.Context,
-	caller string,
-	eligibleBonded sdkmath.Int,
-	treasuryBalance sdkmath.Int,
-	committedAnnualBudget sdkmath.Int,
-) (types.PeriodState, error) {
-	if err := k.RequireAuthority(ctx, caller); err != nil {
-		return types.PeriodState{}, err
-	}
-	return k.ActivateFundedPeriod(
-		ctx,
-		eligibleBonded,
-		treasuryBalance,
-		committedAnnualBudget,
-	)
 }

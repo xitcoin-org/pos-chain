@@ -34,9 +34,9 @@ func (k Keeper) SetParams(ctx sdk.Context, params types.Params) error {
 	}
 
 	value := make([]byte, 20)
-	binary.BigEndian.PutUint32(value[0:4], params.AnnualRateBasisPoints)
+	binary.BigEndian.PutUint32(value[0:4], params.TreasuryReleaseRateBasisPoints)
 	binary.BigEndian.PutUint64(value[4:12], params.BlocksPerYear)
-	binary.BigEndian.PutUint64(value[12:20], params.RewardPeriodBlocks)
+	binary.BigEndian.PutUint64(value[12:20], params.CalculationPeriodBlocks)
 	ctx.KVStore(k.storeKey).Set(types.ParamsKey, value)
 	return nil
 }
@@ -48,10 +48,20 @@ func (k Keeper) GetParams(ctx sdk.Context) types.Params {
 	}
 
 	return types.Params{
-		AnnualRateBasisPoints: binary.BigEndian.Uint32(value[0:4]),
-		BlocksPerYear:         binary.BigEndian.Uint64(value[4:12]),
-		RewardPeriodBlocks:    binary.BigEndian.Uint64(value[12:20]),
+		TreasuryReleaseRateBasisPoints: binary.BigEndian.Uint32(value[0:4]),
+		BlocksPerYear:                  binary.BigEndian.Uint64(value[4:12]),
+		CalculationPeriodBlocks:        binary.BigEndian.Uint64(value[12:20]),
 	}
+}
+
+// Migrate1to2 removes the obsolete fixed-APR period and installs the approved
+// daily treasury-release parameters. Lifetime distribution accounting remains.
+func (k Keeper) Migrate1to2(ctx sdk.Context) error {
+	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
+		return err
+	}
+	ctx.KVStore(k.storeKey).Delete(types.PeriodStateKey)
+	return nil
 }
 
 func (k Keeper) UpdateParams(ctx sdk.Context, next types.Params) error {
