@@ -7,6 +7,15 @@ daily treasury-derived reward accounting.
 
 ## State transition
 
+The on-chain plan name is:
+
+```text
+xitcoin-validator-incentives-daily-v2
+```
+
+The application registers this plan with the canonical module migration
+manager. The upgrade changes module state only; it adds or removes no store.
+
 The migration:
 
 1. installs the default 1,000-basis-point treasury release rate;
