@@ -1,6 +1,6 @@
 # Validator Incentive governance operations
 
-Status: approved economic specification; implementation alignment pending
+Status: approved economic specification; implementation aligned in PR #15
 Reference date: 27 August 2026
 
 ## Authority model
@@ -120,21 +120,15 @@ calculation independently:
 - last calculation height and next calculation height;
 - cumulative funded distributions.
 
-## Implementation migration
+## Implementation status
 
-The implementation on `main` still represents an earlier fixed-APR,
-funded-period design. It must not be activated for mainnet in that form.
+PR #15 aligns the module with this specification. It replaces the fixed-APR
+and manual-budget paths, creates deterministic daily snapshots, transfers each
+block's funded share to the canonical fee collector, exposes reproducible
+read-only state, and includes a versioned state migration.
 
-Alignment requires:
-
-1. replace the fixed APR parameter with a treasury release-rate parameter;
-2. remove the 20% APR ceiling and quarterly rate-transition rule;
-3. remove governance-supplied annual budgets and manual period activation;
-4. add deterministic daily snapshots and derived metrics;
-5. integrate automatic funded distribution with staking/distribution accounting;
-6. update protobuf messages, queries, CLI, genesis validation and migrations;
-7. add unit, integration, invariant, restart and upgrade tests;
-8. complete independent review before any production activation.
+Independent review, testnet rehearsal and explicit release approval remain
+mandatory before production activation.
 
 ## Release boundary
 
