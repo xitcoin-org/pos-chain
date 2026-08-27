@@ -1,6 +1,7 @@
 name: Generate validator incentive protobuf
 
 on:
+  pull_request:
   push:
     branches:
       - feat/daily-validator-incentives-20260827
