@@ -33,22 +33,21 @@ Completion of the public testnet does not by itself authorize a mainnet launch.
 - [x] DefiLlama Chainlist correction submitted as PR #3073;
 - [x] public guide separated from technical verification records.
 
-The existing funded-period implementation predates the approved daily dynamic
-model. Its fixed APR, 20% ceiling, quarterly transition and manually committed
-annual budget are not authorized mainnet parameters.
+PR #15 implements the approved daily dynamic model. Its merge does not by
+itself authorize activation.
 
 ## Required before public activation
 
 - [ ] complete an independent security review of the final module diff;
-- [ ] align the module with the 10% treasury-release policy and daily derived APY;
-- [ ] remove fixed-APR, 20%-ceiling, quarterly-transition and manual-budget paths;
-- [ ] expose reproducible daily calculation state through read-only queries;
-- [ ] integrate and test automatic proportional funded distribution;
+- [x] align the module with the 10% treasury-release policy and daily derived APY;
+- [x] remove fixed-APR, 20%-ceiling, quarterly-transition and manual-budget paths;
+- [x] expose reproducible daily calculation state through read-only queries;
+- [x] integrate and test automatic funded distribution through the canonical fee collector;
 - [ ] resolve all review findings and rerun the full repository CI matrix;
 - [ ] reconcile canonical total supply across PoS, Xitcoin EVM and Cronos EVM;
 - [ ] document bridge lock/mint and burn/unlock accounting with invariants;
 - [ ] define the initial treasury funding transaction and source-of-funds record;
-- [ ] rehearse parameter update and funded-period activation through governance;
+- [ ] rehearse the parameter update and automatic daily distribution on testnet;
 - [ ] publish the exact genesis migration or chain-upgrade plan;
 - [x] execute a persistent testnet deployment with public endpoints;
 - [ ] run load, failure, restart, upgrade and rollback exercises on testnet;

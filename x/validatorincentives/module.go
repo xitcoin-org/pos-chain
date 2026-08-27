@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"cosmossdk.io/core/appmodule"
+
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
@@ -16,18 +18,20 @@ import (
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
 	"github.com/xitcoin-org/pos-chain/x/validatorincentives/keeper"
 	"github.com/xitcoin-org/pos-chain/x/validatorincentives/types"
 )
 
-const consensusVersion = 1
+const consensusVersion = 2
 
 var (
 	_ module.AppModule      = AppModule{}
 	_ module.AppModuleBasic = AppModuleBasic{}
 	_ module.HasABCIGenesis = AppModule{}
+	_ appmodule.HasBeginBlocker = AppModule{}
 )
 
 type AppModuleBasic struct{}
@@ -122,11 +126,27 @@ func (am AppModule) RegisterServices(cfg module.Configurator) {
 	)
 	types.RegisterMsgServer(
 		cfg.MsgServer(),
-		keeper.NewMsgServerImpl(
-			am.keeper,
-			am.stakingKeeper,
-			am.treasury,
-		),
+		keeper.NewMsgServerImpl(am.keeper),
+	)
+	if err := cfg.RegisterMigration(
+		types.ModuleName,
+		1,
+		func(ctx sdk.Context) error { return am.keeper.Migrate1to2(ctx) },
+	); err != nil {
+		panic(fmt.Sprintf("failed to register %s migration: %s", types.ModuleName, err))
+	}
+}
+
+// BeginBlock releases the deterministic share for the current block to the
+// canonical fee collector. The distribution module accounts for it on the
+// following block because it runs earlier in the begin-block order.
+func (am AppModule) BeginBlock(goCtx context.Context) error {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	return am.keeper.ProcessBlock(
+		ctx,
+		am.stakingKeeper,
+		am.treasury,
+		authtypes.FeeCollectorName,
 	)
 }
 
