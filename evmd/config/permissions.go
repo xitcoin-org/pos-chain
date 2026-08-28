@@ -36,6 +36,13 @@ func BlockedAddresses() map[string]bool {
 	sort.Strings(accs)
 
 	for _, acc := range accs {
+		// The validator incentive treasury is intentionally prefunded with
+		// existing XTC. It remains a non-minting and non-burning module
+		// account, but must accept ordinary bank transfers.
+		if acc == validatorincentivestypes.TreasuryAccountName {
+			continue
+		}
+
 		blockedAddrs[authtypes.NewModuleAddress(acc).String()] = true
 	}
 
