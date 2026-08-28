@@ -53,5 +53,11 @@ func TestValidatorIncentivesWiring(t *testing.T) {
 	)
 	require.NotEmpty(t, treasuryAddress)
 	blockedAddresses := evmconfig.BlockedAddresses()
-	require.True(t, blockedAddresses[treasuryAddress.String()])
+	require.False(t, blockedAddresses[treasuryAddress.String()])
+	require.True(
+		t,
+		blockedAddresses[authtypes.NewModuleAddress(
+			authtypes.FeeCollectorName,
+		).String()],
+	)
 }
