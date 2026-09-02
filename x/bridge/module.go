@@ -60,6 +60,7 @@ func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, serveM
 	}
 }
 func (AppModuleBasic) GetQueryCmd() *cobra.Command { return cli.GetQueryCmd() }
+func (AppModuleBasic) GetTxCmd() *cobra.Command    { return cli.NewTxCmd() }
 func (AppModuleBasic) ConsensusVersion() uint64    { return consensusVersion }
 
 type AppModule struct {
