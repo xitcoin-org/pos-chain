@@ -25,7 +25,7 @@ Cosmos and EVM activity execute on the same sovereign chain and use the same nat
 | --- | --- | --- |
 | Public name | Xitcoin Testnet | Xitcoin |
 | Status | Canonical public testnet active | Not launched |
-| Cosmos Chain ID | `xitcoin-testnet-1` | `xitcoin` |
+| Cosmos Chain ID | `xitcoin-testnet-v2-1` | `xitcoin` |
 | EVM Chain ID | `101089` | `101088` |
 | Native asset | XTC | XTC |
 | Atomic denomination | `axtc` | `axtc` |
@@ -33,7 +33,7 @@ Cosmos and EVM activity execute on the same sovereign chain and use the same nat
 
 XTC is the native asset on both the Cosmos and EVM interfaces. The EVM interface uses the canonical native precompile; no separate wrapped-XTC token is required inside the Xitcoin network.
 
-The public name is **Xitcoin Testnet**. The technical Cosmos chain ID `xitcoin-testnet-1` identifies the current genesis; it is not a public version or server name.
+The public name is **Xitcoin Testnet**. The technical Cosmos chain ID `xitcoin-testnet-v2-1` identifies the active genesis. The retired `xitcoin-testnet-1` files remain available only for historical verification.
 
 ## Participation model
 
@@ -59,15 +59,15 @@ During the current launch phase, only the canonical on-chain validator-admission
 | [`pos-chain`](https://github.com/xitcoin-org/pos-chain) | Consensus, Cosmos and EVM execution, native XTC, genesis and network documentation |
 | [`contracts`](https://github.com/xitcoin-org/contracts) | Canonical Cronos V1, V2 and migration sources, deployments, audit scope and ecosystem references |
 | [`migration-v1-to-v2`](https://github.com/xitcoin-org/migration-v1-to-v2) | Migration interface, reproducible build and continuity documentation |
-| [`explorer-cosmos-testnet`](https://github.com/xitcoin-org/explorer-cosmos-testnet) | Cosmos testnet explorer source and network configuration |
-| [`explorer-evm-testnet`](https://github.com/xitcoin-org/explorer-evm-testnet) | Blockscout deployment configuration and EVM explorer branding |
+| [`testnets`](https://github.com/xitcoin-org/testnets) | Canonical public testnet genesis, checksum and network manifest |
+| [`explorer-testnet`](https://github.com/xitcoin-org/explorer-testnet) | Cosmos explorer source, faucet interface and Xitcoin testnet configuration |
 | [`brand`](https://github.com/xitcoin-org/brand) | Approved standalone Xitcoin token artwork and color references |
 
 Contract addresses and audit claims are maintained only in `contracts`. Network identity and native-asset rules are maintained only in `pos-chain`. Other repositories link to those canonical records instead of duplicating them.
 
 ## Build
 
-Prerequisites: Go 1.25.13, Node.js 24 and the toolchain documented by the project.
+Prerequisites: Go 1.26.7, Node.js 24 and the toolchain documented by the project.
 
 ```bash
 git clone https://github.com/xitcoin-org/pos-chain.git

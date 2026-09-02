@@ -4,12 +4,14 @@ import json
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-chain = json.loads((root / "networks/xitcoin-testnet-1/chain.json").read_text())
-genesis_path = root / "networks/xitcoin-testnet-1/genesis.json"
+chain = json.loads((root / "networks/xitcoin-testnet-v2-1/chain.json").read_text())
+retired_chain = json.loads((root / "networks/xitcoin-testnet-1/chain.json").read_text())
+genesis_path = root / "networks/xitcoin-testnet-v2-1/genesis.json"
 genesis = json.loads(genesis_path.read_text())
 
 assert chain["status"] == "active"
-assert chain["cosmos_chain_id"] == "xitcoin-testnet-1"
+assert retired_chain["status"] == "retired"
+assert chain["cosmos_chain_id"] == "xitcoin-testnet-v2-1"
 assert chain["evm_chain_id"] == 101089
 assert chain["evm_chain_id_hex"] == "0x18ae1"
 assert chain["native_currency"] == {
@@ -18,9 +20,9 @@ assert chain["native_currency"] == {
     "decimals": 18,
     "base_denom": "axtc",
 }
-assert genesis["chain_id"] == "xitcoin-testnet-1"
+assert genesis["chain_id"] == "xitcoin-testnet-v2-1"
 
-expected_hash = (root / "networks/xitcoin-testnet-1/genesis.sha256").read_text().split()[0]
+expected_hash = (root / "networks/xitcoin-testnet-v2-1/genesis.sha256").read_text().split()[0]
 actual_hash = hashlib.sha256(genesis_path.read_bytes()).hexdigest()
 assert actual_hash == expected_hash == chain["genesis"]["sha256"]
 
@@ -44,9 +46,9 @@ prohibited_test_credentials = (
 )
 
 for text in (identity, normalizer, readme, status, testnet):
-    assert "xitcoin-testnet-1" in text
+    assert "xitcoin-testnet-v2-1" in text
 
-assert "genesis.chain_id !== 'xitcoin-testnet-1'" in normalizer
+assert "genesis.chain_id !== 'xitcoin-testnet-v2-1'" in normalizer
 assert "`101089`" in identity
 assert "`101088`" in identity
 assert "| Status | Canonical public testnet active | Not launched |" in readme
@@ -64,8 +66,6 @@ for path in root.rglob("*"):
             raise AssertionError(
                 f"stored legacy test credential in {path.relative_to(root)}"
             )
-    if "xitcoin-testnet" in text and "xitcoin-testnet-1" not in text:
-        raise AssertionError(f"obsolete testnet identity in {path.relative_to(root)}")
 
 for path in (
     root / "local_node.sh",

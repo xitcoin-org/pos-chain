@@ -3,7 +3,7 @@
 ## Public identity
 
 - Network name: Xitcoin Testnet
-- Cosmos chain ID: `xitcoin-testnet-1`
+- Cosmos chain ID: `xitcoin-testnet-v2-1`
 - EVM chain ID: `101089` (`0x18ae1`)
 - Native asset: XTC
 - Atomic denomination: `axtc`
@@ -13,7 +13,7 @@
 - EVM addresses: `0x...`
 - Node program: `xitcoind`
 
-The public name is `Xitcoin Testnet`. `xitcoin-testnet-1` is its technical Cosmos chain ID, not a public version or server name.
+The public name is `Xitcoin Testnet`. `xitcoin-testnet-v2-1` is its active technical Cosmos chain ID.
 
 ## Admission rule
 
@@ -76,6 +76,6 @@ Production custody, recovery and signer-change procedures must be documented and
 
 ## Current release status
 
-Xitcoin Testnet is publicly active as a four-validator canonical testnet network. Its technical Cosmos chain ID is `xitcoin-testnet-1`. Consensus, peer connectivity, binary identity, genesis identity, Cosmos transactions, EVM transactions and the public interfaces have been validated.
+Xitcoin Testnet is publicly active as a four-validator canonical testnet network. Its technical Cosmos chain ID is `xitcoin-testnet-v2-1`. Consensus, peer connectivity, binary identity, genesis identity, Cosmos transactions, EVM transactions and the public interfaces have been validated.
 
-Cosmos and EVM transaction validation and the coordinated public endpoint cutover were completed on 2026-08-21. The published endpoints now serve the canonical network.
+Cosmos and EVM transaction validation and the coordinated public endpoint verification were completed against the active V2 network on 2026-09-02. The published endpoints serve that canonical network.

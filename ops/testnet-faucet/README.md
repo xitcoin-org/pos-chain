@@ -1,13 +1,13 @@
 # Xitcoin Testnet Faucet
 
-Faucet public officiel du réseau `xitcoin-testnet-1`.
+Faucet public officiel du réseau `xitcoin-testnet-v2-1`.
 
 ## Paramètres
 
-- Distribution : 100 XTC par demande
+- Distribution : 10 XTC par demande
 - Dénomination technique : axtc
 - Limite par adresse : 1 demande par 24 heures
-- Limite par IP : 3 demandes par heure
+- Limite par IP : 3 demandes par 24 heures
 - Backend : Node.js derrière Nginx et Cloudflare
 
 ## Déploiement

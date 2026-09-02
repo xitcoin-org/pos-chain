@@ -10,7 +10,7 @@ const app = genesis.app_state;
 
 app.bridge = { paused: false };
 
-if (genesis.chain_id !== 'xitcoin-testnet-1') {
+if (genesis.chain_id !== 'xitcoin-testnet-v2-1') {
   throw new Error(`Unexpected Cosmos chain ID: ${genesis.chain_id}`);
 }
 

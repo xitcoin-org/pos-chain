@@ -13,7 +13,7 @@ curl -fsS https://rpc-testnet.xitcoin.org/status |
   }'
 ```
 
-Expected Chain ID: `xitcoin-testnet-1`. The node must report
+Expected Chain ID: `xitcoin-testnet-v2-1`. The node must report
 `catching_up=false`.
 
 Check the EVM Chain ID:
@@ -42,13 +42,13 @@ Expected values: `max_validators=258`, `bond_denom=axtc`.
 
 ```bash
 git clone --recurse-submodules https://github.com/xitcoin-org/pos-chain.git
-cd pos-chain/networks/xitcoin-testnet-1
+cd pos-chain/networks/xitcoin-testnet-v2-1
 sha256sum -c genesis.sha256
 ```
 
 Expected SHA-256:
 
-`55c8756a212b9e92c0e8427ea61caff7fa9dca40e801e4b848f59d1aa5f6dae6`
+`5db34acf6496b2c76a6f516e0eb605caef6762552584ddbed7c8703239f33d72`
 
 ## Blockscout indexing
 
