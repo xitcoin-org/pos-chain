@@ -55,7 +55,7 @@ func TestInboundSettlementAndOwnerBurn(t *testing.T) {
 	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_settlement_test")).
 		WithBlockTime(time.Unix(1800000000, 0))
 	bank := &fakeBankKeeper{supply: sdkmath.NewInt(100)}
-	keeper, err := NewSettlementKeeper(key, bank, "axtc", "200")
+	keeper, err := NewSettlementKeeper(key, bank, "axtc", "200", testAuthority())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -104,7 +104,7 @@ func TestSettlementCaps(t *testing.T) {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_settlement_caps_test"))
 	bank := &fakeBankKeeper{supply: sdkmath.NewInt(195)}
-	keeper, err := NewSettlementKeeper(key, bank, "axtc", "200")
+	keeper, err := NewSettlementKeeper(key, bank, "axtc", "200", testAuthority())
 	if err != nil {
 		t.Fatal(err)
 	}

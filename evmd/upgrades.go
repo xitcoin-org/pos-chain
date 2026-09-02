@@ -29,6 +29,11 @@ const GovernanceSafeguardsUpgradeName = "xitcoin-governance-safeguards-v1"
 // state only and does not add or remove a store.
 const ValidatorIncentivesDailyV2UpgradeName = "xitcoin-validator-incentives-daily-v2"
 
+// BridgeInitialRouteUpgradeName is the coordinated binary upgrade that makes
+// authority-gated first-route initialization available. It does not configure,
+// enable, or resume a route by itself.
+const BridgeInitialRouteUpgradeName = "xitcoin-bridge-initial-route-v1"
+
 func (app EVMD) RegisterUpgradeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(
 		UpgradeName,
@@ -75,6 +80,13 @@ func (app EVMD) RegisterUpgradeHandlers() {
 
 	app.UpgradeKeeper.SetUpgradeHandler(
 		ValidatorIncentivesDailyV2UpgradeName,
+		func(ctx context.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
+			return app.ModuleManager.RunMigrations(ctx, app.Configurator(), fromVM)
+		},
+	)
+
+	app.UpgradeKeeper.SetUpgradeHandler(
+		BridgeInitialRouteUpgradeName,
 		func(ctx context.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 			return app.ModuleManager.RunMigrations(ctx, app.Configurator(), fromVM)
 		},

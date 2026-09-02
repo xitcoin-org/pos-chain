@@ -11,6 +11,7 @@ import (
 
 var _ types.Msg = &MsgSubmitAttestation{}
 var _ types.Msg = &MsgInitiateOutboundTransfer{}
+var _ types.Msg = &MsgInitializeRouteConfig{}
 
 // Attestation returns the internal attestation represented by this message.
 func (m MsgSubmitAttestation) Attestation() Attestation {
@@ -64,5 +65,27 @@ func (m *MsgInitiateOutboundTransfer) ValidateBasic() error {
 }
 
 func (m MsgInitiateOutboundTransfer) GetSignBytes() []byte {
+	return AminoCdc.MustMarshalJSON(&m)
+}
+
+func (m *MsgInitializeRouteConfig) RouteConfig() RouteConfig {
+	return RouteConfig{
+		RouteID: m.RouteId, BridgeSigners: m.BridgeSigners, Guardian: m.Guardian,
+		MaxTransferAmount: m.MaxTransferAmount, DailyLimit: m.DailyLimit,
+		MaxOutstandingAmount: m.MaxOutstandingAmount, Enabled: false,
+	}
+}
+
+func (m *MsgInitializeRouteConfig) ValidateBasic() error {
+	if m == nil {
+		return errors.New("bridge: empty initial route configuration")
+	}
+	if _, err := types.AccAddressFromBech32(m.Authority); err != nil {
+		return err
+	}
+	return m.RouteConfig().Validate()
+}
+
+func (m MsgInitializeRouteConfig) GetSignBytes() []byte {
 	return AminoCdc.MustMarshalJSON(&m)
 }

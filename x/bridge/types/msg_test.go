@@ -47,3 +47,27 @@ func TestMsgInitiateOutboundTransferValidateBasic(t *testing.T) {
 		t.Fatal("invalid outbound sender accepted")
 	}
 }
+
+func TestMsgInitializeRouteConfigValidateBasicForcesDisabled(t *testing.T) {
+	msg := MsgInitializeRouteConfig{
+		Authority: sdk.AccAddress(make([]byte, 20)).String(),
+		RouteId: "cronos-testnet-xitcoin-testnet",
+		BridgeSigners: []string{
+			"0x0000000000000000000000000000000000000001",
+			"0x0000000000000000000000000000000000000002",
+			"0x0000000000000000000000000000000000000003",
+		},
+		Guardian: "0x0000000000000000000000000000000000000004",
+		MaxTransferAmount: "10", DailyLimit: "100", MaxOutstandingAmount: "1000",
+	}
+	if err := msg.ValidateBasic(); err != nil {
+		t.Fatalf("valid initial route rejected: %v", err)
+	}
+	if msg.RouteConfig().Enabled {
+		t.Fatal("initial route message can enable its route")
+	}
+	msg.Authority = "not-an-address"
+	if err := msg.ValidateBasic(); err == nil {
+		t.Fatal("invalid authority accepted")
+	}
+}

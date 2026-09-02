@@ -6,9 +6,12 @@ import (
 
 	storetypes "github.com/cosmos/cosmos-sdk/store/v2/types"
 	sdktestutil "github.com/cosmos/cosmos-sdk/testutil"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/xitcoin-org/pos-chain/x/bridge/types"
 )
+
+func testAuthority() string { return sdk.AccAddress(make([]byte, 20)).String() }
 
 func testAttestation() types.Attestation {
 	return types.Attestation{

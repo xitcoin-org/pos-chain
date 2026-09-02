@@ -19,6 +19,7 @@ type Keeper struct {
 	bankKeeper  BankKeeper
 	nativeDenom string
 	maxSupply   sdkmath.Int
+	authority   string
 }
 
 type BankKeeper interface {
@@ -29,11 +30,14 @@ type BankKeeper interface {
 	GetSupply(ctx context.Context, denom string) sdk.Coin
 }
 
+// Authority returns the account allowed to initialize the first route.
+func (k Keeper) Authority() string { return k.authority }
+
 func NewKeeper(storeKey storetypes.StoreKey) Keeper {
 	return Keeper{storeKey: storeKey}
 }
 
-func NewSettlementKeeper(storeKey storetypes.StoreKey, bankKeeper BankKeeper, nativeDenom, maxSupply string) (Keeper, error) {
+func NewSettlementKeeper(storeKey storetypes.StoreKey, bankKeeper BankKeeper, nativeDenom, maxSupply, authority string) (Keeper, error) {
 	if bankKeeper == nil {
 		return Keeper{}, errors.New("bridge bank keeper is required")
 	}
@@ -44,11 +48,14 @@ func NewSettlementKeeper(storeKey storetypes.StoreKey, bankKeeper BankKeeper, na
 	if !ok || !limit.IsPositive() {
 		return Keeper{}, errors.New("bridge maximum supply must be positive")
 	}
-	return Keeper{storeKey: storeKey, bankKeeper: bankKeeper, nativeDenom: nativeDenom, maxSupply: limit}, nil
+	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
+		return Keeper{}, errors.New("bridge authority must be a valid account address")
+	}
+	return Keeper{storeKey: storeKey, bankKeeper: bankKeeper, nativeDenom: nativeDenom, maxSupply: limit, authority: authority}, nil
 }
 
-func MustNewSettlementKeeper(storeKey storetypes.StoreKey, bankKeeper BankKeeper, nativeDenom, maxSupply string) Keeper {
-	keeper, err := NewSettlementKeeper(storeKey, bankKeeper, nativeDenom, maxSupply)
+func MustNewSettlementKeeper(storeKey storetypes.StoreKey, bankKeeper BankKeeper, nativeDenom, maxSupply, authority string) Keeper {
+	keeper, err := NewSettlementKeeper(storeKey, bankKeeper, nativeDenom, maxSupply, authority)
 	if err != nil {
 		panic(err)
 	}

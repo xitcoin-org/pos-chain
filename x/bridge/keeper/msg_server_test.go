@@ -19,7 +19,7 @@ import (
 func TestSubmitAttestationRejectsDefaultUnconfiguredBridge(t *testing.T) {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_msg_disabled_test")).WithBlockTime(time.Unix(1800000000, 0))
-	k, err := NewSettlementKeeper(key, &fakeBankKeeper{supply: sdkmath.ZeroInt()}, "axtc", "1000")
+	k, err := NewSettlementKeeper(key, &fakeBankKeeper{supply: sdkmath.ZeroInt()}, "axtc", "1000", testAuthority())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,11 +30,55 @@ func TestSubmitAttestationRejectsDefaultUnconfiguredBridge(t *testing.T) {
 	}
 }
 
+func TestInitializeRouteConfigRequiresAuthorityAndRunsOncePaused(t *testing.T) {
+	key := storetypes.NewKVStoreKey(types.StoreKey)
+	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_initialize_test"))
+	k, err := NewSettlementKeeper(key, &fakeBankKeeper{supply: sdkmath.ZeroInt()}, "axtc", "1000", testAuthority())
+	if err != nil {
+		t.Fatal(err)
+	}
+	request := &types.MsgInitializeRouteConfig{
+		Authority: testAuthority(), RouteId: "cronos-testnet-xitcoin-testnet",
+		BridgeSigners: []string{
+			"0x0000000000000000000000000000000000000001",
+			"0x0000000000000000000000000000000000000002",
+			"0x0000000000000000000000000000000000000003",
+		},
+		Guardian: "0x0000000000000000000000000000000000000004",
+		MaxTransferAmount: "10", DailyLimit: "100", MaxOutstandingAmount: "1000",
+	}
+	wrong := *request
+	wrong.Authority = sdk.AccAddress(bytes.Repeat([]byte{9}, 20)).String()
+	if _, err := NewMsgServer(k).InitializeRouteConfig(sdk.WrapSDKContext(ctx), &wrong); err == nil {
+		t.Fatal("non-authority initialized the bridge route")
+	}
+	if _, found, err := k.GetRouteConfig(ctx); err != nil || found {
+		t.Fatalf("rejected initialization changed route state: found=%v err=%v", found, err)
+	}
+	if _, err := NewMsgServer(k).InitializeRouteConfig(sdk.WrapSDKContext(ctx), request); err != nil {
+		t.Fatalf("authority initialization rejected: %v", err)
+	}
+	config, found, err := k.GetRouteConfig(ctx)
+	if err != nil || !found {
+		t.Fatalf("initialized route not stored: found=%v err=%v", found, err)
+	}
+	if config.Enabled {
+		t.Fatal("initial route was enabled")
+	}
+	state, err := k.GetRouteState(ctx)
+	if err != nil || !state.Paused {
+		t.Fatalf("initial route was not paused: state=%+v err=%v", state, err)
+	}
+	if _, err := NewMsgServer(k).InitializeRouteConfig(sdk.WrapSDKContext(ctx), request); err == nil {
+		t.Fatal("second initial route configuration was accepted")
+	}
+}
+
 func TestSubmitAttestationRecordsOnlyApprovedAttestation(t *testing.T) {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
 	ctx := sdktestutil.DefaultContext(key, storetypes.NewTransientStoreKey("bridge_msg_admit_test")).WithBlockTime(time.Unix(1800000000, 0))
 	bank := &fakeBankKeeper{supply: sdkmath.ZeroInt()}
-	k, err := NewSettlementKeeper(key, bank, "axtc", "1000")
+	k, err := NewSettlementKeeper(key, bank, "axtc", "1000", testAuthority())
 	if err != nil {
 		t.Fatal(err)
 	}

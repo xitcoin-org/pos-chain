@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Msg_SubmitAttestation_FullMethodName        = "/cosmos.evm.bridge.v1.Msg/SubmitAttestation"
 	Msg_InitiateOutboundTransfer_FullMethodName = "/cosmos.evm.bridge.v1.Msg/InitiateOutboundTransfer"
+	Msg_InitializeRouteConfig_FullMethodName    = "/cosmos.evm.bridge.v1.Msg/InitializeRouteConfig"
 )
 
 // MsgClient is the client API for Msg service.
@@ -33,6 +34,8 @@ type MsgClient interface {
 	SubmitAttestation(ctx context.Context, in *MsgSubmitAttestation, opts ...grpc.CallOption) (*MsgSubmitAttestationResponse, error)
 	// InitiateOutboundTransfer burns native XTC owned by the signer.
 	InitiateOutboundTransfer(ctx context.Context, in *MsgInitiateOutboundTransfer, opts ...grpc.CallOption) (*MsgInitiateOutboundTransferResponse, error)
+	// InitializeRouteConfig creates the first route in a disabled and paused state.
+	InitializeRouteConfig(ctx context.Context, in *MsgInitializeRouteConfig, opts ...grpc.CallOption) (*MsgInitializeRouteConfigResponse, error)
 }
 
 type msgClient struct {
@@ -63,6 +66,16 @@ func (c *msgClient) InitiateOutboundTransfer(ctx context.Context, in *MsgInitiat
 	return out, nil
 }
 
+func (c *msgClient) InitializeRouteConfig(ctx context.Context, in *MsgInitializeRouteConfig, opts ...grpc.CallOption) (*MsgInitializeRouteConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MsgInitializeRouteConfigResponse)
+	err := c.cc.Invoke(ctx, Msg_InitializeRouteConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility.
@@ -73,6 +86,8 @@ type MsgServer interface {
 	SubmitAttestation(context.Context, *MsgSubmitAttestation) (*MsgSubmitAttestationResponse, error)
 	// InitiateOutboundTransfer burns native XTC owned by the signer.
 	InitiateOutboundTransfer(context.Context, *MsgInitiateOutboundTransfer) (*MsgInitiateOutboundTransferResponse, error)
+	// InitializeRouteConfig creates the first route in a disabled and paused state.
+	InitializeRouteConfig(context.Context, *MsgInitializeRouteConfig) (*MsgInitializeRouteConfigResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -88,6 +103,9 @@ func (UnimplementedMsgServer) SubmitAttestation(context.Context, *MsgSubmitAttes
 }
 func (UnimplementedMsgServer) InitiateOutboundTransfer(context.Context, *MsgInitiateOutboundTransfer) (*MsgInitiateOutboundTransferResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method InitiateOutboundTransfer not implemented")
+}
+func (UnimplementedMsgServer) InitializeRouteConfig(context.Context, *MsgInitializeRouteConfig) (*MsgInitializeRouteConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method InitializeRouteConfig not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 func (UnimplementedMsgServer) testEmbeddedByValue()             {}
@@ -146,6 +164,24 @@ func _Msg_InitiateOutboundTransfer_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_InitializeRouteConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgInitializeRouteConfig)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).InitializeRouteConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_InitializeRouteConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).InitializeRouteConfig(ctx, req.(*MsgInitializeRouteConfig))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -160,6 +196,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InitiateOutboundTransfer",
 			Handler:    _Msg_InitiateOutboundTransfer_Handler,
+		},
+		{
+			MethodName: "InitializeRouteConfig",
+			Handler:    _Msg_InitializeRouteConfig_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

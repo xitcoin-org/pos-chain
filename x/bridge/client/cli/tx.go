@@ -28,7 +28,34 @@ func NewTxCmd() *cobra.Command {
 	cmd.AddCommand(
 		NewSubmitAttestationCmd(),
 		NewInitiateOutboundTransferCmd(),
+		NewInitializeRouteConfigCmd(),
 	)
+	return cmd
+}
+
+// NewInitializeRouteConfigCmd creates the first route disabled and paused.
+func NewInitializeRouteConfigCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "initialize-route ROUTE_ID SIGNER_1 SIGNER_2 SIGNER_3 GUARDIAN MAX_TRANSFER_ATOMIC DAILY_LIMIT_ATOMIC MAX_OUTSTANDING_ATOMIC",
+		Short: "Initialize the first bridge route in a disabled and paused state",
+		Args:  cobra.ExactArgs(8),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+			msg := &types.MsgInitializeRouteConfig{
+				Authority: clientCtx.GetFromAddress().String(), RouteId: args[0],
+				BridgeSigners: []string{args[1], args[2], args[3]}, Guardian: args[4],
+				MaxTransferAmount: args[5], DailyLimit: args[6], MaxOutstandingAmount: args[7],
+			}
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	addBridgeTxFlags(cmd)
 	return cmd
 }
 
