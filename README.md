@@ -57,10 +57,12 @@ During the current launch phase, only the canonical on-chain validator-admission
 | Repository | Responsibility |
 | --- | --- |
 | [`pos-chain`](https://github.com/xitcoin-org/pos-chain) | Consensus, Cosmos and EVM execution, native XTC, genesis and network documentation |
-| [`contracts`](https://github.com/xitcoin-org/contracts) | Canonical Cronos V1, V2 and migration sources, deployments, audit scope and ecosystem references |
-| [`migration-v1-to-v2`](https://github.com/xitcoin-org/migration-v1-to-v2) | Migration interface, reproducible build and continuity documentation |
+| [`contracts`](https://github.com/xitcoin-org/contracts) | Canonical Cronos V1, V2, migration and bridge-contract sources, deployments and audit scope |
+| [`bridge-relayer`](https://github.com/xitcoin-org/bridge-relayer) | Public bridge protocol, relayer and operational safety tooling |
 | [`testnets`](https://github.com/xitcoin-org/testnets) | Canonical public testnet genesis, checksum and network manifest |
-| [`explorer-testnet`](https://github.com/xitcoin-org/explorer-testnet) | Cosmos explorer source, faucet interface and Xitcoin testnet configuration |
+| [`guide`](https://github.com/xitcoin-org/guide) | Canonical public user, developer and operator guide |
+| [`explorer-testnet`](https://github.com/xitcoin-org/explorer-testnet) | Canonical Cosmos explorer source, faucet interface and Blockscout configuration |
+| [`explorer-evm-testnet`](https://github.com/xitcoin-org/explorer-evm-testnet) | Reproducible standalone Blockscout configuration and provenance records |
 | [`brand`](https://github.com/xitcoin-org/brand) | Approved standalone Xitcoin token artwork and color references |
 
 Contract addresses and audit claims are maintained only in `contracts`. Network identity and native-asset rules are maintained only in `pos-chain`. Other repositories link to those canonical records instead of duplicating them.
