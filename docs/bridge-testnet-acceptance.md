@@ -4,6 +4,8 @@
 
 Acceptance testing uses an isolated route and test assets. Production token governance and production bridge credentials are outside the test environment.
 
+The public `xitcoin-testnet-v2-1` route remains disabled. Run the matrix on an isolated chain initialized with an approved test route. Operators submit inbound approvals with `xitcoind tx bridge submit-attestation` and users initiate outbound burns with `xitcoind tx bridge initiate-outbound`; neither command configures or enables a route.
+
 ## Required tests
 
 1. A finalized Cronos lock mints the exact native test XTC amount.
