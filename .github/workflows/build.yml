@@ -10,7 +10,7 @@ on:
       - 'go.mod'
       - 'go.sum'
       - 'evmd/**'
-      - 'networks/xitcoin-testnet-1/**'
+      - 'networks/xitcoin-testnet-v2-1/**'
       - 'scripts/verify-xitcoin-release-state.py'
   push:
     branches: [main]
@@ -20,7 +20,7 @@ on:
       - 'go.mod'
       - 'go.sum'
       - 'evmd/**'
-      - 'networks/xitcoin-testnet-1/**'
+      - 'networks/xitcoin-testnet-v2-1/**'
       - 'scripts/verify-xitcoin-release-state.py'
 
 concurrency:
@@ -72,10 +72,10 @@ jobs:
           test -x dist/xitcoind
           dist/xitcoind version --long > dist/version-long.txt
           grep -F "commit: $GITHUB_SHA" dist/version-long.txt
-          cp networks/xitcoin-testnet-1/genesis.json dist/genesis.json
+          cp networks/xitcoin-testnet-v2-1/genesis.json dist/genesis.json
           sha256sum dist/xitcoind > dist/xitcoind.sha256
           sha256sum dist/genesis.json > dist/genesis.json.sha256
-          grep -F "$(awk '{print $1}' networks/xitcoin-testnet-1/genesis.sha256)" \
+          grep -F "$(awk '{print $1}' networks/xitcoin-testnet-v2-1/genesis.sha256)" \
             dist/genesis.json.sha256
 
       - name: Upload Linux AMD64 release
