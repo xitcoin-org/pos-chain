@@ -375,6 +375,7 @@ func NewExampleApp(
 		app.BankKeeper,
 		evmconfig.NativeDenom,
 		evmconfig.MaximumSupplyAtomic,
+		mustKCALBAdministrativeAuthority(),
 	)
 
 	app.MintKeeper = mintkeeper.NewKeeper(

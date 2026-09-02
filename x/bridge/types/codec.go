@@ -19,6 +19,7 @@ var (
 
 const submitAttestationName = "xitcoin/bridge/MsgSubmitAttestation"
 const initiateOutboundTransferName = "xitcoin/bridge/MsgInitiateOutboundTransfer"
+const initializeRouteConfigName = "xitcoin/bridge/MsgInitializeRouteConfig"
 
 func init() {
 	RegisterLegacyAminoCodec(amino)
@@ -31,6 +32,7 @@ func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 		(*sdk.Msg)(nil),
 		&MsgSubmitAttestation{},
 		&MsgInitiateOutboundTransfer{},
+		&MsgInitializeRouteConfig{},
 	)
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }
@@ -39,4 +41,5 @@ func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSubmitAttestation{}, submitAttestationName, nil)
 	cdc.RegisterConcrete(&MsgInitiateOutboundTransfer{}, initiateOutboundTransferName, nil)
+	cdc.RegisterConcrete(&MsgInitializeRouteConfig{}, initializeRouteConfigName, nil)
 }

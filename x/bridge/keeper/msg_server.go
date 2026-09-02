@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -18,6 +19,37 @@ type msgServer struct {
 // NewMsgServer creates the bridge settlement message server.
 func NewMsgServer(k Keeper) types.MsgServer {
 	return msgServer{keeper: k}
+}
+
+// InitializeRouteConfig creates exactly one disabled, paused bridge route.
+// It performs no token, bank, reserve, relayer, mint, burn, or transfer action.
+func (s msgServer) InitializeRouteConfig(goCtx context.Context, req *types.MsgInitializeRouteConfig) (*types.MsgInitializeRouteConfigResponse, error) {
+	if req == nil {
+		return nil, errors.New("bridge: empty initial route configuration")
+	}
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	if err := sdk.ValidateAuthority(ctx, s.keeper.authority, req.Authority); err != nil {
+		return nil, err
+	}
+	if err := req.ValidateBasic(); err != nil {
+		return nil, err
+	}
+	if _, found, err := s.keeper.GetRouteConfig(ctx); err != nil {
+		return nil, err
+	} else if found {
+		return nil, errors.New("bridge: initial route configuration already exists")
+	}
+	config := req.RouteConfig()
+	if err := s.keeper.SetRouteConfig(ctx, config); err != nil {
+		return nil, err
+	}
+	encoded, err := json.Marshal(RouteState{Paused: true})
+	if err != nil {
+		return nil, err
+	}
+	ctx.KVStore(s.keeper.storeKey).Set(routeStateKey, encoded)
+	ctx.EventManager().EmitEvent(sdk.NewEvent("bridge_route_initialized", sdk.NewAttribute("route_id", config.RouteID), sdk.NewAttribute("enabled", "false"), sdk.NewAttribute("paused", "true")))
+	return &types.MsgInitializeRouteConfigResponse{}, nil
 }
 
 // SubmitAttestation validates and settles one inbound Cronos transfer.

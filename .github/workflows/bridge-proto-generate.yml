@@ -1,0 +1,28 @@
+name: Bridge protobuf generation artifact
+
+on:
+  pull_request:
+    paths:
+      - "proto/cosmos/evm/bridge/**"
+      - ".github/workflows/bridge-proto-generate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - run: make proto-gen
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bridge-generated-protobuf
+          path: |
+            x/bridge/types/tx.pb.go
+            api/cosmos/evm/bridge/v1/tx.pulsar.go
+            api/cosmos/evm/bridge/v1/tx_grpc.pb.go
+          if-no-files-found: error
+          retention-days: 1
