@@ -30,6 +30,9 @@ type BankKeeper interface {
 	GetSupply(ctx context.Context, denom string) sdk.Coin
 }
 
+// Authority returns the account allowed to initialize the first route.
+func (k Keeper) Authority() string { return k.authority }
+
 func NewKeeper(storeKey storetypes.StoreKey) Keeper {
 	return Keeper{storeKey: storeKey}
 }
