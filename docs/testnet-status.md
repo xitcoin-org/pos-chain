@@ -5,27 +5,24 @@
 | Property | Canonical value |
 | --- | --- |
 | Public name | Xitcoin Testnet |
-| Cosmos Chain ID | `xitcoin-testnet-1` |
+| Cosmos Chain ID | `xitcoin-testnet-v2-1` |
 | EVM Chain ID | `101089` (`0x18ae1`) |
 | Native asset | XTC |
 | Atomic denomination | `axtc` |
 | Decimals | 18 |
-| Genesis time | `2026-08-25T21:48:17.77229Z` |
-| Genesis SHA-256 | `55c8756a212b9e92c0e8427ea61caff7fa9dca40e801e4b848f59d1aa5f6dae6` |
-| Genesis supply | 457,000,000 XTC |
+| Genesis time | `2026-08-29T09:49:07Z` |
+| Genesis SHA-256 | `5db34acf6496b2c76a6f516e0eb605caef6762552584ddbed7c8703239f33d72` |
+| Genesis supply | 477,000,000 XTC |
 | Initial validators | Atlas, Borealis, Meridian and Zenith |
 | Validator capacity | 258 |
 | Minimum self-delegation | 5,000,000 XTC |
 | Module authority in deployed genesis | `xtc1vza8zsgvrfwmve084ytd8xqdkkm7u9e5csctc2` |
 
-The Cosmos Chain ID identifies the current genesis. The `-1` suffix is not a
-public version label and does not represent a validator or server number.
+`xitcoin-testnet-v2-1` is the only active public testnet generation. `xitcoin-testnet-1` is retired and retained only as historical evidence.
 
-## Certified deployment state
+## Verified deployment state
 
-The canonical four-validator testnet is publicly active. On 2026-08-26 the
-sentry, validators, public endpoints, explorers, Blockscout, faucet and
-healthcheck were verified against the same live chain.
+The four-validator V2 testnet is publicly active. On 2026-09-02, the sentry, validators, public endpoints, explorers, faucet, Cosmos transactions and EVM transactions were verified against the same live chain.
 
 | Component | Status | Endpoint |
 | --- | --- | --- |
@@ -33,52 +30,38 @@ healthcheck were verified against the same live chain.
 | Cosmos REST API | Active | `https://api-testnet.xitcoin.org` |
 | EVM JSON-RPC | Active | `https://evm-rpc-testnet.xitcoin.org` |
 | Cosmos explorer | Active | `https://explorer-testnet.xitcoin.org` |
-| EVM explorer | Active; normal asynchronous indexing lag | `https://evm-explorer-testnet.xitcoin.org` |
+| EVM explorer | Active; indexed from height 1 | `https://evm-explorer-testnet.xitcoin.org` |
 | Faucet | Active; 10 XTC per accepted request | `https://faucet-testnet.xitcoin.org` |
 | Bridge route | Not configured; disabled | — |
 
-Blockscout may trail the chain head by a small number of blocks while indexing.
-A moving one-to-two-block lag is normal; a persistent or increasing lag is not.
-
-## Genesis allocations
+## Genesis bank allocations
 
 | Allocation | Amount |
 | --- | ---: |
 | Sovereign reserve | 386,000,000 XTC |
 | Faucet | 50,000,000 XTC |
-| Security reserve | 960,000 XTC |
-| Validator self-delegation (four total) | 20,000,000 XTC |
-| Validator liquid gas (four total) | 40,000 XTC |
-| **Total** | **457,000,000 XTC** |
+| Validator-incentives module | 20,000,000 XTC |
+| Four validator accounts before genesis transactions | 21,000,000 XTC |
+| **Total** | **477,000,000 XTC** |
 
-The faucet uses its allocation and does not mint automatically. Its deployed
-limits are a 24-hour address window, a 24-hour IP window and at most three
-accepted requests per IP during that window.
+The four genesis transactions self-delegate 20,000,000 XTC from the validator accounts. The remaining validator liquid balance is 1,000,000 XTC total, or 250,000 XTC per validator.
 
-No separate active bridge allocation exists in this genesis. A future bridge
-route requires an explicit configuration and approval process.
+The faucet uses its finite allocation and does not mint automatically. Its deployed limits are a 24-hour address window, a 24-hour IP window and at most three accepted requests per IP during that window.
+
+No bridge route configuration exists in this genesis. Activating a future route requires explicit configuration, authorization and a separate acceptance process.
 
 ## Acceptance record
 
-- four validators active, enabled, not catching up, with equal voting power;
-- sentry active, enabled, not catching up, and connected to the four validators;
+- exact canonical genesis published with its SHA-256 checksum;
+- four validators active, enabled, not catching up, with equal initial voting power;
 - public RPC, API, EVM RPC, explorers and faucet reachable;
-- Blockscout reindexed from the deployed genesis and tracks the live chain;
-- healthcheck timer repeatedly completes successfully;
-- obsolete Blockscout containers and volumes removed;
-- one verified rollback point retained for Blockscout, platform endpoints and
-  sentry application configuration;
-- legacy testnet service units inactive and disabled;
-- bridge route disabled.
+- Blockscout indexing complete from the first EVM height;
+- native Cosmos and EVM transactions confirmed and visible in their respective explorers;
+- bridge route absent;
+- mainnet not launched and no Cronos transaction performed as part of this verification.
 
-The previously documented source revision, binary checksum and Actions run were
-removed because that historical record is no longer resolvable from the current
-public repository history. This document does not claim a source-to-binary
-provenance link that cannot be independently verified. A future binary release
-must publish a reachable source revision and reproducible checksums.
+The active binary identifies source revision `e06e232b95b0c40e3c718da3b8f447eed0588972`. A production release still requires its own reproducible build, published checksums and independent acceptance record.
 
-No production key, mnemonic, password, node key, validator private key or private
-backup is stored in this repository. Testnet and mainnet must use independent
-keys, genesis files, state and operational directories.
+No production key, mnemonic, password, node key, validator private key or private backup is stored in this repository. Testnet and mainnet must use independent keys, genesis files, state and operational directories.
 
 Testnet XTC has no monetary value.

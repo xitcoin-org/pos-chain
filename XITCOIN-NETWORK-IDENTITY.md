@@ -18,7 +18,7 @@ One XTC equals `10^18 axtc`.
 | Network | Cosmos Chain ID | EVM Chain ID | Purpose |
 | --- | --- | ---: | --- |
 | Xitcoin | `xitcoin` | `101088` | Mainnet |
-| Xitcoin Testnet | `xitcoin-testnet-1` | `101089` | Public testing |
+| Xitcoin Testnet | `xitcoin-testnet-v2-1` | `101089` | Active public testing |
 | Xitcoin Devnet | `xitcoin-devnet` | `101090` | Isolated development |
 
-Network manifests are versioned under [`networks/`](networks/). Testnet assets have no monetary value.
+Network manifests are versioned under [`networks/`](networks/). `xitcoin-testnet-1` is retired and retained only for historical verification. Testnet assets have no monetary value.

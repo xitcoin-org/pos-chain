@@ -25,6 +25,13 @@ const cfg = {
 const stateFile = path.join(cfg.faucetHome, 'state', 'claims.json');
 let lock = Promise.resolve();
 
+function formatXtc(amount) {
+  const unit = 10n ** 18n;
+  const whole = amount / unit;
+  const fraction = String(amount % unit).padStart(18, '0').replace(/0+$/, '');
+  return fraction ? `${whole}.${fraction}` : String(whole);
+}
+
 function send(res, status, body) {
   res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
   res.end(JSON.stringify(body));
@@ -104,7 +111,7 @@ const server = http.createServer(async (req, res) => {
         status: 'ok',
         chain_id: cfg.chainId,
         faucet_address: address,
-        claim_amount_xtc: '100',
+        claim_amount_xtc: formatXtc(cfg.amount),
         funded: available >= cfg.amount + cfg.reserve,
       });
     }
@@ -146,7 +153,7 @@ const server = http.createServer(async (req, res) => {
         state.claims = state.claims.filter((c) => now - c.at < Math.max(cfg.addressWindow, cfg.ipWindow));
         await stateWrite(state);
 
-        return send(res, 200, { ok: true, amount_xtc: '100', txhash });
+        return send(res, 200, { ok: true, amount_xtc: formatXtc(cfg.amount), txhash });
       }).catch((err) => {
         console.error(err);
         if (!res.headersSent) send(res, 500, { error: 'claim_failed' });

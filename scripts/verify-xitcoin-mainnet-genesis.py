@@ -76,7 +76,7 @@ def validate(candidate, testnet, expected_bootstrap):
         fail("genesis_time is required")
 
     serialized = json.dumps(candidate, sort_keys=True)
-    if "xitcoin-testnet-1" in serialized:
+    if "xitcoin-testnet" in serialized:
         fail("testnet identity remains in candidate genesis")
 
     app = require(candidate, "app_state")
@@ -222,7 +222,7 @@ def main():
         "--testnet-genesis",
         type=Path,
         default=Path(__file__).resolve().parents[1]
-        / "networks/xitcoin-testnet-1/genesis.json",
+        / "networks/xitcoin-testnet-v2-1/genesis.json",
     )
     args = parser.parse_args()
 
