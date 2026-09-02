@@ -53,8 +53,8 @@ jobs:
         run: |
           set -euo pipefail
           test -x build/xitcoind
-          test -f networks/xitcoin-testnet-1/genesis.json
-          install -m 0644 networks/xitcoin-testnet-1/genesis.json build/genesis.json
+          test -f networks/xitcoin-testnet-v2-1/genesis.json
+          install -m 0644 networks/xitcoin-testnet-v2-1/genesis.json build/genesis.json
           printf '%s\n' "$GITHUB_SHA" > build/COMMIT
           (
             cd build
