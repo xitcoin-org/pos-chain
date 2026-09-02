@@ -44,7 +44,7 @@ require_replacement() {
 require_module github.com/cosmos/cosmos-sdk v0.54.4
 require_module github.com/cometbft/cometbft v0.39.4
 require_module github.com/pion/dtls/v2 v2.2.12
-require_module golang.org/x/crypto v0.55.0
+require_module golang.org/x/crypto v0.56.0
 require_replacement github.com/ethereum/go-ethereum github.com/cosmos/go-ethereum v1.17.2-cosmos-0
 
 # Do not reintroduce a JSON-RPC method accepting raw private keys. OpenPGP
