@@ -375,7 +375,7 @@ func NewExampleApp(
 		app.BankKeeper,
 		evmconfig.NativeDenom,
 		evmconfig.MaximumSupplyAtomic,
-		mustKCALBAdministrativeAuthority(),
+		mustTestnetAdministrativeAuthority(),
 	)
 
 	app.MintKeeper = mintkeeper.NewKeeper(
@@ -435,7 +435,7 @@ func NewExampleApp(
 		appCodec,
 		homePath,
 		app.BaseApp,
-		mustKCALBAdministrativeAuthority(),
+		mustTestnetAdministrativeAuthority(),
 	)
 
 	// Create IBC Keeper
@@ -1055,7 +1055,7 @@ func (app *EVMD) DefaultGenesis() map[string]json.RawMessage {
 	genesis[erc20types.ModuleName] = app.appCodec.MustMarshalJSON(erc20GenState)
 
 	incentiveGenState := validatorincentivestypes.DefaultGenesisState()
-	incentiveGenState.Authority = mustKCALBAdministrativeAuthority()
+	incentiveGenState.Authority = mustTestnetAdministrativeAuthority()
 	incentiveGenesis, err := json.Marshal(incentiveGenState)
 	if err != nil {
 		panic(err)

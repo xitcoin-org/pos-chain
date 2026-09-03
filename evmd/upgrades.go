@@ -21,7 +21,7 @@ import (
 const UpgradeName = "v0.6.0-to-v0.7.0"
 
 // GovernanceSafeguardsUpgradeName disables executable public governance and
-// transfers security-sensitive authorities to the KCALB 2-of-3 multisig.
+// transfers security-sensitive authorities to the Testnet V2 2-of-3 multisig.
 const GovernanceSafeguardsUpgradeName = "xitcoin-governance-safeguards-v1"
 
 // ValidatorIncentivesDailyV2UpgradeName activates the funded daily
@@ -48,7 +48,7 @@ func (app EVMD) RegisterUpgradeHandlers() {
 		GovernanceSafeguardsUpgradeName,
 		func(ctx context.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 			sdkCtx := sdk.UnwrapSDKContext(ctx)
-			authority := mustKCALBAdministrativeAuthority()
+			authority := mustTestnetAdministrativeAuthority()
 			if fromVM == nil {
 				fromVM = module.VersionMap{}
 			}

@@ -29,7 +29,7 @@ func TestValidatorIncentivesWiring(t *testing.T) {
 	require.NoError(t, state.Validate())
 	require.Equal(
 		t,
-		KCALBAdministrativeMultisigAddress,
+		TestnetAdministrativeMultisigAddress,
 		state.Authority,
 	)
 	require.Equal(
