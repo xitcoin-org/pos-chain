@@ -22,6 +22,9 @@ const (
 	Msg_SubmitAttestation_FullMethodName        = "/cosmos.evm.bridge.v1.Msg/SubmitAttestation"
 	Msg_InitiateOutboundTransfer_FullMethodName = "/cosmos.evm.bridge.v1.Msg/InitiateOutboundTransfer"
 	Msg_InitializeRouteConfig_FullMethodName    = "/cosmos.evm.bridge.v1.Msg/InitializeRouteConfig"
+	Msg_EmergencyPauseRoute_FullMethodName      = "/cosmos.evm.bridge.v1.Msg/EmergencyPauseRoute"
+	Msg_ResumeRoute_FullMethodName              = "/cosmos.evm.bridge.v1.Msg/ResumeRoute"
+	Msg_UpdateRouteConfig_FullMethodName        = "/cosmos.evm.bridge.v1.Msg/UpdateRouteConfig"
 )
 
 // MsgClient is the client API for Msg service.
@@ -36,6 +39,12 @@ type MsgClient interface {
 	InitiateOutboundTransfer(ctx context.Context, in *MsgInitiateOutboundTransfer, opts ...grpc.CallOption) (*MsgInitiateOutboundTransferResponse, error)
 	// InitializeRouteConfig creates the first route in a disabled and paused state.
 	InitializeRouteConfig(ctx context.Context, in *MsgInitializeRouteConfig, opts ...grpc.CallOption) (*MsgInitializeRouteConfigResponse, error)
+	// EmergencyPauseRoute allows the configured guardian to pause the route.
+	EmergencyPauseRoute(ctx context.Context, in *MsgEmergencyPauseRoute, opts ...grpc.CallOption) (*MsgEmergencyPauseRouteResponse, error)
+	// ResumeRoute requires threshold approval from the current bridge signers.
+	ResumeRoute(ctx context.Context, in *MsgResumeRoute, opts ...grpc.CallOption) (*MsgResumeRouteResponse, error)
+	// UpdateRouteConfig requires threshold approval from the current bridge signers.
+	UpdateRouteConfig(ctx context.Context, in *MsgUpdateRouteConfig, opts ...grpc.CallOption) (*MsgUpdateRouteConfigResponse, error)
 }
 
 type msgClient struct {
@@ -76,6 +85,36 @@ func (c *msgClient) InitializeRouteConfig(ctx context.Context, in *MsgInitialize
 	return out, nil
 }
 
+func (c *msgClient) EmergencyPauseRoute(ctx context.Context, in *MsgEmergencyPauseRoute, opts ...grpc.CallOption) (*MsgEmergencyPauseRouteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MsgEmergencyPauseRouteResponse)
+	err := c.cc.Invoke(ctx, Msg_EmergencyPauseRoute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ResumeRoute(ctx context.Context, in *MsgResumeRoute, opts ...grpc.CallOption) (*MsgResumeRouteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MsgResumeRouteResponse)
+	err := c.cc.Invoke(ctx, Msg_ResumeRoute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateRouteConfig(ctx context.Context, in *MsgUpdateRouteConfig, opts ...grpc.CallOption) (*MsgUpdateRouteConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MsgUpdateRouteConfigResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateRouteConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility.
@@ -88,6 +127,12 @@ type MsgServer interface {
 	InitiateOutboundTransfer(context.Context, *MsgInitiateOutboundTransfer) (*MsgInitiateOutboundTransferResponse, error)
 	// InitializeRouteConfig creates the first route in a disabled and paused state.
 	InitializeRouteConfig(context.Context, *MsgInitializeRouteConfig) (*MsgInitializeRouteConfigResponse, error)
+	// EmergencyPauseRoute allows the configured guardian to pause the route.
+	EmergencyPauseRoute(context.Context, *MsgEmergencyPauseRoute) (*MsgEmergencyPauseRouteResponse, error)
+	// ResumeRoute requires threshold approval from the current bridge signers.
+	ResumeRoute(context.Context, *MsgResumeRoute) (*MsgResumeRouteResponse, error)
+	// UpdateRouteConfig requires threshold approval from the current bridge signers.
+	UpdateRouteConfig(context.Context, *MsgUpdateRouteConfig) (*MsgUpdateRouteConfigResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -106,6 +151,15 @@ func (UnimplementedMsgServer) InitiateOutboundTransfer(context.Context, *MsgInit
 }
 func (UnimplementedMsgServer) InitializeRouteConfig(context.Context, *MsgInitializeRouteConfig) (*MsgInitializeRouteConfigResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method InitializeRouteConfig not implemented")
+}
+func (UnimplementedMsgServer) EmergencyPauseRoute(context.Context, *MsgEmergencyPauseRoute) (*MsgEmergencyPauseRouteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method EmergencyPauseRoute not implemented")
+}
+func (UnimplementedMsgServer) ResumeRoute(context.Context, *MsgResumeRoute) (*MsgResumeRouteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResumeRoute not implemented")
+}
+func (UnimplementedMsgServer) UpdateRouteConfig(context.Context, *MsgUpdateRouteConfig) (*MsgUpdateRouteConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateRouteConfig not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 func (UnimplementedMsgServer) testEmbeddedByValue()             {}
@@ -182,6 +236,60 @@ func _Msg_InitializeRouteConfig_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_EmergencyPauseRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgEmergencyPauseRoute)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).EmergencyPauseRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_EmergencyPauseRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).EmergencyPauseRoute(ctx, req.(*MsgEmergencyPauseRoute))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ResumeRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgResumeRoute)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ResumeRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_ResumeRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ResumeRoute(ctx, req.(*MsgResumeRoute))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateRouteConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateRouteConfig)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateRouteConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateRouteConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateRouteConfig(ctx, req.(*MsgUpdateRouteConfig))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -200,6 +308,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InitializeRouteConfig",
 			Handler:    _Msg_InitializeRouteConfig_Handler,
+		},
+		{
+			MethodName: "EmergencyPauseRoute",
+			Handler:    _Msg_EmergencyPauseRoute_Handler,
+		},
+		{
+			MethodName: "ResumeRoute",
+			Handler:    _Msg_ResumeRoute_Handler,
+		},
+		{
+			MethodName: "UpdateRouteConfig",
+			Handler:    _Msg_UpdateRouteConfig_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -442,6 +442,412 @@ func (m *MsgInitializeRouteConfigResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgInitializeRouteConfigResponse proto.InternalMessageInfo
 
+// MsgEmergencyPauseRoute submits a guardian-signed pause action. The submitter
+// only pays transaction fees and receives no bridge authority.
+type MsgEmergencyPauseRoute struct {
+	Submitter         string `protobuf:"bytes,1,opt,name=submitter,proto3" json:"submitter,omitempty"`
+	RouteId           string `protobuf:"bytes,2,opt,name=route_id,json=routeId,proto3" json:"route_id,omitempty"`
+	Nonce             uint64 `protobuf:"varint,3,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	ExpiresUnix       int64  `protobuf:"varint,4,opt,name=expires_unix,json=expiresUnix,proto3" json:"expires_unix,omitempty"`
+	GuardianSignature []byte `protobuf:"bytes,5,opt,name=guardian_signature,json=guardianSignature,proto3" json:"guardian_signature,omitempty"`
+}
+
+func (m *MsgEmergencyPauseRoute) Reset()         { *m = MsgEmergencyPauseRoute{} }
+func (m *MsgEmergencyPauseRoute) String() string { return proto.CompactTextString(m) }
+func (*MsgEmergencyPauseRoute) ProtoMessage()    {}
+func (*MsgEmergencyPauseRoute) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d805a178fb0625ab, []int{6}
+}
+func (m *MsgEmergencyPauseRoute) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgEmergencyPauseRoute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgEmergencyPauseRoute.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgEmergencyPauseRoute) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgEmergencyPauseRoute.Merge(m, src)
+}
+func (m *MsgEmergencyPauseRoute) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgEmergencyPauseRoute) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgEmergencyPauseRoute.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgEmergencyPauseRoute proto.InternalMessageInfo
+
+func (m *MsgEmergencyPauseRoute) GetSubmitter() string {
+	if m != nil {
+		return m.Submitter
+	}
+	return ""
+}
+
+func (m *MsgEmergencyPauseRoute) GetRouteId() string {
+	if m != nil {
+		return m.RouteId
+	}
+	return ""
+}
+
+func (m *MsgEmergencyPauseRoute) GetNonce() uint64 {
+	if m != nil {
+		return m.Nonce
+	}
+	return 0
+}
+
+func (m *MsgEmergencyPauseRoute) GetExpiresUnix() int64 {
+	if m != nil {
+		return m.ExpiresUnix
+	}
+	return 0
+}
+
+func (m *MsgEmergencyPauseRoute) GetGuardianSignature() []byte {
+	if m != nil {
+		return m.GuardianSignature
+	}
+	return nil
+}
+
+type MsgEmergencyPauseRouteResponse struct {
+}
+
+func (m *MsgEmergencyPauseRouteResponse) Reset()         { *m = MsgEmergencyPauseRouteResponse{} }
+func (m *MsgEmergencyPauseRouteResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgEmergencyPauseRouteResponse) ProtoMessage()    {}
+func (*MsgEmergencyPauseRouteResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d805a178fb0625ab, []int{7}
+}
+func (m *MsgEmergencyPauseRouteResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgEmergencyPauseRouteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgEmergencyPauseRouteResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgEmergencyPauseRouteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgEmergencyPauseRouteResponse.Merge(m, src)
+}
+func (m *MsgEmergencyPauseRouteResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgEmergencyPauseRouteResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgEmergencyPauseRouteResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgEmergencyPauseRouteResponse proto.InternalMessageInfo
+
+// MsgResumeRoute submits a time-bounded 2-of-3 approval to clear only the
+// route's paused state. It cannot modify the route configuration.
+type MsgResumeRoute struct {
+	Submitter     string   `protobuf:"bytes,1,opt,name=submitter,proto3" json:"submitter,omitempty"`
+	RouteId       string   `protobuf:"bytes,2,opt,name=route_id,json=routeId,proto3" json:"route_id,omitempty"`
+	Nonce         uint64   `protobuf:"varint,3,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	NotBeforeUnix int64    `protobuf:"varint,4,opt,name=not_before_unix,json=notBeforeUnix,proto3" json:"not_before_unix,omitempty"`
+	ExpiresUnix   int64    `protobuf:"varint,5,opt,name=expires_unix,json=expiresUnix,proto3" json:"expires_unix,omitempty"`
+	Signatures    [][]byte `protobuf:"bytes,6,rep,name=signatures,proto3" json:"signatures,omitempty"`
+}
+
+func (m *MsgResumeRoute) Reset()         { *m = MsgResumeRoute{} }
+func (m *MsgResumeRoute) String() string { return proto.CompactTextString(m) }
+func (*MsgResumeRoute) ProtoMessage()    {}
+func (*MsgResumeRoute) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d805a178fb0625ab, []int{8}
+}
+func (m *MsgResumeRoute) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgResumeRoute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgResumeRoute.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgResumeRoute) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgResumeRoute.Merge(m, src)
+}
+func (m *MsgResumeRoute) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgResumeRoute) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgResumeRoute.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgResumeRoute proto.InternalMessageInfo
+
+func (m *MsgResumeRoute) GetSubmitter() string {
+	if m != nil {
+		return m.Submitter
+	}
+	return ""
+}
+
+func (m *MsgResumeRoute) GetRouteId() string {
+	if m != nil {
+		return m.RouteId
+	}
+	return ""
+}
+
+func (m *MsgResumeRoute) GetNonce() uint64 {
+	if m != nil {
+		return m.Nonce
+	}
+	return 0
+}
+
+func (m *MsgResumeRoute) GetNotBeforeUnix() int64 {
+	if m != nil {
+		return m.NotBeforeUnix
+	}
+	return 0
+}
+
+func (m *MsgResumeRoute) GetExpiresUnix() int64 {
+	if m != nil {
+		return m.ExpiresUnix
+	}
+	return 0
+}
+
+func (m *MsgResumeRoute) GetSignatures() [][]byte {
+	if m != nil {
+		return m.Signatures
+	}
+	return nil
+}
+
+type MsgResumeRouteResponse struct {
+}
+
+func (m *MsgResumeRouteResponse) Reset()         { *m = MsgResumeRouteResponse{} }
+func (m *MsgResumeRouteResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgResumeRouteResponse) ProtoMessage()    {}
+func (*MsgResumeRouteResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d805a178fb0625ab, []int{9}
+}
+func (m *MsgResumeRouteResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgResumeRouteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgResumeRouteResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgResumeRouteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgResumeRouteResponse.Merge(m, src)
+}
+func (m *MsgResumeRouteResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgResumeRouteResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgResumeRouteResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgResumeRouteResponse proto.InternalMessageInfo
+
+// MsgUpdateRouteConfig submits a time-bounded 2-of-3 approval over the exact
+// next configuration. The current signer set always authorizes rotations.
+type MsgUpdateRouteConfig struct {
+	Submitter            string   `protobuf:"bytes,1,opt,name=submitter,proto3" json:"submitter,omitempty"`
+	RouteId              string   `protobuf:"bytes,2,opt,name=route_id,json=routeId,proto3" json:"route_id,omitempty"`
+	BridgeSigners        []string `protobuf:"bytes,3,rep,name=bridge_signers,json=bridgeSigners,proto3" json:"bridge_signers,omitempty"`
+	Guardian             string   `protobuf:"bytes,4,opt,name=guardian,proto3" json:"guardian,omitempty"`
+	MaxTransferAmount    string   `protobuf:"bytes,5,opt,name=max_transfer_amount,json=maxTransferAmount,proto3" json:"max_transfer_amount,omitempty"`
+	DailyLimit           string   `protobuf:"bytes,6,opt,name=daily_limit,json=dailyLimit,proto3" json:"daily_limit,omitempty"`
+	MaxOutstandingAmount string   `protobuf:"bytes,7,opt,name=max_outstanding_amount,json=maxOutstandingAmount,proto3" json:"max_outstanding_amount,omitempty"`
+	Enabled              bool     `protobuf:"varint,8,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Nonce                uint64   `protobuf:"varint,9,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	NotBeforeUnix        int64    `protobuf:"varint,10,opt,name=not_before_unix,json=notBeforeUnix,proto3" json:"not_before_unix,omitempty"`
+	ExpiresUnix          int64    `protobuf:"varint,11,opt,name=expires_unix,json=expiresUnix,proto3" json:"expires_unix,omitempty"`
+	Signatures           [][]byte `protobuf:"bytes,12,rep,name=signatures,proto3" json:"signatures,omitempty"`
+}
+
+func (m *MsgUpdateRouteConfig) Reset()         { *m = MsgUpdateRouteConfig{} }
+func (m *MsgUpdateRouteConfig) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateRouteConfig) ProtoMessage()    {}
+func (*MsgUpdateRouteConfig) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d805a178fb0625ab, []int{10}
+}
+func (m *MsgUpdateRouteConfig) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateRouteConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateRouteConfig.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateRouteConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateRouteConfig.Merge(m, src)
+}
+func (m *MsgUpdateRouteConfig) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateRouteConfig) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateRouteConfig.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateRouteConfig proto.InternalMessageInfo
+
+func (m *MsgUpdateRouteConfig) GetSubmitter() string {
+	if m != nil {
+		return m.Submitter
+	}
+	return ""
+}
+
+func (m *MsgUpdateRouteConfig) GetRouteId() string {
+	if m != nil {
+		return m.RouteId
+	}
+	return ""
+}
+
+func (m *MsgUpdateRouteConfig) GetBridgeSigners() []string {
+	if m != nil {
+		return m.BridgeSigners
+	}
+	return nil
+}
+
+func (m *MsgUpdateRouteConfig) GetGuardian() string {
+	if m != nil {
+		return m.Guardian
+	}
+	return ""
+}
+
+func (m *MsgUpdateRouteConfig) GetMaxTransferAmount() string {
+	if m != nil {
+		return m.MaxTransferAmount
+	}
+	return ""
+}
+
+func (m *MsgUpdateRouteConfig) GetDailyLimit() string {
+	if m != nil {
+		return m.DailyLimit
+	}
+	return ""
+}
+
+func (m *MsgUpdateRouteConfig) GetMaxOutstandingAmount() string {
+	if m != nil {
+		return m.MaxOutstandingAmount
+	}
+	return ""
+}
+
+func (m *MsgUpdateRouteConfig) GetEnabled() bool {
+	if m != nil {
+		return m.Enabled
+	}
+	return false
+}
+
+func (m *MsgUpdateRouteConfig) GetNonce() uint64 {
+	if m != nil {
+		return m.Nonce
+	}
+	return 0
+}
+
+func (m *MsgUpdateRouteConfig) GetNotBeforeUnix() int64 {
+	if m != nil {
+		return m.NotBeforeUnix
+	}
+	return 0
+}
+
+func (m *MsgUpdateRouteConfig) GetExpiresUnix() int64 {
+	if m != nil {
+		return m.ExpiresUnix
+	}
+	return 0
+}
+
+func (m *MsgUpdateRouteConfig) GetSignatures() [][]byte {
+	if m != nil {
+		return m.Signatures
+	}
+	return nil
+}
+
+type MsgUpdateRouteConfigResponse struct {
+}
+
+func (m *MsgUpdateRouteConfigResponse) Reset()         { *m = MsgUpdateRouteConfigResponse{} }
+func (m *MsgUpdateRouteConfigResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateRouteConfigResponse) ProtoMessage()    {}
+func (*MsgUpdateRouteConfigResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d805a178fb0625ab, []int{11}
+}
+func (m *MsgUpdateRouteConfigResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateRouteConfigResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateRouteConfigResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateRouteConfigResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateRouteConfigResponse.Merge(m, src)
+}
+func (m *MsgUpdateRouteConfigResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateRouteConfigResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateRouteConfigResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateRouteConfigResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgSubmitAttestation)(nil), "cosmos.evm.bridge.v1.MsgSubmitAttestation")
 	proto.RegisterType((*MsgSubmitAttestationResponse)(nil), "cosmos.evm.bridge.v1.MsgSubmitAttestationResponse")
@@ -449,61 +855,83 @@ func init() {
 	proto.RegisterType((*MsgInitiateOutboundTransferResponse)(nil), "cosmos.evm.bridge.v1.MsgInitiateOutboundTransferResponse")
 	proto.RegisterType((*MsgInitializeRouteConfig)(nil), "cosmos.evm.bridge.v1.MsgInitializeRouteConfig")
 	proto.RegisterType((*MsgInitializeRouteConfigResponse)(nil), "cosmos.evm.bridge.v1.MsgInitializeRouteConfigResponse")
+	proto.RegisterType((*MsgEmergencyPauseRoute)(nil), "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute")
+	proto.RegisterType((*MsgEmergencyPauseRouteResponse)(nil), "cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse")
+	proto.RegisterType((*MsgResumeRoute)(nil), "cosmos.evm.bridge.v1.MsgResumeRoute")
+	proto.RegisterType((*MsgResumeRouteResponse)(nil), "cosmos.evm.bridge.v1.MsgResumeRouteResponse")
+	proto.RegisterType((*MsgUpdateRouteConfig)(nil), "cosmos.evm.bridge.v1.MsgUpdateRouteConfig")
+	proto.RegisterType((*MsgUpdateRouteConfigResponse)(nil), "cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse")
 }
 
 func init() { proto.RegisterFile("cosmos/evm/bridge/v1/tx.proto", fileDescriptor_d805a178fb0625ab) }
 
 var fileDescriptor_d805a178fb0625ab = []byte{
-	// 778 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0x4f, 0x4f, 0x3b, 0x45,
-	0x18, 0x66, 0x59, 0xe8, 0x8f, 0xbe, 0x3f, 0xc0, 0x30, 0x56, 0x5c, 0x2a, 0xd4, 0xa6, 0x04, 0x6d,
-	0x9a, 0xb0, 0x2b, 0x68, 0x48, 0xe4, 0x56, 0x88, 0x87, 0x26, 0x12, 0x92, 0x45, 0x2f, 0x5c, 0x36,
-	0xd3, 0xce, 0x74, 0x99, 0xa4, 0x3b, 0x53, 0x67, 0x66, 0x9b, 0xc5, 0x8b, 0xc6, 0x93, 0x31, 0x31,
-	0xf1, 0xee, 0x97, 0xe0, 0xe0, 0x87, 0xf0, 0x48, 0x3c, 0x79, 0x24, 0x70, 0xe0, 0x03, 0xf8, 0x05,
-	0xcc, 0xfe, 0xeb, 0x36, 0xd0, 0x16, 0xb8, 0x34, 0x79, 0x9f, 0xf7, 0x9d, 0xa7, 0xf3, 0x3e, 0xcf,
-	0xfb, 0xce, 0xc2, 0x4e, 0x4f, 0xa8, 0x40, 0x28, 0x87, 0x8e, 0x02, 0xa7, 0x2b, 0x19, 0xf1, 0xa9,
-	0x33, 0x3a, 0x70, 0x74, 0x64, 0x0f, 0xa5, 0xd0, 0x02, 0x55, 0xd2, 0xb4, 0x4d, 0x47, 0x81, 0x9d,
-	0xa6, 0xed, 0xd1, 0x41, 0x75, 0x03, 0x07, 0x8c, 0x0b, 0x27, 0xf9, 0x4d, 0x0b, 0xab, 0x1f, 0x67,
-	0x3c, 0x81, 0xf2, 0x63, 0x82, 0x40, 0xf9, 0x59, 0x62, 0x2b, 0x4d, 0x78, 0x49, 0xe4, 0x64, 0x74,
-	0x49, 0xd0, 0xf8, 0xd3, 0x84, 0xca, 0x99, 0xf2, 0x2f, 0xc2, 0x6e, 0xc0, 0x74, 0x5b, 0x6b, 0xaa,
-	0x34, 0xd6, 0x4c, 0x70, 0x74, 0x04, 0x65, 0x95, 0x80, 0x9a, 0x4a, 0xcb, 0xa8, 0x1b, 0xcd, 0xf2,
-	0x89, 0xf5, 0xcf, 0x5f, 0xfb, 0xf9, 0x65, 0xda, 0x84, 0x48, 0xaa, 0xd4, 0x85, 0x96, 0x8c, 0xfb,
-	0x6e, 0x51, 0x8a, 0xb6, 0x60, 0x45, 0x8a, 0x50, 0x53, 0x8f, 0x11, 0x6b, 0x31, 0x3e, 0xe6, 0xbe,
-	0x4b, 0xe2, 0x0e, 0x41, 0xdb, 0x50, 0x26, 0x4c, 0xd2, 0x5e, 0xcc, 0x6f, 0x99, 0x49, 0xae, 0x00,
-	0xd0, 0x67, 0xf0, 0x81, 0x12, 0xa1, 0xec, 0x51, 0xaf, 0x77, 0x85, 0x19, 0x8f, 0xcf, 0x2f, 0x25,
-	0x35, 0x6b, 0x29, 0x7c, 0x1a, 0xa3, 0x1d, 0x82, 0x76, 0x00, 0xb2, 0x3a, 0x49, 0xfb, 0xd6, 0x72,
-	0x4a, 0x93, 0x22, 0x2e, 0xed, 0xa3, 0x0a, 0x2c, 0x73, 0xc1, 0x7b, 0xd4, 0x2a, 0xd5, 0x8d, 0xe6,
-	0x92, 0x9b, 0x06, 0xa8, 0x0e, 0xef, 0x09, 0x55, 0x9a, 0xf1, 0xa4, 0x39, 0xeb, 0x5d, 0x72, 0x6a,
-	0x12, 0x42, 0x9b, 0x50, 0xc2, 0x81, 0x08, 0xb9, 0xb6, 0x56, 0x92, 0x64, 0x16, 0xa1, 0x5d, 0x58,
-	0x23, 0x14, 0x93, 0x01, 0xe3, 0xd4, 0x0b, 0x39, 0x8b, 0xac, 0x72, 0xdd, 0x68, 0x9a, 0xee, 0x6a,
-	0x0e, 0x7e, 0xcf, 0x59, 0x84, 0x6a, 0x00, 0x8a, 0xf9, 0x1c, 0xeb, 0x50, 0x52, 0x65, 0x41, 0xdd,
-	0x6c, 0xae, 0xba, 0x13, 0xc8, 0xf1, 0xd1, 0x2f, 0x8f, 0x37, 0xad, 0x42, 0xa4, 0xdf, 0x1e, 0x6f,
-	0x5a, 0xbb, 0x11, 0xd3, 0x3d, 0xc1, 0x78, 0xee, 0xf8, 0x34, 0x13, 0x1a, 0xdf, 0xc0, 0xf6, 0x34,
-	0xdc, 0xa5, 0x6a, 0x28, 0xb8, 0xa2, 0x68, 0x0f, 0xd6, 0x71, 0x01, 0xc7, 0x92, 0x19, 0xa9, 0x64,
-	0x13, 0x68, 0x87, 0x34, 0xee, 0x0c, 0xf8, 0xe4, 0x4c, 0xf9, 0x1d, 0xce, 0x34, 0xc3, 0x9a, 0x9e,
-	0x87, 0xba, 0x2b, 0x42, 0x4e, 0xbe, 0x93, 0x98, 0xab, 0x3e, 0x95, 0xe8, 0x0b, 0x28, 0x29, 0xca,
-	0xc9, 0x2b, 0x8c, 0xce, 0xea, 0xe6, 0xb9, 0xfc, 0x44, 0x6a, 0x73, 0x9e, 0xd4, 0x4b, 0x93, 0x52,
-	0x1f, 0x1f, 0xc7, 0x2a, 0x65, 0xff, 0x10, 0x4b, 0xd4, 0x7a, 0x2e, 0xd1, 0xac, 0x16, 0x1a, 0x97,
-	0xb0, 0x3b, 0x27, 0x3d, 0x16, 0x6c, 0x07, 0x40, 0xd2, 0x1f, 0x42, 0xaa, 0x74, 0x21, 0x56, 0x39,
-	0x43, 0x3a, 0xa4, 0x18, 0x9e, 0xc5, 0x89, 0xe1, 0x69, 0xfc, 0xb7, 0x08, 0xd6, 0x98, 0x7c, 0xc0,
-	0x7e, 0xa4, 0x6e, 0xdc, 0xea, 0xa9, 0xe0, 0x7d, 0xe6, 0xc7, 0x7b, 0x82, 0x43, 0x7d, 0x25, 0x24,
-	0xd3, 0xd7, 0x2f, 0xef, 0xc9, 0xb8, 0x74, 0x9e, 0x82, 0x7b, 0xb0, 0x9e, 0x76, 0xec, 0xc5, 0x23,
-	0x44, 0xa5, 0xb2, 0xcc, 0xba, 0x19, 0xbb, 0x9a, 0xa2, 0x17, 0x29, 0x88, 0xaa, 0xb0, 0xe2, 0x87,
-	0x58, 0x12, 0x86, 0x79, 0x26, 0xe4, 0x38, 0x46, 0x36, 0x7c, 0x18, 0xe0, 0xc8, 0xd3, 0x59, 0xff,
-	0x5e, 0xa6, 0x77, 0xba, 0x2d, 0x1b, 0x01, 0x8e, 0x72, 0x65, 0xda, 0xe9, 0x94, 0x7f, 0x0a, 0xef,
-	0x09, 0x66, 0x83, 0x6b, 0x6f, 0xc0, 0x02, 0xa6, 0x93, 0xdd, 0x29, 0xbb, 0x90, 0x40, 0xdf, 0xc6,
-	0x08, 0xfa, 0x0a, 0x36, 0x63, 0x42, 0x11, 0x6a, 0xa5, 0x31, 0x27, 0x8c, 0xfb, 0x39, 0x67, 0xba,
-	0x4b, 0x95, 0x00, 0x47, 0xe7, 0x45, 0xb2, 0x3d, 0xe1, 0x68, 0xd1, 0x74, 0x6c, 0xea, 0xe7, 0xb3,
-	0x4c, 0x7d, 0x22, 0x6c, 0xa3, 0x01, 0xf5, 0x59, 0xb9, 0xdc, 0xce, 0xc3, 0xdf, 0x4d, 0x30, 0xcf,
-	0x94, 0x8f, 0x14, 0x6c, 0x3c, 0x7f, 0xc1, 0x5a, 0xf6, 0xb4, 0x87, 0xd3, 0x9e, 0xb6, 0x50, 0xd5,
-	0xc3, 0xd7, 0xd7, 0x8e, 0x67, 0xe9, 0x57, 0x03, 0xac, 0x99, 0x2b, 0x75, 0x30, 0x93, 0x70, 0xd6,
-	0x91, 0xea, 0xd7, 0x6f, 0x3e, 0x32, 0xbe, 0xca, 0x4f, 0xf0, 0xd1, 0xf4, 0xe9, 0xb4, 0x5f, 0xe0,
-	0x7c, 0x52, 0x5f, 0x3d, 0x7a, 0x5b, 0x7d, 0x7e, 0x81, 0xea, 0xf2, 0xcf, 0x8f, 0x37, 0x2d, 0xe3,
-	0xa4, 0xf3, 0xf7, 0x7d, 0xcd, 0xb8, 0xbd, 0xaf, 0x19, 0x77, 0xf7, 0x35, 0xe3, 0x8f, 0x87, 0xda,
-	0xc2, 0xed, 0x43, 0x6d, 0xe1, 0xdf, 0x87, 0xda, 0xc2, 0xa5, 0xe3, 0x33, 0x7d, 0x15, 0x76, 0xed,
-	0x9e, 0x08, 0x9c, 0x6c, 0x02, 0xf6, 0x85, 0xf4, 0x9d, 0xa1, 0x50, 0xfb, 0xc9, 0x7b, 0xef, 0x44,
-	0xf9, 0x44, 0xe8, 0xeb, 0x21, 0x55, 0xdd, 0x52, 0xf2, 0x7d, 0xfa, 0xf2, 0xff, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0x05, 0x4e, 0x95, 0x9f, 0x1d, 0x07, 0x00, 0x00,
+	// 1036 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xdc, 0x57, 0x4d, 0x6f, 0xe3, 0x44,
+	0x18, 0xae, 0x9b, 0x7e, 0xe5, 0xed, 0xc7, 0xaa, 0xde, 0x52, 0xbc, 0x61, 0x1b, 0x82, 0x4b, 0x97,
+	0x2a, 0xda, 0xc6, 0xdb, 0x65, 0x55, 0x41, 0x6f, 0xed, 0x6a, 0x0f, 0x91, 0x88, 0x16, 0xb9, 0xec,
+	0x65, 0x2f, 0xd6, 0x24, 0x9e, 0xb8, 0x23, 0xc5, 0x33, 0x61, 0x66, 0x5c, 0x25, 0x5c, 0x40, 0x1c,
+	0x10, 0x42, 0x42, 0xe2, 0xc4, 0x85, 0x3f, 0xd1, 0x03, 0x3f, 0x82, 0xe3, 0x8a, 0x13, 0xc7, 0xaa,
+	0x3d, 0xf4, 0x07, 0xf0, 0x07, 0x90, 0xc7, 0x1f, 0x31, 0x71, 0x9c, 0xb6, 0x08, 0x38, 0xec, 0x25,
+	0xd2, 0x3c, 0xef, 0x33, 0xaf, 0xfd, 0x3e, 0xef, 0x97, 0x03, 0x5b, 0x1d, 0x26, 0x7c, 0x26, 0x2c,
+	0x7c, 0xe6, 0x5b, 0x6d, 0x4e, 0x5c, 0x0f, 0x5b, 0x67, 0xfb, 0x96, 0x1c, 0x34, 0xfa, 0x9c, 0x49,
+	0xa6, 0x6f, 0x44, 0xe6, 0x06, 0x3e, 0xf3, 0x1b, 0x91, 0xb9, 0x71, 0xb6, 0x5f, 0x59, 0x47, 0x3e,
+	0xa1, 0xcc, 0x52, 0xbf, 0x11, 0xb1, 0xf2, 0x6e, 0xec, 0xc7, 0x17, 0x5e, 0xe8, 0xc0, 0x17, 0x5e,
+	0x6c, 0x78, 0x10, 0x19, 0x1c, 0x75, 0xb2, 0x62, 0x77, 0xea, 0x60, 0xfe, 0x52, 0x82, 0x8d, 0x96,
+	0xf0, 0x4e, 0x82, 0xb6, 0x4f, 0xe4, 0x91, 0x94, 0x58, 0x48, 0x24, 0x09, 0xa3, 0xfa, 0x01, 0x94,
+	0x85, 0x02, 0x25, 0xe6, 0x86, 0x56, 0xd3, 0x76, 0xcb, 0xc7, 0xc6, 0xef, 0xbf, 0xee, 0x25, 0x2f,
+	0x73, 0xe4, 0xba, 0x1c, 0x0b, 0x71, 0x22, 0x39, 0xa1, 0x9e, 0x3d, 0xa2, 0xea, 0x0f, 0x60, 0x89,
+	0xb3, 0x40, 0x62, 0x87, 0xb8, 0xc6, 0x6c, 0x78, 0xcd, 0x5e, 0x54, 0xe7, 0xa6, 0xab, 0x3f, 0x84,
+	0xb2, 0x4b, 0x38, 0xee, 0x84, 0xfe, 0x8d, 0x92, 0xb2, 0x8d, 0x00, 0xfd, 0x11, 0xdc, 0x13, 0x2c,
+	0xe0, 0x1d, 0xec, 0x74, 0x4e, 0x11, 0xa1, 0xe1, 0xfd, 0x39, 0xc5, 0x59, 0x8d, 0xe0, 0xe7, 0x21,
+	0xda, 0x74, 0xf5, 0x2d, 0x80, 0x98, 0xc7, 0x71, 0xd7, 0x98, 0x8f, 0xdc, 0x44, 0x88, 0x8d, 0xbb,
+	0xfa, 0x06, 0xcc, 0x53, 0x46, 0x3b, 0xd8, 0x58, 0xa8, 0x69, 0xbb, 0x73, 0x76, 0x74, 0xd0, 0x6b,
+	0xb0, 0xec, 0x62, 0x21, 0x09, 0x55, 0xc1, 0x19, 0x8b, 0xea, 0x56, 0x16, 0xd2, 0x37, 0x61, 0x01,
+	0xf9, 0x2c, 0xa0, 0xd2, 0x58, 0x52, 0xc6, 0xf8, 0xa4, 0x6f, 0xc3, 0xaa, 0x8b, 0x91, 0xdb, 0x23,
+	0x14, 0x3b, 0x01, 0x25, 0x03, 0xa3, 0x5c, 0xd3, 0x76, 0x4b, 0xf6, 0x4a, 0x02, 0xbe, 0xa2, 0x64,
+	0xa0, 0x57, 0x01, 0x04, 0xf1, 0x28, 0x92, 0x01, 0xc7, 0xc2, 0x80, 0x5a, 0x69, 0x77, 0xc5, 0xce,
+	0x20, 0x87, 0x07, 0xdf, 0x5e, 0x9f, 0xd7, 0x47, 0x22, 0xfd, 0x70, 0x7d, 0x5e, 0xdf, 0x1e, 0x10,
+	0xd9, 0x61, 0x84, 0x26, 0x19, 0x9f, 0x94, 0x04, 0xf3, 0x05, 0x3c, 0x9c, 0x84, 0xdb, 0x58, 0xf4,
+	0x19, 0x15, 0x58, 0xdf, 0x81, 0x35, 0x34, 0x82, 0x43, 0xc9, 0xb4, 0x48, 0xb2, 0x0c, 0xda, 0x74,
+	0xcd, 0x0b, 0x0d, 0xde, 0x6b, 0x09, 0xaf, 0x49, 0x89, 0x24, 0x48, 0xe2, 0x97, 0x81, 0x6c, 0xb3,
+	0x80, 0xba, 0x5f, 0x70, 0x44, 0x45, 0x17, 0x73, 0xfd, 0x09, 0x2c, 0x08, 0x4c, 0xdd, 0x5b, 0x24,
+	0x3a, 0xe6, 0x4d, 0xcb, 0xf2, 0x98, 0xd4, 0xa5, 0x69, 0x52, 0xcf, 0x65, 0xa5, 0x3e, 0x3c, 0x0c,
+	0x55, 0x8a, 0x9f, 0x10, 0x4a, 0x54, 0xcf, 0x4b, 0x54, 0x14, 0x82, 0xf9, 0x1a, 0xb6, 0xa7, 0x98,
+	0x53, 0xc1, 0xb6, 0x00, 0x38, 0xfe, 0x32, 0xc0, 0x42, 0x8e, 0xc4, 0x2a, 0xc7, 0x48, 0xd3, 0x1d,
+	0x15, 0xcf, 0x6c, 0xa6, 0x78, 0xcc, 0x3f, 0x67, 0xc1, 0x48, 0x9d, 0xf7, 0xc8, 0x57, 0xd8, 0x0e,
+	0x43, 0x7d, 0xce, 0x68, 0x97, 0x78, 0x61, 0x9f, 0xa0, 0x40, 0x9e, 0x32, 0x4e, 0xe4, 0xf0, 0xe6,
+	0x3e, 0x49, 0xa9, 0xd3, 0x14, 0xdc, 0x81, 0xb5, 0x28, 0x62, 0x27, 0x2c, 0x21, 0xcc, 0x85, 0x51,
+	0xaa, 0x95, 0xc2, 0xac, 0x46, 0xe8, 0x49, 0x04, 0xea, 0x15, 0x58, 0xf2, 0x02, 0xc4, 0x5d, 0x82,
+	0x68, 0x2c, 0x64, 0x7a, 0xd6, 0x1b, 0x70, 0xdf, 0x47, 0x03, 0x47, 0xc6, 0xf1, 0x3b, 0xb1, 0xde,
+	0x51, 0xb7, 0xac, 0xfb, 0x68, 0x90, 0x28, 0x73, 0x14, 0x55, 0xf9, 0xfb, 0xb0, 0xec, 0x22, 0xd2,
+	0x1b, 0x3a, 0x3d, 0xe2, 0x13, 0xa9, 0x7a, 0xa7, 0x6c, 0x83, 0x82, 0x3e, 0x0b, 0x11, 0xfd, 0x19,
+	0x6c, 0x86, 0x0e, 0x59, 0x20, 0x85, 0x44, 0xd4, 0x25, 0xd4, 0x4b, 0x7c, 0x46, 0xbd, 0xb4, 0xe1,
+	0xa3, 0xc1, 0xcb, 0x91, 0xf1, 0x28, 0x93, 0xd1, 0x51, 0xd0, 0x61, 0x52, 0x3f, 0x2a, 0x4a, 0xea,
+	0x98, 0xb0, 0xa6, 0x09, 0xb5, 0x22, 0x5b, 0x92, 0x4e, 0xf3, 0xc7, 0x59, 0xd8, 0x6c, 0x09, 0xef,
+	0x85, 0x8f, 0xb9, 0x87, 0x69, 0x67, 0xf8, 0x39, 0x0a, 0x44, 0x44, 0xfc, 0x2f, 0xe6, 0x57, 0x5a,
+	0x1d, 0xa5, 0xec, 0x68, 0xf9, 0x00, 0x56, 0xf0, 0xa0, 0x4f, 0x38, 0x16, 0xd1, 0x7c, 0x98, 0x53,
+	0xf3, 0x61, 0x39, 0xc6, 0xd4, 0x78, 0xd8, 0x03, 0x3d, 0xc9, 0x8c, 0x93, 0x4e, 0x05, 0x95, 0x8c,
+	0x15, 0x7b, 0x3d, 0xb1, 0x9c, 0x24, 0x86, 0xc3, 0x4f, 0xf2, 0xd3, 0x62, 0x27, 0xaf, 0xda, 0x84,
+	0xa0, 0xcd, 0x1a, 0x54, 0x27, 0x5b, 0x52, 0xc5, 0x7e, 0x9e, 0x85, 0xb5, 0x96, 0x08, 0x15, 0x0c,
+	0xfc, 0xff, 0x5b, 0xa9, 0x47, 0x70, 0x8f, 0x32, 0xe9, 0xb4, 0x71, 0x97, 0x71, 0x9c, 0x15, 0x6b,
+	0x95, 0x32, 0x79, 0xac, 0x50, 0x25, 0xd7, 0xb8, 0xa2, 0xf3, 0x79, 0x45, 0xff, 0x3e, 0x70, 0x17,
+	0x72, 0x03, 0xf7, 0x49, 0x5e, 0xc2, 0xad, 0xbc, 0x84, 0x19, 0x15, 0x4c, 0x43, 0x55, 0x52, 0x06,
+	0x49, 0x25, 0xfb, 0x6e, 0x4e, 0xad, 0xc8, 0x57, 0x7d, 0x17, 0xc9, 0xf1, 0xd6, 0xff, 0xb7, 0x85,
+	0x7b, 0x6b, 0x5a, 0x5f, 0x37, 0x60, 0x11, 0x53, 0xd4, 0xee, 0x61, 0x57, 0x2d, 0xd4, 0x25, 0x3b,
+	0x39, 0x8e, 0x8a, 0xa3, 0x7c, 0x43, 0x71, 0xc0, 0x6d, 0x8a, 0x63, 0xf9, 0xa6, 0xe2, 0x58, 0xf9,
+	0x87, 0xdb, 0x38, 0x97, 0x6f, 0xb3, 0xaa, 0xb6, 0x71, 0x0e, 0x4f, 0x0a, 0xe5, 0xe9, 0xc5, 0x3c,
+	0x94, 0x5a, 0xc2, 0xd3, 0x05, 0xac, 0xe7, 0xbf, 0xa7, 0xea, 0x8d, 0x49, 0x9f, 0x71, 0x8d, 0x49,
+	0xeb, 0xbd, 0xf2, 0xf4, 0xf6, 0xdc, 0x74, 0xb3, 0x7d, 0xaf, 0x81, 0x51, 0xb8, 0xe0, 0xf7, 0x0b,
+	0x1d, 0x16, 0x5d, 0xa9, 0x7c, 0x7a, 0xe7, 0x2b, 0xe9, 0xab, 0x7c, 0x0d, 0xef, 0x4c, 0xde, 0x95,
+	0x8d, 0x1b, 0x7c, 0x8e, 0xf1, 0x2b, 0x07, 0x77, 0xe3, 0xa7, 0x2f, 0x30, 0x84, 0xfb, 0x93, 0x56,
+	0xc2, 0xe3, 0x42, 0x77, 0x13, 0xd8, 0x95, 0x67, 0x77, 0x61, 0xa7, 0x8f, 0x46, 0xb0, 0x9c, 0x9d,
+	0xad, 0x1f, 0x16, 0x3a, 0xc9, 0xb0, 0x2a, 0x8f, 0x6f, 0xc3, 0x4a, 0x1f, 0x21, 0x60, 0x3d, 0x3f,
+	0x8b, 0x8a, 0xcb, 0x2b, 0xc7, 0x9d, 0x52, 0x5e, 0x85, 0xb5, 0x5d, 0x99, 0xff, 0xe6, 0xfa, 0xbc,
+	0xae, 0x1d, 0x37, 0x7f, 0xbb, 0xac, 0x6a, 0x6f, 0x2e, 0xab, 0xda, 0xc5, 0x65, 0x55, 0xfb, 0xe9,
+	0xaa, 0x3a, 0xf3, 0xe6, 0xaa, 0x3a, 0xf3, 0xc7, 0x55, 0x75, 0xe6, 0xb5, 0xe5, 0x11, 0x79, 0x1a,
+	0xb4, 0x1b, 0x1d, 0xe6, 0x5b, 0x71, 0x33, 0xed, 0x31, 0xee, 0x59, 0x7d, 0x26, 0xf6, 0xd4, 0x07,
+	0xbd, 0x35, 0x48, 0x9a, 0x4b, 0x0e, 0xfb, 0x58, 0xb4, 0x17, 0xd4, 0x1f, 0x90, 0x8f, 0xff, 0x0a,
+	0x00, 0x00, 0xff, 0xff, 0x9b, 0xed, 0xf8, 0x13, 0xfe, 0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -524,6 +952,12 @@ type MsgClient interface {
 	InitiateOutboundTransfer(ctx context.Context, in *MsgInitiateOutboundTransfer, opts ...grpc.CallOption) (*MsgInitiateOutboundTransferResponse, error)
 	// InitializeRouteConfig creates the first route in a disabled and paused state.
 	InitializeRouteConfig(ctx context.Context, in *MsgInitializeRouteConfig, opts ...grpc.CallOption) (*MsgInitializeRouteConfigResponse, error)
+	// EmergencyPauseRoute allows the configured guardian to pause the route.
+	EmergencyPauseRoute(ctx context.Context, in *MsgEmergencyPauseRoute, opts ...grpc.CallOption) (*MsgEmergencyPauseRouteResponse, error)
+	// ResumeRoute requires threshold approval from the current bridge signers.
+	ResumeRoute(ctx context.Context, in *MsgResumeRoute, opts ...grpc.CallOption) (*MsgResumeRouteResponse, error)
+	// UpdateRouteConfig requires threshold approval from the current bridge signers.
+	UpdateRouteConfig(ctx context.Context, in *MsgUpdateRouteConfig, opts ...grpc.CallOption) (*MsgUpdateRouteConfigResponse, error)
 }
 
 type msgClient struct {
@@ -561,6 +995,33 @@ func (c *msgClient) InitializeRouteConfig(ctx context.Context, in *MsgInitialize
 	return out, nil
 }
 
+func (c *msgClient) EmergencyPauseRoute(ctx context.Context, in *MsgEmergencyPauseRoute, opts ...grpc.CallOption) (*MsgEmergencyPauseRouteResponse, error) {
+	out := new(MsgEmergencyPauseRouteResponse)
+	err := c.cc.Invoke(ctx, "/cosmos.evm.bridge.v1.Msg/EmergencyPauseRoute", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ResumeRoute(ctx context.Context, in *MsgResumeRoute, opts ...grpc.CallOption) (*MsgResumeRouteResponse, error) {
+	out := new(MsgResumeRouteResponse)
+	err := c.cc.Invoke(ctx, "/cosmos.evm.bridge.v1.Msg/ResumeRoute", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateRouteConfig(ctx context.Context, in *MsgUpdateRouteConfig, opts ...grpc.CallOption) (*MsgUpdateRouteConfigResponse, error) {
+	out := new(MsgUpdateRouteConfigResponse)
+	err := c.cc.Invoke(ctx, "/cosmos.evm.bridge.v1.Msg/UpdateRouteConfig", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// SubmitAttestation validates and settles an inbound Cronos attestation.
@@ -569,6 +1030,12 @@ type MsgServer interface {
 	InitiateOutboundTransfer(context.Context, *MsgInitiateOutboundTransfer) (*MsgInitiateOutboundTransferResponse, error)
 	// InitializeRouteConfig creates the first route in a disabled and paused state.
 	InitializeRouteConfig(context.Context, *MsgInitializeRouteConfig) (*MsgInitializeRouteConfigResponse, error)
+	// EmergencyPauseRoute allows the configured guardian to pause the route.
+	EmergencyPauseRoute(context.Context, *MsgEmergencyPauseRoute) (*MsgEmergencyPauseRouteResponse, error)
+	// ResumeRoute requires threshold approval from the current bridge signers.
+	ResumeRoute(context.Context, *MsgResumeRoute) (*MsgResumeRouteResponse, error)
+	// UpdateRouteConfig requires threshold approval from the current bridge signers.
+	UpdateRouteConfig(context.Context, *MsgUpdateRouteConfig) (*MsgUpdateRouteConfigResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -583,6 +1050,15 @@ func (*UnimplementedMsgServer) InitiateOutboundTransfer(ctx context.Context, req
 }
 func (*UnimplementedMsgServer) InitializeRouteConfig(ctx context.Context, req *MsgInitializeRouteConfig) (*MsgInitializeRouteConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitializeRouteConfig not implemented")
+}
+func (*UnimplementedMsgServer) EmergencyPauseRoute(ctx context.Context, req *MsgEmergencyPauseRoute) (*MsgEmergencyPauseRouteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmergencyPauseRoute not implemented")
+}
+func (*UnimplementedMsgServer) ResumeRoute(ctx context.Context, req *MsgResumeRoute) (*MsgResumeRouteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResumeRoute not implemented")
+}
+func (*UnimplementedMsgServer) UpdateRouteConfig(ctx context.Context, req *MsgUpdateRouteConfig) (*MsgUpdateRouteConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRouteConfig not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -643,6 +1119,60 @@ func _Msg_InitializeRouteConfig_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_EmergencyPauseRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgEmergencyPauseRoute)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).EmergencyPauseRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cosmos.evm.bridge.v1.Msg/EmergencyPauseRoute",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).EmergencyPauseRoute(ctx, req.(*MsgEmergencyPauseRoute))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ResumeRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgResumeRoute)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ResumeRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cosmos.evm.bridge.v1.Msg/ResumeRoute",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ResumeRoute(ctx, req.(*MsgResumeRoute))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateRouteConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateRouteConfig)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateRouteConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cosmos.evm.bridge.v1.Msg/UpdateRouteConfig",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateRouteConfig(ctx, req.(*MsgUpdateRouteConfig))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cosmos.evm.bridge.v1.Msg",
@@ -659,6 +1189,18 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InitializeRouteConfig",
 			Handler:    _Msg_InitializeRouteConfig_Handler,
+		},
+		{
+			MethodName: "EmergencyPauseRoute",
+			Handler:    _Msg_EmergencyPauseRoute_Handler,
+		},
+		{
+			MethodName: "ResumeRoute",
+			Handler:    _Msg_ResumeRoute_Handler,
+		},
+		{
+			MethodName: "UpdateRouteConfig",
+			Handler:    _Msg_UpdateRouteConfig_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -969,6 +1511,298 @@ func (m *MsgInitializeRouteConfigResponse) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgEmergencyPauseRoute) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgEmergencyPauseRoute) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgEmergencyPauseRoute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.GuardianSignature) > 0 {
+		i -= len(m.GuardianSignature)
+		copy(dAtA[i:], m.GuardianSignature)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.GuardianSignature)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.ExpiresUnix != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.ExpiresUnix))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Nonce != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Nonce))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.RouteId) > 0 {
+		i -= len(m.RouteId)
+		copy(dAtA[i:], m.RouteId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.RouteId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Submitter) > 0 {
+		i -= len(m.Submitter)
+		copy(dAtA[i:], m.Submitter)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Submitter)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgEmergencyPauseRouteResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgEmergencyPauseRouteResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgEmergencyPauseRouteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgResumeRoute) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgResumeRoute) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgResumeRoute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Signatures) > 0 {
+		for iNdEx := len(m.Signatures) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Signatures[iNdEx])
+			copy(dAtA[i:], m.Signatures[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.Signatures[iNdEx])))
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if m.ExpiresUnix != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.ExpiresUnix))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.NotBeforeUnix != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.NotBeforeUnix))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Nonce != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Nonce))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.RouteId) > 0 {
+		i -= len(m.RouteId)
+		copy(dAtA[i:], m.RouteId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.RouteId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Submitter) > 0 {
+		i -= len(m.Submitter)
+		copy(dAtA[i:], m.Submitter)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Submitter)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgResumeRouteResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgResumeRouteResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgResumeRouteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateRouteConfig) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateRouteConfig) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateRouteConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Signatures) > 0 {
+		for iNdEx := len(m.Signatures) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Signatures[iNdEx])
+			copy(dAtA[i:], m.Signatures[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.Signatures[iNdEx])))
+			i--
+			dAtA[i] = 0x62
+		}
+	}
+	if m.ExpiresUnix != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.ExpiresUnix))
+		i--
+		dAtA[i] = 0x58
+	}
+	if m.NotBeforeUnix != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.NotBeforeUnix))
+		i--
+		dAtA[i] = 0x50
+	}
+	if m.Nonce != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Nonce))
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.Enabled {
+		i--
+		if m.Enabled {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x40
+	}
+	if len(m.MaxOutstandingAmount) > 0 {
+		i -= len(m.MaxOutstandingAmount)
+		copy(dAtA[i:], m.MaxOutstandingAmount)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.MaxOutstandingAmount)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.DailyLimit) > 0 {
+		i -= len(m.DailyLimit)
+		copy(dAtA[i:], m.DailyLimit)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DailyLimit)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.MaxTransferAmount) > 0 {
+		i -= len(m.MaxTransferAmount)
+		copy(dAtA[i:], m.MaxTransferAmount)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.MaxTransferAmount)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Guardian) > 0 {
+		i -= len(m.Guardian)
+		copy(dAtA[i:], m.Guardian)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Guardian)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.BridgeSigners) > 0 {
+		for iNdEx := len(m.BridgeSigners) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.BridgeSigners[iNdEx])
+			copy(dAtA[i:], m.BridgeSigners[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.BridgeSigners[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.RouteId) > 0 {
+		i -= len(m.RouteId)
+		copy(dAtA[i:], m.RouteId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.RouteId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Submitter) > 0 {
+		i -= len(m.Submitter)
+		copy(dAtA[i:], m.Submitter)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Submitter)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateRouteConfigResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateRouteConfigResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateRouteConfigResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -1123,6 +1957,149 @@ func (m *MsgInitializeRouteConfig) Size() (n int) {
 }
 
 func (m *MsgInitializeRouteConfigResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgEmergencyPauseRoute) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Submitter)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.RouteId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Nonce != 0 {
+		n += 1 + sovTx(uint64(m.Nonce))
+	}
+	if m.ExpiresUnix != 0 {
+		n += 1 + sovTx(uint64(m.ExpiresUnix))
+	}
+	l = len(m.GuardianSignature)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgEmergencyPauseRouteResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgResumeRoute) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Submitter)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.RouteId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Nonce != 0 {
+		n += 1 + sovTx(uint64(m.Nonce))
+	}
+	if m.NotBeforeUnix != 0 {
+		n += 1 + sovTx(uint64(m.NotBeforeUnix))
+	}
+	if m.ExpiresUnix != 0 {
+		n += 1 + sovTx(uint64(m.ExpiresUnix))
+	}
+	if len(m.Signatures) > 0 {
+		for _, b := range m.Signatures {
+			l = len(b)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *MsgResumeRouteResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgUpdateRouteConfig) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Submitter)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.RouteId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if len(m.BridgeSigners) > 0 {
+		for _, s := range m.BridgeSigners {
+			l = len(s)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	l = len(m.Guardian)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.MaxTransferAmount)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.DailyLimit)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.MaxOutstandingAmount)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Enabled {
+		n += 2
+	}
+	if m.Nonce != 0 {
+		n += 1 + sovTx(uint64(m.Nonce))
+	}
+	if m.NotBeforeUnix != 0 {
+		n += 1 + sovTx(uint64(m.NotBeforeUnix))
+	}
+	if m.ExpiresUnix != 0 {
+		n += 1 + sovTx(uint64(m.ExpiresUnix))
+	}
+	if len(m.Signatures) > 0 {
+		for _, b := range m.Signatures {
+			l = len(b)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *MsgUpdateRouteConfigResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2143,6 +3120,928 @@ func (m *MsgInitializeRouteConfigResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgInitializeRouteConfigResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgEmergencyPauseRoute) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgEmergencyPauseRoute: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgEmergencyPauseRoute: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Submitter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Submitter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RouteId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RouteId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Nonce", wireType)
+			}
+			m.Nonce = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Nonce |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExpiresUnix", wireType)
+			}
+			m.ExpiresUnix = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ExpiresUnix |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GuardianSignature", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.GuardianSignature = append(m.GuardianSignature[:0], dAtA[iNdEx:postIndex]...)
+			if m.GuardianSignature == nil {
+				m.GuardianSignature = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgEmergencyPauseRouteResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgEmergencyPauseRouteResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgEmergencyPauseRouteResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgResumeRoute) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgResumeRoute: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgResumeRoute: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Submitter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Submitter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RouteId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RouteId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Nonce", wireType)
+			}
+			m.Nonce = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Nonce |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotBeforeUnix", wireType)
+			}
+			m.NotBeforeUnix = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NotBeforeUnix |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExpiresUnix", wireType)
+			}
+			m.ExpiresUnix = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ExpiresUnix |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Signatures", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Signatures = append(m.Signatures, make([]byte, postIndex-iNdEx))
+			copy(m.Signatures[len(m.Signatures)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgResumeRouteResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgResumeRouteResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgResumeRouteResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateRouteConfig) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateRouteConfig: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateRouteConfig: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Submitter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Submitter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RouteId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RouteId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BridgeSigners", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BridgeSigners = append(m.BridgeSigners, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Guardian", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Guardian = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxTransferAmount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MaxTransferAmount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DailyLimit", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DailyLimit = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxOutstandingAmount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MaxOutstandingAmount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Enabled", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Enabled = bool(v != 0)
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Nonce", wireType)
+			}
+			m.Nonce = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Nonce |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotBeforeUnix", wireType)
+			}
+			m.NotBeforeUnix = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NotBeforeUnix |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 11:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExpiresUnix", wireType)
+			}
+			m.ExpiresUnix = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ExpiresUnix |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Signatures", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Signatures = append(m.Signatures, make([]byte, postIndex-iNdEx))
+			copy(m.Signatures[len(m.Signatures)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateRouteConfigResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateRouteConfigResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateRouteConfigResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
