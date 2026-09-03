@@ -8,9 +8,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func TestKCALBAdministrativeAuthority(t *testing.T) {
-	authority := mustKCALBAdministrativeAuthority()
-	require.Equal(t, KCALBAdministrativeMultisigAddress, authority)
+func TestTestnetAdministrativeAuthority(t *testing.T) {
+	authority := mustTestnetAdministrativeAuthority()
+	require.Equal(t, "xtc1vza8zsgvrfwmve084ytd8xqdkkm7u9e5csctc2", authority)
+	require.Equal(t, TestnetAdministrativeMultisigAddress, authority)
 
 	address, err := sdk.AccAddressFromBech32(authority)
 	require.NoError(t, err)

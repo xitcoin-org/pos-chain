@@ -6,18 +6,18 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// KCALBAdministrativeMultisigAddress is the public 2-of-3 administrative
+// TestnetAdministrativeMultisigAddress is the public 2-of-3 administrative
 // authority. Its private keys are never embedded in the application.
-const KCALBAdministrativeMultisigAddress = "xtc1e3q4pm23ky0qetnep33j4yezq6c3lc7fcds4je"
+const TestnetAdministrativeMultisigAddress = "xtc1vza8zsgvrfwmve084ytd8xqdkkm7u9e5csctc2"
 
 // UnsafeEnableGovernanceProposalSubmissionOption exists only for legacy test
 // suites. Production startup does not register a CLI flag for this option.
 const UnsafeEnableGovernanceProposalSubmissionOption = "unsafe-enable-governance-proposal-submission"
 
-func mustKCALBAdministrativeAuthority() string {
-	authority, err := sdk.AccAddressFromBech32(KCALBAdministrativeMultisigAddress)
+func mustTestnetAdministrativeAuthority() string {
+	authority, err := sdk.AccAddressFromBech32(TestnetAdministrativeMultisigAddress)
 	if err != nil {
-		panic(fmt.Errorf("invalid KCALB administrative multisig: %w", err))
+		panic(fmt.Errorf("invalid Testnet V2 administrative multisig: %w", err))
 	}
 	return authority.String()
 }
