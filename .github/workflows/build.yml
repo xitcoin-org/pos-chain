@@ -73,8 +73,15 @@ jobs:
           dist/xitcoind version --long > dist/version-long.txt
           grep -F "commit: $GITHUB_SHA" dist/version-long.txt
           cp networks/xitcoin-testnet-v2-1/genesis.json dist/genesis.json
-          sha256sum dist/xitcoind > dist/xitcoind.sha256
-          sha256sum dist/genesis.json > dist/genesis.json.sha256
+
+          (
+            cd dist
+            sha256sum xitcoind > xitcoind.sha256
+            sha256sum genesis.json > genesis.json.sha256
+            sha256sum -c xitcoind.sha256
+            sha256sum -c genesis.json.sha256
+          )
+
           grep -F "$(awk '{print $1}' networks/xitcoin-testnet-v2-1/genesis.sha256)" \
             dist/genesis.json.sha256
 
