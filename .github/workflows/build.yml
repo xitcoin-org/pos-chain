@@ -14,6 +14,8 @@ on:
       - 'scripts/verify-xitcoin-release-state.py'
   push:
     branches: [main]
+    tags:
+      - 'v*-testnet.*'
     paths:
       - '.github/workflows/build.yml'
       - 'Makefile'
@@ -72,6 +74,11 @@ jobs:
           test -x dist/xitcoind
           dist/xitcoind version --long > dist/version-long.txt
           grep -F "commit: $GITHUB_SHA" dist/version-long.txt
+
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            grep -F "version: ${GITHUB_REF_NAME#v}" dist/version-long.txt
+          fi
+
           cp networks/xitcoin-testnet-v2-1/genesis.json dist/genesis.json
 
           (
@@ -92,3 +99,53 @@ jobs:
           path: dist/
           retention-days: 30
           if-no-files-found: error
+
+  publish-testnet-release:
+    name: Publish tagged testnet release
+    if: github.ref_type == 'tag'
+    needs: build-linux-amd64
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download verified release artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: xitcoind-${{ github.sha }}-linux-amd64
+          path: dist
+
+      - name: Reverify downloaded artifact
+        run: |
+          set -euo pipefail
+          (
+            cd dist
+            sha256sum -c xitcoind.sha256
+            sha256sum -c genesis.json.sha256
+          )
+          grep -F "commit: $GITHUB_SHA" dist/version-long.txt
+          grep -F "version: ${GITHUB_REF_NAME#v}" dist/version-long.txt
+          test "$(jq -r '.chain_id' dist/genesis.json)" = "xitcoin-testnet-v2-1"
+
+      - name: Publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release create "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --prerelease \
+            --title "Xitcoin Testnet ${GITHUB_REF_NAME#v}" \
+            --notes "Pre-release binary for the active Xitcoin Public Testnet.
+
+          Cosmos chain ID: xitcoin-testnet-v2-1
+          EVM chain ID: 101089
+          Source commit: $GITHUB_SHA
+
+          This release does not activate the Cronos bridge, configure a route, submit a transaction, or authorize mainnet use. Verify both checksum files before installation." \
+            dist/xitcoind \
+            dist/xitcoind.sha256 \
+            dist/genesis.json \
+            dist/genesis.json.sha256 \
+            dist/version-long.txt
