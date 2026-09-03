@@ -3759,6 +3759,3658 @@ func (x *fastReflection_MsgInitializeRouteConfigResponse) ProtoMethods() *protoi
 	}
 }
 
+var (
+	md_MsgEmergencyPauseRoute                    protoreflect.MessageDescriptor
+	fd_MsgEmergencyPauseRoute_submitter          protoreflect.FieldDescriptor
+	fd_MsgEmergencyPauseRoute_route_id           protoreflect.FieldDescriptor
+	fd_MsgEmergencyPauseRoute_nonce              protoreflect.FieldDescriptor
+	fd_MsgEmergencyPauseRoute_expires_unix       protoreflect.FieldDescriptor
+	fd_MsgEmergencyPauseRoute_guardian_signature protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_cosmos_evm_bridge_v1_tx_proto_init()
+	md_MsgEmergencyPauseRoute = File_cosmos_evm_bridge_v1_tx_proto.Messages().ByName("MsgEmergencyPauseRoute")
+	fd_MsgEmergencyPauseRoute_submitter = md_MsgEmergencyPauseRoute.Fields().ByName("submitter")
+	fd_MsgEmergencyPauseRoute_route_id = md_MsgEmergencyPauseRoute.Fields().ByName("route_id")
+	fd_MsgEmergencyPauseRoute_nonce = md_MsgEmergencyPauseRoute.Fields().ByName("nonce")
+	fd_MsgEmergencyPauseRoute_expires_unix = md_MsgEmergencyPauseRoute.Fields().ByName("expires_unix")
+	fd_MsgEmergencyPauseRoute_guardian_signature = md_MsgEmergencyPauseRoute.Fields().ByName("guardian_signature")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgEmergencyPauseRoute)(nil)
+
+type fastReflection_MsgEmergencyPauseRoute MsgEmergencyPauseRoute
+
+func (x *MsgEmergencyPauseRoute) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgEmergencyPauseRoute)(x)
+}
+
+func (x *MsgEmergencyPauseRoute) slowProtoReflect() protoreflect.Message {
+	mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgEmergencyPauseRoute_messageType fastReflection_MsgEmergencyPauseRoute_messageType
+var _ protoreflect.MessageType = fastReflection_MsgEmergencyPauseRoute_messageType{}
+
+type fastReflection_MsgEmergencyPauseRoute_messageType struct{}
+
+func (x fastReflection_MsgEmergencyPauseRoute_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgEmergencyPauseRoute)(nil)
+}
+func (x fastReflection_MsgEmergencyPauseRoute_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgEmergencyPauseRoute)
+}
+func (x fastReflection_MsgEmergencyPauseRoute_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgEmergencyPauseRoute
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgEmergencyPauseRoute) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgEmergencyPauseRoute
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgEmergencyPauseRoute) Type() protoreflect.MessageType {
+	return _fastReflection_MsgEmergencyPauseRoute_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgEmergencyPauseRoute) New() protoreflect.Message {
+	return new(fastReflection_MsgEmergencyPauseRoute)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgEmergencyPauseRoute) Interface() protoreflect.ProtoMessage {
+	return (*MsgEmergencyPauseRoute)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgEmergencyPauseRoute) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Submitter != "" {
+		value := protoreflect.ValueOfString(x.Submitter)
+		if !f(fd_MsgEmergencyPauseRoute_submitter, value) {
+			return
+		}
+	}
+	if x.RouteId != "" {
+		value := protoreflect.ValueOfString(x.RouteId)
+		if !f(fd_MsgEmergencyPauseRoute_route_id, value) {
+			return
+		}
+	}
+	if x.Nonce != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.Nonce)
+		if !f(fd_MsgEmergencyPauseRoute_nonce, value) {
+			return
+		}
+	}
+	if x.ExpiresUnix != int64(0) {
+		value := protoreflect.ValueOfInt64(x.ExpiresUnix)
+		if !f(fd_MsgEmergencyPauseRoute_expires_unix, value) {
+			return
+		}
+	}
+	if len(x.GuardianSignature) != 0 {
+		value := protoreflect.ValueOfBytes(x.GuardianSignature)
+		if !f(fd_MsgEmergencyPauseRoute_guardian_signature, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgEmergencyPauseRoute) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.submitter":
+		return x.Submitter != ""
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.route_id":
+		return x.RouteId != ""
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.nonce":
+		return x.Nonce != uint64(0)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.expires_unix":
+		return x.ExpiresUnix != int64(0)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.guardian_signature":
+		return len(x.GuardianSignature) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRoute) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.submitter":
+		x.Submitter = ""
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.route_id":
+		x.RouteId = ""
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.nonce":
+		x.Nonce = uint64(0)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.expires_unix":
+		x.ExpiresUnix = int64(0)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.guardian_signature":
+		x.GuardianSignature = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgEmergencyPauseRoute) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.submitter":
+		value := x.Submitter
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.route_id":
+		value := x.RouteId
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.nonce":
+		value := x.Nonce
+		return protoreflect.ValueOfUint64(value)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.expires_unix":
+		value := x.ExpiresUnix
+		return protoreflect.ValueOfInt64(value)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.guardian_signature":
+		value := x.GuardianSignature
+		return protoreflect.ValueOfBytes(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRoute) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.submitter":
+		x.Submitter = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.route_id":
+		x.RouteId = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.nonce":
+		x.Nonce = value.Uint()
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.expires_unix":
+		x.ExpiresUnix = value.Int()
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.guardian_signature":
+		x.GuardianSignature = value.Bytes()
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRoute) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.submitter":
+		panic(fmt.Errorf("field submitter of message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.route_id":
+		panic(fmt.Errorf("field route_id of message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.nonce":
+		panic(fmt.Errorf("field nonce of message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.expires_unix":
+		panic(fmt.Errorf("field expires_unix of message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.guardian_signature":
+		panic(fmt.Errorf("field guardian_signature of message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgEmergencyPauseRoute) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.submitter":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.route_id":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.nonce":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.expires_unix":
+		return protoreflect.ValueOfInt64(int64(0))
+	case "cosmos.evm.bridge.v1.MsgEmergencyPauseRoute.guardian_signature":
+		return protoreflect.ValueOfBytes(nil)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgEmergencyPauseRoute) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in cosmos.evm.bridge.v1.MsgEmergencyPauseRoute", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgEmergencyPauseRoute) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRoute) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgEmergencyPauseRoute) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgEmergencyPauseRoute) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgEmergencyPauseRoute)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.Submitter)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.RouteId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Nonce != 0 {
+			n += 1 + runtime.Sov(uint64(x.Nonce))
+		}
+		if x.ExpiresUnix != 0 {
+			n += 1 + runtime.Sov(uint64(x.ExpiresUnix))
+		}
+		l = len(x.GuardianSignature)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgEmergencyPauseRoute)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.GuardianSignature) > 0 {
+			i -= len(x.GuardianSignature)
+			copy(dAtA[i:], x.GuardianSignature)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.GuardianSignature)))
+			i--
+			dAtA[i] = 0x2a
+		}
+		if x.ExpiresUnix != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExpiresUnix))
+			i--
+			dAtA[i] = 0x20
+		}
+		if x.Nonce != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Nonce))
+			i--
+			dAtA[i] = 0x18
+		}
+		if len(x.RouteId) > 0 {
+			i -= len(x.RouteId)
+			copy(dAtA[i:], x.RouteId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.RouteId)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.Submitter) > 0 {
+			i -= len(x.Submitter)
+			copy(dAtA[i:], x.Submitter)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Submitter)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgEmergencyPauseRoute)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgEmergencyPauseRoute: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgEmergencyPauseRoute: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Submitter", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Submitter = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RouteId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.RouteId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Nonce", wireType)
+				}
+				x.Nonce = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.Nonce |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 4:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpiresUnix", wireType)
+				}
+				x.ExpiresUnix = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.ExpiresUnix |= int64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field GuardianSignature", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.GuardianSignature = append(x.GuardianSignature[:0], dAtA[iNdEx:postIndex]...)
+				if x.GuardianSignature == nil {
+					x.GuardianSignature = []byte{}
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgEmergencyPauseRouteResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_cosmos_evm_bridge_v1_tx_proto_init()
+	md_MsgEmergencyPauseRouteResponse = File_cosmos_evm_bridge_v1_tx_proto.Messages().ByName("MsgEmergencyPauseRouteResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgEmergencyPauseRouteResponse)(nil)
+
+type fastReflection_MsgEmergencyPauseRouteResponse MsgEmergencyPauseRouteResponse
+
+func (x *MsgEmergencyPauseRouteResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgEmergencyPauseRouteResponse)(x)
+}
+
+func (x *MsgEmergencyPauseRouteResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgEmergencyPauseRouteResponse_messageType fastReflection_MsgEmergencyPauseRouteResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgEmergencyPauseRouteResponse_messageType{}
+
+type fastReflection_MsgEmergencyPauseRouteResponse_messageType struct{}
+
+func (x fastReflection_MsgEmergencyPauseRouteResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgEmergencyPauseRouteResponse)(nil)
+}
+func (x fastReflection_MsgEmergencyPauseRouteResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgEmergencyPauseRouteResponse)
+}
+func (x fastReflection_MsgEmergencyPauseRouteResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgEmergencyPauseRouteResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgEmergencyPauseRouteResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgEmergencyPauseRouteResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgEmergencyPauseRouteResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgEmergencyPauseRouteResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgEmergencyPauseRouteResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgEmergencyPauseRouteResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgEmergencyPauseRouteResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgEmergencyPauseRouteResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgEmergencyPauseRouteResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgEmergencyPauseRouteResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var _ protoreflect.List = (*_MsgResumeRoute_6_list)(nil)
+
+type _MsgResumeRoute_6_list struct {
+	list *[][]byte
+}
+
+func (x *_MsgResumeRoute_6_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_MsgResumeRoute_6_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfBytes((*x.list)[i])
+}
+
+func (x *_MsgResumeRoute_6_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_MsgResumeRoute_6_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_MsgResumeRoute_6_list) AppendMutable() protoreflect.Value {
+	panic(fmt.Errorf("AppendMutable can not be called on message MsgResumeRoute at list field Signatures as it is not of Message kind"))
+}
+
+func (x *_MsgResumeRoute_6_list) Truncate(n int) {
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_MsgResumeRoute_6_list) NewElement() protoreflect.Value {
+	var v []byte
+	return protoreflect.ValueOfBytes(v)
+}
+
+func (x *_MsgResumeRoute_6_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_MsgResumeRoute                 protoreflect.MessageDescriptor
+	fd_MsgResumeRoute_submitter       protoreflect.FieldDescriptor
+	fd_MsgResumeRoute_route_id        protoreflect.FieldDescriptor
+	fd_MsgResumeRoute_nonce           protoreflect.FieldDescriptor
+	fd_MsgResumeRoute_not_before_unix protoreflect.FieldDescriptor
+	fd_MsgResumeRoute_expires_unix    protoreflect.FieldDescriptor
+	fd_MsgResumeRoute_signatures      protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_cosmos_evm_bridge_v1_tx_proto_init()
+	md_MsgResumeRoute = File_cosmos_evm_bridge_v1_tx_proto.Messages().ByName("MsgResumeRoute")
+	fd_MsgResumeRoute_submitter = md_MsgResumeRoute.Fields().ByName("submitter")
+	fd_MsgResumeRoute_route_id = md_MsgResumeRoute.Fields().ByName("route_id")
+	fd_MsgResumeRoute_nonce = md_MsgResumeRoute.Fields().ByName("nonce")
+	fd_MsgResumeRoute_not_before_unix = md_MsgResumeRoute.Fields().ByName("not_before_unix")
+	fd_MsgResumeRoute_expires_unix = md_MsgResumeRoute.Fields().ByName("expires_unix")
+	fd_MsgResumeRoute_signatures = md_MsgResumeRoute.Fields().ByName("signatures")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgResumeRoute)(nil)
+
+type fastReflection_MsgResumeRoute MsgResumeRoute
+
+func (x *MsgResumeRoute) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgResumeRoute)(x)
+}
+
+func (x *MsgResumeRoute) slowProtoReflect() protoreflect.Message {
+	mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgResumeRoute_messageType fastReflection_MsgResumeRoute_messageType
+var _ protoreflect.MessageType = fastReflection_MsgResumeRoute_messageType{}
+
+type fastReflection_MsgResumeRoute_messageType struct{}
+
+func (x fastReflection_MsgResumeRoute_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgResumeRoute)(nil)
+}
+func (x fastReflection_MsgResumeRoute_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgResumeRoute)
+}
+func (x fastReflection_MsgResumeRoute_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgResumeRoute
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgResumeRoute) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgResumeRoute
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgResumeRoute) Type() protoreflect.MessageType {
+	return _fastReflection_MsgResumeRoute_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgResumeRoute) New() protoreflect.Message {
+	return new(fastReflection_MsgResumeRoute)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgResumeRoute) Interface() protoreflect.ProtoMessage {
+	return (*MsgResumeRoute)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgResumeRoute) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Submitter != "" {
+		value := protoreflect.ValueOfString(x.Submitter)
+		if !f(fd_MsgResumeRoute_submitter, value) {
+			return
+		}
+	}
+	if x.RouteId != "" {
+		value := protoreflect.ValueOfString(x.RouteId)
+		if !f(fd_MsgResumeRoute_route_id, value) {
+			return
+		}
+	}
+	if x.Nonce != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.Nonce)
+		if !f(fd_MsgResumeRoute_nonce, value) {
+			return
+		}
+	}
+	if x.NotBeforeUnix != int64(0) {
+		value := protoreflect.ValueOfInt64(x.NotBeforeUnix)
+		if !f(fd_MsgResumeRoute_not_before_unix, value) {
+			return
+		}
+	}
+	if x.ExpiresUnix != int64(0) {
+		value := protoreflect.ValueOfInt64(x.ExpiresUnix)
+		if !f(fd_MsgResumeRoute_expires_unix, value) {
+			return
+		}
+	}
+	if len(x.Signatures) != 0 {
+		value := protoreflect.ValueOfList(&_MsgResumeRoute_6_list{list: &x.Signatures})
+		if !f(fd_MsgResumeRoute_signatures, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgResumeRoute) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.submitter":
+		return x.Submitter != ""
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.route_id":
+		return x.RouteId != ""
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.nonce":
+		return x.Nonce != uint64(0)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.not_before_unix":
+		return x.NotBeforeUnix != int64(0)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.expires_unix":
+		return x.ExpiresUnix != int64(0)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.signatures":
+		return len(x.Signatures) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRoute) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.submitter":
+		x.Submitter = ""
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.route_id":
+		x.RouteId = ""
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.nonce":
+		x.Nonce = uint64(0)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.not_before_unix":
+		x.NotBeforeUnix = int64(0)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.expires_unix":
+		x.ExpiresUnix = int64(0)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.signatures":
+		x.Signatures = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgResumeRoute) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.submitter":
+		value := x.Submitter
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.route_id":
+		value := x.RouteId
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.nonce":
+		value := x.Nonce
+		return protoreflect.ValueOfUint64(value)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.not_before_unix":
+		value := x.NotBeforeUnix
+		return protoreflect.ValueOfInt64(value)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.expires_unix":
+		value := x.ExpiresUnix
+		return protoreflect.ValueOfInt64(value)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.signatures":
+		if len(x.Signatures) == 0 {
+			return protoreflect.ValueOfList(&_MsgResumeRoute_6_list{})
+		}
+		listValue := &_MsgResumeRoute_6_list{list: &x.Signatures}
+		return protoreflect.ValueOfList(listValue)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRoute does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRoute) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.submitter":
+		x.Submitter = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.route_id":
+		x.RouteId = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.nonce":
+		x.Nonce = value.Uint()
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.not_before_unix":
+		x.NotBeforeUnix = value.Int()
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.expires_unix":
+		x.ExpiresUnix = value.Int()
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.signatures":
+		lv := value.List()
+		clv := lv.(*_MsgResumeRoute_6_list)
+		x.Signatures = *clv.list
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRoute) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.signatures":
+		if x.Signatures == nil {
+			x.Signatures = [][]byte{}
+		}
+		value := &_MsgResumeRoute_6_list{list: &x.Signatures}
+		return protoreflect.ValueOfList(value)
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.submitter":
+		panic(fmt.Errorf("field submitter of message cosmos.evm.bridge.v1.MsgResumeRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.route_id":
+		panic(fmt.Errorf("field route_id of message cosmos.evm.bridge.v1.MsgResumeRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.nonce":
+		panic(fmt.Errorf("field nonce of message cosmos.evm.bridge.v1.MsgResumeRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.not_before_unix":
+		panic(fmt.Errorf("field not_before_unix of message cosmos.evm.bridge.v1.MsgResumeRoute is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.expires_unix":
+		panic(fmt.Errorf("field expires_unix of message cosmos.evm.bridge.v1.MsgResumeRoute is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgResumeRoute) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.submitter":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.route_id":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.nonce":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.not_before_unix":
+		return protoreflect.ValueOfInt64(int64(0))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.expires_unix":
+		return protoreflect.ValueOfInt64(int64(0))
+	case "cosmos.evm.bridge.v1.MsgResumeRoute.signatures":
+		list := [][]byte{}
+		return protoreflect.ValueOfList(&_MsgResumeRoute_6_list{list: &list})
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRoute"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRoute does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgResumeRoute) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in cosmos.evm.bridge.v1.MsgResumeRoute", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgResumeRoute) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRoute) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgResumeRoute) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgResumeRoute) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgResumeRoute)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.Submitter)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.RouteId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Nonce != 0 {
+			n += 1 + runtime.Sov(uint64(x.Nonce))
+		}
+		if x.NotBeforeUnix != 0 {
+			n += 1 + runtime.Sov(uint64(x.NotBeforeUnix))
+		}
+		if x.ExpiresUnix != 0 {
+			n += 1 + runtime.Sov(uint64(x.ExpiresUnix))
+		}
+		if len(x.Signatures) > 0 {
+			for _, b := range x.Signatures {
+				l = len(b)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgResumeRoute)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Signatures) > 0 {
+			for iNdEx := len(x.Signatures) - 1; iNdEx >= 0; iNdEx-- {
+				i -= len(x.Signatures[iNdEx])
+				copy(dAtA[i:], x.Signatures[iNdEx])
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Signatures[iNdEx])))
+				i--
+				dAtA[i] = 0x32
+			}
+		}
+		if x.ExpiresUnix != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExpiresUnix))
+			i--
+			dAtA[i] = 0x28
+		}
+		if x.NotBeforeUnix != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.NotBeforeUnix))
+			i--
+			dAtA[i] = 0x20
+		}
+		if x.Nonce != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Nonce))
+			i--
+			dAtA[i] = 0x18
+		}
+		if len(x.RouteId) > 0 {
+			i -= len(x.RouteId)
+			copy(dAtA[i:], x.RouteId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.RouteId)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.Submitter) > 0 {
+			i -= len(x.Submitter)
+			copy(dAtA[i:], x.Submitter)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Submitter)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgResumeRoute)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgResumeRoute: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgResumeRoute: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Submitter", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Submitter = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RouteId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.RouteId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Nonce", wireType)
+				}
+				x.Nonce = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.Nonce |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 4:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field NotBeforeUnix", wireType)
+				}
+				x.NotBeforeUnix = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.NotBeforeUnix |= int64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 5:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpiresUnix", wireType)
+				}
+				x.ExpiresUnix = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.ExpiresUnix |= int64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Signatures", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Signatures = append(x.Signatures, make([]byte, postIndex-iNdEx))
+				copy(x.Signatures[len(x.Signatures)-1], dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgResumeRouteResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_cosmos_evm_bridge_v1_tx_proto_init()
+	md_MsgResumeRouteResponse = File_cosmos_evm_bridge_v1_tx_proto.Messages().ByName("MsgResumeRouteResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgResumeRouteResponse)(nil)
+
+type fastReflection_MsgResumeRouteResponse MsgResumeRouteResponse
+
+func (x *MsgResumeRouteResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgResumeRouteResponse)(x)
+}
+
+func (x *MsgResumeRouteResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgResumeRouteResponse_messageType fastReflection_MsgResumeRouteResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgResumeRouteResponse_messageType{}
+
+type fastReflection_MsgResumeRouteResponse_messageType struct{}
+
+func (x fastReflection_MsgResumeRouteResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgResumeRouteResponse)(nil)
+}
+func (x fastReflection_MsgResumeRouteResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgResumeRouteResponse)
+}
+func (x fastReflection_MsgResumeRouteResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgResumeRouteResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgResumeRouteResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgResumeRouteResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgResumeRouteResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgResumeRouteResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgResumeRouteResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgResumeRouteResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgResumeRouteResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgResumeRouteResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgResumeRouteResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgResumeRouteResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRouteResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgResumeRouteResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRouteResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRouteResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRouteResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgResumeRouteResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgResumeRouteResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgResumeRouteResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgResumeRouteResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in cosmos.evm.bridge.v1.MsgResumeRouteResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgResumeRouteResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgResumeRouteResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgResumeRouteResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgResumeRouteResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgResumeRouteResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgResumeRouteResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgResumeRouteResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgResumeRouteResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgResumeRouteResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var _ protoreflect.List = (*_MsgUpdateRouteConfig_3_list)(nil)
+
+type _MsgUpdateRouteConfig_3_list struct {
+	list *[]string
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfString((*x.list)[i])
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.String()
+	concreteValue := valueUnwrapped
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.String()
+	concreteValue := valueUnwrapped
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) AppendMutable() protoreflect.Value {
+	panic(fmt.Errorf("AppendMutable can not be called on message MsgUpdateRouteConfig at list field BridgeSigners as it is not of Message kind"))
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) Truncate(n int) {
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) NewElement() protoreflect.Value {
+	v := ""
+	return protoreflect.ValueOfString(v)
+}
+
+func (x *_MsgUpdateRouteConfig_3_list) IsValid() bool {
+	return x.list != nil
+}
+
+var _ protoreflect.List = (*_MsgUpdateRouteConfig_12_list)(nil)
+
+type _MsgUpdateRouteConfig_12_list struct {
+	list *[][]byte
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfBytes((*x.list)[i])
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) AppendMutable() protoreflect.Value {
+	panic(fmt.Errorf("AppendMutable can not be called on message MsgUpdateRouteConfig at list field Signatures as it is not of Message kind"))
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) Truncate(n int) {
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) NewElement() protoreflect.Value {
+	var v []byte
+	return protoreflect.ValueOfBytes(v)
+}
+
+func (x *_MsgUpdateRouteConfig_12_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_MsgUpdateRouteConfig                        protoreflect.MessageDescriptor
+	fd_MsgUpdateRouteConfig_submitter              protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_route_id               protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_bridge_signers         protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_guardian               protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_max_transfer_amount    protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_daily_limit            protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_max_outstanding_amount protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_enabled                protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_nonce                  protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_not_before_unix        protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_expires_unix           protoreflect.FieldDescriptor
+	fd_MsgUpdateRouteConfig_signatures             protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_cosmos_evm_bridge_v1_tx_proto_init()
+	md_MsgUpdateRouteConfig = File_cosmos_evm_bridge_v1_tx_proto.Messages().ByName("MsgUpdateRouteConfig")
+	fd_MsgUpdateRouteConfig_submitter = md_MsgUpdateRouteConfig.Fields().ByName("submitter")
+	fd_MsgUpdateRouteConfig_route_id = md_MsgUpdateRouteConfig.Fields().ByName("route_id")
+	fd_MsgUpdateRouteConfig_bridge_signers = md_MsgUpdateRouteConfig.Fields().ByName("bridge_signers")
+	fd_MsgUpdateRouteConfig_guardian = md_MsgUpdateRouteConfig.Fields().ByName("guardian")
+	fd_MsgUpdateRouteConfig_max_transfer_amount = md_MsgUpdateRouteConfig.Fields().ByName("max_transfer_amount")
+	fd_MsgUpdateRouteConfig_daily_limit = md_MsgUpdateRouteConfig.Fields().ByName("daily_limit")
+	fd_MsgUpdateRouteConfig_max_outstanding_amount = md_MsgUpdateRouteConfig.Fields().ByName("max_outstanding_amount")
+	fd_MsgUpdateRouteConfig_enabled = md_MsgUpdateRouteConfig.Fields().ByName("enabled")
+	fd_MsgUpdateRouteConfig_nonce = md_MsgUpdateRouteConfig.Fields().ByName("nonce")
+	fd_MsgUpdateRouteConfig_not_before_unix = md_MsgUpdateRouteConfig.Fields().ByName("not_before_unix")
+	fd_MsgUpdateRouteConfig_expires_unix = md_MsgUpdateRouteConfig.Fields().ByName("expires_unix")
+	fd_MsgUpdateRouteConfig_signatures = md_MsgUpdateRouteConfig.Fields().ByName("signatures")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgUpdateRouteConfig)(nil)
+
+type fastReflection_MsgUpdateRouteConfig MsgUpdateRouteConfig
+
+func (x *MsgUpdateRouteConfig) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUpdateRouteConfig)(x)
+}
+
+func (x *MsgUpdateRouteConfig) slowProtoReflect() protoreflect.Message {
+	mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgUpdateRouteConfig_messageType fastReflection_MsgUpdateRouteConfig_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUpdateRouteConfig_messageType{}
+
+type fastReflection_MsgUpdateRouteConfig_messageType struct{}
+
+func (x fastReflection_MsgUpdateRouteConfig_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUpdateRouteConfig)(nil)
+}
+func (x fastReflection_MsgUpdateRouteConfig_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUpdateRouteConfig)
+}
+func (x fastReflection_MsgUpdateRouteConfig_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUpdateRouteConfig
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgUpdateRouteConfig) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUpdateRouteConfig
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgUpdateRouteConfig) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUpdateRouteConfig_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgUpdateRouteConfig) New() protoreflect.Message {
+	return new(fastReflection_MsgUpdateRouteConfig)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgUpdateRouteConfig) Interface() protoreflect.ProtoMessage {
+	return (*MsgUpdateRouteConfig)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgUpdateRouteConfig) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Submitter != "" {
+		value := protoreflect.ValueOfString(x.Submitter)
+		if !f(fd_MsgUpdateRouteConfig_submitter, value) {
+			return
+		}
+	}
+	if x.RouteId != "" {
+		value := protoreflect.ValueOfString(x.RouteId)
+		if !f(fd_MsgUpdateRouteConfig_route_id, value) {
+			return
+		}
+	}
+	if len(x.BridgeSigners) != 0 {
+		value := protoreflect.ValueOfList(&_MsgUpdateRouteConfig_3_list{list: &x.BridgeSigners})
+		if !f(fd_MsgUpdateRouteConfig_bridge_signers, value) {
+			return
+		}
+	}
+	if x.Guardian != "" {
+		value := protoreflect.ValueOfString(x.Guardian)
+		if !f(fd_MsgUpdateRouteConfig_guardian, value) {
+			return
+		}
+	}
+	if x.MaxTransferAmount != "" {
+		value := protoreflect.ValueOfString(x.MaxTransferAmount)
+		if !f(fd_MsgUpdateRouteConfig_max_transfer_amount, value) {
+			return
+		}
+	}
+	if x.DailyLimit != "" {
+		value := protoreflect.ValueOfString(x.DailyLimit)
+		if !f(fd_MsgUpdateRouteConfig_daily_limit, value) {
+			return
+		}
+	}
+	if x.MaxOutstandingAmount != "" {
+		value := protoreflect.ValueOfString(x.MaxOutstandingAmount)
+		if !f(fd_MsgUpdateRouteConfig_max_outstanding_amount, value) {
+			return
+		}
+	}
+	if x.Enabled != false {
+		value := protoreflect.ValueOfBool(x.Enabled)
+		if !f(fd_MsgUpdateRouteConfig_enabled, value) {
+			return
+		}
+	}
+	if x.Nonce != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.Nonce)
+		if !f(fd_MsgUpdateRouteConfig_nonce, value) {
+			return
+		}
+	}
+	if x.NotBeforeUnix != int64(0) {
+		value := protoreflect.ValueOfInt64(x.NotBeforeUnix)
+		if !f(fd_MsgUpdateRouteConfig_not_before_unix, value) {
+			return
+		}
+	}
+	if x.ExpiresUnix != int64(0) {
+		value := protoreflect.ValueOfInt64(x.ExpiresUnix)
+		if !f(fd_MsgUpdateRouteConfig_expires_unix, value) {
+			return
+		}
+	}
+	if len(x.Signatures) != 0 {
+		value := protoreflect.ValueOfList(&_MsgUpdateRouteConfig_12_list{list: &x.Signatures})
+		if !f(fd_MsgUpdateRouteConfig_signatures, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgUpdateRouteConfig) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.submitter":
+		return x.Submitter != ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.route_id":
+		return x.RouteId != ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.bridge_signers":
+		return len(x.BridgeSigners) != 0
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.guardian":
+		return x.Guardian != ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_transfer_amount":
+		return x.MaxTransferAmount != ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.daily_limit":
+		return x.DailyLimit != ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_outstanding_amount":
+		return x.MaxOutstandingAmount != ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.enabled":
+		return x.Enabled != false
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.nonce":
+		return x.Nonce != uint64(0)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.not_before_unix":
+		return x.NotBeforeUnix != int64(0)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.expires_unix":
+		return x.ExpiresUnix != int64(0)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.signatures":
+		return len(x.Signatures) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfig"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfig does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfig) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.submitter":
+		x.Submitter = ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.route_id":
+		x.RouteId = ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.bridge_signers":
+		x.BridgeSigners = nil
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.guardian":
+		x.Guardian = ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_transfer_amount":
+		x.MaxTransferAmount = ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.daily_limit":
+		x.DailyLimit = ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_outstanding_amount":
+		x.MaxOutstandingAmount = ""
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.enabled":
+		x.Enabled = false
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.nonce":
+		x.Nonce = uint64(0)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.not_before_unix":
+		x.NotBeforeUnix = int64(0)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.expires_unix":
+		x.ExpiresUnix = int64(0)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.signatures":
+		x.Signatures = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfig"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfig does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgUpdateRouteConfig) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.submitter":
+		value := x.Submitter
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.route_id":
+		value := x.RouteId
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.bridge_signers":
+		if len(x.BridgeSigners) == 0 {
+			return protoreflect.ValueOfList(&_MsgUpdateRouteConfig_3_list{})
+		}
+		listValue := &_MsgUpdateRouteConfig_3_list{list: &x.BridgeSigners}
+		return protoreflect.ValueOfList(listValue)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.guardian":
+		value := x.Guardian
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_transfer_amount":
+		value := x.MaxTransferAmount
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.daily_limit":
+		value := x.DailyLimit
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_outstanding_amount":
+		value := x.MaxOutstandingAmount
+		return protoreflect.ValueOfString(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.enabled":
+		value := x.Enabled
+		return protoreflect.ValueOfBool(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.nonce":
+		value := x.Nonce
+		return protoreflect.ValueOfUint64(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.not_before_unix":
+		value := x.NotBeforeUnix
+		return protoreflect.ValueOfInt64(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.expires_unix":
+		value := x.ExpiresUnix
+		return protoreflect.ValueOfInt64(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.signatures":
+		if len(x.Signatures) == 0 {
+			return protoreflect.ValueOfList(&_MsgUpdateRouteConfig_12_list{})
+		}
+		listValue := &_MsgUpdateRouteConfig_12_list{list: &x.Signatures}
+		return protoreflect.ValueOfList(listValue)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfig"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfig does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfig) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.submitter":
+		x.Submitter = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.route_id":
+		x.RouteId = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.bridge_signers":
+		lv := value.List()
+		clv := lv.(*_MsgUpdateRouteConfig_3_list)
+		x.BridgeSigners = *clv.list
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.guardian":
+		x.Guardian = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_transfer_amount":
+		x.MaxTransferAmount = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.daily_limit":
+		x.DailyLimit = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_outstanding_amount":
+		x.MaxOutstandingAmount = value.Interface().(string)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.enabled":
+		x.Enabled = value.Bool()
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.nonce":
+		x.Nonce = value.Uint()
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.not_before_unix":
+		x.NotBeforeUnix = value.Int()
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.expires_unix":
+		x.ExpiresUnix = value.Int()
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.signatures":
+		lv := value.List()
+		clv := lv.(*_MsgUpdateRouteConfig_12_list)
+		x.Signatures = *clv.list
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfig"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfig does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfig) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.bridge_signers":
+		if x.BridgeSigners == nil {
+			x.BridgeSigners = []string{}
+		}
+		value := &_MsgUpdateRouteConfig_3_list{list: &x.BridgeSigners}
+		return protoreflect.ValueOfList(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.signatures":
+		if x.Signatures == nil {
+			x.Signatures = [][]byte{}
+		}
+		value := &_MsgUpdateRouteConfig_12_list{list: &x.Signatures}
+		return protoreflect.ValueOfList(value)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.submitter":
+		panic(fmt.Errorf("field submitter of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.route_id":
+		panic(fmt.Errorf("field route_id of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.guardian":
+		panic(fmt.Errorf("field guardian of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_transfer_amount":
+		panic(fmt.Errorf("field max_transfer_amount of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.daily_limit":
+		panic(fmt.Errorf("field daily_limit of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_outstanding_amount":
+		panic(fmt.Errorf("field max_outstanding_amount of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.enabled":
+		panic(fmt.Errorf("field enabled of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.nonce":
+		panic(fmt.Errorf("field nonce of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.not_before_unix":
+		panic(fmt.Errorf("field not_before_unix of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.expires_unix":
+		panic(fmt.Errorf("field expires_unix of message cosmos.evm.bridge.v1.MsgUpdateRouteConfig is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfig"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfig does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgUpdateRouteConfig) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.submitter":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.route_id":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.bridge_signers":
+		list := []string{}
+		return protoreflect.ValueOfList(&_MsgUpdateRouteConfig_3_list{list: &list})
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.guardian":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_transfer_amount":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.daily_limit":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.max_outstanding_amount":
+		return protoreflect.ValueOfString("")
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.enabled":
+		return protoreflect.ValueOfBool(false)
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.nonce":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.not_before_unix":
+		return protoreflect.ValueOfInt64(int64(0))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.expires_unix":
+		return protoreflect.ValueOfInt64(int64(0))
+	case "cosmos.evm.bridge.v1.MsgUpdateRouteConfig.signatures":
+		list := [][]byte{}
+		return protoreflect.ValueOfList(&_MsgUpdateRouteConfig_12_list{list: &list})
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfig"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfig does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgUpdateRouteConfig) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in cosmos.evm.bridge.v1.MsgUpdateRouteConfig", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgUpdateRouteConfig) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfig) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgUpdateRouteConfig) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgUpdateRouteConfig) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgUpdateRouteConfig)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.Submitter)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.RouteId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if len(x.BridgeSigners) > 0 {
+			for _, s := range x.BridgeSigners {
+				l = len(s)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		l = len(x.Guardian)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.MaxTransferAmount)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.DailyLimit)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.MaxOutstandingAmount)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Enabled {
+			n += 2
+		}
+		if x.Nonce != 0 {
+			n += 1 + runtime.Sov(uint64(x.Nonce))
+		}
+		if x.NotBeforeUnix != 0 {
+			n += 1 + runtime.Sov(uint64(x.NotBeforeUnix))
+		}
+		if x.ExpiresUnix != 0 {
+			n += 1 + runtime.Sov(uint64(x.ExpiresUnix))
+		}
+		if len(x.Signatures) > 0 {
+			for _, b := range x.Signatures {
+				l = len(b)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUpdateRouteConfig)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Signatures) > 0 {
+			for iNdEx := len(x.Signatures) - 1; iNdEx >= 0; iNdEx-- {
+				i -= len(x.Signatures[iNdEx])
+				copy(dAtA[i:], x.Signatures[iNdEx])
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Signatures[iNdEx])))
+				i--
+				dAtA[i] = 0x62
+			}
+		}
+		if x.ExpiresUnix != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExpiresUnix))
+			i--
+			dAtA[i] = 0x58
+		}
+		if x.NotBeforeUnix != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.NotBeforeUnix))
+			i--
+			dAtA[i] = 0x50
+		}
+		if x.Nonce != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Nonce))
+			i--
+			dAtA[i] = 0x48
+		}
+		if x.Enabled {
+			i--
+			if x.Enabled {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
+			}
+			i--
+			dAtA[i] = 0x40
+		}
+		if len(x.MaxOutstandingAmount) > 0 {
+			i -= len(x.MaxOutstandingAmount)
+			copy(dAtA[i:], x.MaxOutstandingAmount)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.MaxOutstandingAmount)))
+			i--
+			dAtA[i] = 0x3a
+		}
+		if len(x.DailyLimit) > 0 {
+			i -= len(x.DailyLimit)
+			copy(dAtA[i:], x.DailyLimit)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.DailyLimit)))
+			i--
+			dAtA[i] = 0x32
+		}
+		if len(x.MaxTransferAmount) > 0 {
+			i -= len(x.MaxTransferAmount)
+			copy(dAtA[i:], x.MaxTransferAmount)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.MaxTransferAmount)))
+			i--
+			dAtA[i] = 0x2a
+		}
+		if len(x.Guardian) > 0 {
+			i -= len(x.Guardian)
+			copy(dAtA[i:], x.Guardian)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Guardian)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.BridgeSigners) > 0 {
+			for iNdEx := len(x.BridgeSigners) - 1; iNdEx >= 0; iNdEx-- {
+				i -= len(x.BridgeSigners[iNdEx])
+				copy(dAtA[i:], x.BridgeSigners[iNdEx])
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(x.BridgeSigners[iNdEx])))
+				i--
+				dAtA[i] = 0x1a
+			}
+		}
+		if len(x.RouteId) > 0 {
+			i -= len(x.RouteId)
+			copy(dAtA[i:], x.RouteId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.RouteId)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.Submitter) > 0 {
+			i -= len(x.Submitter)
+			copy(dAtA[i:], x.Submitter)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Submitter)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUpdateRouteConfig)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUpdateRouteConfig: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUpdateRouteConfig: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Submitter", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Submitter = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RouteId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.RouteId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field BridgeSigners", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.BridgeSigners = append(x.BridgeSigners, string(dAtA[iNdEx:postIndex]))
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Guardian", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Guardian = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field MaxTransferAmount", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.MaxTransferAmount = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field DailyLimit", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.DailyLimit = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 7:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field MaxOutstandingAmount", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.MaxOutstandingAmount = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 8:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Enabled", wireType)
+				}
+				var v int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				x.Enabled = bool(v != 0)
+			case 9:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Nonce", wireType)
+				}
+				x.Nonce = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.Nonce |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 10:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field NotBeforeUnix", wireType)
+				}
+				x.NotBeforeUnix = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.NotBeforeUnix |= int64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 11:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpiresUnix", wireType)
+				}
+				x.ExpiresUnix = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.ExpiresUnix |= int64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 12:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Signatures", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Signatures = append(x.Signatures, make([]byte, postIndex-iNdEx))
+				copy(x.Signatures[len(x.Signatures)-1], dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgUpdateRouteConfigResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_cosmos_evm_bridge_v1_tx_proto_init()
+	md_MsgUpdateRouteConfigResponse = File_cosmos_evm_bridge_v1_tx_proto.Messages().ByName("MsgUpdateRouteConfigResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgUpdateRouteConfigResponse)(nil)
+
+type fastReflection_MsgUpdateRouteConfigResponse MsgUpdateRouteConfigResponse
+
+func (x *MsgUpdateRouteConfigResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUpdateRouteConfigResponse)(x)
+}
+
+func (x *MsgUpdateRouteConfigResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgUpdateRouteConfigResponse_messageType fastReflection_MsgUpdateRouteConfigResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUpdateRouteConfigResponse_messageType{}
+
+type fastReflection_MsgUpdateRouteConfigResponse_messageType struct{}
+
+func (x fastReflection_MsgUpdateRouteConfigResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUpdateRouteConfigResponse)(nil)
+}
+func (x fastReflection_MsgUpdateRouteConfigResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUpdateRouteConfigResponse)
+}
+func (x fastReflection_MsgUpdateRouteConfigResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUpdateRouteConfigResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUpdateRouteConfigResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUpdateRouteConfigResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgUpdateRouteConfigResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgUpdateRouteConfigResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse"))
+		}
+		panic(fmt.Errorf("message cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgUpdateRouteConfigResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgUpdateRouteConfigResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUpdateRouteConfigResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUpdateRouteConfigResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUpdateRouteConfigResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUpdateRouteConfigResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -4129,6 +7781,355 @@ func (*MsgInitializeRouteConfigResponse) Descriptor() ([]byte, []int) {
 	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{5}
 }
 
+// MsgEmergencyPauseRoute submits a guardian-signed pause action. The submitter
+// only pays transaction fees and receives no bridge authority.
+type MsgEmergencyPauseRoute struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Submitter         string `protobuf:"bytes,1,opt,name=submitter,proto3" json:"submitter,omitempty"`
+	RouteId           string `protobuf:"bytes,2,opt,name=route_id,json=routeId,proto3" json:"route_id,omitempty"`
+	Nonce             uint64 `protobuf:"varint,3,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	ExpiresUnix       int64  `protobuf:"varint,4,opt,name=expires_unix,json=expiresUnix,proto3" json:"expires_unix,omitempty"`
+	GuardianSignature []byte `protobuf:"bytes,5,opt,name=guardian_signature,json=guardianSignature,proto3" json:"guardian_signature,omitempty"`
+}
+
+func (x *MsgEmergencyPauseRoute) Reset() {
+	*x = MsgEmergencyPauseRoute{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgEmergencyPauseRoute) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgEmergencyPauseRoute) ProtoMessage() {}
+
+// Deprecated: Use MsgEmergencyPauseRoute.ProtoReflect.Descriptor instead.
+func (*MsgEmergencyPauseRoute) Descriptor() ([]byte, []int) {
+	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *MsgEmergencyPauseRoute) GetSubmitter() string {
+	if x != nil {
+		return x.Submitter
+	}
+	return ""
+}
+
+func (x *MsgEmergencyPauseRoute) GetRouteId() string {
+	if x != nil {
+		return x.RouteId
+	}
+	return ""
+}
+
+func (x *MsgEmergencyPauseRoute) GetNonce() uint64 {
+	if x != nil {
+		return x.Nonce
+	}
+	return 0
+}
+
+func (x *MsgEmergencyPauseRoute) GetExpiresUnix() int64 {
+	if x != nil {
+		return x.ExpiresUnix
+	}
+	return 0
+}
+
+func (x *MsgEmergencyPauseRoute) GetGuardianSignature() []byte {
+	if x != nil {
+		return x.GuardianSignature
+	}
+	return nil
+}
+
+type MsgEmergencyPauseRouteResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgEmergencyPauseRouteResponse) Reset() {
+	*x = MsgEmergencyPauseRouteResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgEmergencyPauseRouteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgEmergencyPauseRouteResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgEmergencyPauseRouteResponse.ProtoReflect.Descriptor instead.
+func (*MsgEmergencyPauseRouteResponse) Descriptor() ([]byte, []int) {
+	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{7}
+}
+
+// MsgResumeRoute submits a time-bounded 2-of-3 approval to clear only the
+// route's paused state. It cannot modify the route configuration.
+type MsgResumeRoute struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Submitter     string   `protobuf:"bytes,1,opt,name=submitter,proto3" json:"submitter,omitempty"`
+	RouteId       string   `protobuf:"bytes,2,opt,name=route_id,json=routeId,proto3" json:"route_id,omitempty"`
+	Nonce         uint64   `protobuf:"varint,3,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	NotBeforeUnix int64    `protobuf:"varint,4,opt,name=not_before_unix,json=notBeforeUnix,proto3" json:"not_before_unix,omitempty"`
+	ExpiresUnix   int64    `protobuf:"varint,5,opt,name=expires_unix,json=expiresUnix,proto3" json:"expires_unix,omitempty"`
+	Signatures    [][]byte `protobuf:"bytes,6,rep,name=signatures,proto3" json:"signatures,omitempty"`
+}
+
+func (x *MsgResumeRoute) Reset() {
+	*x = MsgResumeRoute{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgResumeRoute) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgResumeRoute) ProtoMessage() {}
+
+// Deprecated: Use MsgResumeRoute.ProtoReflect.Descriptor instead.
+func (*MsgResumeRoute) Descriptor() ([]byte, []int) {
+	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *MsgResumeRoute) GetSubmitter() string {
+	if x != nil {
+		return x.Submitter
+	}
+	return ""
+}
+
+func (x *MsgResumeRoute) GetRouteId() string {
+	if x != nil {
+		return x.RouteId
+	}
+	return ""
+}
+
+func (x *MsgResumeRoute) GetNonce() uint64 {
+	if x != nil {
+		return x.Nonce
+	}
+	return 0
+}
+
+func (x *MsgResumeRoute) GetNotBeforeUnix() int64 {
+	if x != nil {
+		return x.NotBeforeUnix
+	}
+	return 0
+}
+
+func (x *MsgResumeRoute) GetExpiresUnix() int64 {
+	if x != nil {
+		return x.ExpiresUnix
+	}
+	return 0
+}
+
+func (x *MsgResumeRoute) GetSignatures() [][]byte {
+	if x != nil {
+		return x.Signatures
+	}
+	return nil
+}
+
+type MsgResumeRouteResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgResumeRouteResponse) Reset() {
+	*x = MsgResumeRouteResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgResumeRouteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgResumeRouteResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgResumeRouteResponse.ProtoReflect.Descriptor instead.
+func (*MsgResumeRouteResponse) Descriptor() ([]byte, []int) {
+	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{9}
+}
+
+// MsgUpdateRouteConfig submits a time-bounded 2-of-3 approval over the exact
+// next configuration. The current signer set always authorizes rotations.
+type MsgUpdateRouteConfig struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Submitter            string   `protobuf:"bytes,1,opt,name=submitter,proto3" json:"submitter,omitempty"`
+	RouteId              string   `protobuf:"bytes,2,opt,name=route_id,json=routeId,proto3" json:"route_id,omitempty"`
+	BridgeSigners        []string `protobuf:"bytes,3,rep,name=bridge_signers,json=bridgeSigners,proto3" json:"bridge_signers,omitempty"`
+	Guardian             string   `protobuf:"bytes,4,opt,name=guardian,proto3" json:"guardian,omitempty"`
+	MaxTransferAmount    string   `protobuf:"bytes,5,opt,name=max_transfer_amount,json=maxTransferAmount,proto3" json:"max_transfer_amount,omitempty"`
+	DailyLimit           string   `protobuf:"bytes,6,opt,name=daily_limit,json=dailyLimit,proto3" json:"daily_limit,omitempty"`
+	MaxOutstandingAmount string   `protobuf:"bytes,7,opt,name=max_outstanding_amount,json=maxOutstandingAmount,proto3" json:"max_outstanding_amount,omitempty"`
+	Enabled              bool     `protobuf:"varint,8,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Nonce                uint64   `protobuf:"varint,9,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	NotBeforeUnix        int64    `protobuf:"varint,10,opt,name=not_before_unix,json=notBeforeUnix,proto3" json:"not_before_unix,omitempty"`
+	ExpiresUnix          int64    `protobuf:"varint,11,opt,name=expires_unix,json=expiresUnix,proto3" json:"expires_unix,omitempty"`
+	Signatures           [][]byte `protobuf:"bytes,12,rep,name=signatures,proto3" json:"signatures,omitempty"`
+}
+
+func (x *MsgUpdateRouteConfig) Reset() {
+	*x = MsgUpdateRouteConfig{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgUpdateRouteConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgUpdateRouteConfig) ProtoMessage() {}
+
+// Deprecated: Use MsgUpdateRouteConfig.ProtoReflect.Descriptor instead.
+func (*MsgUpdateRouteConfig) Descriptor() ([]byte, []int) {
+	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *MsgUpdateRouteConfig) GetSubmitter() string {
+	if x != nil {
+		return x.Submitter
+	}
+	return ""
+}
+
+func (x *MsgUpdateRouteConfig) GetRouteId() string {
+	if x != nil {
+		return x.RouteId
+	}
+	return ""
+}
+
+func (x *MsgUpdateRouteConfig) GetBridgeSigners() []string {
+	if x != nil {
+		return x.BridgeSigners
+	}
+	return nil
+}
+
+func (x *MsgUpdateRouteConfig) GetGuardian() string {
+	if x != nil {
+		return x.Guardian
+	}
+	return ""
+}
+
+func (x *MsgUpdateRouteConfig) GetMaxTransferAmount() string {
+	if x != nil {
+		return x.MaxTransferAmount
+	}
+	return ""
+}
+
+func (x *MsgUpdateRouteConfig) GetDailyLimit() string {
+	if x != nil {
+		return x.DailyLimit
+	}
+	return ""
+}
+
+func (x *MsgUpdateRouteConfig) GetMaxOutstandingAmount() string {
+	if x != nil {
+		return x.MaxOutstandingAmount
+	}
+	return ""
+}
+
+func (x *MsgUpdateRouteConfig) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *MsgUpdateRouteConfig) GetNonce() uint64 {
+	if x != nil {
+		return x.Nonce
+	}
+	return 0
+}
+
+func (x *MsgUpdateRouteConfig) GetNotBeforeUnix() int64 {
+	if x != nil {
+		return x.NotBeforeUnix
+	}
+	return 0
+}
+
+func (x *MsgUpdateRouteConfig) GetExpiresUnix() int64 {
+	if x != nil {
+		return x.ExpiresUnix
+	}
+	return 0
+}
+
+func (x *MsgUpdateRouteConfig) GetSignatures() [][]byte {
+	if x != nil {
+		return x.Signatures
+	}
+	return nil
+}
+
+type MsgUpdateRouteConfigResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgUpdateRouteConfigResponse) Reset() {
+	*x = MsgUpdateRouteConfigResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cosmos_evm_bridge_v1_tx_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgUpdateRouteConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgUpdateRouteConfigResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgUpdateRouteConfigResponse.ProtoReflect.Descriptor instead.
+func (*MsgUpdateRouteConfigResponse) Descriptor() ([]byte, []int) {
+	return file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP(), []int{11}
+}
+
 var File_cosmos_evm_bridge_v1_tx_proto protoreflect.FileDescriptor
 
 var file_cosmos_evm_bridge_v1_tx_proto_rawDesc = []byte{
@@ -4215,45 +8216,139 @@ var file_cosmos_evm_bridge_v1_tx_proto_rawDesc = []byte{
 	0x67, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65,
 	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x22, 0x0a, 0x20, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x69,
 	0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66,
-	0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x8d, 0x03, 0x0a, 0x03, 0x4d,
-	0x73, 0x67, 0x12, 0x73, 0x0a, 0x11, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x41, 0x74, 0x74, 0x65,
-	0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2a, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
-	0x73, 0x67, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x41, 0x74, 0x74, 0x65, 0x73, 0x74, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x1a, 0x32, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d,
-	0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x53, 0x75,
-	0x62, 0x6d, 0x69, 0x74, 0x41, 0x74, 0x74, 0x65, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x88, 0x01, 0x0a, 0x18, 0x49, 0x6e, 0x69, 0x74,
-	0x69, 0x61, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x54, 0x72, 0x61, 0x6e,
-	0x73, 0x66, 0x65, 0x72, 0x12, 0x31, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76,
-	0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49,
-	0x6e, 0x69, 0x74, 0x69, 0x61, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x54,
-	0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x1a, 0x39, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
-	0x73, 0x67, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x62, 0x6f, 0x75,
-	0x6e, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x7f, 0x0a, 0x15, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65,
-	0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x2e, 0x2e, 0x63, 0x6f,
+	0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x8d, 0x02, 0x0a, 0x16, 0x4d,
+	0x73, 0x67, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x50, 0x61, 0x75, 0x73, 0x65,
+	0x52, 0x6f, 0x75, 0x74, 0x65, 0x12, 0x36, 0x0a, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x74,
+	0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69,
+	0x6e, 0x67, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72, 0x12, 0x19, 0x0a,
+	0x08, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x6e, 0x63,
+	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x12, 0x21,
+	0x0a, 0x0c, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x73, 0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x73, 0x55, 0x6e, 0x69,
+	0x78, 0x12, 0x2d, 0x0a, 0x12, 0x67, 0x75, 0x61, 0x72, 0x64, 0x69, 0x61, 0x6e, 0x5f, 0x73, 0x69,
+	0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x11, 0x67,
+	0x75, 0x61, 0x72, 0x64, 0x69, 0x61, 0x6e, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65,
+	0x3a, 0x38, 0x82, 0xe7, 0xb0, 0x2a, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72,
+	0x8a, 0xe7, 0xb0, 0x2a, 0x25, 0x78, 0x69, 0x74, 0x63, 0x6f, 0x69, 0x6e, 0x2f, 0x62, 0x72, 0x69,
+	0x64, 0x67, 0x65, 0x2f, 0x4d, 0x73, 0x67, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79,
+	0x50, 0x61, 0x75, 0x73, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x22, 0x20, 0x0a, 0x1e, 0x4d, 0x73,
+	0x67, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x50, 0x61, 0x75, 0x73, 0x65, 0x52,
+	0x6f, 0x75, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x96, 0x02, 0x0a,
+	0x0e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x12,
+	0x36, 0x0a, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x73, 0x75,
+	0x62, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72, 0x12, 0x19, 0x0a, 0x08, 0x72, 0x6f, 0x75, 0x74, 0x65,
+	0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x72, 0x6f, 0x75, 0x74, 0x65,
+	0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x04, 0x52, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x6f, 0x74, 0x5f,
+	0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x0d, 0x6e, 0x6f, 0x74, 0x42, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x55, 0x6e, 0x69, 0x78,
+	0x12, 0x21, 0x0a, 0x0c, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x73, 0x5f, 0x75, 0x6e, 0x69, 0x78,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x73, 0x55,
+	0x6e, 0x69, 0x78, 0x12, 0x1e, 0x0a, 0x0a, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65,
+	0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x0a, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75,
+	0x72, 0x65, 0x73, 0x3a, 0x30, 0x82, 0xe7, 0xb0, 0x2a, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74,
+	0x74, 0x65, 0x72, 0x8a, 0xe7, 0xb0, 0x2a, 0x1d, 0x78, 0x69, 0x74, 0x63, 0x6f, 0x69, 0x6e, 0x2f,
+	0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2f, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65,
+	0x52, 0x6f, 0x75, 0x74, 0x65, 0x22, 0x18, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x73, 0x75,
+	0x6d, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x86, 0x04, 0x0a, 0x14, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x75,
+	0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x36, 0x0a, 0x09, 0x73, 0x75, 0x62, 0x6d,
+	0x69, 0x74, 0x74, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
+	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
+	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72,
+	0x12, 0x19, 0x0a, 0x08, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x49, 0x64, 0x12, 0x25, 0x0a, 0x0e, 0x62,
+	0x72, 0x69, 0x64, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x72, 0x73, 0x18, 0x03, 0x20,
+	0x03, 0x28, 0x09, 0x52, 0x0d, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x53, 0x69, 0x67, 0x6e, 0x65,
+	0x72, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x67, 0x75, 0x61, 0x72, 0x64, 0x69, 0x61, 0x6e, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x67, 0x75, 0x61, 0x72, 0x64, 0x69, 0x61, 0x6e, 0x12, 0x2e,
+	0x0a, 0x13, 0x6d, 0x61, 0x78, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x6d, 0x61, 0x78,
+	0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1f,
+	0x0a, 0x0b, 0x64, 0x61, 0x69, 0x6c, 0x79, 0x5f, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x64, 0x61, 0x69, 0x6c, 0x79, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x12,
+	0x34, 0x0a, 0x16, 0x6d, 0x61, 0x78, 0x5f, 0x6f, 0x75, 0x74, 0x73, 0x74, 0x61, 0x6e, 0x64, 0x69,
+	0x6e, 0x67, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x14, 0x6d, 0x61, 0x78, 0x4f, 0x75, 0x74, 0x73, 0x74, 0x61, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x41,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64,
+	0x18, 0x08, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x12,
+	0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05,
+	0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x6f, 0x74, 0x5f, 0x62, 0x65, 0x66,
+	0x6f, 0x72, 0x65, 0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d,
+	0x6e, 0x6f, 0x74, 0x42, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x55, 0x6e, 0x69, 0x78, 0x12, 0x21, 0x0a,
+	0x0c, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x73, 0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x0b, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0b, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x73, 0x55, 0x6e, 0x69, 0x78,
+	0x12, 0x1e, 0x0a, 0x0a, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65, 0x73, 0x18, 0x0c,
+	0x20, 0x03, 0x28, 0x0c, 0x52, 0x0a, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65, 0x73,
+	0x3a, 0x36, 0x82, 0xe7, 0xb0, 0x2a, 0x09, 0x73, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72,
+	0x8a, 0xe7, 0xb0, 0x2a, 0x23, 0x78, 0x69, 0x74, 0x63, 0x6f, 0x69, 0x6e, 0x2f, 0x62, 0x72, 0x69,
+	0x64, 0x67, 0x65, 0x2f, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x75,
+	0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x1e, 0x0a, 0x1c, 0x4d, 0x73, 0x67, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xe0, 0x05, 0x0a, 0x03, 0x4d, 0x73, 0x67,
+	0x12, 0x73, 0x0a, 0x11, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x41, 0x74, 0x74, 0x65, 0x73, 0x74,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2a, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65,
+	0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67,
+	0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x41, 0x74, 0x74, 0x65, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x1a, 0x32, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62,
+	0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x53, 0x75, 0x62, 0x6d,
+	0x69, 0x74, 0x41, 0x74, 0x74, 0x65, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x88, 0x01, 0x0a, 0x18, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61,
+	0x74, 0x65, 0x4f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66,
+	0x65, 0x72, 0x12, 0x31, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e,
+	0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x69,
+	0x74, 0x69, 0x61, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x66, 0x65, 0x72, 0x1a, 0x39, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65,
+	0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67,
+	0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64,
+	0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x7f, 0x0a, 0x15, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x6f,
+	0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x2e, 0x2e, 0x63, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x6f,
+	0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x1a, 0x36, 0x2e, 0x63, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x6f,
+	0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x79, 0x0a, 0x13, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x50, 0x61,
+	0x75, 0x73, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x12, 0x2c, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
+	0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e,
+	0x4d, 0x73, 0x67, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x50, 0x61, 0x75, 0x73,
+	0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x1a, 0x34, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
+	0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
+	0x67, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x50, 0x61, 0x75, 0x73, 0x65, 0x52,
+	0x6f, 0x75, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x61, 0x0a, 0x0b,
+	0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x12, 0x24, 0x2e, 0x63, 0x6f,
 	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65,
-	0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x1a, 0x36, 0x2e, 0x63, 0x6f,
-	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65,
-	0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7, 0xb0, 0x2a, 0x01, 0x42, 0xc6, 0x01, 0x0a, 0x18, 0x63,
-	0x6f, 0x6d, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72,
-	0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f,
-	0x50, 0x01, 0x5a, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x65, 0x76, 0x6d, 0x2f,
-	0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2f, 0x76, 0x31, 0x3b, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65,
-	0x76, 0x31, 0xa2, 0x02, 0x03, 0x43, 0x45, 0x42, 0xaa, 0x02, 0x14, 0x43, 0x6f, 0x73, 0x6d, 0x6f,
-	0x73, 0x2e, 0x45, 0x76, 0x6d, 0x2e, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x56, 0x31, 0xca,
-	0x02, 0x14, 0x43, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5c, 0x45, 0x76, 0x6d, 0x5c, 0x42, 0x72, 0x69,
-	0x64, 0x67, 0x65, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x20, 0x43, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5c,
-	0x45, 0x76, 0x6d, 0x5c, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50,
-	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x43, 0x6f, 0x73, 0x6d,
-	0x6f, 0x73, 0x3a, 0x3a, 0x45, 0x76, 0x6d, 0x3a, 0x3a, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x3a,
-	0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x52, 0x6f, 0x75, 0x74,
+	0x65, 0x1a, 0x2c, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62,
+	0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x73, 0x75,
+	0x6d, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x73, 0x0a, 0x11, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x12, 0x2a, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76,
+	0x6d, 0x2e, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x1a, 0x32, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62, 0x72,
+	0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7, 0xb0, 0x2a, 0x01, 0x42, 0xc6, 0x01, 0x0a, 0x18,
+	0x63, 0x6f, 0x6d, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x62,
+	0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74,
+	0x6f, 0x50, 0x01, 0x5a, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69,
+	0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x65, 0x76, 0x6d,
+	0x2f, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2f, 0x76, 0x31, 0x3b, 0x62, 0x72, 0x69, 0x64, 0x67,
+	0x65, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x43, 0x45, 0x42, 0xaa, 0x02, 0x14, 0x43, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x2e, 0x45, 0x76, 0x6d, 0x2e, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x2e, 0x56, 0x31,
+	0xca, 0x02, 0x14, 0x43, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5c, 0x45, 0x76, 0x6d, 0x5c, 0x42, 0x72,
+	0x69, 0x64, 0x67, 0x65, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x20, 0x43, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x5c, 0x45, 0x76, 0x6d, 0x5c, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x5c, 0x56, 0x31, 0x5c, 0x47,
+	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x43, 0x6f, 0x73,
+	0x6d, 0x6f, 0x73, 0x3a, 0x3a, 0x45, 0x76, 0x6d, 0x3a, 0x3a, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65,
+	0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4268,7 +8363,7 @@ func file_cosmos_evm_bridge_v1_tx_proto_rawDescGZIP() []byte {
 	return file_cosmos_evm_bridge_v1_tx_proto_rawDescData
 }
 
-var file_cosmos_evm_bridge_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_cosmos_evm_bridge_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_cosmos_evm_bridge_v1_tx_proto_goTypes = []interface{}{
 	(*MsgSubmitAttestation)(nil),                // 0: cosmos.evm.bridge.v1.MsgSubmitAttestation
 	(*MsgSubmitAttestationResponse)(nil),        // 1: cosmos.evm.bridge.v1.MsgSubmitAttestationResponse
@@ -4276,19 +8371,31 @@ var file_cosmos_evm_bridge_v1_tx_proto_goTypes = []interface{}{
 	(*MsgInitiateOutboundTransferResponse)(nil), // 3: cosmos.evm.bridge.v1.MsgInitiateOutboundTransferResponse
 	(*MsgInitializeRouteConfig)(nil),            // 4: cosmos.evm.bridge.v1.MsgInitializeRouteConfig
 	(*MsgInitializeRouteConfigResponse)(nil),    // 5: cosmos.evm.bridge.v1.MsgInitializeRouteConfigResponse
+	(*MsgEmergencyPauseRoute)(nil),              // 6: cosmos.evm.bridge.v1.MsgEmergencyPauseRoute
+	(*MsgEmergencyPauseRouteResponse)(nil),      // 7: cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse
+	(*MsgResumeRoute)(nil),                      // 8: cosmos.evm.bridge.v1.MsgResumeRoute
+	(*MsgResumeRouteResponse)(nil),              // 9: cosmos.evm.bridge.v1.MsgResumeRouteResponse
+	(*MsgUpdateRouteConfig)(nil),                // 10: cosmos.evm.bridge.v1.MsgUpdateRouteConfig
+	(*MsgUpdateRouteConfigResponse)(nil),        // 11: cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse
 }
 var file_cosmos_evm_bridge_v1_tx_proto_depIdxs = []int32{
-	0, // 0: cosmos.evm.bridge.v1.Msg.SubmitAttestation:input_type -> cosmos.evm.bridge.v1.MsgSubmitAttestation
-	2, // 1: cosmos.evm.bridge.v1.Msg.InitiateOutboundTransfer:input_type -> cosmos.evm.bridge.v1.MsgInitiateOutboundTransfer
-	4, // 2: cosmos.evm.bridge.v1.Msg.InitializeRouteConfig:input_type -> cosmos.evm.bridge.v1.MsgInitializeRouteConfig
-	1, // 3: cosmos.evm.bridge.v1.Msg.SubmitAttestation:output_type -> cosmos.evm.bridge.v1.MsgSubmitAttestationResponse
-	3, // 4: cosmos.evm.bridge.v1.Msg.InitiateOutboundTransfer:output_type -> cosmos.evm.bridge.v1.MsgInitiateOutboundTransferResponse
-	5, // 5: cosmos.evm.bridge.v1.Msg.InitializeRouteConfig:output_type -> cosmos.evm.bridge.v1.MsgInitializeRouteConfigResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: cosmos.evm.bridge.v1.Msg.SubmitAttestation:input_type -> cosmos.evm.bridge.v1.MsgSubmitAttestation
+	2,  // 1: cosmos.evm.bridge.v1.Msg.InitiateOutboundTransfer:input_type -> cosmos.evm.bridge.v1.MsgInitiateOutboundTransfer
+	4,  // 2: cosmos.evm.bridge.v1.Msg.InitializeRouteConfig:input_type -> cosmos.evm.bridge.v1.MsgInitializeRouteConfig
+	6,  // 3: cosmos.evm.bridge.v1.Msg.EmergencyPauseRoute:input_type -> cosmos.evm.bridge.v1.MsgEmergencyPauseRoute
+	8,  // 4: cosmos.evm.bridge.v1.Msg.ResumeRoute:input_type -> cosmos.evm.bridge.v1.MsgResumeRoute
+	10, // 5: cosmos.evm.bridge.v1.Msg.UpdateRouteConfig:input_type -> cosmos.evm.bridge.v1.MsgUpdateRouteConfig
+	1,  // 6: cosmos.evm.bridge.v1.Msg.SubmitAttestation:output_type -> cosmos.evm.bridge.v1.MsgSubmitAttestationResponse
+	3,  // 7: cosmos.evm.bridge.v1.Msg.InitiateOutboundTransfer:output_type -> cosmos.evm.bridge.v1.MsgInitiateOutboundTransferResponse
+	5,  // 8: cosmos.evm.bridge.v1.Msg.InitializeRouteConfig:output_type -> cosmos.evm.bridge.v1.MsgInitializeRouteConfigResponse
+	7,  // 9: cosmos.evm.bridge.v1.Msg.EmergencyPauseRoute:output_type -> cosmos.evm.bridge.v1.MsgEmergencyPauseRouteResponse
+	9,  // 10: cosmos.evm.bridge.v1.Msg.ResumeRoute:output_type -> cosmos.evm.bridge.v1.MsgResumeRouteResponse
+	11, // 11: cosmos.evm.bridge.v1.Msg.UpdateRouteConfig:output_type -> cosmos.evm.bridge.v1.MsgUpdateRouteConfigResponse
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_cosmos_evm_bridge_v1_tx_proto_init() }
@@ -4369,6 +8476,78 @@ func file_cosmos_evm_bridge_v1_tx_proto_init() {
 				return nil
 			}
 		}
+		file_cosmos_evm_bridge_v1_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgEmergencyPauseRoute); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cosmos_evm_bridge_v1_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgEmergencyPauseRouteResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cosmos_evm_bridge_v1_tx_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgResumeRoute); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cosmos_evm_bridge_v1_tx_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgResumeRouteResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cosmos_evm_bridge_v1_tx_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgUpdateRouteConfig); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cosmos_evm_bridge_v1_tx_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgUpdateRouteConfigResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4376,7 +8555,7 @@ func file_cosmos_evm_bridge_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cosmos_evm_bridge_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

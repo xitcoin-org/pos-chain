@@ -7,7 +7,7 @@ import (
 
 func TestNewTxCmdIncludesBridgeOperations(t *testing.T) {
 	cmd := NewTxCmd()
-	for _, name := range []string{"submit-attestation", "initiate-outbound", "initialize-route"} {
+	for _, name := range []string{"submit-attestation", "initiate-outbound", "initialize-route", "pause-route", "resume-route", "update-route"} {
 		child, _, err := cmd.Find([]string{name})
 		if err != nil {
 			t.Fatalf("find %s: %v", name, err)
