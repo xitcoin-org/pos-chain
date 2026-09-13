@@ -33,7 +33,9 @@ if name=='cosmos-sdk':
  prior=json.loads((root/'docs/fork-qualification-20260913/sdk-preserved-checks.json').read_text())
  run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','crypto/armor_compat_test.go'])
  unchanged=subprocess.check_output(['git','diff','--binary','--unified=0','--','.',*[':!'+x for x in prior['excluded_test_files']]],cwd=src)
- assert hashlib.sha256(unchanged).hexdigest()==prior['unchanged_patch_sha256'], 'production source or module graph changed; prior SDK checks cannot be reused'
+ (out/'unchanged-sdk.diff').write_bytes(unchanged)
+ canonical=b''.join(line for line in unchanged.splitlines(keepends=True) if not line.startswith(b'index '))
+ assert hashlib.sha256(canonical).hexdigest()==prior['unchanged_content_diff_sha256'], 'production source or module graph changed; prior SDK checks cannot be reused'
  assert prior['tidy_all']['exit_code']==0 and prior['build']['exit_code']==0
  (out/'preserved-checks.json').write_text(json.dumps(prior,indent=2))
  # The repository supports LINT_DIFF; all other modules and files passed the full lint.

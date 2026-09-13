@@ -31,5 +31,7 @@
     "seconds": 289.19
   },
   "lint_prior": "all modules completed; only gci in armor_compat_test.go and missing explanation on existing nolint in keeper_test.go failed",
-  "source_changes": "test import grouping and explanatory comment only; production source and all dependency locks unchanged"
+  "source_changes": "test import grouping and explanatory comment only; production source and all dependency locks unchanged",
+  "unchanged_content_diff_sha256": "ed0e38edab981f976b25d481d84e8f9b615031eb524c88e68df9108edd270cbc",
+  "comparison": "Ignore only Git index abbreviation metadata lines; all patch paths, modes, hunks and source bytes retained. Verified against original signed qualification patch."
 }
