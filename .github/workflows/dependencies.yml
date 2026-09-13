@@ -28,8 +28,11 @@ jobs:
           bash scripts/run-govulncheck.sh ./...
 
       - name: Run evmd govulncheck
+        if: ${{ !cancelled() && (success() || failure()) }}
         working-directory: evmd
-        run: bash ../scripts/run-govulncheck.sh ./...
+        run: |
+          go mod why github.com/pion/dtls/v2 golang.org/x/crypto/openpgp/armor
+          bash ../scripts/run-govulncheck.sh -show verbose ./...
 
   contract-dependencies:
     runs-on: ubuntu-24.04

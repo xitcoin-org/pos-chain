@@ -7,13 +7,15 @@ set -euo pipefail
 review_by=2026-09-05
 if [[ "$(date -u +%F)" > "$review_by" ]]; then
   echo "govulncheck exception review expired on $review_by" >&2
-  exit 1
+  review_expired=true
+else
+  review_expired=false
 fi
 
 accepted=(
   GO-2023-1821 # x/crisis is compiled upstream but not imported or registered by Xitcoin.
   GO-2023-1881 # x/crisis is compiled upstream but not imported or registered by Xitcoin.
-  GO-2024-2584 # Cosmos SDK 0.54.4 is newer than the advisory's <0.47.10 range.
+  GO-2024-2584 # Fix source is present in SDK 0.54.4; OSV range mismatch still requires review.
   GO-2025-3442 # CometBFT 0.39 has no compatible fixed release; exact version is locked.
   GO-2026-4479 # Pion DTLS v2 has no fixed release; v3 is not API-compatible.
   GO-2026-5932 # OpenPGP is pulled by Cosmos keyring; no x/crypto version fixes it.
@@ -69,6 +71,12 @@ set +e
 govulncheck "$@" 2>&1 | tee "$report"
 status=${PIPESTATUS[0]}
 set -e
+
+# Always collect current findings, but never accept an expired review.
+if [[ "$review_expired" == true ]]; then
+  echo "govulncheck report collected; expired exception review still blocks this check" >&2
+  exit 1
+fi
 
 if (( status == 0 )); then
   exit 0
