@@ -199,3 +199,44 @@ test('request without hash never queries or infers non-submission', async (t) =>
   const row = await journal.claim(address(), '192.0.2.1', async () => '');
   assert.equal((await journal.reconcile(row.id, async () => assert.fail())).state, 'unknown');
 });
+
+test('HTTP candidate reserves before fake CLI and returns 202 without asserting confirmation', async (t) => {
+  const vm = require('node:vm');
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'faucet-http-fixture-'));
+  t.after(() => fs.rm(dir, { recursive: true }));
+  await fs.mkdir(path.join(dir, 'state'));
+  await fs.writeFile(path.join(dir, 'state', 'address'), address(99));
+  let handler, ready, calls = 0;
+  const listening = new Promise((resolve) => { ready = resolve; });
+  const fakeServer = { listen: (_port, _host, callback) => { callback(); ready(); }, close: (callback) => callback() };
+  const source = await fs.readFile(path.join(__dirname, 'server.js'), 'utf8');
+  const env = { HOST: '127.0.0.1', PORT: '0', CHAIN_ID: policy.chainId, API_URL: 'https://fixture.invalid', BIN: 'never-executed', FAUCET_HOME: dir, AMOUNT_BASE: '1', RESERVE_BASE: '0', ADDRESS_WINDOW_SECONDS: '86400', IP_WINDOW_SECONDS: '86400', IP_LIMIT: '3' };
+  vm.runInNewContext(source, {
+    require: (name) => {
+      if (name === 'node:http') return { createServer: (callback) => { handler = callback; return fakeServer; } };
+      if (name === './bounded') return { readBody, runBounded: async (command) => {
+        assert.equal(command, 'never-executed'); calls++;
+        const envelope = JSON.parse(await fs.readFile(path.join(dir, 'state/recovery-v1/journal.json')));
+        assert.equal(JSON.parse(envelope.payload)[0].state, 'unknown');
+        return JSON.stringify({ txhash: 'a'.repeat(64) });
+      } };
+      return require(name);
+    },
+    process: { env, once: () => {} }, console: { log: () => {}, error: () => {} },
+    URL, Buffer, AbortController, setTimeout, clearTimeout,
+    fetch: async () => ({ ok: true, body: [Buffer.from(JSON.stringify({ balances: [{ denom: 'axtc', amount: '100' }] }))] }),
+  }, { filename: 'server-offline-fixture.js' });
+  await listening;
+  async function request(recipient) {
+    const req = new PassThrough(); Object.assign(req, { method: 'POST', url: '/claim', headers: {}, socket: { remoteAddress: '192.0.2.1' } });
+    let status, payload;
+    const res = { headersSent: false, writeHead(code) { status = code; this.headersSent = true; }, end(text) { payload = JSON.parse(text); } };
+    const handled = handler(req, res); req.end(JSON.stringify({ address: recipient })); await handled;
+    return { status, payload };
+  }
+  assert.equal((await request('invalid')).status, 400); assert.equal(calls, 0);
+  const first = await request(address());
+  assert.equal(first.status, 202); assert.equal(first.payload.status, 'submitted');
+  assert.equal(first.payload.reconciliation_required, true); assert.equal(first.payload.ok, undefined);
+  assert.equal((await request(address())).status, 429); assert.equal(calls, 1);
+});
