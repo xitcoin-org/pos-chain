@@ -16,6 +16,41 @@ index 0000000..201d6dc
 +Original copyright and license notices are preserved. SDK core: LICENSE (Apache-2.0); enterprise/group and enterprise/poa remain owned by Cosmos Labs US Inc. and governed by their respective LICENSE files (Source Available Evaluation License), only evaluated in qualification, not added to the Xitcoin application. Geth: COPYING.LESSER for library code and COPYING for GPL components/commands, subject to per-file notices. Dependencies retain their own licenses. This fork distributes corresponding source, not deployment binaries.
 +
 +The fork commit is a qualification candidate until the complete required upstream checks and downstream review pass. No production suitability or global PASS is implied.
+diff --git a/cmd/keeper/go.mod b/cmd/keeper/go.mod
+index 8303b4a..87ce6f6 100644
+--- a/cmd/keeper/go.mod
++++ b/cmd/keeper/go.mod
+@@ -41,3 +41,4 @@ require (
+-	golang.org/x/crypto v0.44.0 // indirect
+-	golang.org/x/sync v0.18.0 // indirect
+-	golang.org/x/sys v0.40.0 // indirect
++	golang.org/x/crypto v0.48.0 // indirect
++	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df // indirect
++	golang.org/x/sync v0.19.0 // indirect
++	golang.org/x/sys v0.41.0 // indirect
+diff --git a/cmd/keeper/go.sum b/cmd/keeper/go.sum
+index a162537..c1a7bc7 100644
+--- a/cmd/keeper/go.sum
++++ b/cmd/keeper/go.sum
+@@ -130,2 +130,2 @@ go.opentelemetry.io/otel/trace v1.40.0/go.mod h1:zeAhriXecNGP/s2SEG3+Y8X9ujcJOTq
+-golang.org/x/crypto v0.44.0 h1:A97SsFvM3AIwEEmTBiaxPPTYpDC47w720rdiiUvgoAU=
+-golang.org/x/crypto v0.44.0/go.mod h1:013i+Nw79BMiQiMsOPcVCB5ZIJbYkerPrGnOa00tvmc=
++golang.org/x/crypto v0.48.0 h1:/VRzVqiRSggnhY7gNRxPauEQ5Drw9haKdM0jqfcCFts=
++golang.org/x/crypto v0.48.0/go.mod h1:r0kV5h3qnFPlQnBSrULhlsRfryS2pmewsg+XfMgkVos=
+@@ -134,2 +134,2 @@ golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df/go.mod h1:FXUEEKJgO7OQYeo8N0
+-golang.org/x/sync v0.18.0 h1:kr88TuHDroi+UVf+0hZnirlk8o8T+4MrK6mr60WkH/I=
+-golang.org/x/sync v0.18.0/go.mod h1:9KTHXmSnoGruLpwFjVSX0lNNA75CykiMECbovNTZqGI=
++golang.org/x/sync v0.19.0 h1:vV+1eWNmZ5geRlYjzm2adRgW2/mcpevXNg50YZtPCE4=
++golang.org/x/sync v0.19.0/go.mod h1:9KTHXmSnoGruLpwFjVSX0lNNA75CykiMECbovNTZqGI=
+@@ -140,4 +140,4 @@ golang.org/x/sys v0.11.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+-golang.org/x/sys v0.40.0 h1:DBZZqJ2Rkml6QMQsZywtnjnnGvHza6BTfYFWY9kjEWQ=
+-golang.org/x/sys v0.40.0/go.mod h1:OgkHotnGiDImocRcuBABYBEXf8A9a87e/uXjp9XT3ks=
+-golang.org/x/text v0.31.0 h1:aC8ghyu4JhP8VojJ2lEHBnochRno1sgL6nEi9WGFGMM=
+-golang.org/x/text v0.31.0/go.mod h1:tKRAlv61yKIjGGHX/4tP1LTbc13YSec1pxVEWXzfoeM=
++golang.org/x/sys v0.41.0 h1:Ivj+2Cp/ylzLiEU89QhWblYnOE9zerudt9Ftecq2C6k=
++golang.org/x/sys v0.41.0/go.mod h1:OgkHotnGiDImocRcuBABYBEXf8A9a87e/uXjp9XT3ks=
++golang.org/x/text v0.34.0 h1:oL/Qq0Kdaqxa1KbNeMKwQq0reLCCaFtqu2eNuSeNHbk=
++golang.org/x/text v0.34.0/go.mod h1:homfLqTYRFyVYemLBFl5GgL/DWEiH5wcsQ5gSh1yziA=
 diff --git a/go.mod b/go.mod
 index 37a2537..389834a 100644
 --- a/go.mod

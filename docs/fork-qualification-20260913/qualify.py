@@ -7,7 +7,7 @@ def run(label,args,cwd=src):
  global minimum
  with (out/(label+'.log')).open('w') as log:
   child_env=os.environ.copy()
-  if cwd==src:child_env.update(GITHUB_SHA=base,GITHUB_REPOSITORY='cosmos/'+name,GITHUB_REF_TYPE='',GITHUB_HEAD_REF='')
+  if cwd==src or src in cwd.parents:child_env.update(GITHUB_SHA=base,GITHUB_REPOSITORY='cosmos/'+name,GITHUB_REF_TYPE='',GITHUB_HEAD_REF='')
   p=subprocess.Popen(args,cwd=cwd,env=child_env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
   reason=None;t=time.monotonic()
   while p.poll() is None:
@@ -32,7 +32,14 @@ run('patch',['git','apply','--unidiff-zero',str(patch)])
 if name=='cosmos-sdk':
  for label,args in [('tidy-all',['make','tidy-all','VERSION_RAW=v0.54.4']),('build',['make','build','VERSION_RAW=v0.54.4']),('lint',['make','lint','VERSION_RAW=v0.54.4']),('test-unit',['make','test-unit','VERSION_RAW=v0.54.4'])]:run(label,args)
 else:
- run('gofmt',['gofmt','-w','p2p/nat/stun.go','p2p/nat/stun_local_test.go'])
- run('goimports',['go','run','golang.org/x/tools/cmd/goimports@v0.41.0','-w','p2p/nat/stun.go','p2p/nat/stun_local_test.go'])
- for label,args in [('build',['make','all']),('test',['go','run','./build/ci.go','test']),('lint',['go','run','./build/ci.go','lint']),('check-generate',['go','run','./build/ci.go','check_generate']),('check-baddeps',['go','run','./build/ci.go','check_baddeps'])]:run(label,args)
+ prior=json.loads((root/'docs/fork-qualification-20260913/geth-preserved-checks.json').read_text())
+ run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','p2p/nat/stun_local_test.go'])
+ unchanged=subprocess.check_output(['git','diff','--binary','--unified=0','--','.',':!cmd/keeper/go.mod',':!cmd/keeper/go.sum'],cwd=src)
+ assert hashlib.sha256(unchanged).hexdigest()==prior['input_patch_sha256'], 'root source changed; prior checks cannot be reused'
+ assert prior['make_all']['exit_code']==0 and prior['root_tests_passed']
+ (out/'preserved-checks.json').write_text(json.dumps(prior,indent=2))
+ # Resume the exact full-test command emitted by build/ci.go for the only failed module.
+ run('keeper-build',['go','build','./...'],src/'cmd/keeper')
+ run('keeper-test',['go','test','-timeout=45m','-tags=ckzg','-tags=integrationtests','-p','1','./...'],src/'cmd/keeper')
+ for label,args in [('lint',['go','run','./build/ci.go','lint']),('check-generate',['go','run','./build/ci.go','check_generate']),('check-baddeps',['go','run','./build/ci.go','check_baddeps'])]:run(label,args)
 (out/'complete.json').write_text(json.dumps({'status':'REQUIRED_UPSTREAM_CHECKS_PASSED','base':base,'patch_sha256':hashlib.sha256(patch.read_bytes()).hexdigest(),'minimum_free_bytes':minimum},indent=2))

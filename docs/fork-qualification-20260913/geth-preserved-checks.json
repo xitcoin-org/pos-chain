@@ -1,0 +1,21 @@
+{
+  "run": 34788224704,
+  "job": 103807517429,
+  "artifact": 10328010368,
+  "artifact_sha256": "2f3ce4cb07fc393e89f4136688655ff8a1acb41235371a48e20ed68296763f18",
+  "input_patch_sha256": "c5e3e3fba432281a7a8e0896147baf501e47893e3b3f64ddd59bd0b1f72fc633",
+  "make_all": {
+    "command": [
+      "make",
+      "all"
+    ],
+    "exit_code": 0,
+    "blocked": null,
+    "minimum_free_bytes": 89353224192,
+    "seconds": 216.64
+  },
+  "root_tests_passed": true,
+  "root_tests_evidence": "official ci.go proceeds to keeper only after root go test succeeds",
+  "keeper_failure": "go.mod updates needed",
+  "root_graph_unchanged_by_keeper_tidy": true
+}
