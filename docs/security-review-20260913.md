@@ -75,3 +75,25 @@ A signed replacement branch replays PR43's diagnostic changes from the existing
 main baseline. No main rewrite, forced update, contract change, protection
 change or security-gate relaxation is part of this regularization. CI failure
 on the expired review remains expected and must block merging.
+
+## Verified candidate patch set
+
+The [isolated remediation patch set](security-remediation-20260913/README.md)
+now includes successful builds of both modules and fifteen targeted test suites.
+It is published for review, not installed as the active dependency graph.
+
+Important refinement to the earlier binary observations: both the reference
+release and the first candidate were stripped. govulncheck 1.7.0 falls back to
+module-level precision in that case, emitting conservative package/symbol
+placeholders. The absence of a DTLS package finding in the stripped reference
+is not proof that DTLS symbols are absent. Source analysis identifies STUN v2
+as the only external importer of DTLS v2; Geth NAT calls UDP4 net.Dial, while
+the DTLS constructor is in the separate DialURI path.
+
+A second candidate build retains symbols. Its scan reports GO-2026-5932 and
+GO-2025-3442 at module level only, with no package/function findings. Both
+source scans also completed; exact summaries and binary hashes are included
+in validation.json. No warning, prior finding or expired gate was suppressed.
+Local SDK/Geth replacement coordinates are `(devel)`; their missing SDK
+advisories cannot clear GO-2024-2584. Independent source-fix and metadata review
+remain mandatory, and the exception expiry is still 2026-09-05.
