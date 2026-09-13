@@ -25,7 +25,7 @@ function address(seed = 0, prefix = 'xtc', length = 20) {
   const alphabet = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
   return prefix + '1' + [...words, ...Array.from({ length: 6 }, (_, i) => (chk >>> (5 * (5 - i))) & 31)].map((v) => alphabet[v]).join('');
 }
-const policy = { chainId: 'fixture-chain', amount: '1', addressWindow: 86400000, ipWindow: 86400000, ipLimit: 3, clock: () => 1000 };
+const policy = { sender: address(99), chainId: 'fixture-chain', amount: '1', addressWindow: 86400000, ipWindow: 86400000, ipLimit: 3, clock: () => 1000 };
 async function fixture(t, override = {}) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'faucet-offline-'));
   t.after(() => fs.rm(dir, { recursive: true })); // Only this test's synthetic files.
@@ -174,4 +174,28 @@ test('malformed legacy history is preserved and prevents initialization', async 
   await fs.writeFile(legacyFile, '{truncated');
   await assert.rejects(Journal.open(path.join(parent, 'new'), { ...policy, legacyFile }), SyntaxError);
   assert.equal(await fs.readFile(legacyFile, 'utf8'), '{truncated');
+});
+
+test('receipt reconciliation requires exact transaction context and inclusion', async (t) => {
+  for (const changed of ['txhash', 'chainId', 'sender', 'recipient', 'denom', 'amount', 'height', 'code', 'absent', 'timeout', 'confirmed', 'failed']) {
+    const { journal } = await fixture(t);
+    const row = await journal.claim(address(), '192.0.2.1', async () => 'a'.repeat(64));
+    const receipt = { txhash: row.txhash, chainId: row.chainId, sender: row.sender, recipient: row.address, denom: row.denom, amount: row.amount, height: 1, code: changed === 'failed' ? 5 : 0 };
+    if (Object.hasOwn(receipt, changed)) receipt[changed] = changed === 'height' ? 0 : 'mismatch';
+    let aborted = false;
+    const result = await journal.reconcile(row.id, async (_, signal) => {
+      if (changed === 'absent') return null;
+      if (changed === 'timeout') { signal.addEventListener('abort', () => { aborted = true; }); return new Promise(() => {}); }
+      return receipt;
+    }, 5);
+    assert.equal(result.state, changed === 'confirmed' ? 'confirmed' : changed === 'failed' ? 'failed_definite' : 'unknown');
+    if (changed === 'timeout') assert(aborted);
+    await assert.rejects(journal.claim(address(), '192.0.2.2', async () => assert.fail()), /address_limit/);
+  }
+});
+
+test('request without hash never queries or infers non-submission', async (t) => {
+  const { journal } = await fixture(t);
+  const row = await journal.claim(address(), '192.0.2.1', async () => '');
+  assert.equal((await journal.reconcile(row.id, async () => assert.fail())).state, 'unknown');
 });

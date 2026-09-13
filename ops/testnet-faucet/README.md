@@ -22,8 +22,12 @@ Un hash reste `submitted`, sans prétendre confirmer l'exécution ; toute autre
 issue ambiguë reste `unknown`. Ces demandes, ainsi que les claims historiques
 importés sans preuve d'inclusion, bloquent la réémission même après 24 heures.
 HTTP 202 fournit une référence de réconciliation et l'interface demande de ne
-pas resoumettre. La chaîne de lecture des reçus et la résolution autorisée des
-états ne sont pas encore implémentées : aucun résultat n'est déclaré confirmé.
+pas resoumettre. Le noyau de réconciliation vérifie hash, chaîne, expéditeur, destinataire,
+montant, dénomination, hauteur et code via un adaptateur de lecture injectable.
+Il est testé uniquement sur reçus fictifs ; aucun adaptateur RPC ni endpoint
+public de résolution n'est branché. Sans hash, l'état demeure inchangé pour
+réception opérateur indépendante. Un reçu inclus à code non nul garde le quota
+jusqu'à expiration de la fenêtre ; l'absence de reçu maintient le blocage.
 
 `claims.json` est conservé octet pour octet. Un historique invalide est refusé.
 Chaque écriture fsync le fichier puis le répertoire ; les copies de récupération

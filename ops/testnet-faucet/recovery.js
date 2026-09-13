@@ -43,8 +43,8 @@ function validate(rows) {
   const ids = new Set();
   for (const row of rows) {
     if (!row || typeof row.id !== 'string' || ids.has(row.id) || !STATES.has(row.state) ||
-        !validAddress(row.address) || typeof row.ip !== 'string' || normalizeIp(row.ip) !== row.ip ||
-        !Number.isSafeInteger(row.at) || row.at < 0 || typeof row.chainId !== 'string' || !row.chainId ||
+        !validAddress(row.address) || !validAddress(row.sender) || typeof row.ip !== 'string' || normalizeIp(row.ip) !== row.ip ||
+        !Number.isSafeInteger(row.at) || row.at < 0 || typeof row.amount !== 'string' || typeof row.chainId !== 'string' || !row.chainId ||
         row.denom !== 'axtc' || !/^[1-9][0-9]*$/.test(row.amount) ||
         (row.txhash !== null && !/^[0-9A-F]{64}$/.test(row.txhash))) throw new Error('invalid_journal');
     ids.add(row.id);
@@ -57,14 +57,14 @@ async function readBounded(file) {
 }
 
 class Journal {
-  static async open(directory, { legacyFile, chainId, amount, addressWindow, ipWindow, ipLimit, clock = Date.now } = {}) {
-    if (!chainId || !/^[1-9][0-9]*$/.test(String(amount)) ||
+  static async open(directory, { legacyFile, chainId, sender, amount, addressWindow, ipWindow, ipLimit, clock = Date.now } = {}) {
+    if (!validAddress(sender) || !chainId || !/^[1-9][0-9]*$/.test(String(amount)) ||
         ![addressWindow, ipWindow, ipLimit].every((x) => Number.isSafeInteger(x) && x > 0)) throw new Error('invalid_policy');
     await fs.mkdir(directory, { recursive: true, mode: 0o700 });
     const lock = path.join(directory, 'writer.lock');
     await fs.mkdir(lock, { mode: 0o700 }); // Never steal a lock, even after a crash.
     const journal = new Journal();
-    Object.assign(journal, { directory, lock, chainId, amount: String(amount), addressWindow, ipWindow, ipLimit, clock, rows: [], busy: false, poisoned: false });
+    Object.assign(journal, { directory, lock, chainId, sender, amount: String(amount), addressWindow, ipWindow, ipLimit, clock, rows: [], busy: false, poisoned: false });
     try {
       const file = path.join(directory, 'journal.json');
       let text;
@@ -83,13 +83,13 @@ class Journal {
           if (legacy !== undefined) {
             if (!Array.isArray(legacy.claims)) throw new Error('invalid_legacy');
             journal.rows = legacy.claims.map((row) => ({ id: randomUUID(), address: row.address, ip: normalizeIp(row.ip), at: row.at,
-              chainId, denom: 'axtc', amount: String(amount), state: 'unknown', txhash: typeof row.txhash === 'string' && /^[a-fA-F0-9]{64}$/.test(row.txhash) ? row.txhash.toUpperCase() : null }));
+              chainId, sender, denom: 'axtc', amount: String(amount), state: 'unknown', txhash: typeof row.txhash === 'string' && /^[a-fA-F0-9]{64}$/.test(row.txhash) ? row.txhash.toUpperCase() : null }));
             validate(journal.rows); // Legacy broadcast hashes do not establish inclusion.
           }
         }
         await journal.persist();
       }
-      if (journal.rows.some((row) => row.chainId !== chainId || row.amount !== String(amount))) throw new Error('policy_changed_requires_review');
+      if (journal.rows.some((row) => row.sender !== sender || row.chainId !== chainId || row.amount !== String(amount))) throw new Error('policy_changed_requires_review');
       return journal;
     } catch (err) {
       await fs.rmdir(lock);
@@ -134,7 +134,7 @@ class Journal {
       if (!Number.isSafeInteger(now) || now < 0) throw new Error('invalid_clock');
       if (this.rows.some((r) => r.address === address && (PENDING.has(r.state) || now - r.at < this.addressWindow))) throw new Error('address_limit');
       if (this.rows.filter((r) => r.ip === ip && (PENDING.has(r.state) || now - r.at < this.ipWindow)).length >= this.ipLimit) throw new Error('ip_limit');
-      const row = { id: randomUUID(), address, ip, at: now, chainId: this.chainId, denom: 'axtc', amount: this.amount, state: 'reserved', txhash: null };
+      const row = { id: randomUUID(), address, ip, at: now, chainId: this.chainId, sender: this.sender, denom: 'axtc', amount: this.amount, state: 'reserved', txhash: null };
       this.rows.push(row);
       await this.commit(); // Nothing has reached the submission adapter yet.
       row.state = 'unknown';
@@ -146,6 +146,32 @@ class Journal {
           row.state = 'submitted';
         }
       } catch { /* Ambiguous child outcomes never release quota or trigger a resend. */ }
+      await this.commit();
+      return { ...row };
+    });
+  }
+
+  // lookup must be a read-only receipt adapter; this method never submits.
+  // The HTTP server deliberately does not expose reconciliation as a public API.
+  async reconcile(id, lookup, timeout = 5000) {
+    return this.exclusive(async () => {
+      const row = this.rows.find((entry) => entry.id === id);
+      if (!row) throw new Error('unknown_request');
+      if (!PENDING.has(row.state) || !row.txhash) return { ...row };
+      let timer, receipt;
+      const controller = new AbortController();
+      try {
+        receipt = await Promise.race([
+          Promise.resolve().then(() => lookup(row.txhash, controller.signal)),
+          new Promise((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(new Error('receipt_timeout')); }, timeout); }),
+        ]);
+      } catch { /* Absence, timeout and read failure are not non-submission. */ }
+      finally { clearTimeout(timer); }
+      const matches = receipt && receipt.txhash === row.txhash && receipt.chainId === row.chainId &&
+        receipt.sender === row.sender && receipt.recipient === row.address && receipt.denom === row.denom &&
+        receipt.amount === row.amount && Number.isSafeInteger(receipt.height) && receipt.height > 0 &&
+        Number.isSafeInteger(receipt.code) && receipt.code >= 0;
+      row.state = matches ? (receipt.code === 0 ? 'confirmed' : 'failed_definite') : 'unknown';
       await this.commit();
       return { ...row };
     });

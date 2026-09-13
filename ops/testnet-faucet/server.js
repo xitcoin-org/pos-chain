@@ -130,7 +130,7 @@ server.maxConnections = 32;
 
 async function start() {
   journal = await Journal.open(path.join(cfg.faucetHome, 'state', 'recovery-v1'), {
-    legacyFile: stateFile, chainId: cfg.chainId, amount: cfg.amount,
+    legacyFile: stateFile, sender: await faucetAddress(), chainId: cfg.chainId, amount: cfg.amount,
     addressWindow: cfg.addressWindow, ipWindow: cfg.ipWindow, ipLimit: cfg.ipLimit,
   });
   for (const signal of ['SIGTERM', 'SIGINT']) process.once(signal, () => {
