@@ -30,7 +30,15 @@ patch=root/'docs/fork-qualification-20260913'/(name+'.patch')
 (out/'input.json').write_text(json.dumps({'name':name,'base':base,'patch_sha256':hashlib.sha256(patch.read_bytes()).hexdigest(),'qualification_commit':os.getenv('GITHUB_SHA')},indent=2))
 run('patch',['git','apply','--unidiff-zero',str(patch)])
 if name=='cosmos-sdk':
- for label,args in [('tidy-all',['make','tidy-all','VERSION_RAW=v0.54.4']),('build',['make','build','VERSION_RAW=v0.54.4']),('lint',['make','lint','VERSION_RAW=v0.54.4']),('test-unit',['make','test-unit','VERSION_RAW=v0.54.4'])]:run(label,args)
+ prior=json.loads((root/'docs/fork-qualification-20260913/sdk-preserved-checks.json').read_text())
+ run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','crypto/armor_compat_test.go'])
+ unchanged=subprocess.check_output(['git','diff','--binary','--unified=0','--','.',*[':!'+x for x in prior['excluded_test_files']]],cwd=src)
+ assert hashlib.sha256(unchanged).hexdigest()==prior['unchanged_patch_sha256'], 'production source or module graph changed; prior SDK checks cannot be reused'
+ assert prior['tidy_all']['exit_code']==0 and prior['build']['exit_code']==0
+ (out/'preserved-checks.json').write_text(json.dumps(prior,indent=2))
+ # The repository supports LINT_DIFF; all other modules and files passed the full lint.
+ run('lint-corrected-tests',['make','lint','VERSION_RAW=v0.54.4','LINT_DIFF=1','GIT_DIFF=crypto/armor_compat_test.go x/gov/keeper/keeper_test.go'])
+ run('test-unit',['make','test-unit','VERSION_RAW=v0.54.4'])
 else:
  prior=json.loads((root/'docs/fork-qualification-20260913/geth-preserved-checks.json').read_text())
  run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','p2p/nat/stun_local_test.go'])

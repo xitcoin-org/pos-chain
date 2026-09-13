@@ -1,0 +1,35 @@
+{
+  "run": 34788124256,
+  "job": 103807239084,
+  "artifact": 10328305788,
+  "prior_input_patch_sha256": "1abcb1683ba4b2966d85c609cfe7ffadd1d9e3964ee1e1a793418a86025bf1e7",
+  "unchanged_patch_sha256": "23bed44987c941a97f3b0c58cc5ee654266f473835060b3939f398472c5842af",
+  "excluded_test_files": [
+    "crypto/armor_compat_test.go",
+    "x/gov/keeper/keeper_test.go"
+  ],
+  "tidy_all": {
+    "command": [
+      "make",
+      "tidy-all",
+      "VERSION_RAW=v0.54.4"
+    ],
+    "exit_code": 0,
+    "blocked": null,
+    "minimum_free_bytes": 89389129728,
+    "seconds": 31.52
+  },
+  "build": {
+    "command": [
+      "make",
+      "build",
+      "VERSION_RAW=v0.54.4"
+    ],
+    "exit_code": 0,
+    "blocked": null,
+    "minimum_free_bytes": 85580902400,
+    "seconds": 289.19
+  },
+  "lint_prior": "all modules completed; only gci in armor_compat_test.go and missing explanation on existing nolint in keeper_test.go failed",
+  "source_changes": "test import grouping and explanatory comment only; production source and all dependency locks unchanged"
+}

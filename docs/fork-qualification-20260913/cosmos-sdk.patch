@@ -60,10 +60,10 @@ index 2526eb2152..9b0b71be81 100644
 -	"golang.org/x/crypto/openpgp/armor" //nolint:staticcheck //TODO: remove this dependency
 diff --git a/crypto/armor_compat_test.go b/crypto/armor_compat_test.go
 new file mode 100644
-index 0000000000..9fcba424de
+index 0000000000..5e5e94f6d2
 --- /dev/null
 +++ b/crypto/armor_compat_test.go
-@@ -0,0 +1,62 @@
+@@ -0,0 +1,63 @@
 +package crypto_test
 +
 +import (
@@ -71,10 +71,11 @@ index 0000000000..9fcba424de
 +	"io"
 +	"testing"
 +
-+	sdkcrypto "github.com/cosmos/cosmos-sdk/crypto"
-+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 +	"github.com/stretchr/testify/require"
 +	oldarmor "golang.org/x/crypto/openpgp/armor"
++
++	sdkcrypto "github.com/cosmos/cosmos-sdk/crypto"
++	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 +)
 +
 +// Only a test oracle; never used by production. All keys are synthetic.
@@ -302,3 +303,10 @@ index 99df90218a..7e69091f95 100644
 @@ -30,0 +31,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
 +github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
 +github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/x/gov/keeper/keeper_test.go b/x/gov/keeper/keeper_test.go
+index 476b5528b0..44db9f9324 100644
+--- a/x/gov/keeper/keeper_test.go
++++ b/x/gov/keeper/keeper_test.go
+@@ -137 +137 @@ func TestSetHooks(t *testing.T) {
+-	govKeeper, _, _, _, _, _, _, _ := setupGovKeeper(t) //nolint:dogsled
++	govKeeper, _, _, _, _, _, _, _ := setupGovKeeper(t) //nolint:dogsled // The hook test only needs the keeper from the shared fixture.
