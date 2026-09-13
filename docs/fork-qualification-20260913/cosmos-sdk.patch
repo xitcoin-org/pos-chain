@@ -1,0 +1,304 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 7688cd7bf5..0fb75f78c7 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -40,0 +41,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
++### Bug Fixes
++
++* (crypto) xitcoin-org/pos-chain#33 Use ProtonMail armor while preserving historical key formats.
++* (build) xitcoin-org/pos-chain#33 Invoke the Bash dependency tidy script with Bash.
++
++## UNRELEASED
++
+diff --git a/Makefile b/Makefile
+index 99cb4d6319..7c2e6db554 100644
+--- a/Makefile
++++ b/Makefile
+@@ -186 +186 @@ tidy-all:
+-	sh ./scripts/go-mod-tidy-all.sh
++	bash ./scripts/go-mod-tidy-all.sh
+diff --git a/XITCOIN-PROVENANCE.md b/XITCOIN-PROVENANCE.md
+new file mode 100644
+index 0000000000..a66d1b431b
+--- /dev/null
++++ b/XITCOIN-PROVENANCE.md
+@@ -0,0 +1,12 @@
++# Xitcoin dependency fork
++
++Maintainer: xitcoin-org. Upstream: https://github.com/cosmos/cosmos-sdk/commit/dedeb7c80a91c47ae83f5352e29c3dd34e4a3fc6.
++Changed on 2026-09-13 for https://github.com/xitcoin-org/pos-chain/issues/33 and PR44.
++
++Production armor imports ProtonMail/go-crypto v1.4.1. Historical formats and encryption remain unchanged. make tidy-all propagates Go-generated sums to nested modules; Bash invocation is corrected.
++
++Module declarations retain their original import identity. Downstream replacements must pin an immutable revision and retain advisory mapping to upstream; a renamed fork is not a vulnerability clearance. The six-case independent security review remains required and expired on 2026-09-05.
++
++Original copyright and license notices are preserved. SDK core: LICENSE (Apache-2.0); enterprise/group and enterprise/poa remain owned by Cosmos Labs US Inc. and governed by their respective LICENSE files (Source Available Evaluation License), only evaluated in qualification, not added to the Xitcoin application. Geth: COPYING.LESSER for library code and COPYING for GPL components/commands, subject to per-file notices. Dependencies retain their own licenses. This fork distributes corresponding source, not deployment binaries.
++
++The fork commit is a qualification candidate until the complete required upstream checks and downstream review pass. No production suitability or global PASS is implied.
+diff --git a/client/v2/go.mod b/client/v2/go.mod
+index c7c43d5fc7..383926b4ad 100644
+--- a/client/v2/go.mod
++++ b/client/v2/go.mod
+@@ -34,0 +35 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/client/v2/go.sum b/client/v2/go.sum
+index 9f9788a6f9..7da5ce591f 100644
+--- a/client/v2/go.sum
++++ b/client/v2/go.sum
+@@ -42,0 +43,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/crypto/armor.go b/crypto/armor.go
+index 2526eb2152..9b0b71be81 100644
+--- a/crypto/armor.go
++++ b/crypto/armor.go
+@@ -0,0 +1 @@
++// Xitcoin modification (2026-09-13); see XITCOIN-PROVENANCE.md.
+@@ -9,0 +11 @@ import (
++	"github.com/ProtonMail/go-crypto/openpgp/armor"
+@@ -13 +14,0 @@ import (
+-	"golang.org/x/crypto/openpgp/armor" //nolint:staticcheck //TODO: remove this dependency
+diff --git a/crypto/armor_compat_test.go b/crypto/armor_compat_test.go
+new file mode 100644
+index 0000000000..9fcba424de
+--- /dev/null
++++ b/crypto/armor_compat_test.go
+@@ -0,0 +1,62 @@
++package crypto_test
++
++import (
++	"bytes"
++	"io"
++	"testing"
++
++	sdkcrypto "github.com/cosmos/cosmos-sdk/crypto"
++	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
++	"github.com/stretchr/testify/require"
++	oldarmor "golang.org/x/crypto/openpgp/armor"
++)
++
++// Only a test oracle; never used by production. All keys are synthetic.
++func oldEncode(t *testing.T, kind string, headers map[string]string, payload []byte) string {
++	t.Helper()
++	var buf bytes.Buffer
++	w, err := oldarmor.Encode(&buf, kind, headers)
++	require.NoError(t, err)
++	_, err = w.Write(payload)
++	require.NoError(t, err)
++	require.NoError(t, w.Close())
++	return buf.String()
++}
++
++func TestHistoricalArmorCompatibility(t *testing.T) {
++	key := secp256k1.GenPrivKey()
++	for _, version := range []string{"0.0.0", "0.0.1"} {
++		t.Run("public-"+version, func(t *testing.T) {
++			encoded := oldEncode(t, "TENDERMINT PUBLIC KEY", map[string]string{"version": version}, key.PubKey().Bytes())
++			got, algo, err := sdkcrypto.UnarmorPubKeyBytes(encoded)
++			require.NoError(t, err)
++			require.Equal(t, "secp256k1", algo)
++			require.Equal(t, key.PubKey().Bytes(), got)
++		})
++	}
++	t.Run("info", func(t *testing.T) {
++		payload := []byte("synthetic historical info")
++		encoded := oldEncode(t, "TENDERMINT KEY INFO", map[string]string{"version": "0.0.0", "type": "Info"}, payload)
++		got, err := sdkcrypto.UnarmorInfoBytes(encoded)
++		require.NoError(t, err)
++		require.Equal(t, payload, got)
++	})
++	t.Run("argon2-chacha-old-reader-and-writer", func(t *testing.T) {
++		encoded := sdkcrypto.EncryptArmorPrivKey(key, "synthetic-passphrase", "")
++		old, err := oldarmor.Decode(bytes.NewBufferString(encoded))
++		require.NoError(t, err)
++		payload, err := io.ReadAll(old.Body)
++		require.NoError(t, err)
++		historical := oldEncode(t, old.Type, old.Header, payload)
++		got, algo, err := sdkcrypto.UnarmorDecryptPrivKey(historical, "synthetic-passphrase")
++		require.NoError(t, err)
++		require.Equal(t, "secp256k1", algo)
++		require.True(t, key.Equals(got))
++		_, _, err = sdkcrypto.UnarmorDecryptPrivKey(historical, "incorrect")
++		require.Error(t, err)
++	})
++	for _, bad := range []string{"", "not armor", "-----BEGIN TENDERMINT PRIVATE KEY-----\n\ninvalid!\n-----END TENDERMINT PRIVATE KEY-----"} {
++		_, _, _, err := sdkcrypto.DecodeArmor(bad)
++		require.Error(t, err)
++	}
++}
+diff --git a/crypto/armor_test.go b/crypto/armor_test.go
+index 0fe60f17b9..040aa4477c 100644
+--- a/crypto/armor_test.go
++++ b/crypto/armor_test.go
+@@ -239 +239 @@ func TestBcryptLegacyEncryption(t *testing.T) {
+-			armor:       crypto.EncodeArmor("TENDERMINT PRIVATE KEY", headerBcrypt, encBytesBcryptXsalsa20symmetric),
++			armor:       oldEncode(t, "TENDERMINT PRIVATE KEY", headerBcrypt, encBytesBcryptXsalsa20symmetric),
+diff --git a/enterprise/group/go.mod b/enterprise/group/go.mod
+index 17af5a5cb1..94333d52f6 100644
+--- a/enterprise/group/go.mod
++++ b/enterprise/group/go.mod
+@@ -40,0 +41 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/group/go.sum b/enterprise/group/go.sum
+index 7be9563b9d..b8e3a1242a 100644
+--- a/enterprise/group/go.sum
++++ b/enterprise/group/go.sum
+@@ -40,0 +41,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/enterprise/group/simapp/go.mod b/enterprise/group/simapp/go.mod
+index 8b4d6bc832..839df5ca66 100644
+--- a/enterprise/group/simapp/go.mod
++++ b/enterprise/group/simapp/go.mod
+@@ -35,0 +36 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/group/simapp/go.sum b/enterprise/group/simapp/go.sum
+index 1a41dda093..3abdd70efb 100644
+--- a/enterprise/group/simapp/go.sum
++++ b/enterprise/group/simapp/go.sum
+@@ -44,0 +45,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/enterprise/group/tests/systemtests/go.mod b/enterprise/group/tests/systemtests/go.mod
+index 67623f36af..30a8ddfbd0 100644
+--- a/enterprise/group/tests/systemtests/go.mod
++++ b/enterprise/group/tests/systemtests/go.mod
+@@ -26,0 +27 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/group/tests/systemtests/go.sum b/enterprise/group/tests/systemtests/go.sum
+index facdd43352..a2661ad986 100644
+--- a/enterprise/group/tests/systemtests/go.sum
++++ b/enterprise/group/tests/systemtests/go.sum
+@@ -42,0 +43,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/enterprise/poa/examples/migrate-from-pos/go.mod b/enterprise/poa/examples/migrate-from-pos/go.mod
+index 1aa80e2f0c..d598820409 100644
+--- a/enterprise/poa/examples/migrate-from-pos/go.mod
++++ b/enterprise/poa/examples/migrate-from-pos/go.mod
+@@ -47,0 +48 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/poa/examples/migrate-from-pos/go.sum b/enterprise/poa/examples/migrate-from-pos/go.sum
+index 92f5792427..909c7afa3b 100644
+--- a/enterprise/poa/examples/migrate-from-pos/go.sum
++++ b/enterprise/poa/examples/migrate-from-pos/go.sum
+@@ -74,0 +75,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/enterprise/poa/go.mod b/enterprise/poa/go.mod
+index 03704d01f0..f01881bcbe 100644
+--- a/enterprise/poa/go.mod
++++ b/enterprise/poa/go.mod
+@@ -35,0 +36 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/poa/go.sum b/enterprise/poa/go.sum
+index fb07c567b4..98e74add31 100644
+--- a/enterprise/poa/go.sum
++++ b/enterprise/poa/go.sum
+@@ -40,0 +41,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/enterprise/poa/simapp/go.mod b/enterprise/poa/simapp/go.mod
+index aec0d2d7c7..3a63240c93 100644
+--- a/enterprise/poa/simapp/go.mod
++++ b/enterprise/poa/simapp/go.mod
+@@ -35,0 +36 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/poa/simapp/go.sum b/enterprise/poa/simapp/go.sum
+index 24079f09f8..403d7b5935 100644
+--- a/enterprise/poa/simapp/go.sum
++++ b/enterprise/poa/simapp/go.sum
+@@ -44,0 +45,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/enterprise/poa/tests/systemtests/go.mod b/enterprise/poa/tests/systemtests/go.mod
+index 3cb1b3e898..95e1faaa5d 100644
+--- a/enterprise/poa/tests/systemtests/go.mod
++++ b/enterprise/poa/tests/systemtests/go.mod
+@@ -28,0 +29 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/enterprise/poa/tests/systemtests/go.sum b/enterprise/poa/tests/systemtests/go.sum
+index ff1416cc78..fe759264a7 100644
+--- a/enterprise/poa/tests/systemtests/go.sum
++++ b/enterprise/poa/tests/systemtests/go.sum
+@@ -42,0 +43,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/go.mod b/go.mod
+index b09500934a..0d4bad1e95 100644
+--- a/go.mod
++++ b/go.mod
+@@ -103,0 +104 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1
+diff --git a/go.sum b/go.sum
+index da0fbddc41..6241eb6b66 100644
+--- a/go.sum
++++ b/go.sum
+@@ -70,0 +71,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/simapp/go.mod b/simapp/go.mod
+index 077ec5106d..bd8397472f 100644
+--- a/simapp/go.mod
++++ b/simapp/go.mod
+@@ -49,0 +50 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/simapp/go.sum b/simapp/go.sum
+index ebf22d88f9..3f9aff1938 100644
+--- a/simapp/go.sum
++++ b/simapp/go.sum
+@@ -74,0 +75,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/tests/go.mod b/tests/go.mod
+index 18cea1fa7f..f7d613fd33 100644
+--- a/tests/go.mod
++++ b/tests/go.mod
+@@ -54,0 +55 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/tests/go.sum b/tests/go.sum
+index f0873cd8ad..79ca3b3de3 100644
+--- a/tests/go.sum
++++ b/tests/go.sum
+@@ -72,0 +73,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/tests/systemtests/go.mod b/tests/systemtests/go.mod
+index 985deee86b..6e7d865f00 100644
+--- a/tests/systemtests/go.mod
++++ b/tests/systemtests/go.mod
+@@ -35,0 +36 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/tests/systemtests/go.sum b/tests/systemtests/go.sum
+index fa320f2906..03701c28f8 100644
+--- a/tests/systemtests/go.sum
++++ b/tests/systemtests/go.sum
+@@ -42,0 +43,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/tools/confix/go.mod b/tools/confix/go.mod
+index 958df6bc36..8b62395323 100644
+--- a/tools/confix/go.mod
++++ b/tools/confix/go.mod
+@@ -30,0 +31 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/tools/confix/go.sum b/tools/confix/go.sum
+index ab0e470495..0a903fa4ee 100644
+--- a/tools/confix/go.sum
++++ b/tools/confix/go.sum
+@@ -42,0 +43,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
+diff --git a/tools/systemtests/go.mod b/tools/systemtests/go.mod
+index 42e878b297..2097f37c03 100644
+--- a/tools/systemtests/go.mod
++++ b/tools/systemtests/go.mod
+@@ -30,0 +31 @@ require (
++	github.com/ProtonMail/go-crypto v1.4.1 // indirect
+diff --git a/tools/systemtests/go.sum b/tools/systemtests/go.sum
+index 99df90218a..7e69091f95 100644
+--- a/tools/systemtests/go.sum
++++ b/tools/systemtests/go.sum
+@@ -30,0 +31,2 @@ github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8
++github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
++github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
