@@ -6,7 +6,9 @@ src=root/'qualification-source';start=time.monotonic();minimum=shutil.disk_usage
 def run(label,args,cwd=src):
  global minimum
  with (out/(label+'.log')).open('w') as log:
-  p=subprocess.Popen(args,cwd=cwd,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+  child_env=os.environ.copy()
+  if cwd==src:child_env.update(GITHUB_SHA=base,GITHUB_REPOSITORY='cosmos/'+name,GITHUB_REF_TYPE='',GITHUB_HEAD_REF='')
+  p=subprocess.Popen(args,cwd=cwd,env=child_env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
   reason=None;t=time.monotonic()
   while p.poll() is None:
    free=shutil.disk_usage(root).free;minimum=min(minimum,free)

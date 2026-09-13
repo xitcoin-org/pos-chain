@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repository: [cosmos-sdk, go-ethereum]
+        repository: [go-ethereum] # SDK continues in run 34788124256; no unchanged rerun
     env:
       GOMAXPROCS: '2'
       GOMEMLIMIT: 2GiB
