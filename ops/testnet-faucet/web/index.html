@@ -17,12 +17,12 @@ h1{margin-top:0;color:#c59b3a}p{line-height:1.55;color:#cbd5e1}input,button{widt
 <p class="small">Limit: one request per address per 24 hours; three requests per IP per 24 hours.</p>
 <input id="address" placeholder="xtc1…" autocomplete="off" spellcheck="false">
 <button id="claim">Request 10 XTC testnet</button>
-<div id="result">Checking faucet status…</div>
+<div id="result" role="status" aria-live="polite">Checking faucet status…</div>
 </main>
 <script>
 const out=document.getElementById('result'),btn=document.getElementById('claim'),input=document.getElementById('address');
 async function health(){const r=await fetch('/healthz');const x=await r.json();out.textContent=x.funded?`Faucet ready: ${x.claim_amount_xtc} XTC testnet per request.`:'Faucet temporarily unavailable.';btn.disabled=!x.funded}
-btn.onclick=async()=>{btn.disabled=true;out.textContent='Submitting request…';try{const r=await fetch('/claim',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:input.value.trim()})});const x=await r.json();out.textContent=x.ok?`Success.\n${x.amount_xtc} XTC testnet sent.\nTransaction: ${x.txhash}`:`Request refused: ${x.error||'unknown_error'}`}catch(e){out.textContent='Network error. Please retry later.'}finally{btn.disabled=false}};
+btn.onclick=async()=>{btn.disabled=true;out.textContent='Submitting request…';try{const r=await fetch('/claim',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:input.value.trim()})});const x=await r.json();out.textContent=x.reconciliation_required?`Request recorded; confirmation is pending. Do not resubmit.\nReference: ${x.request_id}${x.txhash?'\nTransaction: '+x.txhash:''}`:x.ok?`Success.\n${x.amount_xtc} XTC testnet sent.\nTransaction: ${x.txhash}`:`Request refused: ${x.error||'unknown_error'}`}catch(e){out.textContent='The result is uncertain. Do not resubmit; contact the faucet operator for reconciliation.'}finally{btn.disabled=false}};
 health().catch(()=>{out.textContent='Faucet status unavailable.';btn.disabled=true});
 </script>
 </body>
