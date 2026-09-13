@@ -7,7 +7,9 @@ set -euo pipefail
 review_by=2026-09-05
 if [[ "$(date -u +%F)" > "$review_by" ]]; then
   echo "govulncheck exception review expired on $review_by" >&2
-  exit 1
+  review_expired=true
+else
+  review_expired=false
 fi
 
 accepted=(
@@ -69,6 +71,12 @@ set +e
 govulncheck "$@" 2>&1 | tee "$report"
 status=${PIPESTATUS[0]}
 set -e
+
+# Always collect current findings, but never accept an expired review.
+if [[ "$review_expired" == true ]]; then
+  echo "govulncheck report collected; expired exception review still blocks this check" >&2
+  exit 1
+fi
 
 if (( status == 0 )); then
   exit 0
