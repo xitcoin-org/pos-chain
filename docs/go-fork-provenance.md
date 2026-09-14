@@ -1,23 +1,17 @@
-# Independent security review — versioned Go integration
+# Go fork provenance
 
-Refs xitcoin-org/pos-chain#33 and #44. Review is required from an independent security reviewer designated by xitcoin-org. No review is supplied or fabricated by this mission. The existing 2026-09-05 expiry and the six original advisory records remain unchanged. Fork publication, qualification, integration, merge and deployment are separate states.
-
-| Advisory | Original upstream identity | Evidence to assess | Required decision |
-|---|---|---|---|
-| GO-2023-1821 | github.com/cosmos/cosmos-sdk | Original advisory retained; deprecated x/crisis must remain absent from production imports and registration. Fork coordinates do not clear the finding. | Independent assessment on exact root/evmd graph and symbols. |
-| GO-2023-1881 | github.com/cosmos/cosmos-sdk | Same x/crisis constraint; retain distinct advisory and original affected ranges. | Independent assessment; no blanket SDK exemption. |
-| GO-2024-2584 | github.com/cosmos/cosmos-sdk v0.54.4 | Upstream source dedeb7c80a91c47ae83f5352e29c3dd34e4a3fc6 contains slashing and vesting fixes; original OSV open range and upstream advisory discrepancy are preserved in PR44 evidence. | Reconcile source fix with advisory metadata; fork rename or scanner absence is not clearance. |
-| GO-2025-3442 | github.com/cometbft/cometbft v0.39.4 | v0.39.4 contains the SetPeerRange height/base regression fix. Blocksync remains reachable; broad OSV ranges and original module-level findings are retained. | Assess exact graph/symbols and compatible remediation or formally reviewed disposition. |
-| GO-2026-4479 | github.com/pion/dtls/v2 v2.2.12 via Cosmos Geth v1.17.2-cosmos-0 | Patch moves NAT STUN to v3.1.5, preserving UDP4 and removing DTLS v2 from effective production imports; residual CometBFT/IBC module requirements remain. Historical loopback tests pass. | Confirm obsolete package absence from both production import graphs and binary; retain residual module requirements and inspect STUN semantics. |
-| GO-2026-5932 | golang.org/x/crypto/openpgp | SDK armor uses ProtonMail/go-crypto v1.4.1. Historical encryption and synthetic compatibility tests retained; old OpenPGP is a test oracle only. | Confirm production graph/symbol absence; retain x/crypto module-level advisory and stripped-binary scanner limitation. |
-
-Original records and historical proofs: docs/security-review-20260913.md and docs/security-remediation-20260913 in signed PR44 head 52c0ea290645c4b53b5648178f7176dfdc5a401c. New versioned graph results must be added separately, never substituted for the unfavorable baseline results.
-
-Review packet must contain fork base and signed commit SHAs, Go-generated versions and sums, corresponding source/license notices, exact patches, upstream prepublication CI results, source scans for both modules, symbol-bearing binary scan, module-identity mapping, root revision consumed by evmd, and required PR checks on the final head. No release binary is executed against a node. Public activation 11.2.8 and PR21 remain preserved; Cyberscope contract stays frozen.
+Refs #33 and #44. [SECURITY-ASSESSMENT.md](../SECURITY-ASSESSMENT.md) is the
+current source of truth for the six advisory dispositions and residual risks.
+The 2026-09-14 assessment renews the bounded CI disposition through 2026-09-21;
+it is performed by the PR author, without independent approval or release
+acceptance. The current machine record is [security-assessment.json](security-assessment.json).
+The dependency identities and sums in [go-fork-provenance.json](go-fork-provenance.json)
+remain current. Its top-level 2026-09-05 expiry and false acceptance are historical
+fields preserved for the acquired qualification, not the active gate decision.
 
 ## Versioned dependency sources
 
-Both forks preserve upstream module declarations. The two application modules use remote, immutable Go replacements. The original module identities and all six advisory records above remain authoritative for review. Scanner silence under a fork name is not clearance.
+Both forks preserve upstream module declarations. The two application modules use remote, immutable Go replacements. The original module identities and all six advisory records in the identity manifest remain authoritative for review. Scanner silence under a fork name is not clearance.
 
 - `github.com/cosmos/cosmos-sdk` required `v0.54.4` → `github.com/xitcoin-org/cosmos-sdk v0.54.5-0.20260914091530-52ff14a25bee`. [Signed source](https://github.com/xitcoin-org/cosmos-sdk/commit/52ff14a25bee524f0e48ae7f00664443bcb22335), [upstream base](https://github.com/cosmos/cosmos-sdk/commit/dedeb7c80a91c47ae83f5352e29c3dd34e4a3fc6). Go module sum `h1:WU03GGJuL72vYRtn90DF79x51Y5TWGFbLa4XgTvKXuA=`; go.mod sum `h1:/1rNNn6uo2iw2ZEp9N8GK9PdWgH0OmxDly8MEAArYPI=`; qualified patch SHA256 `dc46d5e1e8497222040f0688277217599ce884e52ebdc820ba65f6a79a74902c`.
 - `github.com/ethereum/go-ethereum` required `v1.16.9` → `github.com/xitcoin-org/go-ethereum v1.17.2-cosmos-0.0.20260913233706-e09f79643cd4`. [Signed source](https://github.com/xitcoin-org/go-ethereum/commit/e09f79643cd464404876f3565ce0a8fd8c0aeb16), [upstream base](https://github.com/cosmos/go-ethereum/commit/d99d6fa2c8d98b7cd653de4a9386d2da3db8f25c). Go module sum `h1:xDPGjArTeKQ8j19NP5e968xfZLaidTHxaGGk89JRIww=`; go.mod sum `h1:QtIPOaMKuz4zDZoQQ72nJJ9i5njr+MyRMl2tv7XteJQ=`; qualified patch SHA256 `8316073e371bdccaf788bd0f881d23094f1d486d1d7202d3edaa31fdf2416db4`.
@@ -36,11 +30,22 @@ The Geth fork changes STUN to v3.1.5 with UDP4 preserved. Full root upstream tes
 
 The SDK core retains Apache-2.0 and its per-file notices. The enterprise modules retain their separate Cosmos Labs evaluation licenses; they were evaluated in upstream qualification and are not added to the application. ProtonMail armor retains its BSD-style license. Geth library files retain LGPL notices, and commands/components retain applicable GPL and per-file notices. Pion STUN retains its MIT license. The fork sources retain the original license files and explicit modification notices. No deployment binary is published by this integration; a symbol-bearing qualification binary is built and scanned on an isolated runner, then only its hash and build information are retained. A later distributor must assess applicable source and relinking obligations for its actual binary distribution.
 
-## Review and merge status
+## Assessment and merge status
 
-No independent review is supplied by this mission. The exception expired on 2026-09-05; that date and all six advisory identities remain unchanged. The gate now checks the module being scanned (root or evmd), exact SDK/Geth replacements and required versions, fork sums, the published evmd root anchor and its two sums, and obsolete production imports. These corrections implement review findings R1–R3; they do not renew security acceptance. After successful preflight, findings are collected and expiry still fails the gate. An independent security reviewer designated by xitcoin-org must assess the six cases against these exact revisions and source/binary findings. Repository maintainers must obtain the required approvals and successful mandatory checks before a normal merge. No administrative bypass, alert deletion, arbitrary expiry extension, force-push or deployment is part of this candidate.
+The current assessment explains each original advisory against exact source,
+including the SDK slashing/OSV reference discrepancy, CometBFT's active fixed
+blocksync path, residual DTLS v2 requirements and armor compatibility limits.
+The gate validates the module actually scanned, exact replacements and sums,
+root anchor and obsolete imports. It also verifies the current assessment,
+its explanation and four module locks before scanning. An altered assessment,
+lock drift, new finding, scanner error or expiry fails closed.
 
-Targeted gate validation: `python3 scripts/test-govulncheck-gate.py` runs seven groups of isolated wrapper simulations (Go, date and scanner are simulated; the wrapper and provenance checker are real). These simulations include root/evmd drift, missing or wrong replacements, checksums, root anchor, obsolete imports, scanner errors and expiry. Separately, the real acquired root/evmd dependency graphs and provenance passed; real `govulncheck -scan=module` runs collected GO-2025-3442 and GO-2026-5932 and the wrapper rejected the expired review. Module scans do not establish symbol reachability. Real mutation tests reject invalid locks/sums/imports before a scanner sentinel; they are not vulnerability scans. No acquired SDK/Geth/application suite was rerun for R1–R3.
+No independent approval is supplied. GitHub protections and release-specific
+review requirements remain unchanged; see the normative-source discussion in
+SECURITY-ASSESSMENT.md. Before a later merge, recheck the exact head and all
+requirements then in force. No fusion or deployment is part of PR44 assessment.
+
+Historical R1–R3 gate validation: the then-current `python3 scripts/test-govulncheck-gate.py` ran seven groups of isolated wrapper simulations (Go, date and scanner are simulated; the wrapper and provenance checker are real). These simulations include root/evmd drift, missing or wrong replacements, checksums, root anchor, obsolete imports, scanner errors and expiry. Separately, the real acquired root/evmd dependency graphs and provenance passed; real `govulncheck -scan=module` runs collected GO-2025-3442 and GO-2026-5932 and the wrapper rejected the expired review. Module scans do not establish symbol reachability. Real mutation tests reject invalid locks/sums/imports before a scanner sentinel; they are not vulnerability scans. No acquired SDK/Geth/application suite was rerun for R1–R3.
 
 Historical patch-only evidence remains under `security-remediation-20260913` and at signed head `52c0ea290645c4b53b5648178f7176dfdc5a401c`. It describes the earlier local graph; current locks and this provenance file describe the versioned candidate. The complete integration commit and the root library revision consumed by evmd are recorded separately to avoid a self-referential Go version.
 

@@ -31,6 +31,7 @@ class ReuseTests(unittest.TestCase):
                         str(SOURCE), guard.REVIEWED_HEAD], check=True)
         cls.policy = guard.read_policy(SOURCE)
         for name in cls.policy['mission_files'].keys() | {guard.POLICY}:
+            (cls.root / name).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(SOURCE / name, cls.root / name)
         cls.history = Path(cls.temp.name) / 'history'
         # CI already downloaded and checked all four archives before this test.
@@ -98,6 +99,19 @@ class ReuseTests(unittest.TestCase):
                 guard.validate(self.root, self.history)
         finally:
             subprocess.run(['git', '-C', str(self.root), 'reset', '--quiet', 'HEAD', '--', 'go.mod'], check=True)
+            path.write_bytes(original)
+
+    def test_staged_reviewed_file_cannot_hide_mutation(self):
+        path = self.root / 'SECURITY.md'
+        original = path.read_bytes()
+        try:
+            path.write_bytes(original + b'\nUnreviewed staged text\n')
+            subprocess.run(['git', '-C', str(self.root), 'add', 'SECURITY.md'], check=True)
+            path.write_bytes(original)
+            with self.assertRaises(ValueError):
+                guard.validate(self.root, self.history)
+        finally:
+            subprocess.run(['git', '-C', str(self.root), 'reset', '--quiet', 'HEAD', '--', 'SECURITY.md'], check=True)
             path.write_bytes(original)
 
     def test_policy_mutations(self):

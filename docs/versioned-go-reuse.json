@@ -4,7 +4,7 @@
   "reviewed_head": "ca6af2f3a3ecfad3590709df23afbcbc450d3f82",
   "security_acceptance": false,
   "review_expired": "2026-09-05",
-  "reason": "Reviewed R1-R3 gate-only delta plus this exact reuse validator, regression test and read-only artifact access. Application sources, both module locks, fixtures, provenance JSON and the original resume manifest remain byte-identical to the qualified continuation. All initial failures and scans retain their original SHA. No new binary/scan is claimed by reuse. Policy and guard are repository review inputs, not an independent approval.",
+  "reason": "Exact PR44 technical assessment, documentation and guard delta reviewed 2026-09-14. Production inputs and historical identity manifest remain byte-identical to the qualified continuation. Every listed file is content-bound; no directory exemption. Reuse retains old scans and false global acceptance. Current CI disposition lives separately in docs/security-assessment.json.",
   "gate_evidence": {
     "review_head": "5e24531951873ec8d0cf4403d118c45f47fa641e",
     "correction_head": "ca6af2f3a3ecfad3590709df23afbcbc450d3f82",
@@ -117,19 +117,67 @@
   ],
   "mission_files": {
     "scripts/qualify-versioned-go.py": {
-      "sha256": "5c891521911d7972c505b57d98c44cbd8e38865dda859dd376622e009b77f52d",
+      "sha256": "83841f04692d249d63df6ee66fb4e0ec5e29110c549594adf9861d222ba91655",
       "mode": "100644"
     },
     "scripts/verify-versioned-go-reuse.py": {
-      "sha256": "ae5fb04b343f3283135a5a746a72cd51488b0476b722424d357ab8cc2a7b35ea",
+      "sha256": "193947113ca87b0a70faa8cadd6dad9688a660fed0314b5bdd1c3d51e9bdfc6c",
       "mode": "100644"
     },
     "scripts/test-versioned-go-reuse.py": {
-      "sha256": "127635309e4275eaea90474eccd94e8234c18606e437f4a8796d1e2176410534",
+      "sha256": "4ed76ece167c337f9ed8ae45842b4fa01b6e1214dc1d815d4cd4c37a60f17baa",
       "mode": "100644"
     },
     ".github/workflows/versioned-go-qualification.yml": {
-      "sha256": "f6e4a682de56597166929b8c9b0c0e0ca03965679f6f38800b124331d0b17d89",
+      "sha256": "449190190597e99d6fafb9f3b93c46573ceb8c394d685f583b1f3f429ee6cf03",
+      "mode": "100644"
+    },
+    "scripts/run-govulncheck.sh": {
+      "sha256": "5a0386f7215d27a426e6e01dca81f844df32426430dcbe2869c6238278ad06a5",
+      "mode": "100755"
+    },
+    "scripts/test-govulncheck-gate.py": {
+      "sha256": "84373082b864634f765d36f5a92088fce8ae5c4b9fa47d7889363e19618e57e8",
+      "mode": "100644"
+    },
+    "scripts/verify-go-fork-provenance.py": {
+      "sha256": "da05e54d026748b62115e99acee7d9fb432ed02f7e7fe119bdf32fa19b20250c",
+      "mode": "100644"
+    },
+    "scripts/verify-security-assessment.py": {
+      "sha256": "3b4a3840be08189dfb58a1498e8a766540dd52a7e28461a3b385316a8dccd8eb",
+      "mode": "100644"
+    },
+    "docs/security-assessment.json": {
+      "sha256": "a622b9235cc4a260a413c31c930dde8ef6a0f5b6e65208c7387a6b746799b24e",
+      "mode": "100644"
+    },
+    "SECURITY-ASSESSMENT.md": {
+      "sha256": "9e8d05dbf5817f17b5f6de0e382125b6c9dc7060a7710251bf871da1d4ca94a9",
+      "mode": "100644"
+    },
+    "SECURITY.md": {
+      "sha256": "c58e2ad778e2e6d452ecb2b4e7b215570a1deb03c7f225b32a357126b1bc3770",
+      "mode": "100644"
+    },
+    "docs/go-fork-provenance.md": {
+      "sha256": "d0d5c20338d791ab09c41f8c8a219978e26094f906f5c2e146c4728d3009642f",
+      "mode": "100644"
+    },
+    "README.md": {
+      "sha256": "941147f72ec6c9d5351eed061b7723e66a8820050c46db6937cb1dce069afb70",
+      "mode": "100644"
+    },
+    "AGENTS.md": {
+      "sha256": "2eebd05ff43b4e1106d61234cfdb3c90ca844bdbada0a9de2fc24042553717f7",
+      "mode": "100644"
+    },
+    "UPSTREAMS.md": {
+      "sha256": "1453f1158c64cf882fbcfda159eff460693386a96758a96b0b40bda2b5172616",
+      "mode": "100644"
+    },
+    "docs/development.md": {
+      "sha256": "0568ad8732b2aa937d3b02d35c4aa05fed7fb234d131cd5c3f5c1ca99d88b69f",
       "mode": "100644"
     }
   }

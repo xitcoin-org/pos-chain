@@ -31,6 +31,7 @@ for forbidden in ['github.com/pion/dtls/v2','github.com/pion/stun/v2']:
  if any(p==forbidden or p.startswith(forbidden+'/') for p in packages):errors.append(f'{forbidden}: obsolete production dependency reintroduced')
 ids={a['id'] for a in manifest['advisories']}
 if ids!={'GO-2023-1821','GO-2023-1881','GO-2024-2584','GO-2025-3442','GO-2026-4479','GO-2026-5932'}:errors.append('six-advisory provenance set changed')
+# Historical identity manifest: current CI dates live in security-assessment.json.
 if manifest['review_expires']!='2026-09-05':errors.append('historical review expiry changed')
 report={'status':'FAIL' if errors else 'LOCKS_VERIFIED_REVIEW_STILL_REQUIRED','errors':errors,'residual_modules_requiring_review':residual_modules,'advisories':manifest['advisories'],'forks':manifest['forks']}
 print(json.dumps(report,indent=2));sys.exit(bool(errors))

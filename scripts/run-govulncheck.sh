@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Historical, narrowly scoped advisory dispositions awaiting independent review.
-# These dependency locks identify reviewed sources; they do not grant security
-# acceptance. Any dependency change requires a fresh review.
-review_by=2026-09-05
-if [[ "$(date -u +%F)" > "$review_by" ]]; then
+# Current bounded technical decision, linked to exact locks and explanation.
+# Historical qualification retains its original expired review and false
+# global acceptance. No independent approval or release acceptance is implied.
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+review_dates="$(python3 "$repo_root/scripts/verify-security-assessment.py")"
+read -r assessed_on review_by <<< "$review_dates"
+today="$(date -u +%F)"
+if [[ ! "$today" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ || "$today" < "$assessed_on" ]]; then
+  echo 'Current assessment is not yet valid or the date is invalid' >&2
+  exit 1
+fi
+if [[ "$today" > "$review_by" ]]; then
   echo "govulncheck exception review expired on $review_by" >&2
   review_expired=true
 else
@@ -15,13 +22,11 @@ fi
 accepted=(
   GO-2023-1821 # Deprecated crisis code is outside the reviewed production imports/registration.
   GO-2023-1881 # ConstantFee defect: distinct advisory; crisis remains outside production.
-  GO-2024-2584 # Fix source is present in SDK 0.54.4; OSV range mismatch still requires review.
+  GO-2024-2584 # Fix source is present in SDK 0.54.4; Source/OSV discrepancy is assessed in SECURITY-ASSESSMENT.md.
   GO-2025-3442 # v0.39.4 contains the SetPeerRange fix; broad OSV range still reports it.
   GO-2026-4479 # Residual v2 module only; effective STUN v3/DTLS v3 imports are reviewed.
   GO-2026-5932 # SDK now uses Proton armor; obsolete OpenPGP is a test oracle only.
 )
-
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # Lock the same module that govulncheck scans, including calls from evmd.
 export GOWORK=off

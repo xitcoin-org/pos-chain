@@ -61,7 +61,7 @@ if module=='root':
  run('reuse-regressions',['python3',str(root/'scripts/test-versioned-go-reuse.py')])
  run('gate-regressions',['python3',str(root/'scripts/test-govulncheck-gate.py')])
 failed=any(v['exit_code']!=0 or v['blocked'] for v in results.values())
-(out/'qualification.json').write_text(json.dumps({'status':'QUALIFICATION_FAILED' if failed else 'TECHNICAL_CHECKS_COMPLETED_REVIEW_REQUIRED','security_acceptance':False,'review_expired':'2026-09-05','deployment':False,'reuse_validated_for_head':reuse['sources']['current_head'],'historical_qualification_head':reuse['qualified_head'],'scans_are_historical':True,'current_binary_built':False},indent=2))
+(out/'qualification.json').write_text(json.dumps({'status':'QUALIFICATION_FAILED' if failed else 'TECHNICAL_CHECKS_COMPLETED_REVIEW_REQUIRED','security_acceptance':False,'historical_review_expired':'2026-09-05','current_ci_assessment':'docs/security-assessment.json','deployment':False,'reuse_validated_for_head':reuse['sources']['current_head'],'historical_qualification_head':reuse['qualified_head'],'scans_are_historical':True,'current_binary_built':False},indent=2))
 sys.exit(bool(failed))
 # Historical non-reuse implementation retained for traceability, not executed.
 run('modules',['go','list','-m','-json','all'])

@@ -64,10 +64,11 @@ class GateTests(unittest.TestCase):
         for name in ["scripts", "docs", "rpc", "evmd", "bin"]:
             (self.root / name).mkdir()
         for name in ["scripts/run-govulncheck.sh", "scripts/verify-go-fork-provenance.py",
-                     "docs/go-fork-provenance.json"]:
+                     "docs/go-fork-provenance.json", "docs/security-assessment.json",
+                     "SECURITY-ASSESSMENT.md", "scripts/verify-security-assessment.py"]:
             shutil.copyfile(ROOT / name, self.root / name)
-        for name in ["go.mod", "evmd/go.mod"]:
-            (self.root / name).touch()
+        for name in ["go.mod", "go.sum", "evmd/go.mod", "evmd/go.sum"]:
+            shutil.copyfile(ROOT / name, self.root / name)
         for name in ["go", "date", "govulncheck"]:
             tool = self.root / "bin" / name
             tool.write_text(FAKE_TOOL)
@@ -89,7 +90,7 @@ class GateTests(unittest.TestCase):
             }
         self.cfg = {"modules": {"root": copy.deepcopy(modules), "evmd": copy.deepcopy(modules)},
                     "packages": {"root": [LIBRARY + "/crypto"], "evmd": [LIBRARY + "/evmd"]},
-                    "date": "2026-09-05", "scanner_output": "simulated scanner output", "scanner_status": 0}
+                    "date": "2026-09-14", "scanner_output": "simulated scanner output", "scanner_status": 0}
         self.cfg["modules"]["root"][LIBRARY] = {"Path": LIBRARY, "Main": True}
         self.cfg["modules"]["evmd"][LIBRARY] = {
             "Path": LIBRARY, "Version": manifest["root_library"]["version"],
@@ -120,10 +121,31 @@ class GateTests(unittest.TestCase):
     def test_valid_locks_scanner_and_expiry(self):
         for module in ["root", "evmd"]:
             with self.subTest(module=module):
-                self.cfg["date"] = "2026-09-05"
-                self.run_gate(module, 0, scanned=True)
                 self.cfg["date"] = "2026-09-14"
+                self.run_gate(module, 0, scanned=True)
+                self.cfg["date"] = "2026-09-22"
                 self.run_gate(module, 1, "expired exception review still blocks", scanned=True)
+
+    def test_current_assessment_boundaries_and_integrity(self):
+        for module in ["root", "evmd"]:
+            for date in ["2026-09-14", "2026-09-21"]:
+                self.cfg["date"] = date
+                self.run_gate(module, 0, scanned=True)
+            for date in ["2026-09-13", "invalid"]:
+                self.cfg["date"] = date
+                self.run_gate(module, 1, "not yet valid")
+        self.cfg["date"] = "2026-09-14"
+        for name in ["docs/security-assessment.json", "SECURITY-ASSESSMENT.md",
+                     "docs/go-fork-provenance.json", "go.mod", "go.sum",
+                     "evmd/go.mod", "evmd/go.sum"]:
+            path = self.root / name
+            raw = path.read_bytes()
+            try:
+                path.write_bytes(raw + b"\n")
+                for module in ["root", "evmd"]:
+                    self.run_gate(module, 1, "assessment")
+            finally:
+                path.write_bytes(raw)
 
     def test_each_fork_replacement_and_sum(self):
         for module in ["root", "evmd"]:
@@ -183,9 +205,9 @@ class GateTests(unittest.TestCase):
                 (3, "unparseable", 1), (2, "scanner failure", 2),
             ]:
                 with self.subTest(module=module, status=status, output=output):
-                    self.cfg.update(scanner_status=status, scanner_output=output, date="2026-09-05")
+                    self.cfg.update(scanner_status=status, scanner_output=output, date="2026-09-14")
                     self.run_gate(module, expected, scanned=True)
-                    self.cfg["date"] = "2026-09-14"
+                    self.cfg["date"] = "2026-09-22"
                     self.run_gate(module, 1, "expired exception review still blocks", scanned=True)
 
     def test_existing_source_guards(self):

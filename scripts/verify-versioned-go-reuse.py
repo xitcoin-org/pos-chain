@@ -16,11 +16,13 @@ import zipfile
 
 POLICY = 'docs/versioned-go-reuse.json'
 VERIFIER = 'scripts/verify-versioned-go-reuse.py'
-POLICY_SHA256 = 'bf36b8af55208511c206d877aec7820a8a1d67094537e613ef845ad434c50654'
+POLICY_SHA256 = 'd554ce71cbc6b2885f21625242fd4cae89961362dcb43a988cf29582610cb807'
 QUALIFIED_HEAD = '5e24531951873ec8d0cf4403d118c45f47fa641e'
 REVIEWED_HEAD = 'ca6af2f3a3ecfad3590709df23afbcbc450d3f82'
 GATE_FILES = {'scripts/run-govulncheck.sh', 'scripts/test-govulncheck-gate.py',
               'docs/go-fork-provenance.md'}
+
+MISSION_FILES = {'scripts/qualify-versioned-go.py', 'SECURITY-ASSESSMENT.md', 'AGENTS.md', 'scripts/verify-security-assessment.py', 'scripts/test-versioned-go-reuse.py', 'docs/development.md', 'scripts/run-govulncheck.sh', 'scripts/test-govulncheck-gate.py', 'README.md', 'UPSTREAMS.md', 'SECURITY.md', 'scripts/verify-versioned-go-reuse.py', 'docs/go-fork-provenance.md', '.github/workflows/versioned-go-qualification.yml', 'docs/security-assessment.json', 'scripts/verify-go-fork-provenance.py'}
 
 
 def require(condition, message):
@@ -71,8 +73,8 @@ def validate_sources(root, policy):
     require(gate_delta == GATE_FILES, 'unreviewed gate delta')
     expected = dict(reviewed)
     mission = policy['mission_files']
+    require(set(mission) == MISSION_FILES, 'unreviewed mission file set')
     for path in mission.keys() | {POLICY}:
-        require(path not in GATE_FILES, 'gate files must match reviewed commit')
         expected[path] = None
     current = tree(root, 'HEAD')
     require(set(current) <= set(expected), 'source beyond qualified scope changed')
@@ -80,6 +82,14 @@ def validate_sources(root, policy):
             'committed source deleted')
     staged = set(git(root, 'diff', '--cached', '--name-only', '-z').decode().split('\0')) - {''}
     require(staged <= set(mission) | {POLICY}, 'unqualified staged source')
+    for path in staged:
+        entry = git(root, 'ls-files', '--stage', '--', path).decode().strip().split()
+        require(len(entry) == 4 and entry[2] == '0', 'missing/conflicted index entry')
+        raw = git(root, 'show', ':' + path)
+        expected_mode = '100644' if path == POLICY else mission[path]['mode']
+        expected_digest = digest((root / POLICY).read_bytes()) if path == POLICY else mission[path]['sha256']
+        require(entry[0] == expected_mode and digest(raw) == expected_digest,
+                'unqualified staged mission content: ' + path)
     # Compare all committed entries, including modes and submodule pointers.
     for path, entry in current.items():
         if path not in mission and path != POLICY:
@@ -195,5 +205,5 @@ def validate(root, directory):
     sources = validate_sources(root, policy)
     history = validate_history(root, policy, Path(directory))
     return {'sources': sources, 'history': history, 'qualified_head': QUALIFIED_HEAD,
-            'security_acceptance': False, 'review_expired': '2026-09-05',
+            'security_acceptance': False, 'historical_review_expired': '2026-09-05',
             'scans_are_historical': True, 'current_binary_built': False}
