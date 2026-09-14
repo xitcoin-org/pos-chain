@@ -31,7 +31,7 @@ patch=root/'docs/fork-qualification-20260913'/(name+'.patch')
 run('patch',['git','apply','--unidiff-zero',str(patch)])
 if name=='cosmos-sdk':
  prior=json.loads((root/'docs/fork-qualification-20260913/sdk-preserved-checks.json').read_text())
- run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','crypto/armor_compat_test.go'])
+ run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','crypto/armor_compat_test.go','crypto/testdata/historical_armor.json'])
  unchanged=subprocess.check_output(['git','diff','--binary','--unified=0','--','.',*[':!'+x for x in prior['excluded_test_files']]],cwd=src)
  (out/'unchanged-sdk.diff').write_bytes(unchanged)
  canonical=b''.join(line for line in unchanged.splitlines(keepends=True) if not line.startswith(b'index '))

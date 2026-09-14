@@ -6,7 +6,9 @@
   "unchanged_patch_sha256": "23bed44987c941a97f3b0c58cc5ee654266f473835060b3939f398472c5842af",
   "excluded_test_files": [
     "crypto/armor_compat_test.go",
-    "x/gov/keeper/keeper_test.go"
+    "x/gov/keeper/keeper_test.go",
+    "crypto/testdata/historical_armor.json",
+    "crypto/armor_test.go"
   ],
   "tidy_all": {
     "command": [
@@ -31,7 +33,49 @@
     "seconds": 289.19
   },
   "lint_prior": "all modules completed; only gci in armor_compat_test.go and missing explanation on existing nolint in keeper_test.go failed",
-  "source_changes": "test import grouping and explanatory comment only; production source and all dependency locks unchanged",
-  "unchanged_content_diff_sha256": "ed0e38edab981f976b25d481d84e8f9b615031eb524c88e68df9108edd270cbc",
-  "comparison": "Ignore only Git index abbreviation metadata lines; all patch paths, modes, hunks and source bytes retained. Verified against original signed qualification patch."
+  "source_changes": "Only tests changed: historical public golden vectors replace deprecated import; original enhanced cipher/legacy oracle tests preserved verbatim separately. Upstream armor_test.go restored. Production and dependency locks remain unchanged.",
+  "unchanged_content_diff_sha256": "33b130a98d441eaa0bcebb5729b08589474206fe583b9df97571cca0ef4109f2",
+  "comparison": "Ignore only Git index abbreviation metadata lines; all patch paths, modes, hunks and source bytes retained. Verified against original signed qualification patch.",
+  "fixture_provenance": {
+    "fixture_sha256": "4580573e464d324aa8d314b3e0b337953772b77928e4f37f1afcdd72428365ff",
+    "generator_sdk": "github.com/cosmos/cosmos-sdk v0.54.4",
+    "upstream_commit": "dedeb7c80a91c47ae83f5352e29c3dd34e4a3fc6",
+    "vectors": 15,
+    "private_key_material": "No private key or encrypted private-key fixture is published; only public-key and generic encoding vectors retained.",
+    "legacy_dynamic_oracle_sha256": "087b7a3f8bb3517e03893df5f377e143839fff625fe66d86d85d893c52346ee4",
+    "security_or_lint_suppression_added": false,
+    "legacy_cipher_tests": "Original enhanced armor_test.go and dynamic oldarmor oracle preserved byte-for-byte in legacy-oracle/ for post-publication validation. SDK cipher tests restored to upstream implementation.",
+    "secret_detection": "Flattened patch scanner matched malformed test marker across file boundary into fixture contents. Original detections retained. Only public vectors published, patch hunks reordered without changing source content."
+  },
+  "public_fixture_test": {
+    "command": [
+      "go",
+      "test",
+      "-tags=test",
+      "./crypto",
+      "-run",
+      "^TestHistoricalArmorCompatibility$",
+      "-count=1",
+      "-v"
+    ],
+    "cwd": "/dev/shm/xitcoin-go-integration-20260913T224412Z/sources/cosmos-sdk",
+    "exit_code": 0,
+    "blocked": null,
+    "minimum_free_bytes": 5912256512,
+    "seconds": 6.82,
+    "resource_samples": [
+      [
+        0.0,
+        5912272896,
+        8382992384,
+        19210448896
+      ],
+      [
+        5.0,
+        5912260608,
+        8285097984,
+        18785206272
+      ]
+    ]
+  }
 }
