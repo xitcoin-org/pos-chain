@@ -8,6 +8,11 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/mock"
 
+	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
+	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
+	ibcgotesting "github.com/cosmos/ibc-go/v11/testing"
+	ibcmock "github.com/cosmos/ibc-go/v11/testing/mock"
 	evm "github.com/xitcoin-org/pos-chain"
 	"github.com/xitcoin-org/pos-chain/contracts"
 	"github.com/xitcoin-org/pos-chain/crypto/ethsecp256k1"
@@ -18,11 +23,6 @@ import (
 	erc20mocks "github.com/xitcoin-org/pos-chain/x/erc20/types/mocks"
 	"github.com/xitcoin-org/pos-chain/x/vm/statedb"
 	evmtypes "github.com/xitcoin-org/pos-chain/x/vm/types"
-	transfertypes "github.com/cosmos/ibc-go/v11/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v11/modules/core/02-client/types"
-	channeltypes "github.com/cosmos/ibc-go/v11/modules/core/04-channel/types"
-	ibcgotesting "github.com/cosmos/ibc-go/v11/testing"
-	ibcmock "github.com/cosmos/ibc-go/v11/testing/mock"
 
 	"cosmossdk.io/math"
 
@@ -108,7 +108,7 @@ func (s *KeeperTestSuite) TestOnRecvPacketRegistered() {
 		{
 			name: "success - invalid sender (no '1')",
 			malleate: func() {
-				transfer := transfertypes.NewFungibleTokenPacketData(registeredDenom, "100", "evmos", ethsecpAddrCosmos, "")
+				transfer := transfertypes.NewFungibleTokenPacketData(registeredDenom, "100", "evmos", ethsecpAddrEvmos, "")
 				bz := transfertypes.ModuleCdc.MustMarshalJSON(&transfer)
 				packet = channeltypes.NewPacket(bz, 100, transfertypes.PortID, sourceChannel, transfertypes.PortID, cosmosEVMChannel, timeoutHeight, 0)
 			},
@@ -121,7 +121,7 @@ func (s *KeeperTestSuite) TestOnRecvPacketRegistered() {
 		{
 			name: "success - invalid sender (bad address)",
 			malleate: func() {
-				transfer := transfertypes.NewFungibleTokenPacketData(registeredDenom, "100", "badba1sv9m0g7ycejwr3s369km58h5qe7xj77hvcxrms", ethsecpAddrCosmos, "")
+				transfer := transfertypes.NewFungibleTokenPacketData(registeredDenom, "100", "badba1sv9m0g7ycejwr3s369km58h5qe7xj77hvcxrms", ethsecpAddrEvmos, "")
 				bz := transfertypes.ModuleCdc.MustMarshalJSON(&transfer)
 				packet = channeltypes.NewPacket(bz, 100, transfertypes.PortID, sourceChannel, transfertypes.PortID, cosmosEVMChannel, timeoutHeight, 0)
 			},
@@ -362,7 +362,9 @@ func (s *KeeperTestSuite) TestOnRecvPacketRegistered() {
 
 func (s *KeeperTestSuite) TestConvertCoinToERC20FromPacket() {
 	var ctx sdk.Context
-	senderAddr := "cosmos1x2w87cvt5mqjncav4lxy8yfreynn273x34qlwy"
+	senderBytes, err := sdk.GetFromBech32("cosmos1x2w87cvt5mqjncav4lxy8yfreynn273x34qlwy", sdk.Bech32MainPrefix)
+	s.Require().NoError(err)
+	senderAddr := sdk.AccAddress(senderBytes).String()
 
 	baseDenom, err := sdk.GetBaseDenom()
 	s.Require().NoError(err)
