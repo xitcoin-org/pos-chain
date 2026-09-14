@@ -42,4 +42,8 @@ No independent review is supplied by this mission. The exception expired on 2026
 
 Historical patch-only evidence remains under `security-remediation-20260913` and at signed head `52c0ea290645c4b53b5648178f7176dfdc5a401c`. It describes the earlier local graph; current locks and this provenance file describe the versioned candidate. The complete integration commit and the root library revision consumed by evmd are recorded separately to avoid a self-referential Go version.
 
-Root library consumed by evmd: `v0.1.0-testnet.4.0.20260914092940-c82f40f042be`, signed commit `c82f40f042be57d6b8f82968a6d5a62a16b358c5`. Root Go sources and locks match that immutable library revision.
+Root library consumed by evmd: `v0.1.0-testnet.4.0.20260914101327-3280cdeee8f6`, signed commit `3280cdeee8f6d362c332572d14ae26a7ec75b8d4`. Root Go sources and locks match that immutable library revision.
+
+The first full versioned evmd run exposed stale integration fixtures: Cosmos-prefixed local addresses, an invalid public Amino address checksum, and permissionless ERC20 scenarios relying on a different genesis default. Four test helper files now preserve address bytes under the configured prefix, use valid local receivers, and set the tested permissionless baseline explicitly. Assertions and production behavior are unchanged. Local preflight passed the entire ERC20 suite and then Ledger after the fixture checksum correction; initial failures are retained.
+
+The CI continuation records the exact prior run and artifact digests and rejects changes outside the four fixture files, immutable evmd root pin/sums, and continuation diagnostics. It preserves the passed full root suite and all previously passed evmd packages; the two formerly failing suites run against the new immutable root. Current source diagnostics and a new symbol-bearing versioned binary remain required. This guarded reuse is technical evidence, not independent security approval.

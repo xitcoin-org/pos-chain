@@ -2,7 +2,7 @@ name: Versioned Go integration qualification
 on:
   pull_request:
     branches: [main]
-    paths: ['go.mod', 'go.sum', 'evmd/**', '**/*.go', 'docs/go-fork-provenance.json', 'scripts/verify-go-fork-provenance.py', 'scripts/qualify-versioned-go.py', '.github/workflows/versioned-go-qualification.yml']
+    paths: ['go.mod', 'go.sum', 'evmd/**', '**/*.go', 'docs/go-fork-provenance.json', 'docs/versioned-go-qualification-resume.json', 'scripts/verify-go-fork-provenance.py', 'scripts/qualify-versioned-go.py', '.github/workflows/versioned-go-qualification.yml']
   workflow_dispatch:
 permissions:
   contents: read

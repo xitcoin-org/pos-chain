@@ -1125,8 +1125,8 @@ github.com/xitcoin-org/cosmos-sdk v0.54.5-0.20260914091530-52ff14a25bee h1:WU03G
 github.com/xitcoin-org/cosmos-sdk v0.54.5-0.20260914091530-52ff14a25bee/go.mod h1:/1rNNn6uo2iw2ZEp9N8GK9PdWgH0OmxDly8MEAArYPI=
 github.com/xitcoin-org/go-ethereum v1.17.2-cosmos-0.0.20260913233706-e09f79643cd4 h1:xDPGjArTeKQ8j19NP5e968xfZLaidTHxaGGk89JRIww=
 github.com/xitcoin-org/go-ethereum v1.17.2-cosmos-0.0.20260913233706-e09f79643cd4/go.mod h1:QtIPOaMKuz4zDZoQQ72nJJ9i5njr+MyRMl2tv7XteJQ=
-github.com/xitcoin-org/pos-chain v0.1.0-testnet.4.0.20260914092940-c82f40f042be h1:gZu3KHPc7UeyzcKZRwtJW5Kvr151PoASCzCU8LFbotY=
-github.com/xitcoin-org/pos-chain v0.1.0-testnet.4.0.20260914092940-c82f40f042be/go.mod h1:7EjObEwFuYAQRSd1W1j7D4hZCLB1SYLFazZHImpSZCE=
+github.com/xitcoin-org/pos-chain v0.1.0-testnet.4.0.20260914101327-3280cdeee8f6 h1:XlNgJS1pkjUXWEfxbl+8+B+5KnmI/AOT2ggB9uy2low=
+github.com/xitcoin-org/pos-chain v0.1.0-testnet.4.0.20260914101327-3280cdeee8f6/go.mod h1:7EjObEwFuYAQRSd1W1j7D4hZCLB1SYLFazZHImpSZCE=
 github.com/xrash/smetrics v0.0.0-20250705151800-55b8f293f342 h1:FnBeRrxr7OU4VvAzt5X7s6266i6cSVkkFPS0TuXWbIg=
 github.com/xrash/smetrics v0.0.0-20250705151800-55b8f293f342/go.mod h1:Ohn+xnUBiLI6FVj/9LpzZWtj1/D6lUovWYBkxHVV3aM=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

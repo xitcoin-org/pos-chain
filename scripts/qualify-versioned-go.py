@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json,os,pathlib,re,shutil,signal,subprocess,sys,time
+import hashlib,json,os,pathlib,re,shutil,signal,subprocess,sys,time
 root=pathlib.Path.cwd();module=sys.argv[1];cwd=root if module=='root' else root/'evmd';out=root/'versioned-evidence';out.mkdir(exist_ok=True);results={}
 def run(label,args):
  minimum=shutil.disk_usage(root).free;start=time.monotonic();reason=None
@@ -18,11 +18,38 @@ def run(label,args):
  (out/'results.json').write_text(json.dumps(results,indent=2));print(label,json.dumps(results[label]),flush=True)
  if p.returncode:print((out/(label+'.log')).read_text()[-5000:])
  return p.returncode==0 and reason is None
+resume_path=root/'docs/versioned-go-qualification-resume.json'
+resume=None
+if resume_path.exists():
+ resume=json.loads(resume_path.read_text());baseline=resume['baseline_head']
+ if not run('fetch-baseline',['git','-C',str(root),'fetch','--depth=1','origin',baseline]):sys.exit(1)
+ def previous(path):return subprocess.check_output(['git','show',baseline+':'+path],cwd=root)
+ changed=set(subprocess.check_output(['git','diff','--name-only',baseline,'HEAD'],cwd=root,text=True).splitlines())
+ assert changed<=set(resume['allowed_changes']), 'source beyond qualified scope changed'
+ for path,hashes in resume['fixtures'].items():
+  assert hashlib.sha256(previous(path)).hexdigest()==hashes['before']
+  assert hashlib.sha256((root/path).read_bytes()).hexdigest()==hashes['after']
+ for path in ['go.mod','go.sum']:assert previous(path)==(root/path).read_bytes(), 'root locks changed'
+ def normalize_evmd_mod(raw):return re.sub(rb'(?m)^(\s*github.com/xitcoin-org/pos-chain )\S+',rb'\1ROOT_VERSION',raw)
+ assert normalize_evmd_mod(previous('evmd/go.mod'))==normalize_evmd_mod((root/'evmd/go.mod').read_bytes())
+ def normalize_evmd_sum(raw):return b''.join(line for line in raw.splitlines(keepends=True) if not line.startswith(b'github.com/xitcoin-org/pos-chain '))
+ assert normalize_evmd_sum(previous('evmd/go.sum'))==normalize_evmd_sum((root/'evmd/go.sum').read_bytes())
+ before=json.loads(previous('docs/go-fork-provenance.json'));after=json.loads((root/'docs/go-fork-provenance.json').read_text())
+ before.pop('root_library',None);after.pop('root_library',None);assert before==after
+ assert all(v['exit_code']==0 and v['blocked'] is None for v in resume['prior_results']['root'].values())
+ assert all(v['exit_code']==0 and v['blocked'] is None for k,v in resume['prior_results']['evmd'].items() if k!='tests')
+ assert set(resume['failed_test_suites'])=={'TestLedgerTestSuite','TestERC20KeeperTestSuite'}
+ assert resume['failed_test_packages']==['github.com/xitcoin-org/pos-chain/evmd/tests/integration']
+ (out/'preserved-checks.json').write_text(json.dumps(resume,indent=2))
 run('modules',['go','list','-m','-json','all'])
 run('provenance',['python3',str(root/'scripts/verify-go-fork-provenance.py')])
 run('verify-sums',['go','mod','verify'])
-run('build',['go','build','./...'])
-run('tests',['go','test','-tags=test','./...'])
+if resume:
+ if module=='root':run('fixture-build',['go','build','./tests/integration/wallets','./tests/integration/x/erc20'])
+ else:run('tests',['go','test','-tags=test','-run','^Test(LedgerTestSuite|ERC20KeeperTestSuite)$','./tests/integration'])
+else:
+ run('build',['go','build','./...'])
+ run('tests',['go','test','-tags=test','./...'])
 run('production-graph',['go','list','-deps','./...'])
 packages=set((out/'production-graph.log').read_text().splitlines())
 forbidden=sorted(p for p in packages if p.startswith('golang.org/x/crypto/openpgp') or p.startswith('github.com/pion/dtls/v2') or p.startswith('github.com/cosmos/cosmos-sdk/x/crisis') or p.startswith('cosmossdk.io/x/crisis') or p.startswith('github.com/cosmos/cosmos-sdk/contrib/x/crisis'))

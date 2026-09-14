@@ -274,8 +274,8 @@
     }
   ],
   "root_library": {
-    "version": "v0.1.0-testnet.4.0.20260914092940-c82f40f042be",
-    "commit": "c82f40f042be57d6b8f82968a6d5a62a16b358c5",
-    "signed_source": "https://github.com/xitcoin-org/pos-chain/commit/c82f40f042be57d6b8f82968a6d5a62a16b358c5"
+    "version": "v0.1.0-testnet.4.0.20260914101327-3280cdeee8f6",
+    "commit": "3280cdeee8f6d362c332572d14ae26a7ec75b8d4",
+    "signed_source": "https://github.com/xitcoin-org/pos-chain/commit/3280cdeee8f6d362c332572d14ae26a7ec75b8d4"
   }
 }
