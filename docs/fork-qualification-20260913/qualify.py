@@ -37,7 +37,8 @@ if name=='cosmos-sdk':
  assert hashlib.sha256(canonical).hexdigest()==prior['unchanged_content_diff_sha256']
  assert prior['lint_corrected_tests']['exit_code']==0
  (out/'preserved-checks.json').write_text(json.dumps(prior,indent=2))
- run('build',['make','build','VERSION_RAW=v0.54.4'])
+ assert prior['build']['exit_code']==0
+ (out/'preserved-build.json').write_text(json.dumps(prior['build'],indent=2))
  run('lint-crc',['make','lint','VERSION_RAW=v0.54.4','LINT_DIFF=1','GIT_DIFF=crypto/armor.go crypto/armor_compat_test.go'])
  run('test-unit',['make','test-unit','VERSION_RAW=v0.54.4'])
 else:

@@ -392,10 +392,10 @@ index 2526eb2152..0af737debd 100644
 +}
 diff --git a/crypto/armor_compat_test.go b/crypto/armor_compat_test.go
 new file mode 100644
-index 0000000000..5e9e7770d6
+index 0000000000..175c0c0049
 --- /dev/null
 +++ b/crypto/armor_compat_test.go
-@@ -0,0 +1,101 @@
+@@ -0,0 +1,104 @@
 +package crypto_test
 +
 +import (
@@ -474,6 +474,9 @@ index 0000000000..5e9e7770d6
 +func TestArmorChecksumCompatibility(t *testing.T) {
 +	valid := sdkcrypto.EncodeArmor("TENDERMINT PUBLIC KEY", nil, []byte("payload"))
 +	checksum := strings.LastIndex(valid, "\n=")
++	require.GreaterOrEqual(t, checksum, 0)
++	beforeEnd, _, found := strings.Cut(valid, "-----END")
++	require.True(t, found)
 +	cases := []struct {
 +		name, input string
 +		valid       bool
@@ -481,7 +484,7 @@ index 0000000000..5e9e7770d6
 +		{"valid", valid, true},
 +		{"corrupt payload", strings.Replace(valid, "cGF5bG9hZA==", "cGF5bG9hZQ==", 1), false},
 +		{"corrupt checksum", valid[:checksum+2] + "AAAA" + valid[checksum+6:], false},
-+		{"missing end", valid[:strings.Index(valid, "-----END")], false},
++		{"missing end", beforeEnd, false},
 +		{"no checksum", valid[:checksum] + valid[checksum+6:], true},
 +		{"leading garbage", "=AAAA\nignored\n" + valid, true},
 +		{"following block", valid + "\n" + strings.Replace(valid, "cGF5bG9hZA==", "cGF5bG9hZQ==", 1), true},

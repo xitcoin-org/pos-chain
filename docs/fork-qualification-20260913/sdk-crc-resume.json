@@ -1,14 +1,12 @@
 {
-  "run": 34791392591,
-  "job": 103816165788,
-  "artifact": 10328776868,
-  "prior_patch_sha256": "8db46fadda0d1cf7b03f9381f1dff39051205e6fc3f9c701c3c630777c689113",
+  "run": 34793489922,
+  "job": 103822036387,
+  "artifact": 10329086570,
+  "prior_patch_sha256": "d66bfe9c40b658302e8b6dd5b91399849f2085ea625f090f69a41323372de890",
   "excluded_files": [
-    "crypto/armor.go",
-    "crypto/armor_compat_test.go",
-    "XITCOIN-PROVENANCE.md"
+    "crypto/armor_compat_test.go"
   ],
-  "unchanged_content_diff_sha256": "e57242080255e7d56b4dfbb6d943bcbb6f76b437d93e337d3ac6576ac5ebd5d4",
+  "unchanged_content_diff_sha256": "66a751cf60483c5b1aed19ec9462b1b6eea3c348ea18a599c310e4459798441d",
   "lint_corrected_tests": {
     "command": [
       "make",
@@ -33,5 +31,16 @@
     "minimum_free_bytes": 80614092800,
     "seconds": 1646.04
   },
-  "reason": "Full unit tests exposed CRC24 compatibility regression in keyring. Production decoding changed; build and all unit tests must rerun. Module locks unchanged, tidy inherited; only crypto lint must rerun. Previous all-module tests passed except crypto/keyring; original failure retained."
+  "reason": "CRC production build passed. Only test slicing changed to strings.Cut after gocritic warning; exact production source and all locks preserved. Resume crypto lint and full unit tests.",
+  "build": {
+    "command": [
+      "make",
+      "build",
+      "VERSION_RAW=v0.54.4"
+    ],
+    "exit_code": 0,
+    "blocked": null,
+    "minimum_free_bytes": 86214352896,
+    "seconds": 312.71
+  }
 }
