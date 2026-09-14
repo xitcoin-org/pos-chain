@@ -1,3 +1,7 @@
+# Historical evidence and current versioned integration
+
+The dated evidence below describes the earlier patch-only candidate at `52c0ea290645c4b53b5648178f7176dfdc5a401c`. The current candidate pins signed, qualified SDK and Geth forks; see [current provenance](go-fork-provenance.md). Historical local/devel scans and earlier failures are preserved and do not describe the current dependency locks. Integration qualification and independent security approval remain distinct; the review expiry stays 2026-09-05.
+
 # Go advisory reassessment — 2026-09-13
 
 Related: #33, #41, #42, #43.
@@ -65,7 +69,7 @@ independent security review; do not suppress the finding.
 SDK v0.55.0 crypto/armor.go still imports golang.org/x/crypto/openpgp/armor.
 An isolated SDK v0.54.4 candidate switches only that production import to
 ProtonMail/go-crypto v1.4.1. Synthetic tests compare historical armor encoders,
-public versions 0.0.0/0.0.1, key info, bcrypt/XSalsa20 and Argon2/ChaCha formats,
+public versions 0.0.0/0.0.1, metadata, bcrypt with XSalsa20 and Argon2 with ChaCha,
 wrong passwords and malformed input. An isolated Geth candidate changes the
 STUN import to v3.1.5 while preserving the UDP4 transport. These are local
 candidates, not integrated or released dependency fixes. Full two-module

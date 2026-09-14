@@ -1,3 +1,7 @@
+# Historical evidence and current versioned integration
+
+The dated evidence below describes the earlier patch-only candidate at `52c0ea290645c4b53b5648178f7176dfdc5a401c`. The current candidate pins signed, qualified SDK and Geth forks; see [current provenance](../go-fork-provenance.md). Historical local/devel scans and earlier failures are preserved and do not describe the current dependency locks. Integration qualification and independent security approval remain distinct; the review expiry stays 2026-09-05.
+
 # Verified Go remediation candidate
 
 Refs #33, #43, #44. This is a reviewable patch set, not an active dependency
