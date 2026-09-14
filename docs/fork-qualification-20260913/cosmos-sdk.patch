@@ -306,7 +306,7 @@ index 99cb4d6319..7c2e6db554 100644
 +	bash ./scripts/go-mod-tidy-all.sh
 diff --git a/XITCOIN-PROVENANCE.md b/XITCOIN-PROVENANCE.md
 new file mode 100644
-index 0000000000..a66d1b431b
+index 0000000000..c79b04a2ab
 --- /dev/null
 +++ b/XITCOIN-PROVENANCE.md
 @@ -0,0 +1,12 @@
@@ -315,7 +315,7 @@ index 0000000000..a66d1b431b
 +Maintainer: xitcoin-org. Upstream: https://github.com/cosmos/cosmos-sdk/commit/dedeb7c80a91c47ae83f5352e29c3dd34e4a3fc6.
 +Changed on 2026-09-13 for https://github.com/xitcoin-org/pos-chain/issues/33 and PR44.
 +
-+Production armor imports ProtonMail/go-crypto v1.4.1. Historical formats and encryption remain unchanged. make tidy-all propagates Go-generated sums to nested modules; Bash invocation is corrected.
++Production armor imports ProtonMail/go-crypto v1.4.1. Historical formats and encryption remain unchanged. On 2026-09-14, full keyring tests identified that the maintained reader ignores CRC24; DecodeArmor now validates the historical checksum through the maintained encoder and requires the end line when a checksum is present. No obsolete OpenPGP code is imported or copied. make tidy-all propagates Go-generated sums to nested modules; Bash invocation is corrected.
 +
 +Module declarations retain their original import identity. Downstream replacements must pin an immutable revision and retain advisory mapping to upstream; a renamed fork is not a vulnerability clearance. The six-case independent security review remains required and expired on 2026-09-05.
 +
@@ -336,27 +336,73 @@ index 9f9788a6f9..7da5ce591f 100644
 +github.com/ProtonMail/go-crypto v1.4.1 h1:9RfcZHqEQUvP8RzecWEUafnZVtEvrBVL9BiF67IQOfM=
 +github.com/ProtonMail/go-crypto v1.4.1/go.mod h1:e1OaTyu5SYVrO9gKOEhTc+5UcXtTUa+P3uLudwcgPqo=
 diff --git a/crypto/armor.go b/crypto/armor.go
-index 2526eb2152..9b0b71be81 100644
+index 2526eb2152..0af737debd 100644
 --- a/crypto/armor.go
 +++ b/crypto/armor.go
 @@ -0,0 +1 @@
 +// Xitcoin modification (2026-09-13); see XITCOIN-PROVENANCE.md.
-@@ -9,0 +11 @@ import (
+@@ -3,0 +5 @@ import (
++	"bufio"
+@@ -8,0 +11 @@ import (
++	"strings"
+@@ -9,0 +13 @@ import (
 +	"github.com/ProtonMail/go-crypto/openpgp/armor"
-@@ -13 +14,0 @@ import (
+@@ -13 +16,0 @@ import (
 -	"golang.org/x/crypto/openpgp/armor" //nolint:staticcheck //TODO: remove this dependency
+@@ -280 +283,4 @@ func DecodeArmor(armorStr string) (blockType string, headers map[string]string,
+-	block, err := armor.Decode(buf)
++	// Pass a sufficiently sized reader so Decode reuses it. This records the
++	// selected body after skipped preambles, without reparsing armor headers.
++	reader := bufio.NewReaderSize(buf, 100)
++	block, err := armor.Decode(reader)
+@@ -283,0 +290 @@ func DecodeArmor(armorStr string) (blockType string, headers map[string]string,
++	bodyStart := len(armorStr) - buf.Len() - reader.Buffered()
+@@ -287,0 +295,3 @@ func DecodeArmor(armorStr string) (blockType string, headers map[string]string,
++	if err := validateArmorChecksum(armorStr[bodyStart:], block.Type, data); err != nil {
++		return "", nil, nil, err
++	}
+@@ -289,0 +300,28 @@ func DecodeArmor(armorStr string) (blockType string, headers map[string]string,
++
++// validateArmorChecksum preserves Tendermint's historical CRC24 corruption
++// check. The maintained OpenPGP reader intentionally ignores this footer under
++// RFC 9580, but existing keyring files and callers still rely on its validation.
++// CRC24 detects accidental corruption; it is not cryptographic authentication.
++func validateArmorChecksum(body, blockType string, data []byte) error {
++	lines := strings.Split(body, "\n")
++	for i, raw := range lines {
++		line := strings.TrimSpace(raw)
++		if strings.HasPrefix(line, "-----END ") {
++			return nil // Historically, a missing CRC24 footer was accepted.
++		}
++		if len(line) != 5 || line[0] != '=' {
++			continue
++		}
++		if i+1 >= len(lines) || !strings.HasPrefix(strings.TrimSpace(lines[i+1]), "-----END ") {
++			return armor.ArmorCorrupt
++		}
++		// Use the maintained encoder's CRC24 implementation, not a second one.
++		encoded := EncodeArmor(blockType, nil, data)
++		footer := strings.LastIndex(encoded, "\n=")
++		if footer < 0 || line != encoded[footer+1:footer+6] {
++			return armor.ArmorCorrupt
++		}
++		return nil
++	}
++	return nil
++}
 diff --git a/crypto/armor_compat_test.go b/crypto/armor_compat_test.go
 new file mode 100644
-index 0000000000..1c0b106086
+index 0000000000..5e9e7770d6
 --- /dev/null
 +++ b/crypto/armor_compat_test.go
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,101 @@
 +package crypto_test
 +
 +import (
 +	"encoding/json"
 +	"fmt"
 +	"os"
++	"strings"
 +	"testing"
 +
 +	"github.com/stretchr/testify/require"
@@ -420,5 +466,34 @@ index 0000000000..1c0b106086
 +	for _, bad := range []string{"", "not armor", "-----BEGIN TENDERMINT PRIVATE KEY-----\n\ninvalid!\n-----END TENDERMINT PRIVATE KEY-----"} {
 +		_, _, _, err := sdkcrypto.DecodeArmor(bad)
 +		require.Error(t, err)
++	}
++}
++
++// Corruption must fail before decoding a key, even when its payload remains
++// syntactically valid. Preambles and subsequent blocks must not select the CRC.
++func TestArmorChecksumCompatibility(t *testing.T) {
++	valid := sdkcrypto.EncodeArmor("TENDERMINT PUBLIC KEY", nil, []byte("payload"))
++	checksum := strings.LastIndex(valid, "\n=")
++	cases := []struct {
++		name, input string
++		valid       bool
++	}{
++		{"valid", valid, true},
++		{"corrupt payload", strings.Replace(valid, "cGF5bG9hZA==", "cGF5bG9hZQ==", 1), false},
++		{"corrupt checksum", valid[:checksum+2] + "AAAA" + valid[checksum+6:], false},
++		{"missing end", valid[:strings.Index(valid, "-----END")], false},
++		{"no checksum", valid[:checksum] + valid[checksum+6:], true},
++		{"leading garbage", "=AAAA\nignored\n" + valid, true},
++		{"following block", valid + "\n" + strings.Replace(valid, "cGF5bG9hZA==", "cGF5bG9hZQ==", 1), true},
++	}
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			_, _, _, err := sdkcrypto.DecodeArmor(tc.input)
++			if tc.valid {
++				require.NoError(t, err)
++			} else {
++				require.Error(t, err)
++			}
++		})
 +	}
 +}

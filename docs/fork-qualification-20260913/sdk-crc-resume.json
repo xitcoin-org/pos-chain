@@ -1,0 +1,37 @@
+{
+  "run": 34791392591,
+  "job": 103816165788,
+  "artifact": 10328776868,
+  "prior_patch_sha256": "8db46fadda0d1cf7b03f9381f1dff39051205e6fc3f9c701c3c630777c689113",
+  "excluded_files": [
+    "crypto/armor.go",
+    "crypto/armor_compat_test.go",
+    "XITCOIN-PROVENANCE.md"
+  ],
+  "unchanged_content_diff_sha256": "e57242080255e7d56b4dfbb6d943bcbb6f76b437d93e337d3ac6576ac5ebd5d4",
+  "lint_corrected_tests": {
+    "command": [
+      "make",
+      "lint",
+      "VERSION_RAW=v0.54.4",
+      "LINT_DIFF=1",
+      "GIT_DIFF=crypto/armor_compat_test.go x/gov/keeper/keeper_test.go"
+    ],
+    "exit_code": 0,
+    "blocked": null,
+    "minimum_free_bytes": 87758299136,
+    "seconds": 343.72
+  },
+  "tests_previous": {
+    "command": [
+      "make",
+      "test-unit",
+      "VERSION_RAW=v0.54.4"
+    ],
+    "exit_code": 2,
+    "blocked": null,
+    "minimum_free_bytes": 80614092800,
+    "seconds": 1646.04
+  },
+  "reason": "Full unit tests exposed CRC24 compatibility regression in keyring. Production decoding changed; build and all unit tests must rerun. Module locks unchanged, tidy inherited; only crypto lint must rerun. Previous all-module tests passed except crypto/keyring; original failure retained."
+}

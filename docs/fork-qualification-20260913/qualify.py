@@ -30,16 +30,15 @@ patch=root/'docs/fork-qualification-20260913'/(name+'.patch')
 (out/'input.json').write_text(json.dumps({'name':name,'base':base,'patch_sha256':hashlib.sha256(patch.read_bytes()).hexdigest(),'qualification_commit':os.getenv('GITHUB_SHA')},indent=2))
 run('patch',['git','apply','--unidiff-zero',str(patch)])
 if name=='cosmos-sdk':
- prior=json.loads((root/'docs/fork-qualification-20260913/sdk-preserved-checks.json').read_text())
+ prior=json.loads((root/'docs/fork-qualification-20260913/sdk-crc-resume.json').read_text())
  run('index-new-sources',['git','add','-N','XITCOIN-PROVENANCE.md','crypto/armor_compat_test.go','crypto/testdata/historical_armor.json'])
- unchanged=subprocess.check_output(['git','diff','--binary','--unified=0','--','.',*[':!'+x for x in prior['excluded_test_files']]],cwd=src)
- (out/'unchanged-sdk.diff').write_bytes(unchanged)
- canonical=b''.join(line for line in unchanged.splitlines(keepends=True) if not line.startswith(b'index '))
- assert hashlib.sha256(canonical).hexdigest()==prior['unchanged_content_diff_sha256'], 'production source or module graph changed; prior SDK checks cannot be reused'
- assert prior['tidy_all']['exit_code']==0 and prior['build']['exit_code']==0
+ unchanged=subprocess.check_output(['git','diff','--binary','--unified=0','--rotate-to=crypto/testdata/historical_armor.json'],cwd=src)
+ canonical=b''.join(line for chunk in unchanged.split(b'diff --git ')[1:] if chunk.splitlines()[0].decode().split(' b/',1)[1] not in prior['excluded_files'] for line in (b'diff --git '+chunk).splitlines(keepends=True) if not line.startswith(b'index '))
+ assert hashlib.sha256(canonical).hexdigest()==prior['unchanged_content_diff_sha256']
+ assert prior['lint_corrected_tests']['exit_code']==0
  (out/'preserved-checks.json').write_text(json.dumps(prior,indent=2))
- # The repository supports LINT_DIFF; all other modules and files passed the full lint.
- run('lint-corrected-tests',['make','lint','VERSION_RAW=v0.54.4','LINT_DIFF=1','GIT_DIFF=crypto/armor_compat_test.go x/gov/keeper/keeper_test.go'])
+ run('build',['make','build','VERSION_RAW=v0.54.4'])
+ run('lint-crc',['make','lint','VERSION_RAW=v0.54.4','LINT_DIFF=1','GIT_DIFF=crypto/armor.go crypto/armor_compat_test.go'])
  run('test-unit',['make','test-unit','VERSION_RAW=v0.54.4'])
 else:
  prior=json.loads((root/'docs/fork-qualification-20260913/geth-preserved-checks.json').read_text())
