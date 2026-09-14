@@ -16,7 +16,7 @@ import zipfile
 
 POLICY = 'docs/versioned-go-reuse.json'
 VERIFIER = 'scripts/verify-versioned-go-reuse.py'
-POLICY_SHA256 = 'ad636f7ee9249444da4edac6713ddef9d06a9c326444d8869b8ce323afbcc6c9'
+POLICY_SHA256 = 'bf36b8af55208511c206d877aec7820a8a1d67094537e613ef845ad434c50654'
 QUALIFIED_HEAD = '5e24531951873ec8d0cf4403d118c45f47fa641e'
 REVIEWED_HEAD = 'ca6af2f3a3ecfad3590709df23afbcbc450d3f82'
 GATE_FILES = {'scripts/run-govulncheck.sh', 'scripts/test-govulncheck-gate.py',

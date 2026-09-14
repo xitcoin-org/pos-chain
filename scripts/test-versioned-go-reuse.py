@@ -25,6 +25,10 @@ class ReuseTests(unittest.TestCase):
         cls.root = Path(cls.temp.name) / 'repo'
         subprocess.run(['git', 'clone', '--quiet', '--shared', '--no-checkout', str(SOURCE), str(cls.root)], check=True)
         subprocess.run(['git', '-C', str(cls.root), 'checkout', '--quiet', 'HEAD'], check=True)
+        # GitHub checkout is shallow/detached. Unreferenced fetched ancestors
+        # need an explicit local fetch; clone does not promise to copy them.
+        subprocess.run(['git', '-C', str(cls.root), 'fetch', '--quiet', '--depth=2',
+                        str(SOURCE), guard.REVIEWED_HEAD], check=True)
         cls.policy = guard.read_policy(SOURCE)
         for name in cls.policy['mission_files'].keys() | {guard.POLICY}:
             shutil.copy2(SOURCE / name, cls.root / name)

@@ -121,11 +121,11 @@
       "mode": "100644"
     },
     "scripts/verify-versioned-go-reuse.py": {
-      "sha256": "34fca75c761b8d1362588af798a8e16904b8c34532d712211ab16cad8a447584",
+      "sha256": "ae5fb04b343f3283135a5a746a72cd51488b0476b722424d357ab8cc2a7b35ea",
       "mode": "100644"
     },
     "scripts/test-versioned-go-reuse.py": {
-      "sha256": "fe871b0d50b477efb01da82f61c0dcb5a4d5df153b4b65b477d434fe87bcd68c",
+      "sha256": "127635309e4275eaea90474eccd94e8234c18606e437f4a8796d1e2176410534",
       "mode": "100644"
     },
     ".github/workflows/versioned-go-qualification.yml": {
