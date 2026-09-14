@@ -60,7 +60,15 @@ class Journal {
   static async open(directory, { legacyFile, chainId, sender, amount, addressWindow, ipWindow, ipLimit, clock = Date.now } = {}) {
     if (!validAddress(sender) || !chainId || !/^[1-9][0-9]*$/.test(String(amount)) ||
         ![addressWindow, ipWindow, ipLimit].every((x) => Number.isSafeInteger(x) && x > 0)) throw new Error('invalid_policy');
-    await fs.mkdir(directory, { recursive: true, mode: 0o700 });
+    // The state parent must already exist. Fsyncing only the journal's own
+    // directory does not persist its newly created entry in that parent.
+    const parent = await fs.open(path.dirname(directory), 'r');
+    try {
+      try { await fs.mkdir(directory, { mode: 0o700 }); }
+      catch (err) { if (err.code !== 'EEXIST') throw err; }
+      if (!(await fs.lstat(directory)).isDirectory()) throw new Error('invalid_journal_directory');
+      await parent.sync(); // Must succeed before a journal can accept claims.
+    } finally { await parent.close(); }
     const lock = path.join(directory, 'writer.lock');
     await fs.mkdir(lock, { mode: 0o700 }); // Never steal a lock, even after a crash.
     const journal = new Journal();
