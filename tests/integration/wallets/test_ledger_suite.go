@@ -51,7 +51,7 @@ func (suite *LedgerTestSuite) SetupTest() {
 	// We use the testutil network to load the encoding config
 	network.New(suite.create, suite.options...)
 
-	suite.hrp = "cosmos"
+	suite.hrp = sdk.GetConfig().GetBech32AccountAddrPrefix()
 
 	suite.txAmino = suite.getMockTxAmino()
 	suite.txProtobuf = suite.getMockTxProtobuf()
@@ -88,12 +88,14 @@ func (suite *LedgerTestSuite) getMockTxAmino() []byte {
 				"type":"cosmos-sdk/MsgSend",
 				"value":{
 					"amount":[{"amount":"150","denom":"atom"}],
-					"from_address":"cosmos10jmp6sgh4cc6zt3e8gw05wavvejgr5pwsjskvv",
-					"to_address":"cosmos1fx944mzagwdhx0wz7k9tfztc8g3lkfk6rrgv6l"
+					"from_address":"%s",
+					"to_address":"%s"
 				}
 			}],
 			"sequence":"6"
-		}`, constants.ExampleChainID.ChainID),
+		}`, constants.ExampleChainID.ChainID,
+		suite.fixtureAddress("cosmos10jmp6sgh4cc6zt3e8gw05wavvejgr5pwsjskvv").String(),
+		suite.fixtureAddress("cosmos1fx944mzagwdhx0wz7k9tfztc8g3lkfk6pzezqh").String()),
 		"",
 	)
 
@@ -105,8 +107,8 @@ func (suite *LedgerTestSuite) getMockTxProtobuf() []byte {
 
 	memo := "memo"
 	msg := banktypes.NewMsgSend(
-		sdk.MustAccAddressFromBech32("cosmos1r5sckdd808qvg7p8d0auaw896zcluqfd7djffp"),
-		sdk.MustAccAddressFromBech32("cosmos10t8ca2w09ykd6ph0agdz5stvgau47whhaggl9a"),
+		suite.fixtureAddress("cosmos1r5sckdd808qvg7p8d0auaw896zcluqfd7djffp"),
+		suite.fixtureAddress("cosmos10t8ca2w09ykd6ph0agdz5stvgau47whhaggl9a"),
 		[]sdk.Coin{
 			{
 				Denom:  "atom",
@@ -163,4 +165,11 @@ func (suite *LedgerTestSuite) getMockTxProtobuf() []byte {
 	suite.Require().NoError(err)
 
 	return signBytes
+}
+
+// fixtureAddress preserves the public fixture bytes while using the app prefix.
+func (suite *LedgerTestSuite) fixtureAddress(address string) sdk.AccAddress {
+	bz, err := sdk.GetFromBech32(address, sdk.Bech32MainPrefix)
+	suite.Require().NoError(err)
+	return sdk.AccAddress(bz)
 }

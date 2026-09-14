@@ -80,12 +80,15 @@ make build
 Run the core validation suites:
 
 ```bash
-go test ./x/validatoradmission/...
-go test ./x/bridge/...
-go test ./evmd/config
-go test ./evmd/cmd/evmd/cmd
-go test -tags test ./evmd/tests/integration/precompiles/werc20
+go test -tags=test ./x/validatoradmission/...
+go test -tags=test ./x/bridge/...
+(cd evmd && go test -tags=test ./config ./cmd/evmd/cmd)
+(cd evmd && go test -tags=test ./tests/integration/precompiles/werc20)
 ```
+
+Root and `evmd/` are separate Go modules; root `./...` does not test evmd.
+PR44 dependency dispositions and limits are recorded in
+[SECURITY-ASSESSMENT.md](SECURITY-ASSESSMENT.md).
 
 ## Documentation
 

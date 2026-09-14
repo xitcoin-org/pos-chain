@@ -196,6 +196,8 @@ func (s *KeeperTestSuite) TestRegisterERC20() {
 
 			ctx = s.network.GetContext()
 
+			// Set the scenario baseline explicitly; app genesis defaults may differ.
+			s.network.App.GetErc20Keeper().SetPermissionlessRegistration(ctx, true)
 			tc.malleate()
 
 			_, err = s.network.App.GetErc20Keeper().RegisterERC20(ctx, &types.MsgRegisterERC20{

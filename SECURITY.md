@@ -6,30 +6,34 @@ Report security vulnerabilities through GitHub Private Vulnerability Reporting f
 
 Do not open a public issue for an undisclosed vulnerability.
 
-## Reviewed upstream Go advisories
+## Reviewed Go advisories
 
-The release CI scans both source and the compiled `xitcoind` artifact. It
-currently recognizes upstream-only advisories under exact dependency
-and code-surface locks in `scripts/run-govulncheck.sh`:
+[SECURITY-ASSESSMENT.md](SECURITY-ASSESSMENT.md) is the current source of truth
+for PR44's six dispositions, exact versions, evidence, expiry and residual risk.
+[Provenance](docs/go-fork-provenance.md) records immutable sources and sums.
+The 2026-09-14 technical assessment is by the PR author; it is not an independent
+approval or release authorization.
 
-- `GO-2024-2584`: the database range is stale for Cosmos SDK `v0.54.3`; the
-  published fix is present from Cosmos SDK `v0.47.10`.
-- `GO-2023-1821` and `GO-2023-1881`: the deprecated Cosmos `x/crisis`
-  package is present in the upstream module archive but is neither imported
-  nor registered by Xitcoin. CI prohibits adding an import.
-- `GO-2025-3442`: the compatible CometBFT `v0.39` line has no published fixed
-  release. The exact version is locked pending a Cosmos-compatible release;
-  the binary scan prevents this advisory from being overlooked.
-- `GO-2026-4479`: Pion DTLS v2 has no fixed v2 release. It is pulled only by
-  the STUN/NAT path of the pinned Cosmos go-ethereum fork. Migration to DTLS
-  v3 requires the corresponding upstream geth change.
-- `GO-2026-5932`: Cosmos SDK still compiles the legacy OpenPGP armor helper.
-  Xitcoin does not expose the former `personal_importRawKey` JSON-RPC method.
+- GO-2023-1821 and GO-2023-1881: x/crisis is absent from the examined production
+  imports and application registration; these are distinct non-applicability
+  conclusions, not blanket SDK exemptions.
+- GO-2024-2584: the consumed SDK fork based on v0.54.4 contains the slashing
+  fix; the open Go advisory range is reconciled against source.
+- GO-2025-3442: CometBFT v0.39.4 contains the peer-height regression fix.
+  Blocksync is active and the broad Go module findings remain recorded.
+- GO-2026-4479: Geth uses STUN v3.1.5 over UDP4; DTLS v3.1.4 has the nonce
+  fix. DTLS v2.2.12 remains transitively required by CometBFT/IBC but is absent
+  from the examined production imports.
+- GO-2026-5932: SDK armor uses ProtonMail/go-crypto v1.4.1 with CRC24
+  compatibility checking. Legacy OpenPGP is a test oracle only; x/crypto
+  remains for other primitives. CRC24 is not authentication.
 
-These are not permanent suppressions. A new advisory, a dependency or
-replacement change, reintroduction of raw-key import, or the review deadline
-fails CI. The exceptions must be removed as soon as compatible upstream
-releases are available.
+The gates retain all six identities, exact dependency and assessment checks,
+obsolete-import/raw-key RPC rejection, scanner errors, new findings and expiry.
+Dependency security scans root and evmd; Test and build also scans its compiled
+artifact. Historical symbol-bearing qualification is separately identified;
+scanner silence under fork coordinates or in stripped binaries is not clearance.
+Renewal requires a new justified assessment and tests, never just a date change.
 
 ## Scope
 
