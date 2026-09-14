@@ -240,3 +240,47 @@ test('HTTP candidate reserves before fake CLI and returns 202 without asserting 
   assert.equal(first.payload.reconciliation_required, true); assert.equal(first.payload.ok, undefined);
   assert.equal((await request(address())).status, 429); assert.equal(calls, 1);
 });
+
+test('new journal directory entry is synced before accepting a claim', async (t) => {
+  const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'faucet-parent-'));
+  t.after(() => fs.rm(parent, { recursive: true }));
+  const open = fs.open;
+  const events = [];
+  fs.open = async (...args) => {
+    const handle = await open(...args);
+    if (args[0] === parent) {
+      const sync = handle.sync.bind(handle);
+      handle.sync = async () => { await sync(); events.push('parent-sync'); };
+    }
+    return handle;
+  };
+  try {
+    const journal = await Journal.open(path.join(parent, 'journal'), policy);
+    assert.deepEqual(events, ['parent-sync']);
+    await journal.claim(address(4), '192.0.2.44', async () => { events.push('submit'); return 'A'.repeat(64); });
+    assert.deepEqual(events, ['parent-sync', 'submit']);
+    await journal.close();
+  } finally { fs.open = open; }
+});
+
+test('parent sync failure prevents opening a usable journal', async (t) => {
+  const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'faucet-parent-error-'));
+  t.after(() => fs.rm(parent, { recursive: true }));
+  const open = fs.open;
+  fs.open = async (...args) => {
+    const handle = await open(...args);
+    if (args[0] === parent) handle.sync = async () => { throw new Error('synthetic_parent_sync_failure'); };
+    return handle;
+  };
+  try {
+    const dir = path.join(parent, 'journal');
+    await assert.rejects(Journal.open(dir, policy), /synthetic_parent_sync_failure/);
+    assert.deepEqual(await fs.readdir(dir), []);
+  } finally { fs.open = open; }
+});
+
+test('journal refuses implicit creation of unpersisted parent directories', async (t) => {
+  const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'faucet-parent-missing-'));
+  t.after(() => fs.rm(parent, { recursive: true }));
+  await assert.rejects(Journal.open(path.join(parent, 'missing', 'journal'), policy), { code: 'ENOENT' });
+});

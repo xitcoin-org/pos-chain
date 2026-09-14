@@ -30,7 +30,9 @@ réception opérateur indépendante. Un reçu inclus à code non nul garde le qu
 jusqu'à expiration de la fenêtre ; l'absence de reçu maintient le blocage.
 
 `claims.json` est conservé octet pour octet. Un historique invalide est refusé.
-Chaque écriture fsync le fichier puis le répertoire ; les copies de récupération
+Le parent `state/` doit déjà exister. Son entrée `recovery-v1` est synchronisée
+avant ouverture ; un échec de fsync du parent empêche toute soumission.
+Chaque écriture fsync ensuite le fichier puis le répertoire ; les copies de récupération
 sont conservées. Le plafond de 64 snapshots de 8 Mio impose un arrêt sûr et une
 réception d'archivage avant une exploitation prolongée. Aucun effacement ou
 recyclage automatique des réservations n'est effectué. Un crash peut laisser
