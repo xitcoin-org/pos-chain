@@ -2,10 +2,11 @@ name: Versioned Go integration qualification
 on:
   pull_request:
     branches: [main]
-    paths: ['go.mod', 'go.sum', 'evmd/**', '**/*.go', 'docs/go-fork-provenance.json', 'docs/versioned-go-qualification-resume.json', 'scripts/verify-go-fork-provenance.py', 'scripts/qualify-versioned-go.py', '.github/workflows/versioned-go-qualification.yml']
+    paths: ['go.mod', 'go.sum', 'evmd/**', '**/*.go', 'docs/go-fork-provenance.json', 'docs/versioned-go-qualification-resume.json', 'scripts/verify-go-fork-provenance.py', 'scripts/qualify-versioned-go.py', 'scripts/verify-versioned-go-reuse.py', 'scripts/test-versioned-go-reuse.py', 'docs/versioned-go-reuse.json', '.github/workflows/versioned-go-qualification.yml']
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 jobs:
   qualify:
     name: Versioned graph (${{ matrix.module }})
@@ -16,6 +17,7 @@ jobs:
       matrix:
         module: [root, evmd]
     env:
+      GH_TOKEN: ${{ github.token }}
       GOMAXPROCS: '2'
       GOMEMLIMIT: 2GiB
       GOFLAGS: -p=1 -mod=readonly

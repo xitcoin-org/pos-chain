@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import hashlib,json,os,pathlib,re,shutil,signal,subprocess,sys,time
+sys.dont_write_bytecode=True
+if sys.flags.optimize: raise RuntimeError('qualification assertions require unoptimized Python')
 root=pathlib.Path.cwd();module=sys.argv[1];cwd=root if module=='root' else root/'evmd';out=root/'versioned-evidence';out.mkdir(exist_ok=True);results={}
 def run(label,args):
  minimum=shutil.disk_usage(root).free;start=time.monotonic();reason=None
@@ -20,11 +22,21 @@ def run(label,args):
  return p.returncode==0 and reason is None
 resume_path=root/'docs/versioned-go-qualification-resume.json'
 resume=None
+import importlib.util
+spec=importlib.util.spec_from_file_location('reuse',root/'scripts/verify-versioned-go-reuse.py')
+reuse_guard=importlib.util.module_from_spec(spec);spec.loader.exec_module(reuse_guard)
+policy=reuse_guard.read_policy(root)
+if not run('fetch-reviewed',['git','-C',str(root),'fetch','--depth=2','origin',reuse_guard.REVIEWED_HEAD]):sys.exit(1)
+# Full-tree identity and exact mission digests precede the original assertions.
+reuse_guard.validate_sources(root,policy)
+history_dir=out/'historical-artifacts'
+reuse_guard.download_history(policy,history_dir)
+reuse=reuse_guard.validate(root,history_dir)
 if resume_path.exists():
  resume=json.loads(resume_path.read_text());baseline=resume['baseline_head']
  if not run('fetch-baseline',['git','-C',str(root),'fetch','--depth=1','origin',baseline]):sys.exit(1)
  def previous(path):return subprocess.check_output(['git','show',baseline+':'+path],cwd=root)
- changed=set(subprocess.check_output(['git','diff','--name-only',baseline,'HEAD'],cwd=root,text=True).splitlines())
+ changed=set(subprocess.check_output(['git','diff','--name-only',baseline,reuse['qualified_head']],cwd=root,text=True).splitlines())
  assert changed<=set(resume['allowed_changes']), 'source beyond qualified scope changed'
  for path,hashes in resume['fixtures'].items():
   assert hashlib.sha256(previous(path)).hexdigest()==hashes['before']
@@ -41,6 +53,17 @@ if resume_path.exists():
  assert set(resume['failed_test_suites'])=={'TestLedgerTestSuite','TestERC20KeeperTestSuite'}
  assert resume['failed_test_packages']==['github.com/xitcoin-org/pos-chain/evmd/tests/integration']
  (out/'preserved-checks.json').write_text(json.dumps(resume,indent=2))
+# The old fixture/lock/result assertions above remain mandatory. The new guard
+# proves the current tree differs only by the reviewed, digest-bound gate delta.
+if not resume: raise RuntimeError('historical qualification manifest absent')
+(out/'reused-checks.json').write_text(json.dumps(reuse,indent=2))
+if module=='root':
+ run('reuse-regressions',['python3',str(root/'scripts/test-versioned-go-reuse.py')])
+ run('gate-regressions',['python3',str(root/'scripts/test-govulncheck-gate.py')])
+failed=any(v['exit_code']!=0 or v['blocked'] for v in results.values())
+(out/'qualification.json').write_text(json.dumps({'status':'QUALIFICATION_FAILED' if failed else 'TECHNICAL_CHECKS_COMPLETED_REVIEW_REQUIRED','security_acceptance':False,'review_expired':'2026-09-05','deployment':False,'reuse_validated_for_head':reuse['sources']['current_head'],'historical_qualification_head':reuse['qualified_head'],'scans_are_historical':True,'current_binary_built':False},indent=2))
+sys.exit(bool(failed))
+# Historical non-reuse implementation retained for traceability, not executed.
 run('modules',['go','list','-m','-json','all'])
 run('provenance',['python3',str(root/'scripts/verify-go-fork-provenance.py')])
 run('verify-sums',['go','mod','verify'])
