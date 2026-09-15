@@ -21,6 +21,6 @@
   "homepage": "https://github.com/xitcoin-org/pos-chain#readme",
   "type": "module",
   "dependencies": {
-    "@account-abstraction/contracts": "^0.6.0"
+    "@account-abstraction/contracts": "^0.8.0"
   }
 }
